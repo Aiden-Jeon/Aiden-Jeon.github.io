@@ -1,0 +1,431 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=robots content="noodp">
+<meta http-equiv=x-ua-compatible content="IE=edge, chrome=1">
+<title>setup.py 와 Makefile 설정하기 - Aiden's Firewoods</title><meta name=Description content="This is My New Hugo Site"><meta property="og:title" content="setup.py 와 Makefile 설정하기">
+<meta property="og:description" content="Module setup Contents 순서
+ setup.py 와 Makefile 설정하기 프로젝트별 pylint 설정하기   이번 포스트에서는 setup.py 와 Makefile을 설정하는 법에 대해 소개하겠습니다.
+포스트에서 사용된 코드는 github 에서 확인할 수 있습니다.
+1. setup.py setup.py 에서 사용되는 setuptools.setup은 개발하고 있는 소스 코드를 package 형식으로 배포 할 때 이용합니다.
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19  ## setup.py from setuptools import find_packages, setup setup( name=&#34;github_cicd&#34;, version=&#34;0.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://aiden-jeon.github.io/makefile/"><meta property="og:image" content="https://aiden-jeon.github.io/logo.png"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2021-03-14T00:00:00+00:00">
+<meta property="article:modified_time" content="2021-03-14T00:00:00+00:00">
+<meta name=twitter:card content="summary_large_image">
+<meta name=twitter:image content="https://aiden-jeon.github.io/logo.png">
+<meta name=twitter:title content="setup.py 와 Makefile 설정하기">
+<meta name=twitter:description content="Module setup Contents 순서
+ setup.py 와 Makefile 설정하기 프로젝트별 pylint 설정하기   이번 포스트에서는 setup.py 와 Makefile을 설정하는 법에 대해 소개하겠습니다.
+포스트에서 사용된 코드는 github 에서 확인할 수 있습니다.
+1. setup.py setup.py 에서 사용되는 setuptools.setup은 개발하고 있는 소스 코드를 package 형식으로 배포 할 때 이용합니다.
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19  ## setup.py from setuptools import find_packages, setup setup( name=&#34;github_cicd&#34;, version=&#34;0.">
+<meta name=application-name content="LoveIt">
+<meta name=apple-mobile-web-app-title content="LoveIt"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://aiden-jeon.github.io/makefile/><link rel=prev href=https://aiden-jeon.github.io/pylintrc/><link rel=next href=https://aiden-jeon.github.io/1158/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"setup.py 와 Makefile 설정하기","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/aiden-jeon.github.io\/makefile\/"},"genre":"posts","wordcount":505,"url":"https:\/\/aiden-jeon.github.io\/makefile\/","datePublished":"2021-03-14T00:00:00+00:00","dateModified":"2021-03-14T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"Jongseob Jeon"},"description":""}</script></head>
+<body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':'auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark')&&document.body.setAttribute('theme','dark')</script>
+<div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title="Aiden's Firewoods"></a>
+</div>
+<div class=menu>
+<div class=menu-inner><a class=menu-item href=/> Home </a><a class=menu-item href=/posts/> Posts </a><a class=menu-item href=/tags/> Tags </a><a class=menu-item href=/categories/> Categories </a><a class=menu-item href=/about/> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder="Search titles or contents..." id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search>
+<i class="fas fa-search fa-fw"></i>
+</a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear>
+<i class="fas fa-times-circle fa-fw"></i>
+</a>
+<span class="search-button search-loading" id=search-loading-desktop>
+<i class="fas fa-spinner fa-fw fa-spin"></i>
+</span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw"></i>
+</a>
+</div>
+</div>
+</div>
+</header><header class=mobile id=header-mobile>
+<div class=header-container>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title="Aiden's Firewoods"></a>
+</div>
+<div class=menu-toggle id=menu-toggle-mobile>
+<span></span><span></span><span></span>
+</div>
+</div>
+<div class=menu id=menu-mobile><div class=search-wrapper>
+<div class="search mobile" id=search-mobile>
+<input type=text placeholder="Search titles or contents..." id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search>
+<i class="fas fa-search fa-fw"></i>
+</a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear>
+<i class="fas fa-times-circle fa-fw"></i>
+</a>
+<span class="search-button search-loading" id=search-loading-mobile>
+<i class="fas fa-spinner fa-fw fa-spin"></i>
+</span>
+</div>
+<a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>
+Cancel
+</a>
+</div><a class=menu-item href=/ title>Home</a><a class=menu-item href=/posts/ title>Posts</a><a class=menu-item href=/tags/ title>Tags</a><a class=menu-item href=/categories/ title>Categories</a><a class=menu-item href=/about/ title>About</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw"></i>
+</a></div>
+</div>
+</header>
+<div class="search-dropdown desktop">
+<div id=search-dropdown-desktop></div>
+</div>
+<div class="search-dropdown mobile">
+<div id=search-dropdown-mobile></div>
+</div>
+<main class=main>
+<div class=container><div class=toc id=toc-auto>
+<h2 class=toc-title>Contents</h2>
+<div class="toc-content always-active" id=toc-content-auto></div>
+</div><article class="page single"><h1 class="single-title animated flipInX">setup.py 와 Makefile 설정하기</h1><div class=post-meta>
+<div class=post-meta-line><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-category>included in <a href=/categories/setup-module/><i class="far fa-folder fa-fw"></i>setup-module</a></span></div>
+<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-03-14>2021-03-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;505 words&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;</div>
+</div><div class="details toc" id=toc-static kept>
+<div class="details-summary toc-title">
+<span>Contents</span>
+<span><i class="details-icon fas fa-angle-right"></i></span>
+</div>
+<div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href=#1-setuppy>1. setup.py</a></li>
+<li><a href=#2-makefile>2. Makefile</a>
+<ul>
+<li><a href=#21-makefile을-사용하는-이유>2.1 Makefile을 사용하는 이유</a></li>
+<li><a href=#22-코드-작성>2.2 코드 작성</a></li>
+</ul>
+</li>
+<li><a href=#3-사용하기>3. 사용하기</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav></div>
+</div><div class=content id=content><p><strong>Module setup Contents 순서</strong></p>
+<ol>
+<li><a href=https://aiden-jeon.github.io/setup-module/makefile target=_blank rel="noopener noreffer">setup.py 와 Makefile 설정하기</a></li>
+<li><a href=https://aiden-jeon.github.io/setup-module/pylintrc target=_blank rel="noopener noreffer">프로젝트별 pylint 설정하기</a></li>
+</ol>
+<hr>
+<p>이번 포스트에서는 setup.py 와 Makefile을 설정하는 법에 대해 소개하겠습니다.<br>
+포스트에서 사용된 코드는 <a href=https://github.com/aiden-jeon/github-cicd target=_blank rel="noopener noreffer">github</a> 에서 확인할 수 있습니다.</p>
+<h3 id=1-setuppy>1. setup.py</h3>
+<p><code>setup.py</code> 에서 사용되는 <code>setuptools.setup</code>은 개발하고 있는 소스 코드를 package 형식으로 배포 할 때 이용합니다.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=c1>## setup.py</span>
+<span class=kn>from</span> <span class=nn>setuptools</span> <span class=kn>import</span> <span class=n>find_packages</span><span class=p>,</span> <span class=n>setup</span>
+
+
+<span class=n>setup</span><span class=p>(</span>
+    <span class=n>name</span><span class=o>=</span><span class=s2>&#34;github_cicd&#34;</span><span class=p>,</span>
+    <span class=n>version</span><span class=o>=</span><span class=s2>&#34;0.0.1&#34;</span><span class=p>,</span>
+    <span class=n>packages</span><span class=o>=</span><span class=n>find_packages</span><span class=p>(</span><span class=s2>&#34;src&#34;</span><span class=p>),</span>
+    <span class=n>python_requires</span><span class=o>=</span><span class=s2>&#34;&gt;=3.*&#34;</span><span class=p>,</span>
+    <span class=n>author</span><span class=o>=</span><span class=s2>&#34;Aiden-jeon&#34;</span><span class=p>,</span>
+    <span class=n>author_email</span><span class=o>=</span><span class=s2>&#34;ells2124@gmail.com&#34;</span><span class=p>,</span>
+    <span class=n>description</span><span class=o>=</span><span class=s2>&#34;Example of github-cicd&#34;</span><span class=p>,</span>
+    <span class=n>keywords</span><span class=o>=</span><span class=s2>&#34;ML pipeline kubeflow automation&#34;</span><span class=p>,</span>
+    <span class=n>url</span><span class=o>=</span><span class=s2>&#34;https://github.com/aiden-jeon/github-cicd&#34;</span><span class=p>,</span>
+    <span class=n>project_urls</span><span class=o>=</span><span class=p>{</span>
+        <span class=s2>&#34;Documentation&#34;</span><span class=p>:</span> <span class=s2>&#34;https://github.com/aiden-jeon/github-cicd&#34;</span><span class=p>,</span>
+        <span class=s2>&#34;Source Code&#34;</span><span class=p>:</span> <span class=s2>&#34;https://github.com/aiden-jeon/github-cicd&#34;</span><span class=p>,</span>
+    <span class=p>},</span>
+<span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>name</code>: 패키지가 어떤 이름으로 설치 될지를 나타냅니다.<br>
+<code>version</code>: 배포된 소스코드의 버전입니다.<br>
+<code>packages</code>: 배포에 포함 될 package들을 의미합니다. 보통 <code>setuptools.find_packages</code>를 이용해 자동으로 찾습니다. 예를 들어서 src 폴더 밑에 <code>module_1</code>, <code>module_2</code> 가 있다면 두 모듈을 모두 찾아서 설치를 해줍니다. 이렇게 설치된 경우 아래와 같이 사용할 수 있습니다.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=kn>import</span> <span class=nn>module_1</span>
+<span class=kn>import</span> <span class=nn>module_2</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>만약, src 폴더 없이 <code>module_1</code> 폴더를 설치하고 싶을 경우에는 아래와 같이 설정을 해야 합니다.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>packages</span><span class=o>=</span><span class=p>[</span><span class=s2>&#34;module_1&#34;</span><span class=p>]</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>python_requires</code>: 실행 가능한 파이썬 버전을 의미합니다.</p>
+<p>아래 코드를 이용해 작성이 완료된 <code>setup.py</code>를 설치할 수 있습니다.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>pip</span> <span class=n>install</span> <span class=o>-</span> <span class=n>e</span> <span class=o>.</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>사용한 python 버전의 site-packages에 가면 아래와 같이 패키지가 설치되어 있는 것을 확인 할 수 있습니다.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>&gt; ls<span class=p>|</span>grep github
+
+github-cicd.egg-link
+</code></pre></td></tr></table>
+</div>
+</div><h3 id=2-makefile>2. Makefile</h3>
+<p>이번에는 Makefile을 작성해보겠습니다.</p>
+<h4 id=21-makefile을-사용하는-이유>2.1 Makefile을 사용하는 이유</h4>
+<blockquote>
+<p>Compiling the source code files can be tiring, especially when you have to include several source files and type the compiling command every time you need to compile. Makefiles are the solution to simplify this task.</p>
+<p>Makefiles are special format files that help build and manage the projects automatically.<br>
+출처: <a href="https://www.tutorialspoint.com/makefile/why_makefile.htm#:~:text=Compiling%20the%20source%20code%20files,and%20manage%20the%20projects%20automatically" target=_blank rel="noopener noreffer">link</a></p>
+</blockquote>
+<p>요약하면 compile을 반복적으로 해야할 때 이러한 작업을 간단히 하기 위해 사용합니다.</p>
+<h4 id=22-코드-작성>2.2 코드 작성</h4>
+<p>Python에서는 협업을 위한 여러가지 tool이 존재합니다.
+이러한 tool을 이용해 코드의 일관성, 타입체크, 코드 테스트를 수행할 수 있습니다.
+그런데 이 과정이 반복적으로 이루어지기 때문에 이를 코드화하려고 합니다.</p>
+<ul>
+<li>init
+Makefile을 수행하기 위해서는 제일 처음 필요한 패키지와 소스코드를 설치해야 합니다.</li>
+</ul>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>init:
+	pip install -U pip
+	pip install -r requirements.txt
+	pip install -e .
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>format
+코드 format을 맞추기 위해 사용되는 툴은 주로 black 과 isort 가 있습니다.
+이 때 isort 가 black과 충돌을 일으키지 않게 <code>--profile black</code>을 추가합니다.</li>
+</ul>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>format:
+	black .
+	isort . --skip-gitignore --profile black
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>lint
+linting을 검사하기 위해 pytest 를 이용하고 pylint, flake8, mypy 를 사용하겠습니다.</li>
+</ul>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>lint:
+	pytest src/mrxflow/ --pylint --flake8 --mypy
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>test
+test를 수행하기 위해 pytest를 이용하겠습니다.</li>
+</ul>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>test:
+	pytest tests -s --verbose --cov<span class=o>=</span>src/ --cov-report<span class=o>=</span>html --cov-report<span class=o>=</span>term-missing
+</code></pre></td></tr></table>
+</div>
+</div><p>전체 코드는 다음과 같습니다.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>SHELL :<span class=o>=</span> /bin/bash
+
+all:
+	<span class=nb>echo</span> <span class=s1>&#39;Makefile for github-cicd&#39;</span>
+
+init:
+	pip install -U pip
+	pip install -r requirements.txt
+	pip install -e .
+
+format:
+	black .
+	isort . --skip-gitignore --profile black
+
+lint:
+	pytest src/mrxflow/ --pylint --flake8 --mypy
+
+test:
+	pytest tests -s --verbose --cov<span class=o>=</span>src/ --cov-report<span class=o>=</span>html --cov-report<span class=o>=</span>term-missing
+</code></pre></td></tr></table>
+</div>
+</div><h3 id=3-사용하기>3. 사용하기</h3>
+<p><code>setup.py</code>와 Makefile의 작성을 다 했다면 다음과 같이 사용할 수 있습니다.</p>
+<ol>
+<li>init
+Makefile에서 수행할 때 필요한 패키지를 설치합니다.</li>
+</ol>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>make init
+</code></pre></td></tr></table>
+</div>
+</div><ol start=2>
+<li>다른 명령어 사용해보기</li>
+</ol>
+<ul>
+<li>format</li>
+</ul>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>make format
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>lint</li>
+</ul>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>make lint
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>test</li>
+</ul>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>make <span class=nb>test</span>
+</code></pre></td></tr></table>
+</div>
+</div></div><div class=post-footer id=post-footer>
+<div class=post-info>
+<div class=post-info-line>
+<div class=post-info-mod>
+<span>Updated on 2021-03-14</span>
+</div>
+<div class=post-info-license></div>
+</div>
+<div class=post-info-line>
+<div class=post-info-md><span>
+<a class=link-to-markdown href=/makefile/index.md target=_blank>Read Markdown</a>
+</span></div>
+<div class=post-info-share>
+<span><a href=javascript:void(0); title="Share on Twitter" data-sharer=twitter data-url=https://aiden-jeon.github.io/makefile/ data-title="setup.py 와 Makefile 설정하기"><i class="fab fa-twitter fa-fw"></i></a><a href=javascript:void(0); title="Share on Facebook" data-sharer=facebook data-url=https://aiden-jeon.github.io/makefile/><i class="fab fa-facebook-square fa-fw"></i></a><a href=javascript:void(0); title="Share on Linkedin" data-sharer=linkedin data-url=https://aiden-jeon.github.io/makefile/><i class="fab fa-linkedin fa-fw"></i></a><a href=javascript:void(0); title="Share on Reddit" data-sharer=reddit data-url=https://aiden-jeon.github.io/makefile/><i class="fab fa-reddit fa-fw"></i></a><a href=javascript:void(0); title="Share on Evernote" data-sharer=evernote data-url=https://aiden-jeon.github.io/makefile/ data-title="setup.py 와 Makefile 설정하기"><i class="fab fa-evernote fa-fw"></i></a></span>
+</div>
+</div>
+</div>
+<div class=post-info-more>
+<section class=post-tags></section>
+<section>
+<span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span>
+</section>
+</div>
+<div class=post-nav><a href=/pylintrc/ class=prev rel=prev title="프로젝트별 pylint 설정하기"><i class="fas fa-angle-left fa-fw"></i>프로젝트별 pylint 설정하기</a>
+<a href=/1158/ class=next rel=next title="요세푸스 문제">요세푸스 문제<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+</main><footer class=footer>
+<div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.88.1">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+</div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2019 - 2021</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>Jongseob Jeon</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div>
+</div>
+</footer></div>
+<div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top">
+<i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title="View Comments">
+<i class="fas fa-comment fa-fw"></i>
+</a>
+</div><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/smooth-scroll/smooth-scroll.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:30},comment:{},cookieconsent:{content:{dismiss:"Got it!",link:"Learn more",message:"This website uses Cookies to improve your experience."},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",lunrIndexURL:"/index.json",maxResultLength:10,noResultsFound:"No results found",snippetLength:30,type:"lunr"}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','UA-173612846-1',{anonymize_ip:!0})</script><script type=text/javascript src="https://www.googletagmanager.com/gtag/js?id=UA-173612846-1" async></script></body>
+</html>

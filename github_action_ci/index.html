@@ -1,0 +1,333 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=robots content="noodp">
+<meta http-equiv=x-ua-compatible content="IE=edge, chrome=1">
+<title>github action을 이용한 ci - Aiden's Firewoods</title><meta name=Description content="This is My New Hugo Site"><meta property="og:title" content="github action을 이용한 ci">
+<meta property="og:description" content="CI/CD Contents 순서
+ sphinx-autoapi 를 이용한 자동 api 문서 생성하기 github action을 이용한 ci ghcr을 이용한 kubernetes deployment 만들기 helm을 이용한 deployment chart 만들기 argocd를 이용한 cd   이번 포스트에서는 github action을 이용해 CI(Continuous Integreation)를 하는 법에 대해서 알아보겠습니다. 이번 포스트에서 사용하는 Dockerfile은 github 를 이용합니다. 내용은 이전 포스트를 확인해주세요.
+1. github package 사용 설정하기 이번 포스트에서는 ghcr(GitHub Container Registry for Docker images) 을 이용할 예정입니다. 개인 repo에서 ghcr을 사용하기 위해서는 따로 설정할 부분이 있습니다.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://aiden-jeon.github.io/github_action_ci/"><meta property="og:image" content="https://aiden-jeon.github.io/logo.png"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2021-03-04T00:00:00+00:00">
+<meta property="article:modified_time" content="2021-03-04T00:00:00+00:00">
+<meta name=twitter:card content="summary_large_image">
+<meta name=twitter:image content="https://aiden-jeon.github.io/logo.png">
+<meta name=twitter:title content="github action을 이용한 ci">
+<meta name=twitter:description content="CI/CD Contents 순서
+ sphinx-autoapi 를 이용한 자동 api 문서 생성하기 github action을 이용한 ci ghcr을 이용한 kubernetes deployment 만들기 helm을 이용한 deployment chart 만들기 argocd를 이용한 cd   이번 포스트에서는 github action을 이용해 CI(Continuous Integreation)를 하는 법에 대해서 알아보겠습니다. 이번 포스트에서 사용하는 Dockerfile은 github 를 이용합니다. 내용은 이전 포스트를 확인해주세요.
+1. github package 사용 설정하기 이번 포스트에서는 ghcr(GitHub Container Registry for Docker images) 을 이용할 예정입니다. 개인 repo에서 ghcr을 사용하기 위해서는 따로 설정할 부분이 있습니다.">
+<meta name=application-name content="LoveIt">
+<meta name=apple-mobile-web-app-title content="LoveIt"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://aiden-jeon.github.io/github_action_ci/><link rel=prev href=https://aiden-jeon.github.io/helm_deployment_chart/><link rel=next href=https://aiden-jeon.github.io/ghcr_k8s_deploy/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"github action을 이용한 ci","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/aiden-jeon.github.io\/github_action_ci\/"},"genre":"posts","keywords":"github, ghcr","wordcount":391,"url":"https:\/\/aiden-jeon.github.io\/github_action_ci\/","datePublished":"2021-03-04T00:00:00+00:00","dateModified":"2021-03-04T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"Jongseob Jeon"},"description":""}</script></head>
+<body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':'auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark')&&document.body.setAttribute('theme','dark')</script>
+<div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title="Aiden's Firewoods"></a>
+</div>
+<div class=menu>
+<div class=menu-inner><a class=menu-item href=/> Home </a><a class=menu-item href=/posts/> Posts </a><a class=menu-item href=/tags/> Tags </a><a class=menu-item href=/categories/> Categories </a><a class=menu-item href=/about/> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder="Search titles or contents..." id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search>
+<i class="fas fa-search fa-fw"></i>
+</a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear>
+<i class="fas fa-times-circle fa-fw"></i>
+</a>
+<span class="search-button search-loading" id=search-loading-desktop>
+<i class="fas fa-spinner fa-fw fa-spin"></i>
+</span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw"></i>
+</a>
+</div>
+</div>
+</div>
+</header><header class=mobile id=header-mobile>
+<div class=header-container>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title="Aiden's Firewoods"></a>
+</div>
+<div class=menu-toggle id=menu-toggle-mobile>
+<span></span><span></span><span></span>
+</div>
+</div>
+<div class=menu id=menu-mobile><div class=search-wrapper>
+<div class="search mobile" id=search-mobile>
+<input type=text placeholder="Search titles or contents..." id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search>
+<i class="fas fa-search fa-fw"></i>
+</a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear>
+<i class="fas fa-times-circle fa-fw"></i>
+</a>
+<span class="search-button search-loading" id=search-loading-mobile>
+<i class="fas fa-spinner fa-fw fa-spin"></i>
+</span>
+</div>
+<a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>
+Cancel
+</a>
+</div><a class=menu-item href=/ title>Home</a><a class=menu-item href=/posts/ title>Posts</a><a class=menu-item href=/tags/ title>Tags</a><a class=menu-item href=/categories/ title>Categories</a><a class=menu-item href=/about/ title>About</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw"></i>
+</a></div>
+</div>
+</header>
+<div class="search-dropdown desktop">
+<div id=search-dropdown-desktop></div>
+</div>
+<div class="search-dropdown mobile">
+<div id=search-dropdown-mobile></div>
+</div>
+<main class=main>
+<div class=container><div class=toc id=toc-auto>
+<h2 class=toc-title>Contents</h2>
+<div class="toc-content always-active" id=toc-content-auto></div>
+</div><article class="page single"><h1 class="single-title animated flipInX">github action을 이용한 ci</h1><div class=post-meta>
+<div class=post-meta-line><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-category>included in <a href=/categories/cicd/><i class="far fa-folder fa-fw"></i>cicd</a></span></div>
+<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-03-04>2021-03-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;391 words&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;2 minutes&nbsp;</div>
+</div><div class="details toc" id=toc-static kept>
+<div class="details-summary toc-title">
+<span>Contents</span>
+<span><i class="details-icon fas fa-angle-right"></i></span>
+</div>
+<div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
+<ul>
+<li>
+<ul>
+<li><a href=#1-github-package-사용-설정하기>1. github package 사용 설정하기</a></li>
+<li><a href=#2-secrets-설정해주기>2. secrets 설정해주기</a></li>
+<li><a href=#3-github-action-작성하기>3. github action 작성하기</a></li>
+<li><a href=#4-local-ghcr-pull>4. local ghcr pull</a></li>
+</ul>
+</li>
+</ul>
+</nav></div>
+</div><div class=content id=content><p><strong>CI/CD Contents 순서</strong></p>
+<ol>
+<li><a href=/sphinx_autoapi/ rel>sphinx-autoapi 를 이용한 자동 api 문서 생성하기</a></li>
+<li><a href=/github_action_ci/ rel>github action을 이용한 ci</a></li>
+<li><a href=/ghcr_k8s_deploy/ rel>ghcr을 이용한 kubernetes deployment 만들기</a></li>
+<li><a href=/helm_deployment_chart/ rel>helm을 이용한 deployment chart 만들기</a></li>
+<li><a href=/argocd_cd/ rel>argocd를 이용한 cd</a></li>
+</ol>
+<hr>
+<p>이번 포스트에서는 github action을 이용해 CI(Continuous Integreation)를 하는 법에 대해서 알아보겠습니다.
+이번 포스트에서 사용하는 Dockerfile은 <a href=https://github.com/Aiden-Jeon/github-cicd target=_blank rel="noopener noreffer">github</a> 를 이용합니다.
+내용은 <a href=/sphinx_autoapi/ rel>이전 포스트</a>를 확인해주세요.</p>
+<h2 id=1-github-package-사용-설정하기>1. github package 사용 설정하기</h2>
+<p>이번 포스트에서는 ghcr(GitHub Container Registry for Docker images) 을 이용할 예정입니다. 개인 repo에서 ghcr을 사용하기 위해서는 따로 설정할 부분이 있습니다.</p>
+<p>github 페이지에서 오른쪽 위에 있는 프로필을 누른 후 Feature Preview를 열어줍니다.
+<img class=lazyload src=/svg/loading.min.svg data-src=/imgs/github/cicd-0.png data-srcset="/imgs/github/cicd-0.png, /imgs/github/cicd-0.png 1.5x, /imgs/github/cicd-0.png 2x" data-sizes=auto alt=/imgs/github/cicd-0.png title=그림-1></p>
+<p>Improved continer support enable을 눌러줍니다. 그러면 아래와 같이 바뀌게 됩니다.
+<img class=lazyload src=/svg/loading.min.svg data-src=/imgs/github/cicd-1.png data-srcset="/imgs/github/cicd-1.png, /imgs/github/cicd-1.png 1.5x, /imgs/github/cicd-1.png 2x" data-sizes=auto alt=/imgs/github/cicd-1.png title=그림-2></p>
+<h2 id=2-secrets-설정해주기>2. secrets 설정해주기</h2>
+<p>github action 으로 자동으로 push 하기 위해서는 github packages에 접근할 수 있는 key가 필요합니다.</p>
+<p>우선 github setting에서 deplotver settings / personal access tokens 로 들어 갑니다.</p>
+<p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/k8s/ghcr/0.png data-srcset="/imgs/k8s/ghcr/0.png, /imgs/k8s/ghcr/0.png 1.5x, /imgs/k8s/ghcr/0.png 2x" data-sizes=auto alt=/imgs/k8s/ghcr/0.png title=그림-3>
+여기서 generate new token을 누릅니다.</p>
+<p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/k8s/ghcr/1.png data-srcset="/imgs/k8s/ghcr/1.png, /imgs/k8s/ghcr/1.png 1.5x, /imgs/k8s/ghcr/1.png 2x" data-sizes=auto alt=/imgs/k8s/ghcr/1.png title=그림-4>
+토큰 이름으로 ghcr-token을 입력하고 packages와 관련된 권한을 주고 token을 생성합니다.</p>
+<p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/k8s/ghcr/2.png data-srcset="/imgs/k8s/ghcr/2.png, /imgs/k8s/ghcr/2.png 1.5x, /imgs/k8s/ghcr/2.png 2x" data-sizes=auto alt=/imgs/k8s/ghcr/2.png title=그림-5>
+다음과 같이 토큰이 생성됩니다. 이 토큰을 메모장에 잘 적어둡니다.</p>
+<p>그리고 ci를 진행할 github repo의 settings에 들어갑니다.
+secrets를 누른 후 New repository secret을 눌러줍니다.
+<img class=lazyload src=/svg/loading.min.svg data-src=/imgs/github/cicd-2.png data-srcset="/imgs/github/cicd-2.png, /imgs/github/cicd-2.png 1.5x, /imgs/github/cicd-2.png 2x" data-sizes=auto alt=/imgs/github/cicd-2.png title=그림-6></p>
+<p>Name에는 CR_PAT을 value 에는 위에서 생성한 key를 입력합니다.
+<img class=lazyload src=/svg/loading.min.svg data-src=/imgs/github/cicd-3.png data-srcset="/imgs/github/cicd-3.png, /imgs/github/cicd-3.png 1.5x, /imgs/github/cicd-3.png 2x" data-sizes=auto alt=/imgs/github/cicd-3.png title=그림-7></p>
+<p>정상적으로 생성되면 아래와 같이 나오게 됩니다.
+<img class=lazyload src=/svg/loading.min.svg data-src=/imgs/github/cicd-4.png data-srcset="/imgs/github/cicd-4.png, /imgs/github/cicd-4.png 1.5x, /imgs/github/cicd-4.png 2x" data-sizes=auto alt=/imgs/github/cicd-4.png title=그림-8></p>
+<h2 id=3-github-action-작성하기>3. github action 작성하기</h2>
+<p>이제 준비가 끝났으니 github action을 작성할 차례입니다.
+<code>.github/workflows</code> 폴더를 생성합니다. 그리고 아래와 같은 파일을 작성합니다. 파일명은 <code>docker-image-push.yml</code>으로 하겠습니다.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Docker Image CI/CD</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=nt>on</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=nt>push</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span><span class=nt>branches</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>main]</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=nt>jobs</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=nt>docker-image-ci</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span><span class=nt>runs-on</span><span class=p>:</span><span class=w> </span><span class=l>ubuntu-18.04</span><span class=w>
+</span><span class=w>    </span><span class=nt>steps</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Checkout</span><span class=w>
+</span><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>actions/checkout@v2</span><span class=w>
+</span><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span><span class=w>          </span><span class=nt>submodules</span><span class=p>:</span><span class=w> </span><span class=l>recursive</span><span class=w>
+</span><span class=w>          </span><span class=nt>fetch-depth</span><span class=p>:</span><span class=w> </span><span class=m>0</span><span class=w>
+</span><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Create shot SHA</span><span class=w>
+</span><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>benjlevesque/short-sha@v1.2</span><span class=w>
+</span><span class=w>        </span><span class=nt>id</span><span class=p>:</span><span class=w> </span><span class=l>short-sha</span><span class=w>
+</span><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Set up Docker Buildx</span><span class=w>
+</span><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>docker/setup-buildx-action@v1</span><span class=w>
+</span><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Login to GitHub Container Registry</span><span class=w>
+</span><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>docker/login-action@v1</span><span class=w>
+</span><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span><span class=w>          </span><span class=nt>registry</span><span class=p>:</span><span class=w> </span><span class=l>ghcr.io</span><span class=w>
+</span><span class=w>          </span><span class=nt>username</span><span class=p>:</span><span class=w> </span><span class=l>${{ github.repository_owner }}</span><span class=w>
+</span><span class=w>          </span><span class=nt>password</span><span class=p>:</span><span class=w> </span><span class=l>${{ secrets.CR_PAT }}</span><span class=w>
+</span><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Build and push</span><span class=w>
+</span><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>docker/build-push-action@v2</span><span class=w>
+</span><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span><span class=w>          </span><span class=nt>push</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>
+</span><span class=w>          </span><span class=nt>context</span><span class=p>:</span><span class=w> </span><span class=l>./</span><span class=w>
+</span><span class=w>          </span><span class=nt>file</span><span class=p>:</span><span class=w> </span><span class=l>docker/Dockerfile</span><span class=w>
+</span><span class=w>          </span><span class=nt>tags</span><span class=p>:</span><span class=w> </span><span class=p>|</span><span class=sd>
+</span><span class=sd>            ghcr.io/&lt;github-name&gt;/&lt;package-name&gt;:latest
+</span><span class=sd>            ghcr.io/&lt;github-name&gt;/&lt;package-name&gt;:${{ steps.short-sha.outputs.sha }}</span><span class=w>            
+</span></code></pre></td></tr></table>
+</div>
+</div><p>내용에서 수정해야 할 부분은 아래 부분입니다.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=nt>tags</span><span class=p>:</span><span class=w> </span><span class=l>|</span><span class=w>
+</span><span class=w></span><span class=l>ghcr.io/&lt;github-name&gt;/&lt;package-name&gt;:latest</span><span class=w>
+</span><span class=w></span><span class=l>ghcr.io/&lt;github-name&gt;/&lt;package-name&gt;:${{ steps.short-sha.outputs.sha }}</span><span class=w>
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>github-name</code>: pacakge를 저장할 github name을 적어줍니다.</li>
+<li><code>package-name</code>: 저장할 package 이름을 적어줍니다.</li>
+</ul>
+<p>예를 들어 저는 다음과 같이 적겠습니다.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=nt>tags</span><span class=p>:</span><span class=w> </span><span class=l>|</span><span class=w>
+</span><span class=w></span><span class=l>ghcr.io/aiden-jeon/sphinx-api:latest</span><span class=w>
+</span><span class=w></span><span class=l>ghcr.io/aiden-jeon/sphinx-api:${{ steps.short-sha.outputs.sha }}</span><span class=w>
+</span></code></pre></td></tr></table>
+</div>
+</div><p>이제 작성한 workflow를 github에 push 해줍니다. github에 들어가보면 자동으로 action을 실행합니다.
+<img class=lazyload src=/svg/loading.min.svg data-src=/imgs/github/cicd-5.png data-srcset="/imgs/github/cicd-5.png, /imgs/github/cicd-5.png 1.5x, /imgs/github/cicd-5.png 2x" data-sizes=auto alt=/imgs/github/cicd-5.png title=그림-9></p>
+<p>package에 가보면 아래과 같이 생성된 걸 확인할 수 있습니다.
+<img class=lazyload src=/svg/loading.min.svg data-src=/imgs/github/cicd-6.png data-srcset="/imgs/github/cicd-6.png, /imgs/github/cicd-6.png 1.5x, /imgs/github/cicd-6.png 2x" data-sizes=auto alt=/imgs/github/cicd-6.png title=그림-10></p>
+<h2 id=4-local-ghcr-pull>4. local ghcr pull</h2>
+<p>local에서 ghcr을 pull해서 정상적으로 build가 되었는지 확인해보겠습니다.</p>
+<p>아래 명령어로 ghcr docker에 로그인합니다.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=nb>export</span> <span class=nv>CR_PAT</span><span class=o>=</span>&lt;MY_TOKEN&gt;
+<span class=nb>echo</span> <span class=nv>$CR_PAT</span> <span class=p>|</span> docker login ghcr.io -u &lt;github-username&gt; --password-stdin
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>MY_TOKEN: 위에서 발급받은 key를 입력해줍니다.</li>
+<li>github-username: ghcr package가 있는 username을 입력합니다.</li>
+</ul>
+<p>로그인을 한후 아까 만든 docker를 pull합니다. pull 명령어는 package를 누르면 확인할 수 있습니다.
+<img class=lazyload src=/svg/loading.min.svg data-src=/imgs/github/cicd-7.png data-srcset="/imgs/github/cicd-7.png, /imgs/github/cicd-7.png 1.5x, /imgs/github/cicd-7.png 2x" data-sizes=auto alt=/imgs/github/cicd-7.png title=그림-11></p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>docker pull ghcr.io/aiden-jeon/sphinx-api:dc3c4be
+</code></pre></td></tr></table>
+</div>
+</div><p>정상적으로 run 되는지 확인해보겠습니다.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>docker run -p 8000:80 --rm ghcr.io/aiden-jeon/sphinx-api:dc3c4be
+</code></pre></td></tr></table>
+</div>
+</div><p>http://localhost:8000 을 들어가면 정상적으로 나오는 것을 확인할 수 있습니다.</p>
+</div><div class=post-footer id=post-footer>
+<div class=post-info>
+<div class=post-info-line>
+<div class=post-info-mod>
+<span>Updated on 2021-03-04</span>
+</div>
+<div class=post-info-license></div>
+</div>
+<div class=post-info-line>
+<div class=post-info-md><span>
+<a class=link-to-markdown href=/github_action_ci/index.md target=_blank>Read Markdown</a>
+</span></div>
+<div class=post-info-share>
+<span><a href=javascript:void(0); title="Share on Twitter" data-sharer=twitter data-url=https://aiden-jeon.github.io/github_action_ci/ data-title="github action을 이용한 ci" data-hashtags=github,ghcr><i class="fab fa-twitter fa-fw"></i></a><a href=javascript:void(0); title="Share on Facebook" data-sharer=facebook data-url=https://aiden-jeon.github.io/github_action_ci/ data-hashtag=github><i class="fab fa-facebook-square fa-fw"></i></a><a href=javascript:void(0); title="Share on Linkedin" data-sharer=linkedin data-url=https://aiden-jeon.github.io/github_action_ci/><i class="fab fa-linkedin fa-fw"></i></a><a href=javascript:void(0); title="Share on Reddit" data-sharer=reddit data-url=https://aiden-jeon.github.io/github_action_ci/><i class="fab fa-reddit fa-fw"></i></a><a href=javascript:void(0); title="Share on Evernote" data-sharer=evernote data-url=https://aiden-jeon.github.io/github_action_ci/ data-title="github action을 이용한 ci"><i class="fab fa-evernote fa-fw"></i></a></span>
+</div>
+</div>
+</div>
+<div class=post-info-more>
+<section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/github/>github</a>,&nbsp;<a href=/tags/ghcr/>ghcr</a></section>
+<section>
+<span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span>
+</section>
+</div>
+<div class=post-nav><a href=/helm_deployment_chart/ class=prev rel=prev title="helm을 이용한 deployment chart 만들기"><i class="fas fa-angle-left fa-fw"></i>helm을 이용한 deployment chart 만들기</a>
+<a href=/ghcr_k8s_deploy/ class=next rel=next title="ghcr을 이용한 kubernetes deployment 만들기">ghcr을 이용한 kubernetes deployment 만들기<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+</main><footer class=footer>
+<div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.88.1">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+</div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2019 - 2021</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>Jongseob Jeon</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div>
+</div>
+</footer></div>
+<div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top">
+<i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title="View Comments">
+<i class="fas fa-comment fa-fw"></i>
+</a>
+</div><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/smooth-scroll/smooth-scroll.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:30},comment:{},cookieconsent:{content:{dismiss:"Got it!",link:"Learn more",message:"This website uses Cookies to improve your experience."},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",lunrIndexURL:"/index.json",maxResultLength:10,noResultsFound:"No results found",snippetLength:30,type:"lunr"}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','UA-173612846-1',{anonymize_ip:!0})</script><script type=text/javascript src="https://www.googletagmanager.com/gtag/js?id=UA-173612846-1" async></script></body>
+</html>

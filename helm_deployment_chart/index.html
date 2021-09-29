@@ -1,0 +1,643 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=robots content="noodp">
+<meta http-equiv=x-ua-compatible content="IE=edge, chrome=1">
+<title>helm을 이용한 deployment chart 만들기 - Aiden's Firewoods</title><meta name=Description content="This is My New Hugo Site"><meta property="og:title" content="helm을 이용한 deployment chart 만들기">
+<meta property="og:description" content="CI/CD Contents 순서
+ sphinx-autoapi 를 이용한 자동 api 문서 생성하기 github action을 이용한 ci ghcr을 이용한 kubernetes deployment 만들기 helm을 이용한 deployment chart 만들기 argocd를 이용한 cd   이번 포스트에서는 helm 을 이용해 이전 포스트 에서 작성한 파일들을 자동화 하는 법에 대해서 알아 보겠습니다.
+1. helm start helm 을 시작하려는 repo 최상단에서 다음과 같이 입력해줍니다.
+1 2 3  > helm create sphinx-doc Creating sphinx-doc   그러면 아래와 같은 파일들이 생성됩니다.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://aiden-jeon.github.io/helm_deployment_chart/"><meta property="og:image" content="https://aiden-jeon.github.io/logo.png"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2021-03-04T00:00:00+00:00">
+<meta property="article:modified_time" content="2021-03-04T00:00:00+00:00">
+<meta name=twitter:card content="summary_large_image">
+<meta name=twitter:image content="https://aiden-jeon.github.io/logo.png">
+<meta name=twitter:title content="helm을 이용한 deployment chart 만들기">
+<meta name=twitter:description content="CI/CD Contents 순서
+ sphinx-autoapi 를 이용한 자동 api 문서 생성하기 github action을 이용한 ci ghcr을 이용한 kubernetes deployment 만들기 helm을 이용한 deployment chart 만들기 argocd를 이용한 cd   이번 포스트에서는 helm 을 이용해 이전 포스트 에서 작성한 파일들을 자동화 하는 법에 대해서 알아 보겠습니다.
+1. helm start helm 을 시작하려는 repo 최상단에서 다음과 같이 입력해줍니다.
+1 2 3  > helm create sphinx-doc Creating sphinx-doc   그러면 아래와 같은 파일들이 생성됩니다.">
+<meta name=application-name content="LoveIt">
+<meta name=apple-mobile-web-app-title content="LoveIt"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://aiden-jeon.github.io/helm_deployment_chart/><link rel=prev href=https://aiden-jeon.github.io/sphinx_autoapi/><link rel=next href=https://aiden-jeon.github.io/github_action_ci/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"helm을 이용한 deployment chart 만들기","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/aiden-jeon.github.io\/helm_deployment_chart\/"},"genre":"posts","keywords":"helm","wordcount":663,"url":"https:\/\/aiden-jeon.github.io\/helm_deployment_chart\/","datePublished":"2021-03-04T00:00:00+00:00","dateModified":"2021-03-04T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"Jongseob Jeon"},"description":""}</script></head>
+<body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':'auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark')&&document.body.setAttribute('theme','dark')</script>
+<div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title="Aiden's Firewoods"></a>
+</div>
+<div class=menu>
+<div class=menu-inner><a class=menu-item href=/> Home </a><a class=menu-item href=/posts/> Posts </a><a class=menu-item href=/tags/> Tags </a><a class=menu-item href=/categories/> Categories </a><a class=menu-item href=/about/> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder="Search titles or contents..." id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search>
+<i class="fas fa-search fa-fw"></i>
+</a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear>
+<i class="fas fa-times-circle fa-fw"></i>
+</a>
+<span class="search-button search-loading" id=search-loading-desktop>
+<i class="fas fa-spinner fa-fw fa-spin"></i>
+</span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw"></i>
+</a>
+</div>
+</div>
+</div>
+</header><header class=mobile id=header-mobile>
+<div class=header-container>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title="Aiden's Firewoods"></a>
+</div>
+<div class=menu-toggle id=menu-toggle-mobile>
+<span></span><span></span><span></span>
+</div>
+</div>
+<div class=menu id=menu-mobile><div class=search-wrapper>
+<div class="search mobile" id=search-mobile>
+<input type=text placeholder="Search titles or contents..." id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search>
+<i class="fas fa-search fa-fw"></i>
+</a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear>
+<i class="fas fa-times-circle fa-fw"></i>
+</a>
+<span class="search-button search-loading" id=search-loading-mobile>
+<i class="fas fa-spinner fa-fw fa-spin"></i>
+</span>
+</div>
+<a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>
+Cancel
+</a>
+</div><a class=menu-item href=/ title>Home</a><a class=menu-item href=/posts/ title>Posts</a><a class=menu-item href=/tags/ title>Tags</a><a class=menu-item href=/categories/ title>Categories</a><a class=menu-item href=/about/ title>About</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw"></i>
+</a></div>
+</div>
+</header>
+<div class="search-dropdown desktop">
+<div id=search-dropdown-desktop></div>
+</div>
+<div class="search-dropdown mobile">
+<div id=search-dropdown-mobile></div>
+</div>
+<main class=main>
+<div class=container><div class=toc id=toc-auto>
+<h2 class=toc-title>Contents</h2>
+<div class="toc-content always-active" id=toc-content-auto></div>
+</div><article class="page single"><h1 class="single-title animated flipInX">helm을 이용한 deployment chart 만들기</h1><div class=post-meta>
+<div class=post-meta-line><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-category>included in <a href=/categories/cicd/><i class="far fa-folder fa-fw"></i>cicd</a></span></div>
+<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-03-04>2021-03-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;663 words&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;4 minutes&nbsp;</div>
+</div><div class="details toc" id=toc-static kept>
+<div class="details-summary toc-title">
+<span>Contents</span>
+<span><i class="details-icon fas fa-angle-right"></i></span>
+</div>
+<div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
+<ul>
+<li>
+<ul>
+<li><a href=#1-helm-start>1. helm start</a></li>
+<li><a href=#2-deploymentyaml>2. <code>deployment.yaml</code></a></li>
+<li><a href=#3-serviceyaml>3. <code>service.yaml</code></a></li>
+<li><a href=#4-ingressyaml>4. <code>ingress.yaml</code></a></li>
+<li><a href=#5-values-localyaml>5. <code>values-local.yaml</code></a></li>
+<li><a href=#3-helm-install>3. helm install</a></li>
+</ul>
+</li>
+</ul>
+</nav></div>
+</div><div class=content id=content><p><strong>CI/CD Contents 순서</strong></p>
+<ol>
+<li><a href=/sphinx_autoapi/ rel>sphinx-autoapi 를 이용한 자동 api 문서 생성하기</a></li>
+<li><a href=/github_action_ci/ rel>github action을 이용한 ci</a></li>
+<li><a href=/ghcr_k8s_deploy/ rel>ghcr을 이용한 kubernetes deployment 만들기</a></li>
+<li><a href=/helm_deployment_chart/ rel>helm을 이용한 deployment chart 만들기</a></li>
+<li><a href=/argocd_cd/ rel>argocd를 이용한 cd</a></li>
+</ol>
+<hr>
+<p>이번 포스트에서는 helm 을 이용해 <a href=https://aiden-jeon.github.io/cicd/github-cicd-2 target=_blank rel="noopener noreffer">이전 포스트</a> 에서 작성한 파일들을 자동화 하는 법에 대해서 알아 보겠습니다.</p>
+<h2 id=1-helm-start>1. helm start</h2>
+<p>helm 을 시작하려는 repo 최상단에서 다음과 같이 입력해줍니다.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>&gt; helm create sphinx-doc
+
+Creating sphinx-doc
+</code></pre></td></tr></table>
+</div>
+</div><p>그러면 아래와 같은 파일들이 생성됩니다.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>&gt; <span class=nb>cd</span> sphinx-doc
+&gt; ls
+
+Chart.yaml  charts      templates   values.yaml
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=2-deploymentyaml>2. <code>deployment.yaml</code></h2>
+<p>생성된 <code>deployment.yaml</code> 을 다음과 같이 수정합니다.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml>{<span class=l>% raw %}</span><span class=w>
+</span><span class=w></span><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>apps/v1</span><span class=w>
+</span><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>Deployment</span><span class=w>
+</span><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span>{{<span class=w> </span><span class=l>template &#34;sphinx-doc.fullname&#34; . }}</span><span class=w>
+</span><span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class=l>sphinx-doc</span><span class=w>
+</span><span class=w>  </span><span class=nt>labels</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span><span class=nt>app</span><span class=p>:</span><span class=w> </span>{{<span class=w> </span><span class=l>template &#34;sphinx-doc.name&#34; . }}</span><span class=w>
+</span><span class=w>    </span><span class=nt>chart</span><span class=p>:</span><span class=w> </span>{{<span class=w> </span><span class=l>template &#34;sphinx-doc.chart&#34; . }}</span><span class=w>
+</span><span class=w>    </span><span class=nt>release</span><span class=p>:</span><span class=w> </span>{{<span class=w> </span><span class=l>.Release.Name }}</span><span class=w>
+</span><span class=w>    </span><span class=nt>heritage</span><span class=p>:</span><span class=w> </span>{{<span class=w> </span><span class=l>.Release.Service }}</span><span class=w>
+</span><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=nt>replicas</span><span class=p>:</span><span class=w> </span>{{<span class=w> </span><span class=l>.Values.replicaCount }}</span><span class=w>
+</span><span class=w>  </span><span class=nt>revisionHistoryLimit</span><span class=p>:</span><span class=w> </span><span class=m>3</span><span class=w>
+</span><span class=w>  </span><span class=nt>selector</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span><span class=nt>matchLabels</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span><span class=nt>app</span><span class=p>:</span><span class=w> </span>{{<span class=w> </span><span class=l>template &#34;sphinx-doc.name&#34; . }}</span><span class=w>
+</span><span class=w>      </span><span class=nt>release</span><span class=p>:</span><span class=w> </span>{{<span class=w> </span><span class=l>.Release.Name }}</span><span class=w>
+</span><span class=w>  </span><span class=nt>template</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span><span class=nt>labels</span><span class=p>:</span><span class=w>
+</span><span class=w>        </span><span class=nt>app</span><span class=p>:</span><span class=w> </span>{{<span class=w> </span><span class=l>template &#34;sphinx-doc.name&#34; . }}</span><span class=w>
+</span><span class=w>        </span><span class=nt>release</span><span class=p>:</span><span class=w> </span>{{<span class=w> </span><span class=l>.Release.Name }}</span><span class=w>
+</span><span class=w>    </span><span class=nt>spec</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span><span class=nt>imagePullSecrets</span><span class=p>:</span><span class=w>
+</span><span class=w>        </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;{{ .Values.image.pullSecrets }}&#34;</span><span class=w>
+</span><span class=w>      </span><span class=nt>containers</span><span class=p>:</span><span class=w>
+</span><span class=w>        </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span>{{<span class=w> </span><span class=l>.Chart.Name }}</span><span class=w>
+</span><span class=w>          </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;{{ .Values.image.repository }}:{{ .Values.image.tag }}&#34;</span><span class=w>
+</span><span class=w>          </span><span class=nt>imagePullPolicy</span><span class=p>:</span><span class=w> </span>{{<span class=w> </span><span class=l>.Values.image.pullPolicy }}</span><span class=w>
+</span><span class=w>          </span><span class=nt>ports</span><span class=p>:</span><span class=w>
+</span><span class=w>            </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>http</span><span class=w>
+</span><span class=w>              </span><span class=nt>containerPort</span><span class=p>:</span><span class=w> </span><span class=m>80</span><span class=w>
+</span><span class=w>              </span><span class=nt>protocol</span><span class=p>:</span><span class=w> </span><span class=l>TCP</span><span class=w>
+</span><span class=w>          </span><span class=nt>livenessProbe</span><span class=p>:</span><span class=w>
+</span><span class=w>            </span><span class=nt>httpGet</span><span class=p>:</span><span class=w>
+</span><span class=w>              </span><span class=nt>path</span><span class=p>:</span><span class=w> </span><span class=l>/</span><span class=w>
+</span><span class=w>              </span><span class=nt>port</span><span class=p>:</span><span class=w> </span><span class=l>http</span><span class=w>
+</span><span class=w>          </span><span class=nt>readinessProbe</span><span class=p>:</span><span class=w>
+</span><span class=w>            </span><span class=nt>httpGet</span><span class=p>:</span><span class=w>
+</span><span class=w>              </span><span class=nt>path</span><span class=p>:</span><span class=w> </span><span class=l>/</span><span class=w>
+</span><span class=w>              </span><span class=nt>port</span><span class=p>:</span><span class=w> </span><span class=l>http</span><span class=w>
+</span><span class=w>          </span><span class=nt>resources</span><span class=p>:</span><span class=w>
+</span><span class=w></span>{{<span class=w> </span><span class=l>toYaml .Values.resources | indent 12 }}</span><span class=w>
+</span><span class=w>    </span>{{- <span class=l>with .Values.nodeSelector }}</span><span class=w>
+</span><span class=w>      </span><span class=nt>nodeSelector</span><span class=p>:</span><span class=w>
+</span><span class=w></span>{{<span class=w> </span><span class=l>toYaml . | indent 8 }}</span><span class=w>
+</span><span class=w>    </span>{{- <span class=l>end }}</span><span class=w>
+</span><span class=w>    </span>{{- <span class=l>with .Values.affinity }}</span><span class=w>
+</span><span class=w>      </span><span class=nt>affinity</span><span class=p>:</span><span class=w>
+</span><span class=w></span>{{<span class=w> </span><span class=l>toYaml . | indent 8 }}</span><span class=w>
+</span><span class=w>    </span>{{- <span class=l>end }}</span><span class=w>
+</span><span class=w>    </span>{{- <span class=l>with .Values.tolerations }}</span><span class=w>
+</span><span class=w>      </span><span class=nt>tolerations</span><span class=p>:</span><span class=w>
+</span><span class=w></span>{{<span class=w> </span><span class=l>toYaml . | indent 8 }}</span><span class=w>
+</span><span class=w>    </span>{{- <span class=l>end }}</span><span class=w>
+</span><span class=w></span>{<span class=l>% endraw %}</span><span class=w>
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id=3-serviceyaml>3. <code>service.yaml</code></h2>
+<p>생성된 <code>service.yaml</code> 을 다음과 같이 수정합니다.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml>{<span class=l>% raw %}</span><span class=w>
+</span><span class=w></span><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>v1</span><span class=w>
+</span><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>Service</span><span class=w>
+</span><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class=l>sphinx-doc</span><span class=w>
+</span><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span>{{<span class=w> </span><span class=l>template &#34;sphinx-doc.fullname&#34; . }}</span><span class=w>
+</span><span class=w>  </span><span class=nt>labels</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span><span class=nt>app</span><span class=p>:</span><span class=w> </span>{{<span class=w> </span><span class=l>template &#34;sphinx-doc.name&#34; . }}</span><span class=w>
+</span><span class=w>    </span><span class=nt>chart</span><span class=p>:</span><span class=w> </span>{{<span class=w> </span><span class=l>template &#34;sphinx-doc.chart&#34; . }}</span><span class=w>
+</span><span class=w>    </span><span class=nt>release</span><span class=p>:</span><span class=w> </span>{{<span class=w> </span><span class=l>.Release.Name }}</span><span class=w>
+</span><span class=w>    </span><span class=nt>heritage</span><span class=p>:</span><span class=w> </span>{{<span class=w> </span><span class=l>.Release.Service }}</span><span class=w>
+</span><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=nt>type</span><span class=p>:</span><span class=w> </span>{{<span class=w> </span><span class=l>.Values.service.type }}</span><span class=w>
+</span><span class=w>  </span><span class=nt>ports</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span>- <span class=nt>port</span><span class=p>:</span><span class=w> </span>{{<span class=w> </span><span class=l>.Values.service.port }}</span><span class=w>
+</span><span class=w>      </span><span class=nt>targetPort</span><span class=p>:</span><span class=w> </span><span class=l>http</span><span class=w>
+</span><span class=w>      </span><span class=nt>protocol</span><span class=p>:</span><span class=w> </span><span class=l>TCP</span><span class=w>
+</span><span class=w>      </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>http</span><span class=w>
+</span><span class=w>  </span><span class=nt>selector</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span><span class=nt>app</span><span class=p>:</span><span class=w> </span>{{<span class=w> </span><span class=l>template &#34;sphinx-doc.name&#34; . }}</span><span class=w>
+</span><span class=w>    </span><span class=nt>release</span><span class=p>:</span><span class=w> </span>{{<span class=w> </span><span class=l>.Release.Name }}</span><span class=w>
+</span><span class=w></span>{<span class=l>% endraw %}</span><span class=w>
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id=4-ingressyaml>4. <code>ingress.yaml</code></h2>
+<p>생성된 <code>ingress.yaml</code> 을 다음과 같이 수정합니다.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml>{<span class=l>% raw %}</span><span class=w>
+</span><span class=w></span>{{- <span class=l>if .Values.ingress.enabled -}}</span><span class=w>
+</span><span class=w></span>{{- <span class=l>$fullName := include &#34;sphinx-doc.fullname&#34; . -}}</span><span class=w>
+</span><span class=w></span>{{- <span class=l>$ingressPath := .Values.ingress.path -}}</span><span class=w>
+</span><span class=w></span>{{- <span class=l>$svcPort := .Values.service.port -}}</span><span class=w>
+</span><span class=w></span>{{- <span class=l>if semverCompare &#34;&gt;=1.14-0&#34; .Capabilities.KubeVersion.GitVersion -}}</span><span class=w>
+</span><span class=w></span><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>networking.k8s.io/v1beta1</span><span class=w>
+</span><span class=w></span>{{- <span class=l>else -}}</span><span class=w>
+</span><span class=w></span><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>extensions/v1beta1</span><span class=w>
+</span><span class=w></span>{{- <span class=l>end }}</span><span class=w>
+</span><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>Ingress</span><span class=w>
+</span><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class=l>mrxflow</span><span class=w>
+</span><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span>{{<span class=w> </span><span class=l>template &#34;sphinx-doc.fullname&#34; . }}</span><span class=w>
+</span><span class=w>  </span><span class=nt>labels</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span><span class=nt>app</span><span class=p>:</span><span class=w> </span>{{<span class=w> </span><span class=l>template &#34;sphinx-doc.name&#34; . }}</span><span class=w>
+</span><span class=w>    </span><span class=nt>chart</span><span class=p>:</span><span class=w> </span>{{<span class=w> </span><span class=l>template &#34;sphinx-doc.chart&#34; . }}</span><span class=w>
+</span><span class=w>    </span><span class=nt>release</span><span class=p>:</span><span class=w> </span>{{<span class=w> </span><span class=l>.Release.Name }}</span><span class=w>
+</span><span class=w>    </span><span class=nt>heritage</span><span class=p>:</span><span class=w> </span>{{<span class=w> </span><span class=l>.Release.Service }}</span><span class=w>
+</span><span class=w>  </span>{{- <span class=l>with .Values.ingress.annotations }}</span><span class=w>
+</span><span class=w>  </span><span class=nt>annotations</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span>{{- <span class=l>toYaml . | nindent 4 }}</span><span class=w>
+</span><span class=w>  </span>{{- <span class=l>end }}</span><span class=w>
+</span><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
+</span><span class=w></span>{{- <span class=l>if .Values.ingress.tls }}</span><span class=w>
+</span><span class=w>  </span><span class=nt>tls</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span>{{- <span class=l>range .Values.ingress.tls }}</span><span class=w>
+</span><span class=w>    </span>- <span class=nt>hosts</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span>{{- <span class=l>range .hosts }}</span><span class=w>
+</span><span class=w>        </span>- {{<span class=w> </span><span class=l>. | quote }}</span><span class=w>
+</span><span class=w>      </span>{{- <span class=l>end }}</span><span class=w>
+</span><span class=w>      </span><span class=nt>secretName</span><span class=p>:</span><span class=w> </span>{{<span class=w> </span><span class=l>.secretName }}</span><span class=w>
+</span><span class=w>  </span>{{- <span class=l>end }}</span><span class=w>
+</span><span class=w></span>{{- <span class=l>end }}</span><span class=w>
+</span><span class=w>  </span><span class=nt>rules</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span>{{- <span class=l>range .Values.ingress.hosts }}</span><span class=w>
+</span><span class=w>    </span>- <span class=nt>host</span><span class=p>:</span><span class=w> </span>{{<span class=w> </span><span class=l>.host }}</span><span class=w>
+</span><span class=w>      </span><span class=nt>http</span><span class=p>:</span><span class=w>
+</span><span class=w>        </span><span class=nt>paths</span><span class=p>:</span><span class=w>
+</span><span class=w>          </span>- <span class=nt>path</span><span class=p>:</span><span class=w> </span>{{<span class=w> </span><span class=l>$ingressPath }}</span><span class=w>
+</span><span class=w>            </span><span class=nt>backend</span><span class=p>:</span><span class=w>
+</span><span class=w>              </span><span class=nt>serviceName</span><span class=p>:</span><span class=w> </span>{{<span class=w> </span><span class=l>$fullName }}</span><span class=w>
+</span><span class=w>              </span><span class=nt>servicePort</span><span class=p>:</span><span class=w> </span>{{<span class=w> </span><span class=l>$svcPort }}</span><span class=w>
+</span><span class=w>  </span>{{- <span class=l>end }}</span><span class=w>
+</span><span class=w></span>{{- <span class=l>end }}</span><span class=w>
+</span><span class=w></span>{<span class=l>% endraw %}</span><span class=w>
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id=5-values-localyaml>5. <code>values-local.yaml</code></h2>
+<p>local에서 확인을 위한 value로 <code>values-local.yaml</code> 을 만들겠습니다.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=nt>replicaCount</span><span class=p>:</span><span class=w> </span><span class=m>1</span><span class=w>
+</span><span class=w></span><span class=nt>image</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=nt>repository</span><span class=p>:</span><span class=w> </span><span class=l>ghcr.io/aiden-jeon/sphinx-api</span><span class=w>
+</span><span class=w>  </span><span class=nt>tag</span><span class=p>:</span><span class=w> </span><span class=l>dc3c4be</span><span class=w>
+</span><span class=w>  </span><span class=nt>pullPolicy</span><span class=p>:</span><span class=w> </span><span class=l>Always</span><span class=w>
+</span><span class=w>  </span><span class=nt>pullSecrets</span><span class=p>:</span><span class=w> </span><span class=l>test-ghcr</span><span class=w>
+</span><span class=w></span><span class=nt>service</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class=l>NodePort</span><span class=w>
+</span><span class=w>  </span><span class=nt>port</span><span class=p>:</span><span class=w> </span><span class=m>80</span><span class=w>
+</span><span class=w></span><span class=nt>ingress</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=nt>enabled</span><span class=p>:</span><span class=w> </span><span class=kc>false</span><span class=w>
+</span><span class=w>  </span><span class=nt>annotations</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span><span class=nt>kubernetes.io/ingress.class</span><span class=p>:</span><span class=w> </span><span class=l>nginx</span><span class=w>
+</span><span class=w>    </span><span class=nt>ingress.kubernetes.io/rewrite-target</span><span class=p>:</span><span class=w> </span><span class=l>/</span><span class=w>
+</span><span class=w>  </span><span class=nt>path</span><span class=p>:</span><span class=w> </span><span class=l>/</span><span class=w>
+</span><span class=w>  </span><span class=nt>hosts</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span>- <span class=nt>host</span><span class=p>:</span><span class=w> </span><span class=l>chart-example.local</span><span class=w>
+</span><span class=w>  </span><span class=nt>tls</span><span class=p>:</span><span class=w> </span><span class=p>[]</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=nt>resources</span><span class=p>:</span><span class=w> </span>{}<span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=nt>nodeSelector</span><span class=p>:</span><span class=w> </span>{}<span class=w>
+</span><span class=w></span><span class=nt>tolerations</span><span class=p>:</span><span class=w> </span><span class=p>[]</span><span class=w>
+</span><span class=w></span><span class=nt>affinity</span><span class=p>:</span><span class=w> </span>{}<span class=w>
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id=3-helm-install>3. helm install</h2>
+<p>이제 helm 을 이용해 install 해보겠습니다.</p>
+<p>우선 kubectl namespace를 생성합니다.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>&gt; kubectl create ns sphinx-doc
+
+namespace/sphinx-doc created
+</code></pre></td></tr></table>
+</div>
+</div><p>새 namespace에 secret을 추가해줍니다.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>kubectl -n sphinx-doc create secret docker-registry test-ghcr <span class=se>\
+</span><span class=se></span>    --docker-server<span class=o>=</span>ghcr.io <span class=se>\
+</span><span class=se></span>    --docker-username<span class=o>=</span>aiden-jeon <span class=se>\
+</span><span class=se></span>    --docker-password<span class=o>=</span>&lt;secret_key&gt; <span class=se>\
+</span><span class=se></span>    --docker-email<span class=o>=</span>ells2124@gmail.com
+</code></pre></td></tr></table>
+</div>
+</div><p>사용하지 않는 <code>serviceaccount.yaml</code> <code>hpa.yaml</code> 을 삭제합니다.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>rm sphinx-doc/templates/serviceaccount.yaml
+rm sphinx-doc/templates/hpa.yaml
+</code></pre></td></tr></table>
+</div>
+</div><p>그리고 helm install을 합니다.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>&gt; helm install sphinx-doc sphinx-doc/ --values sphinx-doc/values-local.yaml
+
+NAME: sphinx-doc
+LAST DEPLOYED: Thu Mar  <span class=m>4</span> 16:59:41 <span class=m>2021</span>
+NAMESPACE: default
+STATUS: deployed
+REVISION: <span class=m>1</span>
+NOTES:
+1. Get the application URL by running these commands:
+  <span class=nb>export</span> <span class=nv>NODE_PORT</span><span class=o>=</span><span class=k>$(</span>kubectl get --namespace default -o <span class=nv>jsonpath</span><span class=o>=</span><span class=s2>&#34;{.spec.ports[0].nodePort}&#34;</span> services sphinx-doc<span class=k>)</span>
+  <span class=nb>export</span> <span class=nv>NODE_IP</span><span class=o>=</span><span class=k>$(</span>kubectl get nodes --namespace default -o <span class=nv>jsonpath</span><span class=o>=</span><span class=s2>&#34;{.items[0].status.addresses[0].address}&#34;</span><span class=k>)</span>
+  <span class=nb>echo</span> http://<span class=nv>$NODE_IP</span>:<span class=nv>$NODE_PORT</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>정상적으로 설치되면 아래와 같이 자동으로 service 들이 뜨게 됩니다.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>&gt; kubectl get all -n sphinx-doc
+
+NAME                              READY   STATUS    RESTARTS   AGE
+pod/sphinx-doc-6f5b76f46c-tzt7d   1/1     Running   <span class=m>0</span>          11s
+
+NAME                 TYPE       CLUSTER-IP      EXTERNAL-IP   PORT<span class=o>(</span>S<span class=o>)</span>        AGE
+service/sphinx-doc   NodePort   10.103.77.217   &lt;none&gt;        80:32164/TCP   11s
+
+NAME                         READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/sphinx-doc   1/1     <span class=m>1</span>            <span class=m>1</span>           11s
+
+NAME                                    DESIRED   CURRENT   READY   AGE
+replicaset.apps/sphinx-doc-6f5b76f46c   <span class=m>1</span>         <span class=m>1</span>         <span class=m>1</span>       11s
+</code></pre></td></tr></table>
+</div>
+</div><p>연결을 위한 ip를 확인합니다.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>&gt; minikube service -n sphinx-doc --url sphinx-doc
+
+http://192.168.64.2:32164
+</code></pre></td></tr></table>
+</div>
+</div><p>정상적으로 api document 가 보이는지 확인합니다.</p>
+</div><div class=post-footer id=post-footer>
+<div class=post-info>
+<div class=post-info-line>
+<div class=post-info-mod>
+<span>Updated on 2021-03-04</span>
+</div>
+<div class=post-info-license></div>
+</div>
+<div class=post-info-line>
+<div class=post-info-md><span>
+<a class=link-to-markdown href=/helm_deployment_chart/index.md target=_blank>Read Markdown</a>
+</span></div>
+<div class=post-info-share>
+<span><a href=javascript:void(0); title="Share on Twitter" data-sharer=twitter data-url=https://aiden-jeon.github.io/helm_deployment_chart/ data-title="helm을 이용한 deployment chart 만들기" data-hashtags=helm><i class="fab fa-twitter fa-fw"></i></a><a href=javascript:void(0); title="Share on Facebook" data-sharer=facebook data-url=https://aiden-jeon.github.io/helm_deployment_chart/ data-hashtag=helm><i class="fab fa-facebook-square fa-fw"></i></a><a href=javascript:void(0); title="Share on Linkedin" data-sharer=linkedin data-url=https://aiden-jeon.github.io/helm_deployment_chart/><i class="fab fa-linkedin fa-fw"></i></a><a href=javascript:void(0); title="Share on Reddit" data-sharer=reddit data-url=https://aiden-jeon.github.io/helm_deployment_chart/><i class="fab fa-reddit fa-fw"></i></a><a href=javascript:void(0); title="Share on Evernote" data-sharer=evernote data-url=https://aiden-jeon.github.io/helm_deployment_chart/ data-title="helm을 이용한 deployment chart 만들기"><i class="fab fa-evernote fa-fw"></i></a></span>
+</div>
+</div>
+</div>
+<div class=post-info-more>
+<section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/helm/>helm</a></section>
+<section>
+<span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span>
+</section>
+</div>
+<div class=post-nav><a href=/sphinx_autoapi/ class=prev rel=prev title="sphinx-autoapi 를 이용한 자동 api 문서 생성하기"><i class="fas fa-angle-left fa-fw"></i>sphinx-autoapi 를 이용한 자동 api 문서 생성하기</a>
+<a href=/github_action_ci/ class=next rel=next title="github action을 이용한 ci">github action을 이용한 ci<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+</article></div>
+</main><footer class=footer>
+<div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.88.1">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+</div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2019 - 2021</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>Jongseob Jeon</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div>
+</div>
+</footer></div>
+<div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top">
+<i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title="View Comments">
+<i class="fas fa-comment fa-fw"></i>
+</a>
+</div><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/smooth-scroll/smooth-scroll.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:30},comment:{},cookieconsent:{content:{dismiss:"Got it!",link:"Learn more",message:"This website uses Cookies to improve your experience."},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",lunrIndexURL:"/index.json",maxResultLength:10,noResultsFound:"No results found",snippetLength:30,type:"lunr"}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','UA-173612846-1',{anonymize_ip:!0})</script><script type=text/javascript src="https://www.googletagmanager.com/gtag/js?id=UA-173612846-1" async></script></body>
+</html>

@@ -1,51 +1,10 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>dev on Aiden's Firewoods</title><link>https://aiden-jeon.github.io/categories/dev/</link><description>Recent content in dev on Aiden's Firewoods</description><generator>Hugo -- gohugo.io</generator><copyright>Copyright © 2020-2021, Jongseob Jeon; all rights reserved.</copyright><lastBuildDate>Wed, 15 Jul 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://aiden-jeon.github.io/categories/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>MacOS에 Virtualbox Windows10 설치하기</title><link>https://aiden-jeon.github.io/post/tech/dev/macos_virtualbox_windows10/</link><pubDate>Wed, 15 Jul 2020 00:00:00 +0000</pubDate><guid>https://aiden-jeon.github.io/post/tech/dev/macos_virtualbox_windows10/</guid><description>
-&lt;h2 id="준비">준비&lt;/h2>
-&lt;p>우선 버츄얼 박스와 윈도우10을 다운로드 받습니다.&lt;/p>
-&lt;ul>
-&lt;li>&lt;a href="https://www.virtualbox.org/wiki/Downloads">Virtual box 다운로드&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://www.microsoft.com/ko-kr/software-download/windows10ISO">Window10 다운로드&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;h2 id="설치하기">설치하기&lt;/h2>
-&lt;p>Virtualbox를 실행시키면 아래와 같은 화면이 나옵니다.
-(2020.07 기준 virutalbox 버전은 6.1.12 입니다.)&lt;/p>
-&lt;p>&lt;img src="https://aiden-jeon.github.io/imgs/windows/windows_1.png" alt="2CB89C19-07FC-43A4-956D-63DF859B4239">&lt;/p>
-&lt;p>여기서 새로 만들기 버튼을 눌러줍니다.&lt;/p>
-&lt;p>&lt;img src="https://aiden-jeon.github.io/imgs/windows/windows_2.png" alt="C1B4CED5-5CA7-4945-8F03-9CA46F4BF834">&lt;/p>
-&lt;p>이름에 Windows 10 이라고 입력해줍니다. 그러면 밑의 버전도 이름에 맞추어서 자동으로 변경됩니다.&lt;/p>
-&lt;p>&lt;img src="https://aiden-jeon.github.io/imgs/windows/windows_3.png" alt="58CE287C-919A-4A2C-BDBF-4BCD66D6AC75">&lt;/p>
-&lt;p>추천 메모리 크기는 기본값인 2048로 둡니다.&lt;/p>
-&lt;p>&lt;img src="https://aiden-jeon.github.io/imgs/windows/windows_4.png" alt="1A563FFA-D88B-4D51-901A-D1E5E8CAB4D3">&lt;/p>
-&lt;p>계속하기를 누르면 하드 디스크 크기를 설정해주어야 합니다.&lt;/p>
-&lt;p>&lt;img src="https://aiden-jeon.github.io/imgs/windows/windows_5.png" alt="04EC17F0-6A11-4FE4-9CE2-DBF4A18469DE">&lt;/p>
-&lt;p>VMDK를 골라줍니다.&lt;/p>
-&lt;p>&lt;img src="https://aiden-jeon.github.io/imgs/windows/windows_6.png" alt="20E7DBBF-8382-4792-A9BC-4A9CC323D4DC">&lt;/p>
-&lt;p>&lt;img src="https://aiden-jeon.github.io/imgs/windows/windows_7.png" alt="786AED0C-E1C6-4A57-900F-35219368E990">&lt;/p>
-&lt;p>저는 32gb 로 설정해주었습니다.&lt;/p>
-&lt;p>&lt;img src="https://aiden-jeon.github.io/imgs/windows/windows_8.png" alt="E4960960-3549-4E34-85A6-8528E19EC706">&lt;/p>
-&lt;p>설치가 완료되면 다음과 같이 나옵니다.&lt;/p>
-&lt;p>&lt;img src="https://aiden-jeon.github.io/imgs/windows/windows_9.png" alt="F685527D-D908-46AA-8436-DDB0BB6D7B44">&lt;/p>
-&lt;p>이제 여기서 설정 버튼을 눌러줍니다.&lt;/p>
-&lt;p>&lt;img src="https://aiden-jeon.github.io/imgs/windows/10.png" alt="7CFC4AE9-3401-434F-A842-00E48CBDE776">&lt;/p>
-&lt;p>우선 시스템에서 광 디스크를 하드 디스크 밑으로 내려 줍니다. 이는 윈도우가 CD로 설치 된 후 하드 디스크로 부팅시키기 위함입니다.&lt;/p>
-&lt;p>&lt;img src="https://aiden-jeon.github.io/imgs/windows/11.png" alt="A59A7058-9541-4CB2-B452-C3DD44EB26C3">&lt;/p>
-&lt;p>그리고 저장소에서 비어있음을 누르고 빨간 네모가 쳐진 시디 모양의 아이콘을 눌러줍니다.&lt;/p>
-&lt;p>&lt;img src="https://aiden-jeon.github.io/imgs/windows/12.png" alt="B2006D54-592C-4F5B-89F8-021EE17ABC61">&lt;/p>
-&lt;p>그리고 가상 광학 디스크 선택/만들기를 눌러줍니다.&lt;/p>
-&lt;p>&lt;img src="https://aiden-jeon.github.io/imgs/windows/13.png" alt="A50A569F-843B-426A-A277-2D3384CD817A">&lt;/p>
-&lt;p>추가를 누르고&lt;/p>
-&lt;p>&lt;img src="https://aiden-jeon.github.io/imgs/windows/14.png" alt="AC69DC40-5E2A-4C4A-8D26-28EE774FC882">&lt;/p>
-&lt;p>아까 다운로드 받은 windows10.ios 를 선택해줍니다.&lt;/p>
-&lt;p>&lt;img src="https://aiden-jeon.github.io/imgs/windows/15.png" alt="A564F171-514B-419F-98E5-89B2C718C4F6">&lt;/p>
-&lt;p>그러면 아래와 같이 win10.ios 가 생기게 됩니다. 선택을 누르고 확인을 누르면 됩니다.&lt;/p>
-&lt;p>&lt;img src="https://aiden-jeon.github.io/imgs/windows/16.png" alt="637F6A71-E478-4F48-8BAB-D5303F198285">&lt;/p>
-&lt;p>이제 시작을 눌러줍니다.&lt;/p>
-&lt;p>&lt;img src="https://aiden-jeon.github.io/imgs/windows/17.png" alt="1377F26C-A9A3-4AE6-A2C5-009C9B8CFEF5">&lt;/p>
-&lt;h2 id="윈도우-설치">윈도우 설치&lt;/h2>
-&lt;p>시작을 누르면 윈도우10 설치 과정을 따라 가면 됩니다.&lt;/p>
-&lt;p>윈도우를 설치하실 때에는 제품 키가 없음을 눌러서 진행하시면 됩니다.&lt;/p>
-&lt;p>&lt;img src="https://aiden-jeon.github.io/imgs/windows/18.png" alt="743C2297-AB10-441A-82B2-B058D5236BD2">&lt;/p>
-&lt;p>윈도우 버전은 본인의 필요에 따라 선택하면 됩니다. 가장 기본적인 기능은 Windows10 Home 입니다.&lt;/p>
-&lt;p>&lt;img src="https://aiden-jeon.github.io/imgs/windows/19.png" alt="5359A096-9DB4-41F4-A929-CB7B70792E76">&lt;/p>
-&lt;p>약관에 동의하시고 사용자 지정 설치로 진행합니다.&lt;/p>
-&lt;p>&lt;img src="https://aiden-jeon.github.io/imgs/windows/20.png" alt="3BCF3F77-D130-4CF6-AB61-743CC0DAFFDD">&lt;/p>
-&lt;p>이후에는 본인의 취향에 맞추어서 설정을 선택하면서 진행하면 됩니다.&lt;/p></description></item></channel></rss>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>dev - Category - Aiden's Firewoods</title><link>https://aiden-jeon.github.io/categories/dev/</link><description>dev - Category - Aiden's Firewoods</description><generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>ells2124@gmail.com (Jongseob Jeon)</managingEditor><webMaster>ells2124@gmail.com (Jongseob Jeon)</webMaster><lastBuildDate>Wed, 15 Jul 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://aiden-jeon.github.io/categories/dev/" rel="self" type="application/rss+xml"/><item><title>MacOS에 Virtualbox Windows10 설치하기</title><link>https://aiden-jeon.github.io/macos_virtualbox_windows10/</link><pubDate>Wed, 15 Jul 2020 00:00:00 +0000</pubDate><author>Author</author><guid>https://aiden-jeon.github.io/macos_virtualbox_windows10/</guid><description>준비 우선 버츄얼 박스와 윈도우10을 다운로드 받습니다.
+Virtual box 다운로드 Window10 다운로드 설치하기 Virtualbox를 실행시키면 아래와 같은 화면이 나옵니다. (2020.07 기준 virutalbox 버전은 6.1.12 입니다.)
+여기서 새로 만들기 버튼을 눌러줍니다.
+이름에 Windows 10 이라고 입력해줍니다. 그러면 밑의 버전도 이름에 맞추어서 자동으로 변경됩니다.
+추천 메모리 크기는 기본값인 2048로 둡니다.
+계속하기를 누르면 하드 디스크 크기를 설정해주어야 합니다.
+VMDK를 골라줍니다.
+저는 32gb 로 설정해주었습니다.
+설치가 완료되면 다음과 같이 나옵니다.
+이제 여기서 설정 버튼을 눌러줍니다.</description></item></channel></rss>
