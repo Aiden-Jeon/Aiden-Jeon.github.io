@@ -12,8 +12,6 @@
 
 
 
-
-
 ## Certification
 *CKA: Certified Kubernetes Administrator (The Linux Foundation)*
 ![CKA](/imgs/cka/review_02.png)
