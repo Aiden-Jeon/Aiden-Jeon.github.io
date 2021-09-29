@@ -4,7 +4,7 @@
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=robots content="noodp">
 <meta http-equiv=x-ua-compatible content="IE=edge, chrome=1">
-<title>알파벳 찾기 - Aiden's Firewoods</title><meta name=Description content="This is My New Hugo Site"><meta property="og:title" content="알파벳 찾기">
+<title>알파벳 찾기 - Aiden's Firewoods</title><meta name=Description content="Welcome to Aiden's Camp"><meta property="og:title" content="알파벳 찾기">
 <meta property="og:description" content=" problem number: 10809 link: https://www.acmicpc.net/problem/10809   Define input, output  Input: 소문자로 이루어진 단어 S Output: 각 알파벳이 처음 나온 위치  source code 1 2 3 4 5 6 7 8 9 10 11  import sys S = sys.stdin.readline().strip() result = [-1] * (ord(&#34;z&#34;) - ord(&#34;a&#34;) + 1) for i, string in enumerate(S): if result[ord(string) - ord(&#34;a&#34;)] == -1: result[ord(string) - ord(&#34;a&#34;)] = i print(*result)   ">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://aiden-jeon.github.io/10809/"><meta property="og:image" content="https://aiden-jeon.github.io/logo.png"><meta property="article:section" content="posts">

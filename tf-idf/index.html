@@ -4,7 +4,7 @@
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=robots content="noodp">
 <meta http-equiv=x-ua-compatible content="IE=edge, chrome=1">
-<title>Pandas를 이용한 tf-idf 구하기 - Aiden's Firewoods</title><meta name=Description content="This is My New Hugo Site"><meta property="og:title" content="Pandas를 이용한 tf-idf 구하기">
+<title>Pandas를 이용한 tf-idf 구하기 - Aiden's Firewoods</title><meta name=Description content="Welcome to Aiden's Camp"><meta property="og:title" content="Pandas를 이용한 tf-idf 구하기">
 <meta property="og:description" content="이번 포스트는 Pandas를 이용해 tf-idf를 계산하는 방법에 대해서 설명합니다.
  TF-IDF  TF(Term Frequency): 한 문장에서 나타난 각 단어들의 빈도 IDF(Inverse Document Frequency): 문서들에 나타난 단어들의 빈도의 역수 TF-IDF: TF*IDF  Data 데이터는 이미 빈도수가 계산되어 있다고 가정합니다.
 1 2 3 4 5 6 7 8 9 10 11  data = [ [0, 0, 1, 0, 1, 0, 0, 0, 0, 0], [0, 0, 0, 0, 2, 1, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 2], [0, 0, 0, 0, 0, 0, 0, 3, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0] ] columns = [ f&#34;feature_{0}&#34; for i in range(10) ] sample_data = pd.">
