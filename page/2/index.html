@@ -82,6 +82,29 @@ Cancel
 <main class=main>
 <div class=container><div class="page home" posts><div class=home-profile><div class=home-avatar><a href=/ title=Home><img class=lazyload src=/svg/loading.min.svg data-src=/icons/ms-icon-310x310.png data-srcset="/icons/ms-icon-310x310.png, /icons/ms-icon-310x310.png 1.5x, /icons/ms-icon-310x310.png 2x" data-sizes=auto alt=/icons/ms-icon-310x310.png title=/icons/ms-icon-310x310.png></a></div><h2 class=home-subtitle><div id=id-1 class=typeit></div></h2><div class=links><a href=https://github.com/Aiden-Jeon title=GitHub target=_blank rel="noopener noreffer me"><i class="fab fa-github-alt fa-fw"></i></a><a href=https://linkedin.com/in/https://www.linkedin.com/in/jongseob-jeon/ title=LinkedIn target=_blank rel="noopener noreffer me"><i class="fab fa-linkedin fa-fw"></i></a><a href=mailto:ells2124@gmail.com title=Email rel=" me"><i class="far fa-envelope fa-fw"></i></a><a href=/index.xml title=RSS target=_blank rel="noopener noreffer me"><i class="fas fa-rss fa-fw"></i></a></div></div>
 <article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
+<a href=/explaining_dnn_types/>Types of Explanatory Methods</a>
+</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-07-14>2021-07-14</time></span>&nbsp;<span class=post-category>included in <a href=/categories/xai/><i class="far fa-folder fa-fw"></i>xai</a></span></div><div class=content>들어가기 앞서..
+본 포스트는 Explaining Deep Neural Networks 논문을 읽고 요약한 내용입니다. 더 자세한 내용은 해당 논문을 참고해주세요.
+Types of Explanatory Methods 1. Post-Hoc versus Self-Explanatory Post-hoc explanatory methods
+사후 설명 방법은 이미 학습이 끝나서 고정된 모델을 대상으로 합니다.
+이러한 방법의 대표적인 예시로는 LIME이 있습니다. LIME은 설명하고자 하는 모델의 예측을 그 주변의 값들을 이용해 선형 회귀와 같은 해석 가능한 모델을 학습시켜서 설명합니다.
+- 장점) 고정된 모델을 대상으로 하기 때문에 모델에 영향을 미치지 않음</div><div class=post-footer>
+<a href=/explaining_dnn_types/>Read More</a><div class=post-tags>
+<i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/xai/>xai</a></div></div>
+</article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
+<a href=/antipatterns_for_mlops/>Using AntiPatterns to avoid MLOps Mistakes</a>
+</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-07-06>2021-07-06</time></span>&nbsp;<span class=post-category>included in <a href=/categories/mlops/><i class="far fa-folder fa-fw"></i>mlops</a></span></div><div class=content>업데이트 내역: 2021.07.16 Brier Score 수식 추가 TL;DR MLOps를 성공적으로 수행하기 위해서는 아래와 같은 상황들이 일어나지 않도록 해야 합니다.
+데이터 유출에 의해 과도하게 최적화(overly optimistic)된 모델이 배포된 상황 모델이 배포된 후 아무런 관리없이 계속해서 사용 되는 상황 Hyper-parameter Optimization이 이루어지지 않는 상황 실제로 성능이 검증되지 않는 기법이 파이프라인에 바로 적용되는 상황 모델 성능 향상의 요인을 정확히 파악할 수 없는 상황 Test 데이터가 독립적이지 못한 상황 Concept drift에 대응할 수 없는 상황 잘 보정되지 않은 모델을 배포함으로서 머신러닝 파이프라인 전체의 신뢰도 하락이 일어나는 상황 모델을 개발하는 과정에서 데이터가 수정되는 과정이 기록되지 않는 상황 해당 포스트는 Using AntiPatterns to avoid MLOps Mistakes를 읽고 요약한 내용입니다.</div><div class=post-footer>
+<a href=/antipatterns_for_mlops/>Read More</a><div class=post-tags>
+<i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/mlops/>mlops</a></div></div>
+</article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
+<a href=/99_review/>(CKA) CKA 합격 후기</a>
+</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-06-28>2021-06-28</time></span>&nbsp;<span class=post-category>included in <a href=/categories/kubernetes/><i class="far fa-folder fa-fw"></i>kubernetes</a></span></div><div class=content>준비 과정 앞선 포스팅에도 나와 있지만 저는 Udemy의 CKA 강의를 들으며 준비했습니다. 강의 링크
+준비 기간은 2달이 걸렸습니다. 강의 듣고 요약 + Practice Test를 총 한 바퀴 돌렸습니다. 시험 1주전에는 실제 시험에서 사용할 수 있도록 Kuberenetes Document만 보면서 다시 Practice Test를 한 바퀴 더 돌렸습니다. 시험 과정에서 공식 문서의 즐겨찾기는 사용 가능합니다. 그래서 저는 두 번째 볼 때 제가 바로 찾아 볼 수 있도록 제목으로 저장했습니다.
+아래는 제가 사용했었던 즐겨찾기 입니다.</div><div class=post-footer>
+<a href=/99_review/>Read More</a><div class=post-tags>
+<i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/k8s/>k8s</a>,&nbsp;<a href=/tags/cka/>cka</a></div></div>
+</article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
 <a href=/custom-server/>밑바닥부터 시작하는 Seldon-Core - Custom Server</a>
 </h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-06-28>2021-06-28</time></span>&nbsp;<span class=post-category>included in <a href=/categories/seldon/><i class="far fa-folder fa-fw"></i>seldon</a></span></div><div class=content>Pre-requisites 이번 포스트에서는 구성하는 Custom Server를 사용하기 위해서는 아래와 같은 Secret이 필요합니다.
 GHCR secrets aws secrets 1. GHCR Secrets 작성한 Custom Server의 Docker는 GHCR에서 관리합니다.
@@ -106,22 +129,6 @@ Every POD should be able to communicate with every other POD on other nodes with
 CNI in kubernetes Configuring CNI kubelete.service ps -aux | grep kubelet --cni-conf-dir=/etc/cni/net.</div><div class=post-footer>
 <a href=/08_networking/>Read More</a><div class=post-tags>
 <i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/k8s/>k8s</a>,&nbsp;<a href=/tags/cka/>cka</a></div></div>
-</article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
-<a href=/08_networking_pre/>(CKA) 08. Networking Pre-requisites</a>
-</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-06-06>2021-06-06</time></span>&nbsp;<span class=post-category>included in <a href=/categories/kubernetes/><i class="far fa-folder fa-fw"></i>kubernetes</a></span></div><div class=content>CKA를 준비하면서 공부한 요약 내용입니다.
-강의 What is CKA? Pre-Requisites Switching and Routing Switching Routing Default Gateway DNS DNS Configurations on Linux CoreDNS Introduction Network Namespaces Docker Networking Switching Routing Switching 상황 There are two computers and want to communicate to each other → use switch 방법 see the interface of host ip link look at the interface named eth0 assume ip address switch: 192.</div><div class=post-footer>
-<a href=/08_networking_pre/>Read More</a><div class=post-tags>
-<i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/k8s/>k8s</a>,&nbsp;<a href=/tags/cka/>cka</a></div></div>
-</article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
-<a href=/06_security/>(CKA) 06. Security</a>
-</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-05-30>2021-05-30</time></span>&nbsp;<span class=post-category>included in <a href=/categories/kubernetes/><i class="far fa-folder fa-fw"></i>kubernetes</a></span></div><div class=content>Kubernetes Security Primitives Secrure Hosts Password based authentication disabled SSH Key based authentication Secure kubernetes kube-apiserver Who can access? What can they do? Authentication Who can access? Files - Username and Passwords Fiels - Username and Tokens Certificates External Authenication providers - LDAP Service Accounts Authorization What can they do? RBAC Authorization ABAC Authorization Node Authorization Webhook Mode TLS Certificates Network Policies Authentication Users</div><div class=post-footer>
-<a href=/06_security/>Read More</a><div class=post-tags>
-<i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/k8s/>k8s</a>,&nbsp;<a href=/tags/cka/>cka</a></div></div>
-</article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
-<a href=/docker_commands_run/>Docker Commands & Run</a>
-</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-05-27>2021-05-27</time></span>&nbsp;<span class=post-category>included in <a href=/categories/docker/><i class="far fa-folder fa-fw"></i>docker</a></span></div><div class=content>Basic Docker Commands Containers Start a container docker run nginx if image is not present pull image from docker hub if image is present it will reuse docker run -it nginx bash to see directly in terminal use -it option Give name to a container docker run --name &lt;name> &lt;image> List containers → docker randomly give conatiner_id and names to running container</div><div class=post-footer>
-<a href=/docker_commands_run/>Read More</a><div class=post-tags>
-<i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/docker/>docker</a></div></div>
 </article><ul class=pagination><li class=page-item>
 <span class=page-link>
 <a href=/>1</a>
@@ -142,7 +149,7 @@ CNI in kubernetes Configuring CNI kubelete.service ps -aux | grep kubelet --cni-
 <span class=page-link aria-hidden=true>&mldr;</span>
 </li><li class=page-item>
 <span class=page-link>
-<a href=/page/9/>9</a>
+<a href=/page/10/>10</a>
 </span>
 </li></ul></div></div>
 </main><footer class=footer>

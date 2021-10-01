@@ -82,6 +82,32 @@ Cancel
 <main class=main>
 <div class=container><div class="page home" posts><div class=home-profile><div class=home-avatar><a href=/ title=Home><img class=lazyload src=/svg/loading.min.svg data-src=/icons/ms-icon-310x310.png data-srcset="/icons/ms-icon-310x310.png, /icons/ms-icon-310x310.png 1.5x, /icons/ms-icon-310x310.png 2x" data-sizes=auto alt=/icons/ms-icon-310x310.png title=/icons/ms-icon-310x310.png></a></div><h2 class=home-subtitle><div id=id-1 class=typeit></div></h2><div class=links><a href=https://github.com/Aiden-Jeon title=GitHub target=_blank rel="noopener noreffer me"><i class="fab fa-github-alt fa-fw"></i></a><a href=https://linkedin.com/in/https://www.linkedin.com/in/jongseob-jeon/ title=LinkedIn target=_blank rel="noopener noreffer me"><i class="fab fa-linkedin fa-fw"></i></a><a href=mailto:ells2124@gmail.com title=Email rel=" me"><i class="far fa-envelope fa-fw"></i></a><a href=/index.xml title=RSS target=_blank rel="noopener noreffer me"><i class="fas fa-rss fa-fw"></i></a></div></div>
 <article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
+<a href=/pylintrc/>프로젝트별 pylint 설정하기</a>
+</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-03-14>2021-03-14</time></span>&nbsp;<span class=post-category>included in <a href=/categories/setup-module/><i class="far fa-folder fa-fw"></i>setup-module</a></span></div><div class=content>Module setup Contents 순서
+setup.py 와 Makefile 설정하기 프로젝트별 pylint 설정하기 이번 포스트에서는 .pylintrc를 이용해 프로젝트별 pylint를 설정하는 법에 대해 설명하겠습니다. 포스트에서 사용된 코드는 github 에서 확인할 수 있습니다.
+1. generate rcfile 우선 .pylintrc 를 생성하겠습니다.
+1 pylint --generate-rcfile > .pylintrc .pylintrc를 확인해보면 여러가지 설정들이 있습니다.
+2. pylint 사용 다음으로 지난번 포스트에서 만든 Makefile을 이용해 소스코드를 검사해보겠습니다.
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 > make lint pytest src/ --pylint --flake8 --mypy ================= test session starts ================== platform darwin -- Python 3.</div><div class=post-footer>
+<a href=/pylintrc/>Read More</a></div>
+</article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
+<a href=/argocd_cd/>argocd를 이용한 cd</a>
+</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-03-04>2021-03-04</time></span>&nbsp;<span class=post-category>included in <a href=/categories/cicd/><i class="far fa-folder fa-fw"></i>cicd</a></span></div><div class=content>CI/CD Contents 순서
+sphinx-autoapi 를 이용한 자동 api 문서 생성하기 github action을 이용한 ci ghcr을 이용한 kubernetes deployment 만들기 helm을 이용한 deployment chart 만들기 argocd를 이용한 cd 이번 포스트에서는 argocd를 이용해 helm chart를 cd(continuous delivery) 하는 법에 대해서 알아보겠습니다.
+1. 설치 argocd 설치는 tutorial을 따라했습니다.
+2. 실행 1 2 3 4 5 6 7 8 9 # 1. argocd namespace kubectl create namespace argocd kubectl apply -n argocd -f https://raw.</div><div class=post-footer>
+<a href=/argocd_cd/>Read More</a><div class=post-tags>
+<i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/argocd/>argocd</a></div></div>
+</article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
+<a href=/ghcr_k8s_deploy/>ghcr을 이용한 kubernetes deployment 만들기</a>
+</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-03-04>2021-03-04</time></span>&nbsp;<span class=post-category>included in <a href=/categories/cicd/><i class="far fa-folder fa-fw"></i>cicd</a></span></div><div class=content>CI/CD Contents 순서
+sphinx-autoapi 를 이용한 자동 api 문서 생성하기 github action을 이용한 ci ghcr을 이용한 kubernetes deployment 만들기 helm을 이용한 deployment chart 만들기 argocd를 이용한 cd 이번 포스트에서는 minikube를 이용해 이전 포스트에서 만든 ghcr package를 이용해 deployment를 만드는 법에 대해서 알아보겠습니다.
+0. requirements 본 포스트에서는 local환경에서 minikube를 사용하고 있습니다.
+1. deployment.yaml docker/deploy 폴더 밑에 deployment.yaml 파일을 작성하겠습니다.
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 apiVersion:apps/v1kind:Deploymentmetadata:name:sphinx-docspec:selector:matchLabels:type:appservice:sphinx-doctemplate:metadata:labels:type:appservice:sphinx-docspec:containers:- name:sphinx-docimage:ghcr.</div><div class=post-footer>
+<a href=/ghcr_k8s_deploy/>Read More</a><div class=post-tags>
+<i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/k8s/>k8s</a>,&nbsp;<a href=/tags/ghcr/>ghcr</a></div></div>
+</article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
 <a href=/github_action_ci/>github action을 이용한 ci</a>
 </h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-03-04>2021-03-04</time></span>&nbsp;<span class=post-category>included in <a href=/categories/cicd/><i class="far fa-folder fa-fw"></i>cicd</a></span></div><div class=content>CI/CD Contents 순서
 sphinx-autoapi 를 이용한 자동 api 문서 생성하기 github action을 이용한 ci ghcr을 이용한 kubernetes deployment 만들기 helm을 이용한 deployment chart 만들기 argocd를 이용한 cd 이번 포스트에서는 github action을 이용해 CI(Continuous Integreation)를 하는 법에 대해서 알아보겠습니다. 이번 포스트에서 사용하는 Dockerfile은 github 를 이용합니다. 내용은 이전 포스트를 확인해주세요.
@@ -104,30 +130,6 @@ sphinx-autoapi 를 이용한 자동 api 문서 생성하기 github action을 이
 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 class Calculator: def add(self, a: float, b: float) -> float: """add given two number Examples:: calculator = Calculator() calculator.</div><div class=post-footer>
 <a href=/sphinx_autoapi/>Read More</a><div class=post-tags>
 <i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/sphinx/>sphinx</a></div></div>
-</article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
-<a href=/kubernetes_ghcr/>kubernetes에서 ghcr package pull 하기</a>
-</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-03-03>2021-03-03</time></span>&nbsp;<span class=post-category>included in <a href=/categories/kubernetes/><i class="far fa-folder fa-fw"></i>kubernetes</a></span></div><div class=content>kubernetes 에서 사용하는 image는 기본적으로 dockerhub에서 pull 된다. 기본적으로 Local에 있는 패키지는 사용하지 않는다. 회사에서는 도커 이미지를 dockerhub와 같은 곳에 public 하게 공유할 수가 없다. 그래서 github 에서 제공하는 (GHCR) GitHub Container Registry for Docker images 을 이용해서 도커 이미지를 관리하고 있다.
-GHCR 을 이용하기 위해서는 github access key 가 필요하다. 우선 github access token을 발급 받아 보자.
-1. ghcr 을 위한 github access token 발급 받기 우선 github setting에서 deplotver settings / personal access tokens 로 들어간다.</div><div class=post-footer>
-<a href=/kubernetes_ghcr/>Read More</a><div class=post-tags>
-<i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/k8s/>k8s</a></div></div>
-</article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
-<a href=/tracking_my_idol/>동영상에서 원하는 인물 따라가기</a>
-</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2020-10-04>2020-10-04</time></span>&nbsp;<span class=post-category>included in <a href=/categories/project/><i class="far fa-folder fa-fw"></i>project</a></span></div><div class=content>0. 참고 자료 검색 빵형의 개발도상국 1. mp4 동영상 다운로드 youtube 영상 다운로드 ssyoutube로 바꾸면 다운로드 할 수 있는 사이트로 연결됨. https://www.youtube.com/watch?v=naRRqAGIAqQ https://www.ssyoutube.com/watch?v=naRRqAGIAqQ 2. 프로젝트를 위한 가상환경 만들기 1 2 3 pyenv virtualenv 3.7.8 tracking_idol pyenv activate tracking_idol pip install opencv-python==4.1.2.30 opencv-contrib-python==4.1.2.30 numpy opencv 최신 버전은 mac catalina 버전에서 실행이 안된다. https://solarianprogrammer.com/2019/10/21/install-opencv-python-macos/ 3. opencv 를 이용해서 동영상 실행시켜보기 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 import cv2 video_path = "tracking_myidol/dumbi_dumbdi.</div><div class=post-footer>
-<a href=/tracking_my_idol/>Read More</a></div>
-</article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
-<a href=/macos_virtualbox_windows10/>MacOS에 Virtualbox Windows10 설치하기</a>
-</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2020-07-15>2020-07-15</time></span>&nbsp;<span class=post-category>included in <a href=/categories/dev/><i class="far fa-folder fa-fw"></i>dev</a></span></div><div class=content>준비 우선 버츄얼 박스와 윈도우10을 다운로드 받습니다.
-Virtual box 다운로드 Window10 다운로드 설치하기 Virtualbox를 실행시키면 아래와 같은 화면이 나옵니다. (2020.07 기준 virutalbox 버전은 6.1.12 입니다.)
-여기서 새로 만들기 버튼을 눌러줍니다.
-이름에 Windows 10 이라고 입력해줍니다. 그러면 밑의 버전도 이름에 맞추어서 자동으로 변경됩니다.
-추천 메모리 크기는 기본값인 2048로 둡니다.
-계속하기를 누르면 하드 디스크 크기를 설정해주어야 합니다.
-VMDK를 골라줍니다.
-저는 32gb 로 설정해주었습니다.
-설치가 완료되면 다음과 같이 나옵니다.
-이제 여기서 설정 버튼을 눌러줍니다.</div><div class=post-footer>
-<a href=/macos_virtualbox_windows10/>Read More</a></div>
 </article><ul class=pagination><li class=page-item>
 <span class=page-link>
 <a href=/>1</a>
@@ -145,6 +147,10 @@ VMDK를 골라줍니다.
 </li><li class="page-item active">
 <span class=page-link>
 <a href=/page/9/>9</a>
+</span>
+</li><li class=page-item>
+<span class=page-link>
+<a href=/page/10/>10</a>
 </span>
 </li></ul></div></div>
 </main><footer class=footer>

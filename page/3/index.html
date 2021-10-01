@@ -82,6 +82,22 @@ Cancel
 <main class=main>
 <div class=container><div class="page home" posts><div class=home-profile><div class=home-avatar><a href=/ title=Home><img class=lazyload src=/svg/loading.min.svg data-src=/icons/ms-icon-310x310.png data-srcset="/icons/ms-icon-310x310.png, /icons/ms-icon-310x310.png 1.5x, /icons/ms-icon-310x310.png 2x" data-sizes=auto alt=/icons/ms-icon-310x310.png title=/icons/ms-icon-310x310.png></a></div><h2 class=home-subtitle><div id=id-1 class=typeit></div></h2><div class=links><a href=https://github.com/Aiden-Jeon title=GitHub target=_blank rel="noopener noreffer me"><i class="fab fa-github-alt fa-fw"></i></a><a href=https://linkedin.com/in/https://www.linkedin.com/in/jongseob-jeon/ title=LinkedIn target=_blank rel="noopener noreffer me"><i class="fab fa-linkedin fa-fw"></i></a><a href=mailto:ells2124@gmail.com title=Email rel=" me"><i class="far fa-envelope fa-fw"></i></a><a href=/index.xml title=RSS target=_blank rel="noopener noreffer me"><i class="fas fa-rss fa-fw"></i></a></div></div>
 <article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
+<a href=/08_networking_pre/>(CKA) 08. Networking Pre-requisites</a>
+</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-06-06>2021-06-06</time></span>&nbsp;<span class=post-category>included in <a href=/categories/kubernetes/><i class="far fa-folder fa-fw"></i>kubernetes</a></span></div><div class=content>CKA를 준비하면서 공부한 요약 내용입니다.
+강의 What is CKA? Pre-Requisites Switching and Routing Switching Routing Default Gateway DNS DNS Configurations on Linux CoreDNS Introduction Network Namespaces Docker Networking Switching Routing Switching 상황 There are two computers and want to communicate to each other → use switch 방법 see the interface of host ip link look at the interface named eth0 assume ip address switch: 192.</div><div class=post-footer>
+<a href=/08_networking_pre/>Read More</a><div class=post-tags>
+<i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/k8s/>k8s</a>,&nbsp;<a href=/tags/cka/>cka</a></div></div>
+</article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
+<a href=/06_security/>(CKA) 06. Security</a>
+</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-05-30>2021-05-30</time></span>&nbsp;<span class=post-category>included in <a href=/categories/kubernetes/><i class="far fa-folder fa-fw"></i>kubernetes</a></span></div><div class=content>Kubernetes Security Primitives Secrure Hosts Password based authentication disabled SSH Key based authentication Secure kubernetes kube-apiserver Who can access? What can they do? Authentication Who can access? Files - Username and Passwords Fiels - Username and Tokens Certificates External Authenication providers - LDAP Service Accounts Authorization What can they do? RBAC Authorization ABAC Authorization Node Authorization Webhook Mode TLS Certificates Network Policies Authentication Users</div><div class=post-footer>
+<a href=/06_security/>Read More</a><div class=post-tags>
+<i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/k8s/>k8s</a>,&nbsp;<a href=/tags/cka/>cka</a></div></div>
+</article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
+<a href=/docker_commands_run/>Docker Commands & Run</a>
+</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-05-27>2021-05-27</time></span>&nbsp;<span class=post-category>included in <a href=/categories/docker/><i class="far fa-folder fa-fw"></i>docker</a></span></div><div class=content>Basic Docker Commands Containers Start a container docker run nginx if image is not present pull image from docker hub if image is present it will reuse docker run -it nginx bash to see directly in terminal use -it option Give name to a container docker run --name &lt;name> &lt;image> List containers → docker randomly give conatiner_id and names to running container</div><div class=post-footer>
+<a href=/docker_commands_run/>Read More</a><div class=post-tags>
+<i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/docker/>docker</a></div></div>
+</article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
 <a href=/docker_images/>Docker Images</a>
 </h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-05-27>2021-05-27</time></span>&nbsp;<span class=post-category>included in <a href=/categories/docker/><i class="far fa-folder fa-fw"></i>docker</a></span></div><div class=content>Docker Images How to create my own image? Order OS - Ubuntu Update apt repo Install dependencies using apt Install Python dependencies using pip Copy source code to /opt folder Run the web server using &ldquo;flask&rdquo; command Dockerfile 1 2 3 4 5 6 7 8 9 FROMUbuntuRUN apt-get update && apt-get -y install pythonRUN pip install flask flask-mysqlCOPY . /opt/source-codeENTRYPOINT FLASK_APP=/opt/source-code/app.py flask run INSTRUCTION ARGUMENT Build docker build .</div><div class=post-footer>
 <a href=/docker_images/>Read More</a><div class=post-tags>
@@ -98,27 +114,6 @@ Cancel
 강의 What is CKA? Operating System Upgrade upgrading base software applying security patches Pod Eviction Timeout waiting pod healthy pod-eviction-timeout=5m0s Drain Do not use this node, and all pods are out.
 kubectl drain node01 kubectl drain node01 --ignore-daemonsets 1 2 3 4 5 6 7 8 9 10 root@controlplane:~# kubectl drain node01 --ignore-daemonsets node/node01 cordoned WARNING: ignoring DaemonSet-managed Pods: kube-system/kube-flannel-ds-x6dgs, kube-system/kube-proxy-jfmxw evicting pod default/blue-746c87566d-wn2qg evicting pod default/blue-746c87566d-kt266 evicting pod default/blue-746c87566d-9w9zq pod/blue-746c87566d-kt266 evicted pod/blue-746c87566d-wn2qg evicted pod/blue-746c87566d-9w9zq evicted node/node01 evicted kubectl drain node01 --ignore-daemonsets --force</div><div class=post-footer>
 <a href=/05_cluster_maintenance/>Read More</a><div class=post-tags>
-<i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/k8s/>k8s</a>,&nbsp;<a href=/tags/cka/>cka</a></div></div>
-</article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
-<a href=/04_application_lifecycle_managment/>(CKA) 04. Application Lifecycle Management</a>
-</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-05-18>2021-05-18</time></span>&nbsp;<span class=post-category>included in <a href=/categories/kubernetes/><i class="far fa-folder fa-fw"></i>kubernetes</a></span></div><div class=content>CKA를 준비하면서 공부한 요약 내용입니다.
-강의 What is CKA? Rollout and Versioning Rollout Command kubectl rollout status deployment/myapp-deployment kubectl rollout history deployment/myapp-deployment Deployment Strategy Recreate destruction 5 create 5 Rolling Update → default strategy
-destruction and create one by one Revision kubectl apply -f deployment.yaml kubectl set image deployment/myapp-deployment nginx=nginx:1.9.1 Upgrades make new replicaset when upgrade deploy Rollback kubectl rollout undo deployment/myapp-deployment before rollback vs after rollback Commands and Arguments docker</div><div class=post-footer>
-<a href=/04_application_lifecycle_managment/>Read More</a><div class=post-tags>
-<i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/k8s/>k8s</a>,&nbsp;<a href=/tags/cka/>cka</a></div></div>
-</article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
-<a href=/03_logging_monitoring/>(CKA) 03. Logging & Monitoring</a>
-</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-05-17>2021-05-17</time></span>&nbsp;<span class=post-category>included in <a href=/categories/kubernetes/><i class="far fa-folder fa-fw"></i>kubernetes</a></span></div><div class=content>CKA를 준비하면서 공부한 요약 내용입니다.
-강의 What is CKA? Metrics Server In-memory does not store Install minikube minikube addons enable metrics-server others git clone &lt;https://github.con/kubernetes-incubator/metrics-server> kubectl create -f deploy/1.8+ View kubeclt top node kubeclt top pod Managing Application Logs Logs - k8s 로그 보기 w\ defintion kubectl create -f sample.yaml kubectl logs -f sample.yaml 여러 container kubectl logs -f sample.</div><div class=post-footer>
-<a href=/03_logging_monitoring/>Read More</a><div class=post-tags>
-<i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/k8s/>k8s</a>,&nbsp;<a href=/tags/cka/>cka</a></div></div>
-</article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
-<a href=/02_scheduler/>(CKA) 02. Scheduler</a>
-</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-05-16>2021-05-16</time></span>&nbsp;<span class=post-category>included in <a href=/categories/kubernetes/><i class="far fa-folder fa-fw"></i>kubernetes</a></span></div><div class=content>CKA를 준비하면서 공부한 요약 내용입니다.
-강의 What is CKA? Node name default: kubectl-scheduler 위 작업이 기본적으로 pod을 node에 할당해 줌 상태 확인 kubectl get node
-node = no
-1 2 3 4 > k get noNAME STATUS ROLES AGE VERSIONcontrolplane Ready control-plane,master 11m v1.20.0node01 Ready &lt;none> 9m48s v1.20.0 수동 배정 To schedule node manually NodeName 1 2 3 4 5 6 7 8 9 10 ---apiVersion:v1kind:Podmetadata:name:nginxspec:containers:- image:nginxname:nginxnodeName:node01 Label & Selectors Label definition</div><div class=post-footer>
-<a href=/02_scheduler/>Read More</a><div class=post-tags>
 <i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/k8s/>k8s</a>,&nbsp;<a href=/tags/cka/>cka</a></div></div>
 </article><ul class=pagination><li class=page-item>
 <span class=page-link>
@@ -144,7 +139,7 @@ node = no
 <span class=page-link aria-hidden=true>&mldr;</span>
 </li><li class=page-item>
 <span class=page-link>
-<a href=/page/9/>9</a>
+<a href=/page/10/>10</a>
 </span>
 </li></ul></div></div>
 </main><footer class=footer>
