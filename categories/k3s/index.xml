@@ -1,18 +1,17 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>k3s - Category - Aiden's Camp</title><link>https://aiden-jeon.github.io/categories/k3s/</link><description>k3s - Category - Aiden's Camp</description><generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>ells2124@gmail.com (Jongseob Jeon)</managingEditor><webMaster>ells2124@gmail.com (Jongseob Jeon)</webMaster><lastBuildDate>Fri, 01 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://aiden-jeon.github.io/categories/k3s/" rel="self" type="application/rss+xml"/><item><title>Kubeflow Installation</title><link>https://aiden-jeon.github.io/install_kubeflow/</link><pubDate>Fri, 01 Oct 2021 00:00:00 +0000</pubDate><author>Author</author><guid>https://aiden-jeon.github.io/install_kubeflow/</guid><description>이번 포스트에서는 서버에 kubeflow를 설치하는 과정에 대해서 설명합니다.
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>k3s - Category - Aiden's Camp</title><link>https://aiden-jeon.github.io/categories/k3s/</link><description>k3s - Category - Aiden's Camp</description><generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>ells2124@gmail.com (Jongseob Jeon)</managingEditor><webMaster>ells2124@gmail.com (Jongseob Jeon)</webMaster><lastBuildDate>Fri, 01 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://aiden-jeon.github.io/categories/k3s/" rel="self" type="application/rss+xml"/><item><title>k3s Installation</title><link>https://aiden-jeon.github.io/install_k3s/</link><pubDate>Fri, 01 Oct 2021 00:00:00 +0000</pubDate><author>Author</author><guid>https://aiden-jeon.github.io/install_k3s/</guid><description>Kubeflow 설치 시리즈
+Pre-Requisites for k3s Setup k3s Installation Kubeflow Installation 이번 포스트에서는 서버에 k3s를 설치하는 과정에 대해서 설명합니다.
+필요한 준비 과정을 확인 후 진행해 주세요.
+k3s Installation k3s 설치
+k3s는 gpu를 사용하기 위해서 도커를 백엔드로 사용하겠습니다.
+docker 백엔드는 --docker를 추가하면 됩니다. 1 curl -sfL https://get.k3s.io | sh -s - server --disable traefik --disable servicelb --disable local-storage --docker k3s config 확인 k3s를 설치후 k3s config를 확인합니다 1 cat /etc/rancher/k3s/k3s.</description></item><item><title>Kubeflow Installation</title><link>https://aiden-jeon.github.io/install_kubeflow/</link><pubDate>Fri, 01 Oct 2021 00:00:00 +0000</pubDate><author>Author</author><guid>https://aiden-jeon.github.io/install_kubeflow/</guid><description>Kubeflow 설치 시리즈
+Pre-Requisites for k3s Setup k3s Installation Kubeflow Installation 이번 포스트에서는 서버에 kubeflow를 설치하는 과정에 대해서 설명합니다.
 필요한 준비 과정을 확인 후 진행해 주세요.
 Pre-Requisites for k3s Setup k3s Installation 이번 포스트에서 사용하는 kubeflow의 버전은 1.3.0 입니다.
 버전이 바뀔 경우 해당 설치 과정과 달라질 수 있습니다.
 자세한 내용은 링크를 확인해 주세요.
 Kustomize Kubeflow를 설치하기 위해서는 kustmoize와 kubeflow manifest가 필요합니다.
-Clone kubeflow/manifest
-Clone 받는 위치는 편한 곳에 하면 됩니다.
-1 git clone https://github.com/kubeflow/manifests kustomize 다운로드</description></item><item><title>k3s Installation</title><link>https://aiden-jeon.github.io/install_k3s/</link><pubDate>Fri, 01 Oct 2021 00:00:00 +0000</pubDate><author>Author</author><guid>https://aiden-jeon.github.io/install_k3s/</guid><description>이번 포스트에서는 서버에 k3s를 설치하는 과정에 대해서 설명합니다.
-필요한 준비 과정을 확인 후 진행해 주세요.
-Pre-Requisites for k3s Setup
-k3s Installation k3s 설치
-k3s는 gpu를 사용하기 위해서 도커를 백엔드로 사용하겠습니다.
-docker 백엔드는 --docker를 추가하면 됩니다. 1 curl -sfL https://get.k3s.io | sh -s - server --disable traefik --disable servicelb --disable local-storage --docker k3s config 확인 k3s를 설치후 k3s config를 확인합니다 1 cat /etc/rancher/k3s/k3s.yaml k3s config를 kubeconfig로 복사 1 2 3 mkdir .</description></item><item><title>Pre-Requisites for k3s Setup</title><link>https://aiden-jeon.github.io/pre_requisites/</link><pubDate>Fri, 01 Oct 2021 00:00:00 +0000</pubDate><author>Author</author><guid>https://aiden-jeon.github.io/pre_requisites/</guid><description>이번 포스트에서는 k3s를 설정하기 전에 필요한 것들을 세팅하는 과정에 대해서 설명합니다.
+Clone kubeflow/manifest</description></item><item><title>Pre-Requisites for k3s Setup</title><link>https://aiden-jeon.github.io/pre_requisites/</link><pubDate>Fri, 01 Oct 2021 00:00:00 +0000</pubDate><author>Author</author><guid>https://aiden-jeon.github.io/pre_requisites/</guid><description>Kubeflow 설치 시리즈
+Pre-Requisites for k3s Setup k3s Installation Kubeflow Installation 이번 포스트에서는 k3s를 설정하기 전에 필요한 것들을 세팅하는 과정에 대해서 설명합니다.
 이번 포스트에서 진행하는 과정은 서버 데스크탑, 로컬 노트북 두 대의 장비가 있다고 가정하고 있습니다.
 On Server 사용하는 서버 스s펙은 다음과 같습니다.
-1 2 3 4 OS: Ubuntu 20.04 LST GPU: RTX 2060 x2 CPU: Intel(R) Core(TM) i7-9700K CPU @ 3.60GHz MEM: 64G 서버에 설치할 것 들은 3가지 입니다.
-Docker Nvidia Driver WireGuard VPN (사용할 경우) 1.</description></item></channel></rss>
+1 2 3 4 OS: Ubuntu 20.04 LST GPU: RTX 2060 x2 CPU: Intel(R) Core(TM) i7-9700K CPU @ 3.60GHz MEM: 64G 서버에 설치할 것 들은 3가지 입니다.</description></item></channel></rss>

@@ -5,25 +5,25 @@
 <meta name=robots content="noodp">
 <meta http-equiv=x-ua-compatible content="IE=edge, chrome=1">
 <title>밑바닥부터 시작하는 Seldon-Core - Custom Server - Aiden's Camp</title><meta name=Description content="Welcome to Aiden's Camp"><meta property="og:title" content="밑바닥부터 시작하는 Seldon-Core - Custom Server">
-<meta property="og:description" content="Pre-requisites 이번 포스트에서는 구성하는 Custom Server를 사용하기 위해서는 아래와 같은 Secret이 필요합니다.
+<meta property="og:description" content="Pre-requisites 이번 포스트에서는 작성하는 Custom Server를 사용하기 위해서는 아래와 같은 Secret이 필요합니다.
  GHCR secrets aws secrets  1. GHCR Secrets 작성한 Custom Server의 Docker는 GHCR에서 관리합니다.
 k8s에서 image를 pull 하기 위해서는 ghcr에 접근할 수 있는 권한이 필요합니다.
 1 2 3 4 5  kubectl -n seldon create secret docker-registry mrx-ghcr \\ --docker-server=ghcr.io \\ --docker-username=<github id> \\ --docker-password=<secret key> \\ --docker-email=<github mail>   2. aws secrets 이번 포스트에서는 모델을 S3에 저장한다고 가정합니다.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://aiden-jeon.github.io/custom-server/"><meta property="og:image" content="https://aiden-jeon.github.io/logo.png"><meta property="article:section" content="posts">
 <meta property="article:published_time" content="2021-06-28T00:00:00+00:00">
-<meta property="article:modified_time" content="2021-06-28T00:00:00+00:00">
+<meta property="article:modified_time" content="2021-10-01T00:00:00+00:00">
 <meta name=twitter:card content="summary_large_image">
 <meta name=twitter:image content="https://aiden-jeon.github.io/logo.png">
 <meta name=twitter:title content="밑바닥부터 시작하는 Seldon-Core - Custom Server">
-<meta name=twitter:description content="Pre-requisites 이번 포스트에서는 구성하는 Custom Server를 사용하기 위해서는 아래와 같은 Secret이 필요합니다.
+<meta name=twitter:description content="Pre-requisites 이번 포스트에서는 작성하는 Custom Server를 사용하기 위해서는 아래와 같은 Secret이 필요합니다.
  GHCR secrets aws secrets  1. GHCR Secrets 작성한 Custom Server의 Docker는 GHCR에서 관리합니다.
 k8s에서 image를 pull 하기 위해서는 ghcr에 접근할 수 있는 권한이 필요합니다.
 1 2 3 4 5  kubectl -n seldon create secret docker-registry mrx-ghcr \\ --docker-server=ghcr.io \\ --docker-username=<github id> \\ --docker-password=<secret key> \\ --docker-email=<github mail>   2. aws secrets 이번 포스트에서는 모델을 S3에 저장한다고 가정합니다.">
 <meta name=application-name content="Aiden's Camp">
 <meta name=apple-mobile-web-app-title content="Aiden's Camp"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
 <link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://aiden-jeon.github.io/custom-server/><link rel=prev href=https://aiden-jeon.github.io/09_design_and_install_k8s/><link rel=next href=https://aiden-jeon.github.io/99_review/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"밑바닥부터 시작하는 Seldon-Core - Custom Server","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/aiden-jeon.github.io\/custom-server\/"},"genre":"posts","keywords":"k8s, seldon","wordcount":3815,"url":"https:\/\/aiden-jeon.github.io\/custom-server\/","datePublished":"2021-06-28T00:00:00+00:00","dateModified":"2021-06-28T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"Jongseob Jeon"},"description":""}</script></head>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://aiden-jeon.github.io/custom-server/><link rel=prev href=https://aiden-jeon.github.io/09_design_and_install_k8s/><link rel=next href=https://aiden-jeon.github.io/99_review/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"밑바닥부터 시작하는 Seldon-Core - Custom Server","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/aiden-jeon.github.io\/custom-server\/"},"genre":"posts","keywords":"k8s, seldon","wordcount":3713,"url":"https:\/\/aiden-jeon.github.io\/custom-server\/","datePublished":"2021-06-28T00:00:00+00:00","dateModified":"2021-10-01T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"Jongseob Jeon"},"description":""}</script></head>
 <body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':'light'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'light'==='dark')&&document.body.setAttribute('theme','dark')</script>
 <div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
 <div class=header-wrapper>
@@ -91,7 +91,7 @@ Cancel
 <div class="toc-content always-active" id=toc-content-auto></div>
 </div><article class="page single"><h1 class="single-title animated flipInX">밑바닥부터 시작하는 Seldon-Core - Custom Server</h1><div class=post-meta>
 <div class=post-meta-line><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-category>included in <a href=/categories/seldon/><i class="far fa-folder fa-fw"></i>seldon</a></span></div>
-<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-06-28>2021-06-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;3815 words&nbsp;
+<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-06-28>2021-06-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;3713 words&nbsp;
 <i class="far fa-clock fa-fw"></i>&nbsp;18 minutes&nbsp;</div>
 </div><div class="details toc" id=toc-static kept>
 <div class="details-summary toc-title">
@@ -99,8 +99,6 @@ Cancel
 <span><i class="details-icon fas fa-angle-right"></i></span>
 </div>
 <div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
-<ul>
-<li>
 <ul>
 <li><a href=#pre-requisites>Pre-requisites</a>
 <ul>
@@ -133,16 +131,14 @@ Cancel
 </ul>
 </li>
 </ul>
-</li>
-</ul>
 </nav></div>
-</div><div class=content id=content><h2 id=pre-requisites>Pre-requisites</h2>
-<p>이번 포스트에서는 구성하는 Custom Server를 사용하기 위해서는 아래와 같은 Secret이 필요합니다.</p>
+</div><div class=content id=content><h1 id=pre-requisites>Pre-requisites</h1>
+<p>이번 포스트에서는 작성하는 Custom Server를 사용하기 위해서는 아래와 같은 Secret이 필요합니다.</p>
 <ol>
 <li>GHCR secrets</li>
 <li>aws secrets</li>
 </ol>
-<h3 id=1-ghcr-secrets>1. GHCR Secrets</h3>
+<h2 id=1-ghcr-secrets>1. GHCR Secrets</h2>
 <p>작성한 Custom Server의 Docker는 GHCR에서 관리합니다.<br>
 k8s에서 image를 pull 하기 위해서는 ghcr에 접근할 수 있는 권한이 필요합니다.</p>
 <div class=highlight><div class=chroma>
@@ -161,7 +157,7 @@ k8s에서 image를 pull 하기 위해서는 ghcr에 접근할 수 있는 권한�
    --docker-email<span class=o>=</span>&lt;github mail&gt;
 </code></pre></td></tr></table>
 </div>
-</div><h3 id=2-aws-secrets>2. aws secrets</h3>
+</div><h2 id=2-aws-secrets>2. aws secrets</h2>
 <p>이번 포스트에서는 모델을 S3에 저장한다고 가정합니다.<br>
 k8s에서 S3에 있는 모델을 가져오기 위한 aws에 접근할 수 있는 권한이 필요합니다.<br>
 이를 위해서 아래와 같은 <code>aws-secret.yaml</code>을 작성합니다.</p>
@@ -198,25 +194,30 @@ k8s에서 S3에 있는 모델을 가져오기 위한 aws에 접근할 수 있는
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
-</span><span class=lnt>2
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>&gt; <span class=nb>echo</span> <span class=s1>&#39;hello, world!&#39;</span> <span class=p>|</span> base64
-<span class=nv>aGVsbG8sIHdvcmxkIQo</span><span class=o>=</span>
+<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=nb>echo</span> <span class=s1>&#39;hello, world!&#39;</span> <span class=p>|</span> base64
+</code></pre></td></tr></table>
+</div>
+</div><p>변환이 되면 다음과 같이 출력됩니다.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>aGVsbG8sIHdvcmxkIQo=
 </code></pre></td></tr></table>
 </div>
 </div><p>apply로 secret을 생성합니다.</p>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
-</span><span class=lnt>2
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>&gt; kubectl apply -f aws-secret.yaml
-secret/seldon-init-container-secret created
+<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>kubectl apply -f aws-secret.yaml
 </code></pre></td></tr></table>
 </div>
-</div><h2 id=custom-server>Custom Server</h2>
+</div><h1 id=custom-server>Custom Server</h1>
 <p>Seldon-core에서 제공하는 pre-packaged inference server 다음과 같습니다.</p>
 <ul>
 <li>SKLearn Server</li>
@@ -227,9 +228,9 @@ secret/seldon-init-container-secret created
 </ul>
 <p>대부분의 경우는 제공하는 서버를 사용하면 됩니다. 하지만 필요한 경우 Custom 서버를 직접 만들어서 사용할 수 도 있습니다.<br>
 이번 포스트에서는 MLFlowServer를 기본으로 하지만 Conda 환경이 아닌 Pip 환경을 이용하는 방법에 대해서 설명합니다.</p>
-<h2 id=model>Model</h2>
-<h3 id=docker>Docker</h3>
-<h4 id=content>Content</h4>
+<h1 id=model>Model</h1>
+<h2 id=docker>Docker</h2>
+<h3 id=content>Content</h3>
 <p>seldon-core 에서 제공하는 서버들의 디렉토리 구성은 다음과 같습니다.</p>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
@@ -251,150 +252,31 @@ secret/seldon-init-container-secret created
 </div>
 </div><p>파일 중 <code>before-run</code> 과 <code>conda_env_create.py</code> 가 inference server의 환경을 구성하는 파일 입니다.</p>
 <p><code>conda_env_create.py</code> 에서 conda 환경을 구성하는 부분을 빼고 pip 설치만 하도록 수정 후 <code>pip_env_create.py</code> 를 생성하겠습니다.</p>
-<ul>
+<ol>
 <li><code>pip_env_create.py</code>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>  1
-</span><span class=lnt>  2
-</span><span class=lnt>  3
-</span><span class=lnt>  4
-</span><span class=lnt>  5
-</span><span class=lnt>  6
-</span><span class=lnt>  7
-</span><span class=lnt>  8
-</span><span class=lnt>  9
-</span><span class=lnt> 10
-</span><span class=lnt> 11
-</span><span class=lnt> 12
-</span><span class=lnt> 13
-</span><span class=lnt> 14
-</span><span class=lnt> 15
-</span><span class=lnt> 16
-</span><span class=lnt> 17
-</span><span class=lnt> 18
-</span><span class=lnt> 19
-</span><span class=lnt> 20
-</span><span class=lnt> 21
-</span><span class=lnt> 22
-</span><span class=lnt> 23
-</span><span class=lnt> 24
-</span><span class=lnt> 25
-</span><span class=lnt> 26
-</span><span class=lnt> 27
-</span><span class=lnt> 28
-</span><span class=lnt> 29
-</span><span class=lnt> 30
-</span><span class=lnt> 31
-</span><span class=lnt> 32
-</span><span class=lnt> 33
-</span><span class=lnt> 34
-</span><span class=lnt> 35
-</span><span class=lnt> 36
-</span><span class=lnt> 37
-</span><span class=lnt> 38
-</span><span class=lnt> 39
-</span><span class=lnt> 40
-</span><span class=lnt> 41
-</span><span class=lnt> 42
-</span><span class=lnt> 43
-</span><span class=lnt> 44
-</span><span class=lnt> 45
-</span><span class=lnt> 46
-</span><span class=lnt> 47
-</span><span class=lnt> 48
-</span><span class=lnt> 49
-</span><span class=lnt> 50
-</span><span class=lnt> 51
-</span><span class=lnt> 52
-</span><span class=lnt> 53
-</span><span class=lnt> 54
-</span><span class=lnt> 55
-</span><span class=lnt> 56
-</span><span class=lnt> 57
-</span><span class=lnt> 58
-</span><span class=lnt> 59
-</span><span class=lnt> 60
-</span><span class=lnt> 61
-</span><span class=lnt> 62
-</span><span class=lnt> 63
-</span><span class=lnt> 64
-</span><span class=lnt> 65
-</span><span class=lnt> 66
-</span><span class=lnt> 67
-</span><span class=lnt> 68
-</span><span class=lnt> 69
-</span><span class=lnt> 70
-</span><span class=lnt> 71
-</span><span class=lnt> 72
-</span><span class=lnt> 73
-</span><span class=lnt> 74
-</span><span class=lnt> 75
-</span><span class=lnt> 76
-</span><span class=lnt> 77
-</span><span class=lnt> 78
-</span><span class=lnt> 79
-</span><span class=lnt> 80
-</span><span class=lnt> 81
-</span><span class=lnt> 82
-</span><span class=lnt> 83
-</span><span class=lnt> 84
-</span><span class=lnt> 85
-</span><span class=lnt> 86
-</span><span class=lnt> 87
-</span><span class=lnt> 88
-</span><span class=lnt> 89
-</span><span class=lnt> 90
-</span><span class=lnt> 91
-</span><span class=lnt> 92
-</span><span class=lnt> 93
-</span><span class=lnt> 94
-</span><span class=lnt> 95
-</span><span class=lnt> 96
-</span><span class=lnt> 97
-</span><span class=lnt> 98
-</span><span class=lnt> 99
-</span><span class=lnt>100
-</span><span class=lnt>101
-</span><span class=lnt>102
-</span><span class=lnt>103
-</span><span class=lnt>104
-</span><span class=lnt>105
-</span><span class=lnt>106
-</span><span class=lnt>107
-</span><span class=lnt>108
-</span><span class=lnt>109
-</span><span class=lnt>110
-</span><span class=lnt>111
-</span><span class=lnt>112
-</span><span class=lnt>113
-</span><span class=lnt>114
-</span><span class=lnt>115
-</span><span class=lnt>116
-</span><span class=lnt>117
-</span><span class=lnt>118
-</span><span class=lnt>119
-</span><span class=lnt>120
-</span><span class=lnt>121
-</span><span class=lnt>122
-</span><span class=lnt>123
-</span><span class=lnt>124
-</span><span class=lnt>125
-</span><span class=lnt>126
-</span><span class=lnt>127
-</span><span class=lnt>128
-</span><span class=lnt>129
-</span><span class=lnt>130
-</span><span class=lnt>131
-</span><span class=lnt>132
-</span><span class=lnt>133
-</span><span class=lnt>134
-</span><span class=lnt>135
-</span><span class=lnt>136
-</span><span class=lnt>137
-</span><span class=lnt>138
-</span><span class=lnt>139
-</span><span class=lnt>140
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
 </span></code></pre></td>
 <td class=lntd>
 <pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=kn>import</span> <span class=nn>argparse</span>
@@ -418,145 +300,129 @@ secret/seldon-init-container-secret created
     <span class=s2>&#34;--parameters&#34;</span><span class=p>,</span>
     <span class=nb>type</span><span class=o>=</span><span class=nb>str</span><span class=p>,</span>
     <span class=n>default</span><span class=o>=</span><span class=n>os</span><span class=o>.</span><span class=n>environ</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=n>PARAMETERS_ENV_NAME</span><span class=p>,</span> <span class=s2>&#34;[]&#34;</span><span class=p>),</span>
-<span class=p>)</span>
-
-<span class=c1>## This is already set on the environment_rest and environment_grpc files, but</span>
-<span class=c1>## we&#39;ll define a default just in case.</span>
-<span class=n>DEFAULT_CONDA_ENV_NAME</span> <span class=o>=</span> <span class=s2>&#34;mlflow&#34;</span>
-<span class=n>BASE_REQS_PATH</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>join</span><span class=p>(</span>
-    <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>dirname</span><span class=p>(</span><span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>abspath</span><span class=p>(</span><span class=vm>__file__</span><span class=p>)),</span>
-    <span class=s2>&#34;requirements.txt&#34;</span><span class=p>,</span>
-<span class=p>)</span>
-
-<span class=k>def</span> <span class=nf>setup_env</span><span class=p>(</span><span class=n>model_folder</span><span class=p>:</span> <span class=nb>str</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=kc>None</span><span class=p>:</span>
-    <span class=s2>&#34;&#34;&#34;Sets up a pip environment.
-</span><span class=s2>    This methods creates the pip environment described by the `MLmodel` file.
-</span><span class=s2>    Parameters
-</span><span class=s2>    --------
-</span><span class=s2>    model_folder : str
-</span><span class=s2>        Folder where the MLmodel files are stored.
-</span><span class=s2>    &#34;&#34;&#34;</span>
-    <span class=n>mlmodel</span> <span class=o>=</span> <span class=n>read_mlmodel</span><span class=p>(</span><span class=n>model_folder</span><span class=p>)</span>
-
-    <span class=n>flavours</span> <span class=o>=</span> <span class=n>mlmodel</span><span class=p>[</span><span class=s2>&#34;flavors&#34;</span><span class=p>]</span>
-    <span class=n>pyfunc_flavour</span> <span class=o>=</span> <span class=n>flavours</span><span class=p>[</span><span class=s2>&#34;python_function&#34;</span><span class=p>]</span>
-    <span class=n>env_file_name</span> <span class=o>=</span> <span class=n>pyfunc_flavour</span><span class=p>[</span><span class=s2>&#34;env&#34;</span><span class=p>]</span>
-    <span class=n>env_file_path</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=n>model_folder</span><span class=p>,</span> <span class=n>env_file_name</span><span class=p>)</span>
-    <span class=n>env_file_path</span> <span class=o>=</span> <span class=n>copy_env</span><span class=p>(</span><span class=n>env_file_path</span><span class=p>)</span>
-    <span class=n>copy_pip</span><span class=p>(</span><span class=n>env_file_path</span><span class=p>)</span>
-    <span class=n>install_base_reqs</span><span class=p>()</span>
-
-<span class=k>def</span> <span class=nf>read_mlmodel</span><span class=p>(</span><span class=n>model_folder</span><span class=p>:</span> <span class=nb>str</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Any</span><span class=p>:</span>
-    <span class=s2>&#34;&#34;&#34;Reads an MLmodel file.
-</span><span class=s2>    Parameters
-</span><span class=s2>    ---------
-</span><span class=s2>    model_folder : str
-</span><span class=s2>        Folder where the MLmodel files are stored.
-</span><span class=s2>    Returns
-</span><span class=s2>    --------
-</span><span class=s2>    obj
-</span><span class=s2>        Dictionary with MLmodel contents.
-</span><span class=s2>    &#34;&#34;&#34;</span>
-    <span class=n>log</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=s2>&#34;Reading MLmodel file&#34;</span><span class=p>)</span>
-    <span class=n>mlmodel_path</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=n>model_folder</span><span class=p>,</span> <span class=s2>&#34;MLmodel&#34;</span><span class=p>)</span>
-    <span class=k>return</span> <span class=n>_read_yaml</span><span class=p>(</span><span class=n>mlmodel_path</span><span class=p>)</span>
-
-<span class=k>def</span> <span class=nf>_read_yaml</span><span class=p>(</span><span class=n>file_path</span><span class=p>:</span> <span class=nb>str</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Any</span><span class=p>:</span>
-    <span class=s2>&#34;&#34;&#34;Reads a YAML file.
-</span><span class=s2>    Parameters
-</span><span class=s2>    ---------
-</span><span class=s2>    file_path
-</span><span class=s2>        Path to the YAML file.
-</span><span class=s2>    Returns
-</span><span class=s2>    -------
-</span><span class=s2>    dict
-</span><span class=s2>        Dictionary with YAML file contents.
-</span><span class=s2>    &#34;&#34;&#34;</span>
-    <span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=n>file_path</span><span class=p>,</span> <span class=s2>&#34;r&#34;</span><span class=p>)</span> <span class=k>as</span> <span class=n>file_reader</span><span class=p>:</span>
-        <span class=k>return</span> <span class=n>yaml</span><span class=o>.</span><span class=n>safe_load</span><span class=p>(</span><span class=n>file_reader</span><span class=p>)</span>
-
-<span class=k>def</span> <span class=nf>copy_env</span><span class=p>(</span><span class=n>env_file_path</span><span class=p>:</span> <span class=nb>str</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>str</span><span class=p>:</span>
-    <span class=s2>&#34;&#34;&#34;Copy conda.yaml to temp dir
-</span><span class=s2>    to prevent the case where the existing file is on Read-only file system.
-</span><span class=s2>    Parameters
-</span><span class=s2>    ----------
-</span><span class=s2>    env_file_path : str
-</span><span class=s2>        env file path to copy.
-</span><span class=s2>    Returns
-</span><span class=s2>    -------
-</span><span class=s2>    str
-</span><span class=s2>        tmp file directory.
-</span><span class=s2>    &#34;&#34;&#34;</span>
-    <span class=n>temp_dir</span> <span class=o>=</span> <span class=n>tempfile</span><span class=o>.</span><span class=n>mkdtemp</span><span class=p>()</span>
-    <span class=n>new_env_path</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=n>temp_dir</span><span class=p>,</span> <span class=s2>&#34;conda.yaml&#34;</span><span class=p>)</span>
-    <span class=n>shutil</span><span class=o>.</span><span class=n>copy2</span><span class=p>(</span><span class=n>env_file_path</span><span class=p>,</span> <span class=n>new_env_path</span><span class=p>)</span>
-
-    <span class=k>return</span> <span class=n>new_env_path</span>
-
-<span class=k>def</span> <span class=nf>copy_pip</span><span class=p>(</span><span class=n>new_env_path</span><span class=p>:</span> <span class=nb>str</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=kc>None</span><span class=p>:</span>
-    <span class=s2>&#34;&#34;&#34;Copy pip packages from conda.yaml to requirements.txt
-</span><span class=s2>    Parameters
-</span><span class=s2>    ----------
-</span><span class=s2>    new_env_path : str
-</span><span class=s2>        requirements.txt path.
-</span><span class=s2>    &#34;&#34;&#34;</span>
-    <span class=n>conda</span> <span class=o>=</span> <span class=n>_read_yaml</span><span class=p>(</span><span class=n>new_env_path</span><span class=p>)</span>
-    <span class=n>pip_packages</span> <span class=o>=</span> <span class=n>conda</span><span class=p>[</span><span class=s2>&#34;dependencies&#34;</span><span class=p>][</span><span class=o>-</span><span class=mi>1</span><span class=p>][</span><span class=s2>&#34;pip&#34;</span><span class=p>]</span>
-    <span class=n>freezed</span> <span class=o>=</span> <span class=n>freeze</span><span class=o>.</span><span class=n>freeze</span><span class=p>()</span>
-    <span class=n>freezed</span> <span class=o>=</span> <span class=nb>map</span><span class=p>(</span><span class=k>lambda</span> <span class=n>x</span><span class=p>:</span> <span class=n>x</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=s2>&#34;==&#34;</span><span class=p>)[</span><span class=mi>0</span><span class=p>],</span> <span class=n>freezed</span><span class=p>)</span>
-    <span class=n>package_to_install</span> <span class=o>=</span> <span class=p>[]</span>
-    <span class=k>for</span> <span class=n>package</span> <span class=ow>in</span> <span class=n>pip_packages</span><span class=p>:</span>
-        <span class=n>name</span> <span class=o>=</span> <span class=n>package</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=s2>&#34;==&#34;</span><span class=p>)[</span><span class=mi>0</span><span class=p>]</span>
-        <span class=k>if</span> <span class=n>name</span> <span class=ow>not</span> <span class=ow>in</span> <span class=n>freezed</span><span class=p>:</span>
-            <span class=n>package_to_install</span> <span class=o>+=</span> <span class=p>[</span><span class=n>package</span><span class=p>]</span>
-
-    <span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=n>BASE_REQS_PATH</span><span class=p>,</span> <span class=s2>&#34;a&#34;</span><span class=p>)</span> <span class=k>as</span> <span class=n>file_writer</span><span class=p>:</span>
-        <span class=n>file_writer</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=s2>&#34;</span><span class=se>\\</span><span class=s2>n&#34;</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=n>package_to_install</span><span class=p>))</span>
-
-<span class=k>def</span> <span class=nf>install_base_reqs</span><span class=p>()</span> <span class=o>-&gt;</span> <span class=kc>None</span><span class=p>:</span>
-    <span class=s2>&#34;&#34;&#34;Install additional requirements from requirements.txt.
-</span><span class=s2>    If the variable is not defined, it falls back to `mlflow`.
-</span><span class=s2>    &#34;&#34;&#34;</span>
-    <span class=n>log</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=s2>&#34;Install additional package from requirements.txt&#34;</span><span class=p>)</span>
-    <span class=n>cmd</span> <span class=o>=</span> <span class=sa>f</span><span class=s2>&#34;pip install -r </span><span class=si>{</span><span class=n>BASE_REQS_PATH</span><span class=si>}</span><span class=s2>&#34;</span>
-    <span class=n>os</span><span class=o>.</span><span class=n>system</span><span class=p>(</span><span class=n>cmd</span><span class=p>)</span>
-
-<span class=k>def</span> <span class=nf>main</span><span class=p>(</span><span class=n>arguments</span><span class=p>:</span> <span class=n>argparse</span><span class=o>.</span><span class=n>Namespace</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=kc>None</span><span class=p>:</span>
-    <span class=s2>&#34;&#34;&#34;main algorithm.
-</span><span class=s2>    Parameters
-</span><span class=s2>    ----------
-</span><span class=s2>    arguments : argparse.Namespace
-</span><span class=s2>    &#34;&#34;&#34;</span>
-    <span class=n>parameters</span> <span class=o>=</span> <span class=n>parse_parameters</span><span class=p>(</span><span class=n>json</span><span class=o>.</span><span class=n>loads</span><span class=p>(</span><span class=n>arguments</span><span class=o>.</span><span class=n>parameters</span><span class=p>))</span>
-    <span class=n>model_uri</span> <span class=o>=</span> <span class=n>parameters</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s2>&#34;model_uri&#34;</span><span class=p>,</span> <span class=s2>&#34;/mnt/model/&#34;</span><span class=p>)</span>
-
-    <span class=n>log</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=s2>&#34;Downloading model from </span><span class=si>%s</span><span class=s2>&#34;</span><span class=p>,</span> <span class=n>model_uri</span><span class=p>)</span>
-    <span class=n>model_folder</span> <span class=o>=</span> <span class=n>Storage</span><span class=o>.</span><span class=n>download</span><span class=p>(</span><span class=n>model_uri</span><span class=p>)</span>
-    <span class=n>setup_env</span><span class=p>(</span><span class=n>model_folder</span><span class=p>)</span>
-
-<span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s2>&#34;__main__&#34;</span><span class=p>:</span>
-    <span class=n>args</span> <span class=o>=</span> <span class=n>parser</span><span class=o>.</span><span class=n>parse_args</span><span class=p>()</span>
-    <span class=n>main</span><span class=p>(</span><span class=n>args</span><span class=p>)</span>
 </code></pre></td></tr></table>
 </div>
 </div></li>
-<li><code>before-run</code>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span><span class=lnt>2
-</span><span class=lnt>3
-</span><span class=lnt>4
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=cp>#!/bin/bash -e
-</span><span class=cp></span>
-<span class=nb>echo</span> <span class=s2>&#34;---&gt; Creating environment with pip...&#34;</span>
-python ./pip_env_create.py
-</code></pre></td></tr></table>
-</div>
-</div></li>
-<li><code>MLFlowServer.py</code>
+</ol>
+<p>)</p>
+<pre><code># This is already set on the environment_rest and environment_grpc files, but
+# we'll define a default just in case.
+DEFAULT_CONDA_ENV_NAME = &quot;mlflow&quot;
+BASE_REQS_PATH = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)),
+    &quot;requirements.txt&quot;,
+)
+
+def setup_env(model_folder: str) -&gt; None:
+    &quot;&quot;&quot;Sets up a pip environment.
+    This methods creates the pip environment described by the `MLmodel` file.
+    Parameters
+    --------
+    model_folder : str
+        Folder where the MLmodel files are stored.
+    &quot;&quot;&quot;
+    mlmodel = read_mlmodel(model_folder)
+
+    flavours = mlmodel[&quot;flavors&quot;]
+    pyfunc_flavour = flavours[&quot;python_function&quot;]
+    env_file_name = pyfunc_flavour[&quot;env&quot;]
+    env_file_path = os.path.join(model_folder, env_file_name)
+    env_file_path = copy_env(env_file_path)
+    copy_pip(env_file_path)
+    install_base_reqs()
+
+def read_mlmodel(model_folder: str) -&gt; Any:
+    &quot;&quot;&quot;Reads an MLmodel file.
+    Parameters
+    ---------
+    model_folder : str
+        Folder where the MLmodel files are stored.
+    Returns
+    --------
+    obj
+        Dictionary with MLmodel contents.
+    &quot;&quot;&quot;
+    log.info(&quot;Reading MLmodel file&quot;)
+    mlmodel_path = os.path.join(model_folder, &quot;MLmodel&quot;)
+    return _read_yaml(mlmodel_path)
+
+def _read_yaml(file_path: str) -&gt; Any:
+    &quot;&quot;&quot;Reads a YAML file.
+    Parameters
+    ---------
+    file_path
+        Path to the YAML file.
+    Returns
+    -------
+    dict
+        Dictionary with YAML file contents.
+    &quot;&quot;&quot;
+    with open(file_path, &quot;r&quot;) as file_reader:
+        return yaml.safe_load(file_reader)
+
+def copy_env(env_file_path: str) -&gt; str:
+    &quot;&quot;&quot;Copy conda.yaml to temp dir
+    to prevent the case where the existing file is on Read-only file system.
+    Parameters
+    ----------
+    env_file_path : str
+        env file path to copy.
+    Returns
+    -------
+    str
+        tmp file directory.
+    &quot;&quot;&quot;
+    temp_dir = tempfile.mkdtemp()
+    new_env_path = os.path.join(temp_dir, &quot;conda.yaml&quot;)
+    shutil.copy2(env_file_path, new_env_path)
+
+    return new_env_path
+
+def copy_pip(new_env_path: str) -&gt; None:
+    &quot;&quot;&quot;Copy pip packages from conda.yaml to requirements.txt
+    Parameters
+    ----------
+    new_env_path : str
+        requirements.txt path.
+    &quot;&quot;&quot;
+    conda = _read_yaml(new_env_path)
+    pip_packages = conda[&quot;dependencies&quot;][-1][&quot;pip&quot;]
+    freezed = freeze.freeze()
+    freezed = map(lambda x: x.split(&quot;==&quot;)[0], freezed)
+    package_to_install = []
+    for package in pip_packages:
+        name = package.split(&quot;==&quot;)[0]
+        if name not in freezed:
+            package_to_install += [package]
+
+    with open(BASE_REQS_PATH, &quot;a&quot;) as file_writer:
+        file_writer.write(&quot;\\n&quot;.join(package_to_install))
+
+def install_base_reqs() -&gt; None:
+    &quot;&quot;&quot;Install additional requirements from requirements.txt.
+    If the variable is not defined, it falls back to `mlflow`.
+    &quot;&quot;&quot;
+    log.info(&quot;Install additional package from requirements.txt&quot;)
+    cmd = f&quot;pip install -r {BASE_REQS_PATH}&quot;
+    os.system(cmd)
+
+def main(arguments: argparse.Namespace) -&gt; None:
+    &quot;&quot;&quot;main algorithm.
+    Parameters
+    ----------
+    arguments : argparse.Namespace
+    &quot;&quot;&quot;
+    parameters = parse_parameters(json.loads(arguments.parameters))
+    model_uri = parameters.get(&quot;model_uri&quot;, &quot;/mnt/model/&quot;)
+
+    log.info(&quot;Downloading model from %s&quot;, model_uri)
+    model_folder = Storage.download(model_uri)
+    setup_env(model_folder)
+
+if __name__ == &quot;__main__&quot;:
+    args = parser.parse_args()
+    main(args)
+</code></pre>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt> 1
@@ -630,93 +496,118 @@ python ./pip_env_create.py
 </span><span class=lnt>69
 </span><span class=lnt>70
 </span><span class=lnt>71
+</span><span class=lnt>72
+</span><span class=lnt>73
+</span><span class=lnt>74
+</span><span class=lnt>75
+</span><span class=lnt>76
+</span><span class=lnt>77
+</span><span class=lnt>78
+</span><span class=lnt>79
+</span><span class=lnt>80
+</span><span class=lnt>81
+</span><span class=lnt>82
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=kn>import</span> <span class=nn>logging</span>
-<span class=kn>import</span> <span class=nn>os</span>
-<span class=kn>from</span> <span class=nn>typing</span> <span class=kn>import</span> <span class=n>Dict</span><span class=p>,</span> <span class=n>List</span><span class=p>,</span> <span class=n>Union</span>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>
+2. `before-run`
+  ```bash
+  #!/bin/bash -e
+  
+  echo &#34;---&gt; Creating environment with pip...&#34;
+  python ./pip_env_create.py
+  ```
 
-<span class=kn>import</span> <span class=nn>numpy</span> <span class=k>as</span> <span class=nn>np</span>
-<span class=kn>import</span> <span class=nn>pandas</span> <span class=k>as</span> <span class=nn>pd</span>
-<span class=kn>import</span> <span class=nn>requests</span>
-<span class=kn>import</span> <span class=nn>yaml</span>
-<span class=kn>from</span> <span class=nn>mlflow</span> <span class=kn>import</span> <span class=n>pyfunc</span>
-<span class=kn>from</span> <span class=nn>seldon_core</span> <span class=kn>import</span> <span class=n>Storage</span>
-<span class=kn>from</span> <span class=nn>seldon_core.user_model</span> <span class=kn>import</span> <span class=n>SeldonComponent</span>
-
-<span class=n>logger</span> <span class=o>=</span> <span class=n>logging</span><span class=o>.</span><span class=n>getLogger</span><span class=p>()</span>
-
-<span class=n>MLFLOW_SERVER</span> <span class=o>=</span> <span class=s2>&#34;model&#34;</span>
-
-<span class=k>class</span> <span class=nc>MLFlowServer</span><span class=p>(</span><span class=n>SeldonComponent</span><span class=p>):</span>
-    <span class=k>def</span> <span class=fm>__init__</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>model_uri</span><span class=p>:</span> <span class=nb>str</span><span class=p>,</span> <span class=n>xtype</span><span class=p>:</span> <span class=nb>str</span> <span class=o>=</span> <span class=s2>&#34;ndarray&#34;</span><span class=p>):</span>
-        <span class=nb>super</span><span class=p>()</span><span class=o>.</span><span class=fm>__init__</span><span class=p>()</span>
-        <span class=n>logger</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Creating MLFLow server with URI </span><span class=si>{</span><span class=n>model_uri</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
-        <span class=n>logger</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;xtype: </span><span class=si>{</span><span class=n>xtype</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
-        <span class=bp>self</span><span class=o>.</span><span class=n>model_uri</span> <span class=o>=</span> <span class=n>model_uri</span>
-        <span class=bp>self</span><span class=o>.</span><span class=n>xtype</span> <span class=o>=</span> <span class=n>xtype</span>
-        <span class=bp>self</span><span class=o>.</span><span class=n>ready</span> <span class=o>=</span> <span class=kc>False</span>
-
-    <span class=k>def</span> <span class=nf>load</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
-        <span class=n>logger</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Downloading model from </span><span class=si>{</span><span class=bp>self</span><span class=o>.</span><span class=n>model_uri</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
-        <span class=n>model_folder</span> <span class=o>=</span> <span class=n>Storage</span><span class=o>.</span><span class=n>download</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>model_uri</span><span class=p>)</span>
-        <span class=bp>self</span><span class=o>.</span><span class=n>_model</span> <span class=o>=</span> <span class=n>pyfunc</span><span class=o>.</span><span class=n>load_model</span><span class=p>(</span><span class=n>model_folder</span><span class=p>)</span>
-        <span class=bp>self</span><span class=o>.</span><span class=n>ready</span> <span class=o>=</span> <span class=kc>True</span>
-
-    <span class=k>def</span> <span class=nf>predict</span><span class=p>(</span>
-        <span class=bp>self</span><span class=p>,</span> <span class=n>X</span><span class=p>:</span> <span class=n>np</span><span class=o>.</span><span class=n>ndarray</span><span class=p>,</span> <span class=n>feature_names</span><span class=p>:</span> <span class=n>List</span><span class=p>[</span><span class=nb>str</span><span class=p>]</span> <span class=o>=</span> <span class=p>[],</span> <span class=n>meta</span><span class=p>:</span> <span class=n>Dict</span> <span class=o>=</span> <span class=kc>None</span>
-    <span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Union</span><span class=p>[</span><span class=n>np</span><span class=o>.</span><span class=n>ndarray</span><span class=p>,</span> <span class=n>List</span><span class=p>,</span> <span class=n>Dict</span><span class=p>,</span> <span class=nb>str</span><span class=p>,</span> <span class=nb>bytes</span><span class=p>]:</span>
-        <span class=n>logger</span><span class=o>.</span><span class=n>debug</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Requesting prediction with: </span><span class=si>{</span><span class=n>X</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
-
-        <span class=k>if</span> <span class=ow>not</span> <span class=bp>self</span><span class=o>.</span><span class=n>ready</span><span class=p>:</span>
-            <span class=k>raise</span> <span class=n>requests</span><span class=o>.</span><span class=n>HTTPError</span><span class=p>(</span><span class=s2>&#34;Model not loaded yet&#34;</span><span class=p>)</span>
-
-        <span class=k>if</span> <span class=bp>self</span><span class=o>.</span><span class=n>xtype</span> <span class=o>==</span> <span class=s2>&#34;ndarray&#34;</span><span class=p>:</span>
-            <span class=n>result</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model</span><span class=o>.</span><span class=n>predict</span><span class=p>(</span><span class=n>X</span><span class=p>)</span>
-        <span class=k>else</span><span class=p>:</span>
-            <span class=k>if</span> <span class=n>feature_names</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span> <span class=ow>and</span> <span class=nb>len</span><span class=p>(</span><span class=n>feature_names</span><span class=p>)</span> <span class=o>&gt;</span> <span class=mi>0</span><span class=p>:</span>
-                <span class=n>df</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>DataFrame</span><span class=p>(</span><span class=n>data</span><span class=o>=</span><span class=n>X</span><span class=p>,</span> <span class=n>columns</span><span class=o>=</span><span class=n>feature_names</span><span class=p>)</span>
-            <span class=k>else</span><span class=p>:</span>
-                <span class=n>df</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>DataFrame</span><span class=p>(</span><span class=n>data</span><span class=o>=</span><span class=n>X</span><span class=p>)</span>
-            <span class=n>result</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model</span><span class=o>.</span><span class=n>predict</span><span class=p>(</span><span class=n>df</span><span class=p>)</span>
-
-        <span class=n>logger</span><span class=o>.</span><span class=n>debug</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Prediction result: </span><span class=si>{</span><span class=n>result</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
-        <span class=k>return</span> <span class=n>result</span>
-
-    <span class=k>def</span> <span class=nf>init_metadata</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
-        <span class=n>file_path</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>model_uri</span><span class=p>,</span> <span class=s2>&#34;metadata.yaml&#34;</span><span class=p>)</span>
-
-        <span class=k>try</span><span class=p>:</span>
-            <span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=n>file_path</span><span class=p>,</span> <span class=s2>&#34;r&#34;</span><span class=p>)</span> <span class=k>as</span> <span class=n>f</span><span class=p>:</span>
-                <span class=k>return</span> <span class=n>yaml</span><span class=o>.</span><span class=n>safe_load</span><span class=p>(</span><span class=n>f</span><span class=o>.</span><span class=n>read</span><span class=p>())</span>
-        <span class=k>except</span> <span class=ne>FileNotFoundError</span><span class=p>:</span>
-            <span class=n>logger</span><span class=o>.</span><span class=n>debug</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;metadata file </span><span class=si>{</span><span class=n>file_path</span><span class=si>}</span><span class=s2> does not exist&#34;</span><span class=p>)</span>
-            <span class=k>return</span> <span class=p>{}</span>
-        <span class=k>except</span> <span class=n>yaml</span><span class=o>.</span><span class=n>YAMLError</span><span class=p>:</span>
-            <span class=n>logger</span><span class=o>.</span><span class=n>error</span><span class=p>(</span>
-                <span class=sa>f</span><span class=s2>&#34;metadata file </span><span class=si>{</span><span class=n>file_path</span><span class=si>}</span><span class=s2> present but does not contain valid yaml&#34;</span>
-            <span class=p>)</span>
-            <span class=k>return</span> <span class=p>{}</span>
-
-      <span class=k>def</span> <span class=nf>class_names</span><span class=p>(</span><span class=bp>self</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Iterable</span><span class=p>[</span><span class=nb>str</span><span class=p>]:</span>
-        <span class=n>output_schema</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model</span><span class=o>.</span><span class=n>metadata</span><span class=o>.</span><span class=n>get_output_schema</span><span class=p>()</span>
-        <span class=k>if</span> <span class=n>output_schema</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span><span class=p>:</span>
-            <span class=n>columns</span> <span class=o>=</span> <span class=p>[</span><span class=n>schema</span><span class=p>[</span><span class=s2>&#34;name&#34;</span><span class=p>]</span> <span class=k>for</span> <span class=n>schema</span> <span class=ow>in</span> <span class=n>output_schema</span><span class=o>.</span><span class=n>to_dict</span><span class=p>()]</span>
-        <span class=k>return</span> <span class=n>columns</span>
+3. `MLFlowServer.py`
+  ```python
+  import logging
+  import os
+  from typing import Dict, List, Union
+  
+  import numpy as np
+  import pandas as pd
+  import requests
+  import yaml
+  from mlflow import pyfunc
+  from seldon_core import Storage
+  from seldon_core.user_model import SeldonComponent
+  
+  logger = logging.getLogger()
+  
+  MLFLOW_SERVER = &#34;model&#34;
+  
+  class MLFlowServer(SeldonComponent):
+      def __init__(self, model_uri: str, xtype: str = &#34;ndarray&#34;):
+          super().__init__()
+          logger.info(f&#34;Creating MLFLow server with URI {model_uri}&#34;)
+          logger.info(f&#34;xtype: {xtype}&#34;)
+          self.model_uri = model_uri
+          self.xtype = xtype
+          self.ready = False
+  
+      def load(self):
+          logger.info(f&#34;Downloading model from {self.model_uri}&#34;)
+          model_folder = Storage.download(self.model_uri)
+          self._model = pyfunc.load_model(model_folder)
+          self.ready = True
+  
+      def predict(
+          self, X: np.ndarray, feature_names: List[str] = [], meta: Dict = None
+      ) -&gt; Union[np.ndarray, List, Dict, str, bytes]:
+          logger.debug(f&#34;Requesting prediction with: {X}&#34;)
+  
+          if not self.ready:
+              raise requests.HTTPError(&#34;Model not loaded yet&#34;)
+  
+          if self.xtype == &#34;ndarray&#34;:
+              result = self._model.predict(X)
+          else:
+              if feature_names is not None and len(feature_names) &gt; 0:
+                  df = pd.DataFrame(data=X, columns=feature_names)
+              else:
+                  df = pd.DataFrame(data=X)
+              result = self._model.predict(df)
+  
+          logger.debug(f&#34;Prediction result: {result}&#34;)
+          return result
+  
+      def init_metadata(self):
+          file_path = os.path.join(self.model_uri, &#34;metadata.yaml&#34;)
+  
+          try:
+              with open(file_path, &#34;r&#34;) as f:
+                  return yaml.safe_load(f.read())
+          except FileNotFoundError:
+              logger.debug(f&#34;metadata file {file_path} does not exist&#34;)
+              return {}
+          except yaml.YAMLError:
+              logger.error(
+                  f&#34;metadata file {file_path} present but does not contain valid yaml&#34;
+              )
+              return {}
+  
+          def class_names(self) -&gt; Iterable[str]:
+          output_schema = self._model.metadata.get_output_schema()
+          if output_schema is not None:
+              columns = [schema[&#34;name&#34;] for schema in output_schema.to_dict()]
+          return columns
 </code></pre></td></tr></table>
 </div>
-</div></li>
-<li><code>image_metadata.json</code>
+</div><ol start=4>
+<li>
+<p><code>image_metadata.json</code></p>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=p>{</span><span class=s2>&#34;labels&#34;</span><span class=p>:</span> <span class=p>[{</span><span class=s2>&#34;name&#34;</span><span class=p>:</span> <span class=s2>&#34;Seldon MLFlow Server&#34;</span><span class=p>},</span> <span class=p>{</span><span class=s2>&#34;vendor&#34;</span><span class=p>:</span> <span class=s2>&#34;Seldon Technologies&#34;</span><span class=p>},</span> <span class=p>{</span><span class=s2>&#34;version&#34;</span><span class=p>:</span> <span class=s2>&#34;1.7.0&#34;</span><span class=p>},</span> <span class=p>{</span><span class=s2>&#34;release&#34;</span><span class=p>:</span> <span class=s2>&#34;1&#34;</span><span class=p>},</span> <span class=p>{</span><span class=s2>&#34;summary&#34;</span><span class=p>:</span> <span class=s2>&#34;An MLFlow Model Server for Seldon Core&#34;</span><span class=p>},</span> <span class=p>{</span><span class=s2>&#34;description&#34;</span><span class=p>:</span> <span class=s2>&#34;The model server for MLFlow models&#34;</span><span class=p>}]}</span>
+<pre tabindex=0 class=chroma><code class=language-json data-lang=json><span class=p>{</span><span class=nt>&#34;labels&#34;</span><span class=p>:</span> <span class=p>[{</span><span class=nt>&#34;name&#34;</span><span class=p>:</span> <span class=s2>&#34;Seldon MLFlow Server&#34;</span><span class=p>},</span> <span class=p>{</span><span class=nt>&#34;vendor&#34;</span><span class=p>:</span> <span class=s2>&#34;Seldon Technologies&#34;</span><span class=p>},</span> <span class=p>{</span><span class=nt>&#34;version&#34;</span><span class=p>:</span> <span class=s2>&#34;1.7.0&#34;</span><span class=p>},</span> <span class=p>{</span><span class=nt>&#34;release&#34;</span><span class=p>:</span> <span class=s2>&#34;1&#34;</span><span class=p>},</span> <span class=p>{</span><span class=nt>&#34;summary&#34;</span><span class=p>:</span> <span class=s2>&#34;An MLFlow Model Server for Seldon Core&#34;</span><span class=p>},</span> <span class=p>{</span><span class=nt>&#34;description&#34;</span><span class=p>:</span> <span class=s2>&#34;The model server for MLFlow models&#34;</span><span class=p>}]}</span>
 </code></pre></td></tr></table>
 </div>
 </div></li>
-<li><code>requirements.txt</code>
+<li>
+<p><code>requirements.txt</code>
+빈 파일을 생성합니다.</p>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code></code></pre></td>
@@ -724,7 +615,7 @@ python ./pip_env_create.py
 <pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback></code></pre></td></tr></table>
 </div>
 </div></li>
-</ul>
+</ol>
 <p>위와 같이 수정하면 디렉토리 구성은 다음과 같이 됩니다.</p>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
@@ -748,7 +639,7 @@ python ./pip_env_create.py
     └── requirements.txt
 </code></pre></td></tr></table>
 </div>
-</div><h4 id=dockerfile>Dockerfile</h4>
+</div><h3 id=dockerfile>Dockerfile</h3>
 <p><code>Dockerfile</code> 을 작성합니다.</p>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
@@ -809,11 +700,9 @@ python ./pip_env_create.py
 </span><span class=err></span>docker push ghcr.io/&lt;github-owner&gt;/serving-tutorial:latest<span class=err>
 </span></code></pre></td></tr></table>
 </div>
-</div><h3 id=seldon-deploy>Seldon-deploy</h3>
-<ul>
-<li>
+</div><h2 id=seldon-deploy>Seldon-deploy</h2>
 <p>다음과 같은 <code>model.yaml</code> deploy 파일을 작성합니다.</p>
-</li>
+<ul>
 <li>
 <p>container의 image가 build 될 때 <code>requirements.txt</code> 에 접근 권한이 있어야 하므로 <code>securityContext</code> 에 <code>privileged</code> , <code>runsAsUser</code>, <code>runAsGroup</code> 을 작성합니다.</p>
 </li>
@@ -882,56 +771,56 @@ python ./pip_env_create.py
 <pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>machinelearning.seldon.io/v1</span><span class=w>
 </span><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>SeldonDeployment</span><span class=w>
 </span><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>graph-iris-model</span><span class=w>
-</span><span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class=l>seldon</span><span class=w>
+</span><span class=w>    </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>graph-iris-model</span><span class=w>
+</span><span class=w>    </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class=l>seldon</span><span class=w>
 </span><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>model</span><span class=w>
-</span><span class=w>  </span><span class=nt>predictors</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>model</span><span class=w>
+</span><span class=w>    </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>model</span><span class=w>
+</span><span class=w>    </span><span class=nt>predictors</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>model</span><span class=w>
 </span><span class=w>    </span><span class=nt>componentSpecs</span><span class=p>:</span><span class=w>
 </span><span class=w>    </span>- <span class=nt>spec</span><span class=p>:</span><span class=w>
 </span><span class=w>        </span><span class=nt>volumes</span><span class=p>:</span><span class=w>
 </span><span class=w>        </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>model-provision-location</span><span class=w>
-</span><span class=w>          </span><span class=nt>emptyDir</span><span class=p>:</span><span class=w> </span>{}<span class=w>
+</span><span class=w>            </span><span class=nt>emptyDir</span><span class=p>:</span><span class=w> </span>{}<span class=w>
 </span><span class=w>        </span><span class=nt>containers</span><span class=p>:</span><span class=w>
 </span><span class=w>        </span>- <span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>ghcr.io/&lt;github-owner&gt;/serving-tutorial:latest</span><span class=w>
-</span><span class=w>          </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>model</span><span class=w>
-</span><span class=w>          </span><span class=nt>imagePullPolicy</span><span class=p>:</span><span class=w> </span><span class=l>Always</span><span class=w>
-</span><span class=w>          </span><span class=nt>securityContext</span><span class=p>:</span><span class=w>
+</span><span class=w>            </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>model</span><span class=w>
+</span><span class=w>            </span><span class=nt>imagePullPolicy</span><span class=p>:</span><span class=w> </span><span class=l>Always</span><span class=w>
+</span><span class=w>            </span><span class=nt>securityContext</span><span class=p>:</span><span class=w>
 </span><span class=w>            </span><span class=nt>privileged</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>
 </span><span class=w>            </span><span class=nt>runAsUser</span><span class=p>:</span><span class=w> </span><span class=m>0</span><span class=w>
 </span><span class=w>            </span><span class=nt>runAsGroup</span><span class=p>:</span><span class=w> </span><span class=m>0</span><span class=w>
-</span><span class=w>          </span><span class=nt>volumeMounts</span><span class=p>:</span><span class=w>
-</span><span class=w>          </span>- <span class=nt>mountPath</span><span class=p>:</span><span class=w> </span><span class=l>/mnt/models</span><span class=w>
+</span><span class=w>            </span><span class=nt>volumeMounts</span><span class=p>:</span><span class=w>
+</span><span class=w>            </span>- <span class=nt>mountPath</span><span class=p>:</span><span class=w> </span><span class=l>/mnt/models</span><span class=w>
 </span><span class=w>            </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>model-provision-location</span><span class=w>
 </span><span class=w>            </span><span class=nt>readOnly</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>
 </span><span class=w>        </span><span class=nt>imagePullSecrets</span><span class=p>:</span><span class=w>
 </span><span class=w>        </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>mrx-ghcr</span><span class=w>
 </span><span class=w>        </span><span class=nt>initContainers</span><span class=p>:</span><span class=w>
 </span><span class=w>        </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>model-initializer</span><span class=w>
-</span><span class=w>          </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>gcr.io/kfserving/storage-initializer:v0.4.0</span><span class=w>
-</span><span class=w>          </span><span class=nt>imagePullPolicy</span><span class=p>:</span><span class=w> </span><span class=l>IfNotPresent</span><span class=w>
-</span><span class=w>          </span><span class=nt>args</span><span class=p>:</span><span class=w>
-</span><span class=w>          </span>- <span class=w>  </span><span class=l>s3://mlflow/mlflow/artifacts/17/b84160df245441fa8d5ad7c5b62a424d/artifacts/iris_svm_model/</span><span class=w>
-</span><span class=w>          </span>- <span class=l>/mnt/models</span><span class=w>
-</span><span class=w>          </span><span class=nt>envFrom</span><span class=p>:</span><span class=w>
-</span><span class=w>          </span>- <span class=nt>secretRef</span><span class=p>:</span><span class=w>
-</span><span class=w>              </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>seldon-init-container-secret</span><span class=w>
-</span><span class=w>          </span><span class=nt>volumeMounts</span><span class=p>:</span><span class=w>
-</span><span class=w>          </span>- <span class=nt>mountPath</span><span class=p>:</span><span class=w> </span><span class=l>/mnt/models</span><span class=w>
+</span><span class=w>            </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>gcr.io/kfserving/storage-initializer:v0.4.0</span><span class=w>
+</span><span class=w>            </span><span class=nt>imagePullPolicy</span><span class=p>:</span><span class=w> </span><span class=l>IfNotPresent</span><span class=w>
+</span><span class=w>            </span><span class=nt>args</span><span class=p>:</span><span class=w>
+</span><span class=w>            </span>- <span class=w>  </span><span class=l>s3://mlflow/mlflow/artifacts/17/b84160df245441fa8d5ad7c5b62a424d/artifacts/iris_svm_model/</span><span class=w>
+</span><span class=w>            </span>- <span class=l>/mnt/models</span><span class=w>
+</span><span class=w>            </span><span class=nt>envFrom</span><span class=p>:</span><span class=w>
+</span><span class=w>            </span>- <span class=nt>secretRef</span><span class=p>:</span><span class=w>
+</span><span class=w>                </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>seldon-init-container-secret</span><span class=w>
+</span><span class=w>            </span><span class=nt>volumeMounts</span><span class=p>:</span><span class=w>
+</span><span class=w>            </span>- <span class=nt>mountPath</span><span class=p>:</span><span class=w> </span><span class=l>/mnt/models</span><span class=w>
 </span><span class=w>            </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>model-provision-location</span><span class=w>
 </span><span class=w>    </span><span class=nt>graph</span><span class=p>:</span><span class=w>
-</span><span class=w>      </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>model</span><span class=w>
-</span><span class=w>      </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class=l>MODEL</span><span class=w>
-</span><span class=w>      </span><span class=nt>children</span><span class=p>:</span><span class=w> </span><span class=p>[]</span><span class=w>
-</span><span class=w>      </span><span class=nt>parameters</span><span class=p>:</span><span class=w>
-</span><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>xtype</span><span class=w>
+</span><span class=w>        </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>model</span><span class=w>
+</span><span class=w>        </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class=l>MODEL</span><span class=w>
+</span><span class=w>        </span><span class=nt>children</span><span class=p>:</span><span class=w> </span><span class=p>[]</span><span class=w>
+</span><span class=w>        </span><span class=nt>parameters</span><span class=p>:</span><span class=w>
+</span><span class=w>        </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>xtype</span><span class=w>
 </span><span class=w>        </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class=l>STRING</span><span class=w>
 </span><span class=w>        </span><span class=nt>value</span><span class=p>:</span><span class=w> </span><span class=l>DataFrame</span><span class=w>
-</span><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>model_uri</span><span class=w>
+</span><span class=w>        </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>model_uri</span><span class=w>
 </span><span class=w>        </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class=l>STRING</span><span class=w>
 </span><span class=w>        </span><span class=nt>value</span><span class=p>:</span><span class=w> </span><span class=l>/mnt/models</span><span class=w>
-</span><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>predict_method</span><span class=w>
+</span><span class=w>        </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>predict_method</span><span class=w>
 </span><span class=w>        </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class=l>STRING</span><span class=w>
 </span><span class=w>        </span><span class=nt>value</span><span class=p>:</span><span class=w> </span><span class=l>decision_function</span><span class=w>
 </span><span class=w>    </span><span class=nt>replicas</span><span class=p>:</span><span class=w> </span><span class=m>1</span><span class=w>
@@ -950,7 +839,7 @@ python ./pip_env_create.py
 </div>
 </div></li>
 <li>
-<p>predict를 해봅니다.</p>
+<p>predict를 요청합니다.</p>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt> 1
@@ -969,13 +858,13 @@ python ./pip_env_create.py
 <pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>curl -X POST &lt;http://10.102.231.216/seldon/seldon/graph-iris-model/api/v1.0/predictions&gt; <span class=se>\\</span>
     -H <span class=s1>&#39;Content-Type: application/json&#39;</span> <span class=se>\\</span>
     -d <span class=s1>&#39;{
-</span><span class=s1>          &#34;data&#34;: {
+</span><span class=s1>            &#34;data&#34;: {
 </span><span class=s1>            &#34;ndarray&#34;: [
-</span><span class=s1>              [6.8,  2.8,  4.8,  1.4],
-</span><span class=s1>              [6.0,  3.4,  4.5,  1.6]
+</span><span class=s1>                [6.8,  2.8,  4.8,  1.4],
+</span><span class=s1>                [6.0,  3.4,  4.5,  1.6]
 </span><span class=s1>            ],
 </span><span class=s1>            &#34;names&#34;:[&#34;sepal length (cm)&#34;, &#34;sepal width (cm)&#34;, &#34;petal length (cm)&#34;, &#34;petal width (cm)&#34;]
-</span><span class=s1>          }
+</span><span class=s1>            }
 </span><span class=s1>        }&#39;</span>
 </code></pre></td></tr></table>
 </div>
@@ -1013,40 +902,40 @@ python ./pip_env_create.py
 </span></code></pre></td>
 <td class=lntd>
 <pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=o>{</span>
-  <span class=s2>&#34;data&#34;</span>: <span class=o>{</span>
+    <span class=s2>&#34;data&#34;</span>: <span class=o>{</span>
     <span class=s2>&#34;names&#34;</span>: <span class=o>[</span>
-      <span class=s2>&#34;Class_0&#34;</span>,
-      <span class=s2>&#34;Class_1&#34;</span>,
-      <span class=s2>&#34;Class_2&#34;</span>
+        <span class=s2>&#34;Class_0&#34;</span>,
+        <span class=s2>&#34;Class_1&#34;</span>,
+        <span class=s2>&#34;Class_2&#34;</span>
     <span class=o>]</span>,
     <span class=s2>&#34;ndarray&#34;</span>: <span class=o>[</span>
-      <span class=o>[</span>
+        <span class=o>[</span>
         0.9663949459143529,
         1.0137844346775422,
         1.0215099592994648
-      <span class=o>]</span>,
-      <span class=o>[</span>
+        <span class=o>]</span>,
+        <span class=o>[</span>
         0.9660782736674745,
         1.0133498258843965,
         1.0222645232705032
-      <span class=o>]</span>
+        <span class=o>]</span>
     <span class=o>]</span>
-  <span class=o>}</span>,
-  <span class=s2>&#34;meta&#34;</span>: <span class=o>{</span>
+    <span class=o>}</span>,
+    <span class=s2>&#34;meta&#34;</span>: <span class=o>{</span>
     <span class=s2>&#34;requestPath&#34;</span>: <span class=o>{</span>
-      <span class=s2>&#34;model&#34;</span>: <span class=s2>&#34;ghcr.io/&lt;github-owner&gt;/serving-tutorial:latest&#34;</span>
+        <span class=s2>&#34;model&#34;</span>: <span class=s2>&#34;ghcr.io/&lt;github-owner&gt;/serving-tutorial:latest&#34;</span>
     <span class=o>}</span>
-  <span class=o>}</span>
+    <span class=o>}</span>
 <span class=o>}</span>
 </code></pre></td></tr></table>
 </div>
 </div></li>
 </ul>
-<h2 id=preprocessor>Preprocessor</h2>
+<h1 id=preprocessor>Preprocessor</h1>
 <p>이번에는 데이터 전처리를 할 수 있는 preprocessor를 작성해보겠습니다.</p>
-<h3 id=docker-1>Docker</h3>
+<h2 id=docker-1>Docker</h2>
 <p>앞서 사용했던 파일에서 <code>MLFLowServer.py</code> 를 수정하겠습니다. sklearn의 StandardScaler는 predict 함수를 갖고 있지 않습니다. 그래서 pyfunc을 이용해서 load할 수 없습니다. 이를 위해서 pyfunc을 새로 생성하고 transform을 할 수 있는 <code>transform_input</code> 를 작성합니다.</p>
-<ul>
+<ol>
 <li>
 <p><code>pyfunc.py</code></p>
 <div class=highlight><div class=chroma>
@@ -1213,7 +1102,7 @@ python ./pip_env_create.py
 </span><span class=s2>    ``model_meta`` contains model metadata loaded from the MLmodel file.
 </span><span class=s2>    &#34;&#34;&#34;</span>
 
-    <span class=c1>## Customized from mlflow==1.16.0</span>
+    <span class=c1># Customized from mlflow==1.16.0</span>
     <span class=k>def</span> <span class=fm>__init__</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>model_meta</span><span class=p>:</span> <span class=n>Model</span><span class=p>,</span> <span class=n>model_impl</span><span class=p>:</span> <span class=n>Any</span><span class=p>):</span>
         <span class=k>if</span> <span class=ow>not</span> <span class=n>model_meta</span><span class=p>:</span>
             <span class=k>raise</span> <span class=n>MlflowException</span><span class=p>(</span><span class=s2>&#34;Model is missing metadata.&#34;</span><span class=p>)</span>
@@ -1228,7 +1117,7 @@ python ./pip_env_create.py
 </span><span class=s2>        the input is passed to the model implementation as is. See `Model Signature Enforcement
 </span><span class=s2>        &lt;https://www.mlflow.org/docs/latest/models.html#signature-enforcement&gt;`_ for more details.&#34;
 </span><span class=s2>        :param data: Model input as one of pandas.DataFrame, numpy.ndarray, or
-</span><span class=s2>                     Dict[str, numpy.ndarray]
+</span><span class=s2>                    Dict[str, numpy.ndarray]
 </span><span class=s2>        :return: Model predictions as one of pandas.DataFrame, pandas.Series, numpy.ndarray or list.
 </span><span class=s2>        &#34;&#34;&#34;</span>
         <span class=n>input_schema</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>metadata</span><span class=o>.</span><span class=n>get_input_schema</span><span class=p>()</span>
@@ -1236,7 +1125,7 @@ python ./pip_env_create.py
             <span class=n>data</span> <span class=o>=</span> <span class=n>_enforce_schema</span><span class=p>(</span><span class=n>data</span><span class=p>,</span> <span class=n>input_schema</span><span class=p>)</span>
         <span class=k>return</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model_impl</span><span class=o>.</span><span class=n>predict</span><span class=p>(</span><span class=n>data</span><span class=p>)</span>
 
-    <span class=c1>## Customized from mlflow==1.16.0</span>
+    <span class=c1># Customized from mlflow==1.16.0</span>
     <span class=k>def</span> <span class=nf>transform</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>data</span><span class=p>:</span> <span class=n>PyFuncInput</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>PyFuncOutput</span><span class=p>:</span>
         <span class=s2>&#34;&#34;&#34;transform method&#34;&#34;&#34;</span>
         <span class=n>input_schema</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>metadata</span><span class=o>.</span><span class=n>get_input_schema</span><span class=p>()</span>
@@ -1291,7 +1180,7 @@ python ./pip_env_create.py
         <span class=n>code_path</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=n>local_path</span><span class=p>,</span> <span class=n>conf</span><span class=p>[</span><span class=n>CODE</span><span class=p>])</span>
         <span class=n>mlflow</span><span class=o>.</span><span class=n>pyfunc</span><span class=o>.</span><span class=n>utils</span><span class=o>.</span><span class=n>_add_code_to_system_path</span><span class=p>(</span><span class=n>code_path</span><span class=o>=</span><span class=n>code_path</span><span class=p>)</span>
     <span class=n>data_path</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=n>local_path</span><span class=p>,</span> <span class=n>conf</span><span class=p>[</span><span class=n>DATA</span><span class=p>])</span> <span class=k>if</span> <span class=p>(</span><span class=n>DATA</span> <span class=ow>in</span> <span class=n>conf</span><span class=p>)</span> <span class=k>else</span> <span class=n>local_path</span>
-    <span class=n>model_impl</span> <span class=o>=</span> <span class=n>importlib</span><span class=o>.</span><span class=n>import_module</span><span class=p>(</span><span class=n>conf</span><span class=p>[</span><span class=n>MAIN</span><span class=p>])</span><span class=o>.</span><span class=n>_load_pyfunc</span><span class=p>(</span><span class=n>data_path</span><span class=p>)</span>  <span class=c1>## type: ignore</span>
+    <span class=n>model_impl</span> <span class=o>=</span> <span class=n>importlib</span><span class=o>.</span><span class=n>import_module</span><span class=p>(</span><span class=n>conf</span><span class=p>[</span><span class=n>MAIN</span><span class=p>])</span><span class=o>.</span><span class=n>_load_pyfunc</span><span class=p>(</span><span class=n>data_path</span><span class=p>)</span>  <span class=c1># type: ignore</span>
     <span class=k>return</span> <span class=n>PyFuncModel</span><span class=p>(</span><span class=n>model_meta</span><span class=o>=</span><span class=n>model_meta</span><span class=p>,</span> <span class=n>model_impl</span><span class=o>=</span><span class=n>model_impl</span><span class=p>)</span>
 </code></pre></td></tr></table>
 </div>
@@ -1482,7 +1371,7 @@ python ./pip_env_create.py
             <span class=p>)</span>
             <span class=k>return</span> <span class=p>{}</span>
 
-      <span class=k>def</span> <span class=nf>class_names</span><span class=p>(</span><span class=bp>self</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Iterable</span><span class=p>[</span><span class=nb>str</span><span class=p>]:</span>
+       <span class=k>def</span> <span class=nf>class_names</span><span class=p>(</span><span class=bp>self</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Iterable</span><span class=p>[</span><span class=nb>str</span><span class=p>]:</span>
         <span class=n>output_schema</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model</span><span class=o>.</span><span class=n>metadata</span><span class=o>.</span><span class=n>get_output_schema</span><span class=p>()</span>
         <span class=k>if</span> <span class=n>output_schema</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span><span class=p>:</span>
             <span class=n>columns</span> <span class=o>=</span> <span class=p>[</span><span class=n>schema</span><span class=p>[</span><span class=s2>&#34;name&#34;</span><span class=p>]</span> <span class=k>for</span> <span class=n>schema</span> <span class=ow>in</span> <span class=n>output_schema</span><span class=o>.</span><span class=n>to_dict</span><span class=p>()]</span>
@@ -1490,7 +1379,7 @@ python ./pip_env_create.py
 </code></pre></td></tr></table>
 </div>
 </div></li>
-</ul>
+</ol>
 <p>위와 같이 수정하면 디렉토리 구성은 다음과 같이 됩니다.</p>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
@@ -1516,11 +1405,9 @@ python ./pip_env_create.py
     └── requirements.txt
 </code></pre></td></tr></table>
 </div>
-</div><h3 id=seldon-deploy-1>Seldon-deploy</h3>
-<ul>
-<li>
+</div><h2 id=seldon-deploy-1>Seldon-deploy</h2>
 <p><code>preprocessor.yaml</code> deploy 파일을 작성합니다.</p>
-</li>
+<ul>
 <li>
 <p><code>preprocessor.yaml</code></p>
 <div class=highlight><div class=chroma>
@@ -1583,53 +1470,53 @@ python ./pip_env_create.py
 <pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>machinelearning.seldon.io/v1</span><span class=w>
 </span><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>SeldonDeployment</span><span class=w>
 </span><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>graph-iris-preprocessor</span><span class=w>
-</span><span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class=l>seldon</span><span class=w>
+</span><span class=w>    </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>graph-iris-preprocessor</span><span class=w>
+</span><span class=w>    </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class=l>seldon</span><span class=w>
 </span><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>preprocessor</span><span class=w>
-</span><span class=w>  </span><span class=nt>predictors</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>preprocessor</span><span class=w>
+</span><span class=w>    </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>preprocessor</span><span class=w>
+</span><span class=w>    </span><span class=nt>predictors</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>preprocessor</span><span class=w>
 </span><span class=w>    </span><span class=nt>componentSpecs</span><span class=p>:</span><span class=w>
 </span><span class=w>    </span>- <span class=nt>spec</span><span class=p>:</span><span class=w>
 </span><span class=w>        </span><span class=nt>volumes</span><span class=p>:</span><span class=w>
 </span><span class=w>        </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>model-provision-location</span><span class=w>
-</span><span class=w>          </span><span class=nt>emptyDir</span><span class=p>:</span><span class=w> </span>{}<span class=w>
+</span><span class=w>            </span><span class=nt>emptyDir</span><span class=p>:</span><span class=w> </span>{}<span class=w>
 </span><span class=w>        </span><span class=nt>containers</span><span class=p>:</span><span class=w>
 </span><span class=w>        </span>- <span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>ghcr.io/&lt;github-owner&gt;/serving-tutorial:latest</span><span class=w>
-</span><span class=w>          </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>preprocessor</span><span class=w>
-</span><span class=w>          </span><span class=nt>imagePullPolicy</span><span class=p>:</span><span class=w> </span><span class=l>Always</span><span class=w>
-</span><span class=w>          </span><span class=nt>securityContext</span><span class=p>:</span><span class=w>
+</span><span class=w>            </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>preprocessor</span><span class=w>
+</span><span class=w>            </span><span class=nt>imagePullPolicy</span><span class=p>:</span><span class=w> </span><span class=l>Always</span><span class=w>
+</span><span class=w>            </span><span class=nt>securityContext</span><span class=p>:</span><span class=w>
 </span><span class=w>            </span><span class=nt>privileged</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>
 </span><span class=w>            </span><span class=nt>runAsUser</span><span class=p>:</span><span class=w> </span><span class=m>0</span><span class=w>
 </span><span class=w>            </span><span class=nt>runAsGroup</span><span class=p>:</span><span class=w> </span><span class=m>0</span><span class=w>
-</span><span class=w>          </span><span class=nt>volumeMounts</span><span class=p>:</span><span class=w>
-</span><span class=w>          </span>- <span class=nt>mountPath</span><span class=p>:</span><span class=w> </span><span class=l>/mnt/models</span><span class=w>
+</span><span class=w>            </span><span class=nt>volumeMounts</span><span class=p>:</span><span class=w>
+</span><span class=w>            </span>- <span class=nt>mountPath</span><span class=p>:</span><span class=w> </span><span class=l>/mnt/models</span><span class=w>
 </span><span class=w>            </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>model-provision-location</span><span class=w>
 </span><span class=w>            </span><span class=nt>readOnly</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>
 </span><span class=w>        </span><span class=nt>imagePullSecrets</span><span class=p>:</span><span class=w>
 </span><span class=w>        </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>mrx-ghcr</span><span class=w>
 </span><span class=w>        </span><span class=nt>initContainers</span><span class=p>:</span><span class=w>
 </span><span class=w>        </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>preprocessor-initializer</span><span class=w>
-</span><span class=w>          </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>gcr.io/kfserving/storage-initializer:v0.4.0</span><span class=w>
-</span><span class=w>          </span><span class=nt>imagePullPolicy</span><span class=p>:</span><span class=w> </span><span class=l>IfNotPresent</span><span class=w>
-</span><span class=w>          </span><span class=nt>args</span><span class=p>:</span><span class=w>
-</span><span class=w>          </span>- <span class=l>s3://mlflow/mlflow/artifacts/17/b84160df245441fa8d5ad7c5b62a424d/artifacts/iris_preprocessor_model/</span><span class=w>
-</span><span class=w>          </span>- <span class=l>/mnt/models</span><span class=w>
-</span><span class=w>          </span><span class=nt>envFrom</span><span class=p>:</span><span class=w>
-</span><span class=w>          </span>- <span class=nt>secretRef</span><span class=p>:</span><span class=w>
-</span><span class=w>              </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>seldon-init-container-secret</span><span class=w>
-</span><span class=w>          </span><span class=nt>volumeMounts</span><span class=p>:</span><span class=w>
-</span><span class=w>          </span>- <span class=nt>mountPath</span><span class=p>:</span><span class=w> </span><span class=l>/mnt/models</span><span class=w>
+</span><span class=w>            </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>gcr.io/kfserving/storage-initializer:v0.4.0</span><span class=w>
+</span><span class=w>            </span><span class=nt>imagePullPolicy</span><span class=p>:</span><span class=w> </span><span class=l>IfNotPresent</span><span class=w>
+</span><span class=w>            </span><span class=nt>args</span><span class=p>:</span><span class=w>
+</span><span class=w>            </span>- <span class=l>s3://mlflow/mlflow/artifacts/17/b84160df245441fa8d5ad7c5b62a424d/artifacts/iris_preprocessor_model/</span><span class=w>
+</span><span class=w>            </span>- <span class=l>/mnt/models</span><span class=w>
+</span><span class=w>            </span><span class=nt>envFrom</span><span class=p>:</span><span class=w>
+</span><span class=w>            </span>- <span class=nt>secretRef</span><span class=p>:</span><span class=w>
+</span><span class=w>                </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>seldon-init-container-secret</span><span class=w>
+</span><span class=w>            </span><span class=nt>volumeMounts</span><span class=p>:</span><span class=w>
+</span><span class=w>            </span>- <span class=nt>mountPath</span><span class=p>:</span><span class=w> </span><span class=l>/mnt/models</span><span class=w>
 </span><span class=w>            </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>model-provision-location</span><span class=w>
 </span><span class=w>    </span><span class=nt>graph</span><span class=p>:</span><span class=w>
-</span><span class=w>      </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>preprocessor</span><span class=w>
-</span><span class=w>      </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class=l>TRANSFORMER</span><span class=w>
-</span><span class=w>      </span><span class=nt>children</span><span class=p>:</span><span class=w> </span><span class=p>[]</span><span class=w>
-</span><span class=w>      </span><span class=nt>parameters</span><span class=p>:</span><span class=w>
-</span><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>xtype</span><span class=w>
+</span><span class=w>        </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>preprocessor</span><span class=w>
+</span><span class=w>        </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class=l>TRANSFORMER</span><span class=w>
+</span><span class=w>        </span><span class=nt>children</span><span class=p>:</span><span class=w> </span><span class=p>[]</span><span class=w>
+</span><span class=w>        </span><span class=nt>parameters</span><span class=p>:</span><span class=w>
+</span><span class=w>        </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>xtype</span><span class=w>
 </span><span class=w>        </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class=l>STRING</span><span class=w>
 </span><span class=w>        </span><span class=nt>value</span><span class=p>:</span><span class=w> </span><span class=l>DataFrame</span><span class=w>
-</span><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>model_uri</span><span class=w>
+</span><span class=w>        </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>model_uri</span><span class=w>
 </span><span class=w>        </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class=l>STRING</span><span class=w>
 </span><span class=w>        </span><span class=nt>value</span><span class=p>:</span><span class=w> </span><span class=l>/mnt/models</span><span class=w>
 </span><span class=w>    </span><span class=nt>replicas</span><span class=p>:</span><span class=w> </span><span class=m>1</span><span class=w>
@@ -1648,7 +1535,7 @@ python ./pip_env_create.py
 </div>
 </div></li>
 <li>
-<p>predict를 해봅니다.</p>
+<p>predict를 요청합니다.</p>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt> 1
@@ -1667,13 +1554,13 @@ python ./pip_env_create.py
 <pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>curl -X POST &lt;http://10.102.231.216/seldon/seldon/graph-iris-preprocessor/api/v1.0/predictions&gt; <span class=se>\\</span>
     -H <span class=s1>&#39;Content-Type: application/json&#39;</span> <span class=se>\\</span>
     -d <span class=s1>&#39;{
-</span><span class=s1>          &#34;data&#34;: {
+</span><span class=s1>            &#34;data&#34;: {
 </span><span class=s1>            &#34;ndarray&#34;: [
-</span><span class=s1>              [6.8,  2.8,  4.8,  1.4],
-</span><span class=s1>              [6.0,  3.4,  4.5,  1.6]
+</span><span class=s1>                [6.8,  2.8,  4.8,  1.4],
+</span><span class=s1>                [6.0,  3.4,  4.5,  1.6]
 </span><span class=s1>            ],
 </span><span class=s1>            &#34;names&#34;:[&#34;sepal length (cm)&#34;, &#34;sepal width (cm)&#34;, &#34;petal length (cm)&#34;, &#34;petal width (cm)&#34;]
-</span><span class=s1>          }
+</span><span class=s1>            }
 </span><span class=s1>        }&#39;</span>
 </code></pre></td></tr></table>
 </div>
@@ -1714,41 +1601,41 @@ python ./pip_env_create.py
 </span></code></pre></td>
 <td class=lntd>
 <pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=o>{</span>
-  <span class=s2>&#34;data&#34;</span>: <span class=o>{</span>
+    <span class=s2>&#34;data&#34;</span>: <span class=o>{</span>
     <span class=s2>&#34;names&#34;</span>: <span class=o>[</span>
-      <span class=s2>&#34;sepal length (cm)&#34;</span>,
-      <span class=s2>&#34;sepal width (cm)&#34;</span>,
-      <span class=s2>&#34;petal length (cm)&#34;</span>,
-      <span class=s2>&#34;petal width (cm)&#34;</span>
+        <span class=s2>&#34;sepal length (cm)&#34;</span>,
+        <span class=s2>&#34;sepal width (cm)&#34;</span>,
+        <span class=s2>&#34;petal length (cm)&#34;</span>,
+        <span class=s2>&#34;petal width (cm)&#34;</span>
     <span class=o>]</span>,
     <span class=s2>&#34;ndarray&#34;</span>: <span class=o>[</span>
-      <span class=o>[</span>
+        <span class=o>[</span>
         1.1591726272442633,
         -0.5923730118389178,
         0.5922459884397444,
         0.26414191647586993
-      <span class=o>]</span>,
-      <span class=o>[</span>
+        <span class=o>]</span>,
+        <span class=o>[</span>
         0.18982966369505322,
         0.7888075857129604,
         0.4217337076989351,
         0.5274062850564719
-      <span class=o>]</span>
+        <span class=o>]</span>
     <span class=o>]</span>
-  <span class=o>}</span>,
-  <span class=s2>&#34;meta&#34;</span>: <span class=o>{</span>
+    <span class=o>}</span>,
+    <span class=s2>&#34;meta&#34;</span>: <span class=o>{</span>
     <span class=s2>&#34;requestPath&#34;</span>: <span class=o>{</span>
-      <span class=s2>&#34;preprocessor&#34;</span>: <span class=s2>&#34;ghcr.io/&lt;github-owner&gt;/serving-tutorial:latest&#34;</span>
+        <span class=s2>&#34;preprocessor&#34;</span>: <span class=s2>&#34;ghcr.io/&lt;github-owner&gt;/serving-tutorial:latest&#34;</span>
     <span class=o>}</span>
-  <span class=o>}</span>
+    <span class=o>}</span>
 <span class=o>}</span>
 </code></pre></td></tr></table>
 </div>
 </div></li>
 </ul>
-<h2 id=postprocessor>Postprocessor</h2>
+<h1 id=postprocessor>Postprocessor</h1>
 <p>이번에는 score에 후처리를 하는 postprocessor를 작성해보겠습니다.</p>
-<h3 id=docker-2>Docker</h3>
+<h2 id=docker-2>Docker</h2>
 <p>seldon-core 에서 제공하는 서버들의 디렉토리 구성은 다음과 같습니다.</p>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
@@ -1769,7 +1656,7 @@ python ./pip_env_create.py
 </code></pre></td></tr></table>
 </div>
 </div><p>앞서 사용했던 파일에서 <code>MLFLowServer.py</code> 를 수정하겠습니다. 이 예제에서는 postprocessor 또한 sklearn의 scaler를 사용하겠습니다. sklearn의 scaler는 predict 함수를 갖고 있지 않습니다. 그래서 pyfunc을 이용해서 load할 수 없습니다. 이를 위해서 pyfunc을 새로 생성하고 transform을 할 수 있는 <code>transform_output</code> 를 작성합니다.</p>
-<ul>
+<ol>
 <li>
 <p><code>pyfunc.py</code></p>
 <div class=highlight><div class=chroma>
@@ -1936,7 +1823,7 @@ python ./pip_env_create.py
 </span><span class=s2>    ``model_meta`` contains model metadata loaded from the MLmodel file.
 </span><span class=s2>    &#34;&#34;&#34;</span>
 
-    <span class=c1>## Customized from mlflow==1.16.0</span>
+    <span class=c1># Customized from mlflow==1.16.0</span>
     <span class=k>def</span> <span class=fm>__init__</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>model_meta</span><span class=p>:</span> <span class=n>Model</span><span class=p>,</span> <span class=n>model_impl</span><span class=p>:</span> <span class=n>Any</span><span class=p>):</span>
         <span class=k>if</span> <span class=ow>not</span> <span class=n>model_meta</span><span class=p>:</span>
             <span class=k>raise</span> <span class=n>MlflowException</span><span class=p>(</span><span class=s2>&#34;Model is missing metadata.&#34;</span><span class=p>)</span>
@@ -1951,7 +1838,7 @@ python ./pip_env_create.py
 </span><span class=s2>        the input is passed to the model implementation as is. See `Model Signature Enforcement
 </span><span class=s2>        &lt;https://www.mlflow.org/docs/latest/models.html#signature-enforcement&gt;`_ for more details.&#34;
 </span><span class=s2>        :param data: Model input as one of pandas.DataFrame, numpy.ndarray, or
-</span><span class=s2>                     Dict[str, numpy.ndarray]
+</span><span class=s2>                    Dict[str, numpy.ndarray]
 </span><span class=s2>        :return: Model predictions as one of pandas.DataFrame, pandas.Series, numpy.ndarray or list.
 </span><span class=s2>        &#34;&#34;&#34;</span>
         <span class=n>input_schema</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>metadata</span><span class=o>.</span><span class=n>get_input_schema</span><span class=p>()</span>
@@ -1959,7 +1846,7 @@ python ./pip_env_create.py
             <span class=n>data</span> <span class=o>=</span> <span class=n>_enforce_schema</span><span class=p>(</span><span class=n>data</span><span class=p>,</span> <span class=n>input_schema</span><span class=p>)</span>
         <span class=k>return</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model_impl</span><span class=o>.</span><span class=n>predict</span><span class=p>(</span><span class=n>data</span><span class=p>)</span>
 
-    <span class=c1>## Customized from mlflow==1.16.0</span>
+    <span class=c1># Customized from mlflow==1.16.0</span>
     <span class=k>def</span> <span class=nf>transform</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>data</span><span class=p>:</span> <span class=n>PyFuncInput</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>PyFuncOutput</span><span class=p>:</span>
         <span class=s2>&#34;&#34;&#34;transform method&#34;&#34;&#34;</span>
         <span class=n>input_schema</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>metadata</span><span class=o>.</span><span class=n>get_input_schema</span><span class=p>()</span>
@@ -2014,7 +1901,7 @@ python ./pip_env_create.py
         <span class=n>code_path</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=n>local_path</span><span class=p>,</span> <span class=n>conf</span><span class=p>[</span><span class=n>CODE</span><span class=p>])</span>
         <span class=n>mlflow</span><span class=o>.</span><span class=n>pyfunc</span><span class=o>.</span><span class=n>utils</span><span class=o>.</span><span class=n>_add_code_to_system_path</span><span class=p>(</span><span class=n>code_path</span><span class=o>=</span><span class=n>code_path</span><span class=p>)</span>
     <span class=n>data_path</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=n>local_path</span><span class=p>,</span> <span class=n>conf</span><span class=p>[</span><span class=n>DATA</span><span class=p>])</span> <span class=k>if</span> <span class=p>(</span><span class=n>DATA</span> <span class=ow>in</span> <span class=n>conf</span><span class=p>)</span> <span class=k>else</span> <span class=n>local_path</span>
-    <span class=n>model_impl</span> <span class=o>=</span> <span class=n>importlib</span><span class=o>.</span><span class=n>import_module</span><span class=p>(</span><span class=n>conf</span><span class=p>[</span><span class=n>MAIN</span><span class=p>])</span><span class=o>.</span><span class=n>_load_pyfunc</span><span class=p>(</span><span class=n>data_path</span><span class=p>)</span>  <span class=c1>## type: ignore</span>
+    <span class=n>model_impl</span> <span class=o>=</span> <span class=n>importlib</span><span class=o>.</span><span class=n>import_module</span><span class=p>(</span><span class=n>conf</span><span class=p>[</span><span class=n>MAIN</span><span class=p>])</span><span class=o>.</span><span class=n>_load_pyfunc</span><span class=p>(</span><span class=n>data_path</span><span class=p>)</span>  <span class=c1># type: ignore</span>
     <span class=k>return</span> <span class=n>PyFuncModel</span><span class=p>(</span><span class=n>model_meta</span><span class=o>=</span><span class=n>model_meta</span><span class=p>,</span> <span class=n>model_impl</span><span class=o>=</span><span class=n>model_impl</span><span class=p>)</span>
 </code></pre></td></tr></table>
 </div>
@@ -2205,7 +2092,7 @@ python ./pip_env_create.py
             <span class=p>)</span>
             <span class=k>return</span> <span class=p>{}</span>
 
-      <span class=k>def</span> <span class=nf>class_names</span><span class=p>(</span><span class=bp>self</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Iterable</span><span class=p>[</span><span class=nb>str</span><span class=p>]:</span>
+       <span class=k>def</span> <span class=nf>class_names</span><span class=p>(</span><span class=bp>self</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Iterable</span><span class=p>[</span><span class=nb>str</span><span class=p>]:</span>
         <span class=n>output_schema</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model</span><span class=o>.</span><span class=n>metadata</span><span class=o>.</span><span class=n>get_output_schema</span><span class=p>()</span>
         <span class=k>if</span> <span class=n>output_schema</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span><span class=p>:</span>
             <span class=n>columns</span> <span class=o>=</span> <span class=p>[</span><span class=n>schema</span><span class=p>[</span><span class=s2>&#34;name&#34;</span><span class=p>]</span> <span class=k>for</span> <span class=n>schema</span> <span class=ow>in</span> <span class=n>output_schema</span><span class=o>.</span><span class=n>to_dict</span><span class=p>()]</span>
@@ -2213,7 +2100,7 @@ python ./pip_env_create.py
 </code></pre></td></tr></table>
 </div>
 </div></li>
-</ul>
+</ol>
 <p>위와 같이 수정하면 디렉토리 구성은 다음과 같이 됩니다.</p>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
@@ -2239,11 +2126,9 @@ python ./pip_env_create.py
     └── requirements.txt
 </code></pre></td></tr></table>
 </div>
-</div><h3 id=seldon-deploy-2>seldon-deploy</h3>
-<ul>
-<li>
+</div><h2 id=seldon-deploy-2>seldon-deploy</h2>
 <p>다음과 같은 <code>postprocessor.yaml</code> deploy 파일을 작성합니다.</p>
-</li>
+<ul>
 <li>
 <p><code>postprocessor.yaml</code></p>
 <div class=highlight><div class=chroma>
@@ -2306,55 +2191,55 @@ python ./pip_env_create.py
 <pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>machinelearning.seldon.io/v1</span><span class=w>
 </span><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>SeldonDeployment</span><span class=w>
 </span><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>graph-iris-postprocessor</span><span class=w>
-</span><span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class=l>seldon</span><span class=w>
+</span><span class=w>    </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>graph-iris-postprocessor</span><span class=w>
+</span><span class=w>    </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class=l>seldon</span><span class=w>
 </span><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>postprocessor</span><span class=w>
-</span><span class=w>  </span><span class=nt>predictors</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>postprocessor</span><span class=w>
+</span><span class=w>    </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>postprocessor</span><span class=w>
+</span><span class=w>    </span><span class=nt>predictors</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>postprocessor</span><span class=w>
 </span><span class=w>    </span><span class=nt>componentSpecs</span><span class=p>:</span><span class=w>
 </span><span class=w>    </span>- <span class=nt>spec</span><span class=p>:</span><span class=w>
 </span><span class=w>        </span><span class=nt>volumes</span><span class=p>:</span><span class=w>
 </span><span class=w>        </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>model-provision-location</span><span class=w>
-</span><span class=w>          </span><span class=nt>emptyDir</span><span class=p>:</span><span class=w> </span>{}<span class=w>
+</span><span class=w>            </span><span class=nt>emptyDir</span><span class=p>:</span><span class=w> </span>{}<span class=w>
 </span><span class=w>        </span><span class=nt>containers</span><span class=p>:</span><span class=w>
 </span><span class=w>        </span>- <span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>ghcr.io/&lt;github-owner&gt;/serving-tutorial:latest</span><span class=w>
-</span><span class=w>          </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>postprocessor</span><span class=w>
-</span><span class=w>          </span><span class=nt>imagePullPolicy</span><span class=p>:</span><span class=w> </span><span class=l>Always</span><span class=w>
-</span><span class=w>          </span><span class=nt>securityContext</span><span class=p>:</span><span class=w>
+</span><span class=w>            </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>postprocessor</span><span class=w>
+</span><span class=w>            </span><span class=nt>imagePullPolicy</span><span class=p>:</span><span class=w> </span><span class=l>Always</span><span class=w>
+</span><span class=w>            </span><span class=nt>securityContext</span><span class=p>:</span><span class=w>
 </span><span class=w>            </span><span class=nt>privileged</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>
 </span><span class=w>            </span><span class=nt>runAsUser</span><span class=p>:</span><span class=w> </span><span class=m>0</span><span class=w>
 </span><span class=w>            </span><span class=nt>runAsGroup</span><span class=p>:</span><span class=w> </span><span class=m>0</span><span class=w>
-</span><span class=w>          </span><span class=nt>volumeMounts</span><span class=p>:</span><span class=w>
-</span><span class=w>          </span>- <span class=nt>mountPath</span><span class=p>:</span><span class=w> </span><span class=l>/mnt/models</span><span class=w>
+</span><span class=w>            </span><span class=nt>volumeMounts</span><span class=p>:</span><span class=w>
+</span><span class=w>            </span>- <span class=nt>mountPath</span><span class=p>:</span><span class=w> </span><span class=l>/mnt/models</span><span class=w>
 </span><span class=w>            </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>model-provision-location</span><span class=w>
 </span><span class=w>            </span><span class=nt>readOnly</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>
 </span><span class=w>        </span><span class=nt>imagePullSecrets</span><span class=p>:</span><span class=w>
 </span><span class=w>        </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>mrx-ghcr</span><span class=w>
 </span><span class=w>        </span><span class=nt>initContainers</span><span class=p>:</span><span class=w>
 </span><span class=w>        </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>postprocessor-initializer</span><span class=w>
-</span><span class=w>          </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>gcr.io/kfserving/storage-initializer:v0.4.0</span><span class=w>
-</span><span class=w>          </span><span class=nt>imagePullPolicy</span><span class=p>:</span><span class=w> </span><span class=l>Always</span><span class=w>
-</span><span class=w>          </span><span class=nt>args</span><span class=p>:</span><span class=w>
-</span><span class=w>          </span>- <span class=l>s3://mlflow/mlflow/artifacts/17/b84160df245441fa8d5ad7c5b62a424d/artifacts/iris_postprocessor_model/</span><span class=w>
-</span><span class=w>          </span>- <span class=l>/mnt/models</span><span class=w>
-</span><span class=w>          </span><span class=nt>envFrom</span><span class=p>:</span><span class=w>
-</span><span class=w>          </span>- <span class=nt>secretRef</span><span class=p>:</span><span class=w>
-</span><span class=w>              </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>seldon-init-container-secret</span><span class=w>
-</span><span class=w>          </span><span class=nt>volumeMounts</span><span class=p>:</span><span class=w>
-</span><span class=w>          </span>- <span class=nt>mountPath</span><span class=p>:</span><span class=w> </span><span class=l>/mnt/models</span><span class=w>
+</span><span class=w>            </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>gcr.io/kfserving/storage-initializer:v0.4.0</span><span class=w>
+</span><span class=w>            </span><span class=nt>imagePullPolicy</span><span class=p>:</span><span class=w> </span><span class=l>Always</span><span class=w>
+</span><span class=w>            </span><span class=nt>args</span><span class=p>:</span><span class=w>
+</span><span class=w>            </span>- <span class=l>s3://mlflow/mlflow/artifacts/17/b84160df245441fa8d5ad7c5b62a424d/artifacts/iris_postprocessor_model/</span><span class=w>
+</span><span class=w>            </span>- <span class=l>/mnt/models</span><span class=w>
+</span><span class=w>            </span><span class=nt>envFrom</span><span class=p>:</span><span class=w>
+</span><span class=w>            </span>- <span class=nt>secretRef</span><span class=p>:</span><span class=w>
+</span><span class=w>                </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>seldon-init-container-secret</span><span class=w>
+</span><span class=w>            </span><span class=nt>volumeMounts</span><span class=p>:</span><span class=w>
+</span><span class=w>            </span>- <span class=nt>mountPath</span><span class=p>:</span><span class=w> </span><span class=l>/mnt/models</span><span class=w>
 </span><span class=w>            </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>model-provision-location</span><span class=w>
 </span><span class=w>    </span><span class=nt>graph</span><span class=p>:</span><span class=w>
-</span><span class=w>      </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>postprocessor</span><span class=w>
-</span><span class=w>      </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class=l>OUTPUT_TRANSFORMER</span><span class=w>
-</span><span class=w>      </span><span class=nt>parameters</span><span class=p>:</span><span class=w>
-</span><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>xtype</span><span class=w>
+</span><span class=w>        </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>postprocessor</span><span class=w>
+</span><span class=w>        </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class=l>OUTPUT_TRANSFORMER</span><span class=w>
+</span><span class=w>        </span><span class=nt>parameters</span><span class=p>:</span><span class=w>
+</span><span class=w>        </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>xtype</span><span class=w>
 </span><span class=w>        </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class=l>STRING</span><span class=w>
 </span><span class=w>        </span><span class=nt>value</span><span class=p>:</span><span class=w> </span><span class=l>DataFrame</span><span class=w>
-</span><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>model_uri</span><span class=w>
+</span><span class=w>        </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>model_uri</span><span class=w>
 </span><span class=w>        </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class=l>STRING</span><span class=w>
 </span><span class=w>        </span><span class=nt>value</span><span class=p>:</span><span class=w> </span><span class=l>/mnt/models</span><span class=w>
-</span><span class=w>      </span><span class=nt>children</span><span class=p>:</span><span class=w> </span><span class=p>[]</span><span class=w>
+</span><span class=w>        </span><span class=nt>children</span><span class=p>:</span><span class=w> </span><span class=p>[]</span><span class=w>
 </span><span class=w>    </span><span class=nt>replicas</span><span class=p>:</span><span class=w> </span><span class=m>1</span><span class=w>
 </span></code></pre></td></tr></table>
 </div>
@@ -2371,7 +2256,7 @@ python ./pip_env_create.py
 </div>
 </div></li>
 <li>
-<p>predict를 해봅니다.</p>
+<p>predict를 요청합니다.</p>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt> 1
@@ -2443,25 +2328,25 @@ python ./pip_env_create.py
 </span></code></pre></td>
 <td class=lntd>
 <pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=o>{</span>
-  <span class=s2>&#34;data&#34;</span>: <span class=o>{</span>
+    <span class=s2>&#34;data&#34;</span>: <span class=o>{</span>
     <span class=s2>&#34;names&#34;</span>: <span class=o>[</span>
-      <span class=s2>&#34;Class_0&#34;</span>,
-      <span class=s2>&#34;Class_1&#34;</span>,
-      <span class=s2>&#34;Class_2&#34;</span>
+        <span class=s2>&#34;Class_0&#34;</span>,
+        <span class=s2>&#34;Class_1&#34;</span>,
+        <span class=s2>&#34;Class_2&#34;</span>
     <span class=o>]</span>,
     <span class=s2>&#34;ndarray&#34;</span>: <span class=o>[</span>
-      <span class=o>[</span>
+        <span class=o>[</span>
         -0.7139912744706434,
         1.41185905424711,
         -0.064123229924972
-      <span class=o>]</span>
+        <span class=o>]</span>
     <span class=o>]</span>
-  <span class=o>}</span>,
-  <span class=s2>&#34;meta&#34;</span>: <span class=o>{</span>
+    <span class=o>}</span>,
+    <span class=s2>&#34;meta&#34;</span>: <span class=o>{</span>
     <span class=s2>&#34;requestPath&#34;</span>: <span class=o>{</span>
-      <span class=s2>&#34;postprocessor&#34;</span>: <span class=s2>&#34;ghcr.io/&lt;github-owner&gt;/serving-tutorial:latest&#34;</span>
+        <span class=s2>&#34;postprocessor&#34;</span>: <span class=s2>&#34;ghcr.io/&lt;github-owner&gt;/serving-tutorial:latest&#34;</span>
     <span class=o>}</span>
-  <span class=o>}</span>
+    <span class=o>}</span>
 <span class=o>}</span>
 </code></pre></td></tr></table>
 </div>
@@ -2471,7 +2356,7 @@ python ./pip_env_create.py
 <div class=post-info>
 <div class=post-info-line>
 <div class=post-info-mod>
-<span>Updated on 2021-06-28</span>
+<span>Updated on 2021-10-01</span>
 </div>
 <div class=post-info-license></div>
 </div>

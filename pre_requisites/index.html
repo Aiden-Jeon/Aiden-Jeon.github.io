@@ -5,11 +5,11 @@
 <meta name=robots content="noodp">
 <meta http-equiv=x-ua-compatible content="IE=edge, chrome=1">
 <title>Pre-Requisites for k3s Setup - Aiden's Camp</title><meta name=Description content="Welcome to Aiden's Camp"><meta property="og:title" content="Pre-Requisites for k3s Setup">
-<meta property="og:description" content="이번 포스트에서는 k3s를 설정하기 전에 필요한 것들을 세팅하는 과정에 대해서 설명합니다.
+<meta property="og:description" content="Kubeflow 설치 시리즈
+ Pre-Requisites for k3s Setup k3s Installation Kubeflow Installation   이번 포스트에서는 k3s를 설정하기 전에 필요한 것들을 세팅하는 과정에 대해서 설명합니다.
 이번 포스트에서 진행하는 과정은 서버 데스크탑, 로컬 노트북 두 대의 장비가 있다고 가정하고 있습니다.
  On Server 사용하는 서버 스s펙은 다음과 같습니다.
-1 2 3 4  OS: Ubuntu 20.04 LST GPU: RTX 2060 x2 CPU: Intel(R) Core(TM) i7-9700K CPU @ 3.60GHz MEM: 64G   서버에 설치할 것 들은 3가지 입니다.
- Docker Nvidia Driver WireGuard VPN (사용할 경우)  1.">
+1 2 3 4  OS: Ubuntu 20.04 LST GPU: RTX 2060 x2 CPU: Intel(R) Core(TM) i7-9700K CPU @ 3.60GHz MEM: 64G   서버에 설치할 것 들은 3가지 입니다.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://aiden-jeon.github.io/pre_requisites/"><meta property="og:image" content="https://aiden-jeon.github.io/logo.png"><meta property="article:section" content="posts">
 <meta property="article:published_time" content="2021-10-01T00:00:00+00:00">
@@ -17,15 +17,15 @@
 <meta name=twitter:card content="summary_large_image">
 <meta name=twitter:image content="https://aiden-jeon.github.io/logo.png">
 <meta name=twitter:title content="Pre-Requisites for k3s Setup">
-<meta name=twitter:description content="이번 포스트에서는 k3s를 설정하기 전에 필요한 것들을 세팅하는 과정에 대해서 설명합니다.
+<meta name=twitter:description content="Kubeflow 설치 시리즈
+ Pre-Requisites for k3s Setup k3s Installation Kubeflow Installation   이번 포스트에서는 k3s를 설정하기 전에 필요한 것들을 세팅하는 과정에 대해서 설명합니다.
 이번 포스트에서 진행하는 과정은 서버 데스크탑, 로컬 노트북 두 대의 장비가 있다고 가정하고 있습니다.
  On Server 사용하는 서버 스s펙은 다음과 같습니다.
-1 2 3 4  OS: Ubuntu 20.04 LST GPU: RTX 2060 x2 CPU: Intel(R) Core(TM) i7-9700K CPU @ 3.60GHz MEM: 64G   서버에 설치할 것 들은 3가지 입니다.
- Docker Nvidia Driver WireGuard VPN (사용할 경우)  1.">
+1 2 3 4  OS: Ubuntu 20.04 LST GPU: RTX 2060 x2 CPU: Intel(R) Core(TM) i7-9700K CPU @ 3.60GHz MEM: 64G   서버에 설치할 것 들은 3가지 입니다.">
 <meta name=application-name content="Aiden's Camp">
 <meta name=apple-mobile-web-app-title content="Aiden's Camp"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
 <link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://aiden-jeon.github.io/pre_requisites/><link rel=prev href=https://aiden-jeon.github.io/chapter-02/><link rel=next href=https://aiden-jeon.github.io/install_k3s/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Pre-Requisites for k3s Setup","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/aiden-jeon.github.io\/pre_requisites\/"},"genre":"posts","keywords":"k8s","wordcount":485,"url":"https:\/\/aiden-jeon.github.io\/pre_requisites\/","datePublished":"2021-10-01T00:00:00+00:00","dateModified":"2021-10-01T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"Jongseob Jeon"},"description":""}</script></head>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://aiden-jeon.github.io/pre_requisites/><link rel=prev href=https://aiden-jeon.github.io/chapter-02/><link rel=next href=https://aiden-jeon.github.io/install_kubeflow/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Pre-Requisites for k3s Setup","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/aiden-jeon.github.io\/pre_requisites\/"},"genre":"posts","keywords":"k8s","wordcount":496,"url":"https:\/\/aiden-jeon.github.io\/pre_requisites\/","datePublished":"2021-10-01T00:00:00+00:00","dateModified":"2021-10-01T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"Jongseob Jeon"},"description":""}</script></head>
 <body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':'light'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'light'==='dark')&&document.body.setAttribute('theme','dark')</script>
 <div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
 <div class=header-wrapper>
@@ -93,7 +93,7 @@ Cancel
 <div class="toc-content always-active" id=toc-content-auto></div>
 </div><article class="page single"><h1 class="single-title animated flipInX">Pre-Requisites for k3s Setup</h1><div class=post-meta>
 <div class=post-meta-line><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-category>included in <a href=/categories/k3s/><i class="far fa-folder fa-fw"></i>k3s</a></span></div>
-<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-10-01>2021-10-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;485 words&nbsp;
+<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-10-01>2021-10-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;496 words&nbsp;
 <i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;</div>
 </div><div class="details toc" id=toc-static kept>
 <div class="details-summary toc-title">
@@ -128,7 +128,14 @@ Cancel
 </li>
 </ul>
 </nav></div>
-</div><div class=content id=content><p>이번 포스트에서는 k3s를 설정하기 전에 필요한 것들을 세팅하는 과정에 대해서 설명합니다.<br>
+</div><div class=content id=content><p><strong>Kubeflow 설치 시리즈</strong></p>
+<ol>
+<li><a href=/pre_requisites/ rel>Pre-Requisites for k3s Setup</a></li>
+<li><a href=/install_k3s/ rel>k3s Installation</a></li>
+<li><a href=/install_kubeflow/ rel>Kubeflow Installation</a></li>
+</ol>
+<hr>
+<p>이번 포스트에서는 k3s를 설정하기 전에 필요한 것들을 세팅하는 과정에 대해서 설명합니다.<br>
 이번 포스트에서 진행하는 과정은 서버 데스크탑, 로컬 노트북 두 대의 장비가 있다고 가정하고 있습니다.</p>
 <hr>
 <h1 id=on-server>On Server</h1>
@@ -452,7 +459,7 @@ sudo systemctl status wg-quick@wg0
 </section>
 </div>
 <div class=post-nav><a href=/chapter-02/ class=prev rel=prev title="2. 문제 해결 개관"><i class="fas fa-angle-left fa-fw"></i>2. 문제 해결 개관</a>
-<a href=/install_k3s/ class=next rel=next title="k3s Installation">k3s Installation<i class="fas fa-angle-right fa-fw"></i></a></div>
+<a href=/install_kubeflow/ class=next rel=next title="Kubeflow Installation">Kubeflow Installation<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id=comments><div id=disqus_thread class=comment></div><noscript>
 Please enable JavaScript to view the comments powered by <a href=https://disqus.com/?ref_noscript>Disqus</a>.
