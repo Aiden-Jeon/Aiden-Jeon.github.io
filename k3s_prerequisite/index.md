@@ -2,9 +2,9 @@
 
 
 **Kubeflow 설치 시리즈**
-1. [Pre-Requisites for k3s Setup]({{< relref "posts/k3s/pre_requisites" >}})
-2. [k3s Installation]({{< relref "posts/k3s/install_k3s" >}})
-3. [Kubeflow Installation]({{< relref "posts/k3s/install_kubeflow" >}})
+1. [Pre-Requisites for k3s Setup]({{< relref "posts/kubernetes/k3s_prerequisite" >}})
+2. [k3s Installation]({{< relref "posts/kubernetes/install_k3s" >}})
+3. [Kubeflow Installation]({{< relref "posts/kubernetes/install_kubeflow" >}})
 
 ---
 이번 포스트에서는 k3s를 설정하기 전에 필요한 것들을 세팅하는 과정에 대해서 설명합니다.  
@@ -123,7 +123,7 @@ Docker가 gpu를 사용할 수 있도록 설정해주어야 합니다.
     nvidia-smi
     ```
 
-## WireGuard VPN (사용할 경우)
+## 3. WireGuard VPN (사용할 경우)
 저는 WireGuard VPN을 이용하고 있기 때문에 서버에 추가적인 VPN 작업을 해주었습니다.
 1. WireGuard Config 발급  
     WireGuard에서 Ubuntu OS의 config를 생성합니다.
