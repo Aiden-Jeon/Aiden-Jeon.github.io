@@ -285,40 +285,40 @@ helm install longhorn longhorn/longhorn --namespace longhorn-system --set csi.ku
 </span><span class=lnt>34
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash> <span class=nv>USER</span><span class=o>=</span>admin<span class=p>;</span> <span class=nv>PASSWORD</span><span class=o>=</span>adminadmin<span class=p>;</span> <span class=nb>echo</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>USER</span><span class=si>}</span><span class=s2>:</span><span class=k>$(</span>openssl passwd -stdin -apr1 <span class=o>&lt;&lt;&lt;</span> <span class=si>${</span><span class=nv>PASSWORD</span><span class=si>}</span><span class=k>)</span><span class=s2>&#34;</span> &gt;&gt; auth
- kubectl -n longhorn-system create secret generic basic-auth --from-file<span class=o>=</span>auth
- cat <span class=s>&lt;&lt;EOF | kubectl apply -f -
-</span><span class=s> apiVersion: networking.k8s.io/v1
-</span><span class=s> kind: Ingress
-</span><span class=s> metadata:
-</span><span class=s>   name: longhorn-ingress
-</span><span class=s>   namespace: longhorn-system
-</span><span class=s>   annotations:
-</span><span class=s>     ingress.kubernetes.io/rewrite-target: /
-</span><span class=s>     kubernetes.io/ingress.class: &#34;nginx&#34;
-</span><span class=s>     # type of authentication
-</span><span class=s>     nginx.ingress.kubernetes.io/auth-type: basic
-</span><span class=s>     # prevent the controller from redirecting (308) to HTTPS
-</span><span class=s>     nginx.ingress.kubernetes.io/ssl-redirect: &#39;false&#39;
-</span><span class=s>     # name of the secret that contains the user/password definitions
-</span><span class=s>     nginx.ingress.kubernetes.io/auth-secret: basic-auth
-</span><span class=s>     # message to display with an appropriate context why the authentication is required
-</span><span class=s>     nginx.ingress.kubernetes.io/auth-realm: &#39;Authentication Required &#39;
-</span><span class=s>     # custom max body size for file uploading like backing image uploading
-</span><span class=s>     nginx.ingress.kubernetes.io/proxy-body-size: 10000m
-</span><span class=s> spec:
-</span><span class=s>   rules:
-</span><span class=s>   - host: longhorn.k3s.cluster.local
-</span><span class=s>     http:
-</span><span class=s>       paths:
-</span><span class=s>       - pathType: Prefix
-</span><span class=s>         path: &#34;/&#34;
-</span><span class=s>         backend:
-</span><span class=s>           service:
-</span><span class=s>             name: longhorn-frontend
-</span><span class=s>             port:
-</span><span class=s>               number: 80
-</span><span class=s> EOF</span>
+<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=nv>USER</span><span class=o>=</span>admin<span class=p>;</span> <span class=nv>PASSWORD</span><span class=o>=</span>adminadmin<span class=p>;</span> <span class=nb>echo</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>USER</span><span class=si>}</span><span class=s2>:</span><span class=k>$(</span>openssl passwd -stdin -apr1 <span class=o>&lt;&lt;&lt;</span> <span class=si>${</span><span class=nv>PASSWORD</span><span class=si>}</span><span class=k>)</span><span class=s2>&#34;</span> &gt;&gt; auth
+kubectl -n longhorn-system create secret generic basic-auth --from-file<span class=o>=</span>auth
+cat <span class=s>&lt;&lt;EOF | kubectl apply -f -
+</span><span class=s>apiVersion: networking.k8s.io/v1
+</span><span class=s>kind: Ingress
+</span><span class=s>metadata:
+</span><span class=s>name: longhorn-ingress
+</span><span class=s>namespace: longhorn-system
+</span><span class=s>annotations:
+</span><span class=s>    ingress.kubernetes.io/rewrite-target: /
+</span><span class=s>    kubernetes.io/ingress.class: &#34;nginx&#34;
+</span><span class=s>    # type of authentication
+</span><span class=s>    nginx.ingress.kubernetes.io/auth-type: basic
+</span><span class=s>    # prevent the controller from redirecting (308) to HTTPS
+</span><span class=s>    nginx.ingress.kubernetes.io/ssl-redirect: &#39;false&#39;
+</span><span class=s>    # name of the secret that contains the user/password definitions
+</span><span class=s>    nginx.ingress.kubernetes.io/auth-secret: basic-auth
+</span><span class=s>    # message to display with an appropriate context why the authentication is required
+</span><span class=s>    nginx.ingress.kubernetes.io/auth-realm: &#39;Authentication Required &#39;
+</span><span class=s>    # custom max body size for file uploading like backing image uploading
+</span><span class=s>    nginx.ingress.kubernetes.io/proxy-body-size: 10000m
+</span><span class=s>spec:
+</span><span class=s>rules:
+</span><span class=s>- host: longhorn.k3s.cluster.local
+</span><span class=s>    http:
+</span><span class=s>    paths:
+</span><span class=s>    - pathType: Prefix
+</span><span class=s>        path: &#34;/&#34;
+</span><span class=s>        backend:
+</span><span class=s>        service:
+</span><span class=s>            name: longhorn-frontend
+</span><span class=s>            port:
+</span><span class=s>            number: 80
+</span><span class=s>EOF</span>
 </code></pre></td></tr></table>
 </div>
 </div></li>
@@ -334,8 +334,8 @@ helm install longhorn longhorn/longhorn --namespace longhorn-system --set csi.ku
 </span><span class=lnt>2
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash> mkdir reverse-proxy
- <span class=nb>cd</span> reverse-proxy
+<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>mkdir reverse-proxy
+<span class=nb>cd</span> reverse-proxy
 </code></pre></td></tr></table>
 </div>
 </div></li>
