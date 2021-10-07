@@ -246,7 +246,8 @@ helm install longhorn longhorn/longhorn --namespace longhorn-system --set csi.ku
 </code></pre></td></tr></table>
 </div>
 </div></li>
-<li>auth & ingress 생성
+<li>auth & ingress 생성</li>
+</ol>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt> 1
@@ -291,9 +292,9 @@ cat <span class=s>&lt;&lt;EOF | kubectl apply -f -
 </span><span class=s>apiVersion: networking.k8s.io/v1
 </span><span class=s>kind: Ingress
 </span><span class=s>metadata:
-</span><span class=s>name: longhorn-ingress
-</span><span class=s>namespace: longhorn-system
-</span><span class=s>annotations:
+</span><span class=s>  name: longhorn-ingress
+</span><span class=s>  namespace: longhorn-system
+</span><span class=s>  annotations:
 </span><span class=s>    ingress.kubernetes.io/rewrite-target: /
 </span><span class=s>    kubernetes.io/ingress.class: &#34;nginx&#34;
 </span><span class=s>    # type of authentication
@@ -307,23 +308,21 @@ cat <span class=s>&lt;&lt;EOF | kubectl apply -f -
 </span><span class=s>    # custom max body size for file uploading like backing image uploading
 </span><span class=s>    nginx.ingress.kubernetes.io/proxy-body-size: 10000m
 </span><span class=s>spec:
-</span><span class=s>rules:
-</span><span class=s>- host: longhorn.k3s.cluster.local
+</span><span class=s>  rules:
+</span><span class=s>  - host: longhorn.k3s.cluster.local
 </span><span class=s>    http:
-</span><span class=s>    paths:
-</span><span class=s>    - pathType: Prefix
+</span><span class=s>      paths:
+</span><span class=s>      - pathType: Prefix
 </span><span class=s>        path: &#34;/&#34;
 </span><span class=s>        backend:
-</span><span class=s>        service:
+</span><span class=s>          service:
 </span><span class=s>            name: longhorn-frontend
 </span><span class=s>            port:
-</span><span class=s>            number: 80
+</span><span class=s>              number: 80
 </span><span class=s>EOF</span>
 </code></pre></td></tr></table>
 </div>
-</div></li>
-</ol>
-<h3 id=on-server>On Server</h3>
+</div><h3 id=on-server>On Server</h3>
 <p>로컬에서 확인할 수 있는 reverse-proxy를 설정해주는 작업입니다.
 이 작업은 서버에서 이루어집니다.</p>
 <ol>
