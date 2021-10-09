@@ -80,6 +80,13 @@ Cancel
 <main class=main>
 <div class=container><div class="page home" posts><div class=home-profile><div class=home-avatar><a href=/ title=Home><img class=lazyload src=/svg/loading.min.svg data-src=/icons/ms-icon-310x310.png data-srcset="/icons/ms-icon-310x310.png, /icons/ms-icon-310x310.png 1.5x, /icons/ms-icon-310x310.png 2x" data-sizes=auto alt=/icons/ms-icon-310x310.png title=/icons/ms-icon-310x310.png></a></div><h2 class=home-subtitle><div id=id-1 class=typeit></div></h2><div class=links><a href=https://github.com/Aiden-Jeon title=GitHub target=_blank rel="noopener noreffer me"><i class="fab fa-github-alt fa-fw"></i></a><a href=https://linkedin.com/in/https://www.linkedin.com/in/jongseob-jeon/ title=LinkedIn target=_blank rel="noopener noreffer me"><i class="fab fa-linkedin fa-fw"></i></a><a href=mailto:ells2124@gmail.com title=Email rel=" me"><i class="far fa-envelope fa-fw"></i></a><a href=/index.xml title=RSS target=_blank rel="noopener noreffer me"><i class="fas fa-rss fa-fw"></i></a></div></div>
 <article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
+<a href=/chapter-03/>3. 코딩과 디버깅에 관하여</a>
+</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-10-09>2021-10-09</time></span>&nbsp;<span class=post-category>included in <a href=/categories/til/><i class="far fa-folder fa-fw"></i>TIL</a></span></div><div class=content>알고리즘 문제 해결 전략을 읽고 요약했습니다.
+3. 코딩과 디버깅에 관하여 3.1 도입: 코딩의 중요성을 간과하지 말라 좋은 성적을 올리기 위한 비결은 당장 빨리 코드를 작성하기 보다 읽기 쉬운 코드를 작성하는 것
+복잡하고 읽기 어려운 코드 디버깅이 어렵다. 한 번에 정확하게 작성하기 어렵다. 3.2 좋은 코드를 짜기 위한 원칙 1) 간결한 코드를 작성하기 코드가 짧으면 짧을 수록 오타나 단순한 버그가 사라질 우려가 줄어든다. 디버깅이 쉬워진다.</div><div class=post-footer>
+<a href=/chapter-03/>Read More</a><div class=post-tags>
+<i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/algorithm/>algorithm</a></div></div>
+</article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
 <a href=/issue_with_auth/>kubeflow 설치 중 auth dex 이슈 해결하기</a>
 </h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-10-08>2021-10-08</time></span>&nbsp;<span class=post-category>included in <a href=/categories/kubernetes/><i class="far fa-folder fa-fw"></i>kubernetes</a></span></div><div class=content>Kubeflow 설치 중 auth의 dex pod이 동작하지 않는 것을 확인했습니다. 우선, auth namespace를 확인해봤습니다.
 1 kubectl get all -n auth 다음과 같은 결과를 얻을 수 있었습니다.
@@ -123,12 +130,6 @@ On Server 사용하는 서버 스s펙은 다음과 같습니다.
 2.2 문제 해결 과정 1.문제를 읽고 이해하기 그림과 입출력 예제로 문제가 원하는 것을 유추하지 않기 2.재정의와 추상화 자신이 다루기 쉬운 개념을 이용해, 문제를 자신의 언어로 풀어 쓰는 것 문제의 추상화 3.계획 세우기 문제를 어떻게 해결할지 계획 세우기 문제를 어떻게 해결할지 결정 사용할 알고리즘과 자료구조 선택 4.계획 검증하기 5.계획 수정하기 6.회고하기 자신이 문제를 해결한 과정을 돌이켜 보고 개선하는 과정</div><div class=post-footer>
 <a href=/chapter-02/>Read More</a><div class=post-tags>
 <i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/algorithm/>algorithm</a></div></div>
-</article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
-<a href=/explaining_dnn_properties/>Properties of Explanations</a>
-</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-07-19>2021-07-19</time></span>&nbsp;<span class=post-category>included in <a href=/categories/xai/><i class="far fa-folder fa-fw"></i>xai</a></span></div><div class=content>Properties of Explanations 딥러닝 모델을 해석하려는 목적은 모델의 의사 결정 과정을 사람이 이해할 수 있게 하는데 있습니다. 이 목적이 달성되었다고 보려면 다음 두 가지 특성이 만족해야 됩니다.
-explanations should be easy for humans to interpret explanations should be faithfully describing the decision-making process of the target model Easiness to interpret 모델 예측의 설명이 어렵다면 사람들이 사용하기 어렵습니다. 예를 들어서 뉴럴넷 모델의 해석이라고 모델의 모든 함수들의 chain 값을 준다면 이는 모델을 이해하는데 아무런 도움이 되지 않습니다.</div><div class=post-footer>
-<a href=/explaining_dnn_properties/>Read More</a><div class=post-tags>
-<i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/xai/>xai</a></div></div>
 </article><ul class=pagination><li class="page-item active">
 <span class=page-link>
 <a href=/>1</a>
