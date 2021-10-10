@@ -5,7 +5,8 @@
 <meta name=robots content="noodp">
 <meta http-equiv=x-ua-compatible content="IE=edge, chrome=1">
 <title>(CKA) 06. Security - Aiden's Camp</title><meta name=Description content="Welcome to Aiden's Camp"><meta property="og:title" content="(CKA) 06. Security">
-<meta property="og:description" content="Kubernetes Security Primitives Secrure Hosts  Password based authentication disabled SSH Key based authentication  Secure kubernetes  kube-apiserver  Who can access? What can they do?    Authentication Who can access?  Files - Username and Passwords Fiels - Username and Tokens Certificates External Authenication providers - LDAP Service Accounts  Authorization What can they do?  RBAC Authorization ABAC Authorization Node Authorization Webhook Mode  TLS Certificates Network Policies Authentication Users">
+<meta property="og:description" content="CKA를 준비하면서 공부한 요약 내용입니다.
+ 강의 What is CKA?  Kubernetes Security Primitives Secrure Hosts  Password based authentication disabled SSH Key based authentication  Secure kubernetes  kube-apiserver  Who can access? What can they do?    Authentication Who can access?  Files - Username and Passwords Fiels - Username and Tokens Certificates External Authenication providers - LDAP Service Accounts  Authorization What can they do?  RBAC Authorization ABAC Authorization Node Authorization Webhook Mode  TLS Certificates Network Policies Authentication Users">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://aiden-jeon.github.io/06_security/"><meta property="og:image" content="https://aiden-jeon.github.io/logo.png"><meta property="article:section" content="posts">
 <meta property="article:published_time" content="2021-05-30T00:00:00+00:00">
@@ -13,9 +14,10 @@
 <meta name=twitter:card content="summary_large_image">
 <meta name=twitter:image content="https://aiden-jeon.github.io/logo.png">
 <meta name=twitter:title content="(CKA) 06. Security">
-<meta name=twitter:description content="Kubernetes Security Primitives Secrure Hosts  Password based authentication disabled SSH Key based authentication  Secure kubernetes  kube-apiserver  Who can access? What can they do?    Authentication Who can access?  Files - Username and Passwords Fiels - Username and Tokens Certificates External Authenication providers - LDAP Service Accounts  Authorization What can they do?  RBAC Authorization ABAC Authorization Node Authorization Webhook Mode  TLS Certificates Network Policies Authentication Users">
+<meta name=twitter:description content="CKA를 준비하면서 공부한 요약 내용입니다.
+ 강의 What is CKA?  Kubernetes Security Primitives Secrure Hosts  Password based authentication disabled SSH Key based authentication  Secure kubernetes  kube-apiserver  Who can access? What can they do?    Authentication Who can access?  Files - Username and Passwords Fiels - Username and Tokens Certificates External Authenication providers - LDAP Service Accounts  Authorization What can they do?  RBAC Authorization ABAC Authorization Node Authorization Webhook Mode  TLS Certificates Network Policies Authentication Users">
 <meta name=application-name content="Aiden's Camp">
-<meta name=apple-mobile-web-app-title content="Aiden's Camp"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=icons/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://aiden-jeon.github.io/06_security/><link rel=prev href=https://aiden-jeon.github.io/docker_commands_run/><link rel=next href=https://aiden-jeon.github.io/08_networking_pre/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"(CKA) 06. Security","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/aiden-jeon.github.io\/06_security\/"},"genre":"posts","keywords":"k8s, cka","wordcount":1429,"url":"https:\/\/aiden-jeon.github.io\/06_security\/","datePublished":"2021-05-30T00:00:00+00:00","dateModified":"2021-05-30T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"Jongseob Jeon"},"description":""}</script></head>
+<meta name=apple-mobile-web-app-title content="Aiden's Camp"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=icons/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://aiden-jeon.github.io/06_security/><link rel=prev href=https://aiden-jeon.github.io/docker_commands_run/><link rel=next href=https://aiden-jeon.github.io/08_networking_pre/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"(CKA) 06. Security","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/aiden-jeon.github.io\/06_security\/"},"genre":"posts","keywords":"k8s, cka","wordcount":1438,"url":"https:\/\/aiden-jeon.github.io\/06_security\/","datePublished":"2021-05-30T00:00:00+00:00","dateModified":"2021-05-30T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"Jongseob Jeon"},"description":""}</script></head>
 <body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':'light'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'light'==='dark')&&document.body.setAttribute('theme','dark')</script>
 <div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
 <div class=header-wrapper>
@@ -80,10 +82,10 @@ Cancel
 <main class=main>
 <div class=container><div class=toc id=toc-auto>
 <h2 class=toc-title>Contents</h2>
-<div class="toc-content always-active" id=toc-content-auto></div>
+<div class=toc-content id=toc-content-auto></div>
 </div><article class="page single"><h1 class="single-title animated flipInX">(CKA) 06. Security</h1><div class=post-meta>
 <div class=post-meta-line><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-category>included in <a href=/categories/kubernetes/><i class="far fa-folder fa-fw"></i>kubernetes</a></span></div>
-<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-05-30>2021-05-30</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1429 words&nbsp;
+<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-05-30>2021-05-30</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1438 words&nbsp;
 <i class="far fa-clock fa-fw"></i>&nbsp;7 minutes&nbsp;</div>
 </div><div class="details toc" id=toc-static kept>
 <div class="details-summary toc-title">
@@ -246,7 +248,12 @@ Cancel
 </li>
 </ul>
 </nav></div>
-</div><div class=content id=content><h2 id=kubernetes-security-primitives>Kubernetes Security Primitives</h2>
+</div><div class=content id=content><p>CKA를 준비하면서 공부한 요약 내용입니다.</p>
+<ul>
+<li><a href=https://www.udemy.com/course/certified-kubernetes-administrator-with-practice-tests/ target=_blank rel="noopener noreffer">강의</a></li>
+<li><a href=https://www.cncf.io/certification/cka/ target=_blank rel="noopener noreffer">What is CKA?</a></li>
+</ul>
+<h2 id=kubernetes-security-primitives>Kubernetes Security Primitives</h2>
 <h3 id=secrure-hosts>Secrure Hosts</h3>
 <ul>
 <li>Password based authentication disabled</li>
