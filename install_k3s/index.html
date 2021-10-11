@@ -431,7 +431,7 @@ COPY ./kubeflow.conf /etc/nginx/conf.d/kubeflow.conf
         proxy_set_header X-Forwarded-Proto <span class=nv>$scheme</span><span class=p>;</span>
         proxy_set_header X-NginX-Proxy true<span class=p>;</span>
         proxy_set_header X-Scheme <span class=nv>$scheme</span><span class=p>;</span>
-        proxy_pass http://localhost:30807<span class=p>;</span>
+        proxy_pass http://localhost:32455<span class=p>;</span>
         proxy_http_version 1.1<span class=p>;</span>
         proxy_set_header Upgrade <span class=nv>$http_upgrade</span><span class=p>;</span>
         proxy_set_header Connection <span class=s2>&#34;upgrade&#34;</span><span class=p>;</span>
