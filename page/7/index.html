@@ -80,6 +80,22 @@ Cancel
 <main class=main>
 <div class=container><div class="page home" posts><div class=home-profile><div class=home-avatar><a href=/ title=Home><img class=lazyload src=/svg/loading.min.svg data-src=/icons/ms-icon-310x310.png data-srcset="/icons/ms-icon-310x310.png, /icons/ms-icon-310x310.png 1.5x, /icons/ms-icon-310x310.png 2x" data-sizes=auto alt=/icons/ms-icon-310x310.png title=/icons/ms-icon-310x310.png></a></div><h2 class=home-subtitle><div id=id-1 class=typeit></div></h2><div class=links><a href=https://github.com/Aiden-Jeon title=GitHub target=_blank rel="noopener noreffer me"><i class="fab fa-github-alt fa-fw"></i></a><a href=https://linkedin.com/in/jongseob-jeon title=LinkedIn target=_blank rel="noopener noreffer me"><i class="fab fa-linkedin fa-fw"></i></a><a href=mailto:ells2124@gmail.com title=Email rel=" me"><i class="far fa-envelope fa-fw"></i></a><a href=/index.xml title=RSS target=_blank rel="noopener noreffer me"><i class="fas fa-rss fa-fw"></i></a></div></div>
 <article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
+<a href=/10820/>문자열 분석</a>
+</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-04-08>2021-04-08</time></span>&nbsp;<span class=post-category>included in <a href=/categories/algorithm/><i class="far fa-folder fa-fw"></i>algorithm</a></span></div><div class=content>problem number: 10820 link: https://www.acmicpc.net/problem/10820 Define input, output Input: 소문자, 대문자, 숫자, 공백으로 이루어진 어떤 문자열 Output: 소문자, 대문자, 숫자, 공백의 개수 설명 주어진 문자열 시작과 끝에 공백이 있음으로 strip 하면 안 된다.
+source code 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 import sys from collections import Counter for i in range(100): lower = 0 upper = 0 number = 0 blank = 0 line = sys.</div><div class=post-footer>
+<a href=/10820/>Read More</a><div class=post-tags>
+<i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/acmicpc/>acmicpc</a></div></div>
+</article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
+<a href=/10808/>알파벳 개수</a>
+</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-04-08>2021-04-08</time></span>&nbsp;<span class=post-category>included in <a href=/categories/algorithm/><i class="far fa-folder fa-fw"></i>algorithm</a></span></div><div class=content> problem number: 10808 link: https://www.acmicpc.net/problem/10808 Define input, output Input: 소문자로 이루어진 단어 S Output: 각 소문자별 count 설명 source code 1 2 3 4 5 6 7 8 import sys from collections import Counter S = sys.stdin.readline() S = Counter(S) answer = [str(S.get(chr(c), 0)) for c in range(ord("a"), ord("z") + 1)] print(" ".join(answer)) </div><div class=post-footer>
+<a href=/10808/>Read More</a><div class=post-tags>
+<i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/acmicpc/>acmicpc</a></div></div>
+</article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
+<a href=/10809/>알파벳 찾기</a>
+</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-04-08>2021-04-08</time></span>&nbsp;<span class=post-category>included in <a href=/categories/algorithm/><i class="far fa-folder fa-fw"></i>algorithm</a></span></div><div class=content> problem number: 10809 link: https://www.acmicpc.net/problem/10809 Define input, output Input: 소문자로 이루어진 단어 S Output: 각 알파벳이 처음 나온 위치 source code 1 2 3 4 5 6 7 8 9 10 11 import sys S = sys.stdin.readline().strip() result = [-1] * (ord("z") - ord("a") + 1) for i, string in enumerate(S): if result[ord(string) - ord("a")] == -1: result[ord(string) - ord("a")] = i print(*result) </div><div class=post-footer>
+<a href=/10809/>Read More</a><div class=post-tags>
+<i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/acmicpc/>acmicpc</a></div></div>
+</article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
 <a href=/1935/>후위 표기식2</a>
 </h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-04-08>2021-04-08</time></span>&nbsp;<span class=post-category>included in <a href=/categories/algorithm/><i class="far fa-folder fa-fw"></i>algorithm</a></span></div><div class=content>problem number: 1935 link: https://www.acmicpc.net/problem/1935 Define input, output Input: 후위표기식으로 표시된 식 Output: 값 설명 후위 표기식과 다르게 정방향으로 접근한다.
 후휘 표기식 자체가 컴퓨터에서 식을 간단하게 계산하기 위해서 만들어진 것을 생각하자.
@@ -96,24 +112,6 @@ source code 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26
 </h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-04-04>2021-04-04</time></span>&nbsp;<span class=post-category>included in <a href=/categories/algorithm/><i class="far fa-folder fa-fw"></i>algorithm</a></span></div><div class=content>problem number: 17299 link: https://www.acmicpc.net/problem/17299 Define input, output Input: Output: 설명 source code 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 import sys from collections import Counter N = int(sys.stdin.readline()) array = list(map(int, sys.stdin.readline().strip().split(" "))) cnt = Counter(array) cnt_array = list(map(lambda x: (cnt[x], x), array)) stack = [] answer = [-1] * N for i, (val, mapping) in enumerate(cnt_array): while stack and cnt_array[stack[-1][0]][0] &lt; val: j, v, m = stack.</div><div class=post-footer>
 <a href=/17299/>Read More</a><div class=post-tags>
 <i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/acmicpc/>acmicpc</a></div></div>
-</article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
-<a href=/1918/>후위 표기식</a>
-</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-04-04>2021-04-04</time></span>&nbsp;<span class=post-category>included in <a href=/categories/algorithm/><i class="far fa-folder fa-fw"></i>algorithm</a></span></div><div class=content>problem number: 1918 link: https://www.acmicpc.net/problem/1918 Define input, output Input: Output: 설명 source code 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 import sys cals = list(sys.stdin.readline().rstrip()) stack = [""] answer = "" for c in cals: if c in ["*", "/"]: while stack and stack[-1] in ["*", "/"]: answer += stack.</div><div class=post-footer>
-<a href=/1918/>Read More</a><div class=post-tags>
-<i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/acmicpc/>acmicpc</a></div></div>
-</article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
-<a href=/introduction/>Introduction to XAI</a>
-</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-03-31>2021-03-31</time></span>&nbsp;<span class=post-category>included in <a href=/categories/xai/><i class="far fa-folder fa-fw"></i>xai</a></span></div><div class=content>Introduction to XAI(eXplainable AI) 최근 많은 산업에서 딥러닝을 적용을 시도하고 있습니다. 하지만 모델의 결과가 어떤 과정을 통해서 그런 예측을 했는지 해석하기 어려운 &lsquo;블랙박스&rsquo; 문제는 딥러닝 적용을 blocking하는 큰 요인입니다.
-예를 들어 신규 대출을 받으려는 고객이 있습니다. 은행에서는 이 고객이 대출을 잘 갚을 수 있을지에 대해 심사를 하고 대출을 승인을 결정합니다. 이 은행에서는 딥러닝 모델을 이용해 고객들의 대출 심사를 합니다. 모델은 이 고객에게 대출을 거절했습니다. 고객과 대출 담당자는 대출이 거절된 이유가 고객의 나이, 직업 등 어떤 이유로 대출이 거절 되었는지 알고 싶습니다.</div><div class=post-footer>
-<a href=/introduction/>Read More</a></div>
-</article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
-<a href=/lime_with_code/>LIME with code</a>
-</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-03-31>2021-03-31</time></span>&nbsp;<span class=post-category>included in <a href=/categories/xai/><i class="far fa-folder fa-fw"></i>xai</a></span></div><div class=content>(LIME) Local Interpretable Model-agnostic Explanations​ Objective of LIME $$\xi(x)=\underset{g\in G}{\operatorname{argmin}} L(f,g,\pi_{x})+\Omega(g)$$
-​
-Train $f$ 이번 포스트에서는 예제 데이터로 fetch_20newsgroups를 사용했습니다. fetch_20newsgroups 데이터에는 총 20개의 Class가 존재합니다. 하지만 문제를 단순하게 하기 위해서 이번 포스트에서는 20개 Class 모두를 사용하기 보다는 &ldquo;atheism&rdquo;, &ldquo;christian&rdquo; 2개의 카테고리만 이용하겠습니다. 이렇게 되면 이제 두 클래스를 분류하는 Binary Text Classification 문제가 되고 모델로는 Random Forest를 사용해 보겠습니다.
-그리고 학습된 Random forest를 $f$ 라고 정의하겠습니다.
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 import sklearn import sklearn.</div><div class=post-footer>
-<a href=/lime_with_code/>Read More</a></div>
 </article><ul class=pagination><li class=page-item>
 <span class=page-link>
 <a href=/>1</a>
@@ -141,8 +139,10 @@ Train $f$ 이번 포스트에서는 예제 데이터로 fetch_20newsgroups를 �
 <a href=/page/9/>9</a>
 </span>
 </li><li class=page-item>
+<span class=page-link aria-hidden=true>&mldr;</span>
+</li><li class=page-item>
 <span class=page-link>
-<a href=/page/10/>10</a>
+<a href=/page/11/>11</a>
 </span>
 </li></ul></div></div>
 </main><footer class=footer>
