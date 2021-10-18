@@ -80,6 +80,16 @@ Cancel
 <main class=main>
 <div class=container><div class="page home" posts><div class=home-profile><div class=home-avatar><a href=/ title=Home><img class=lazyload src=/svg/loading.min.svg data-src=/icons/ms-icon-310x310.png data-srcset="/icons/ms-icon-310x310.png, /icons/ms-icon-310x310.png 1.5x, /icons/ms-icon-310x310.png 2x" data-sizes=auto alt=/icons/ms-icon-310x310.png title=/icons/ms-icon-310x310.png></a></div><h2 class=home-subtitle><div id=id-1 class=typeit></div></h2><div class=links><a href=https://github.com/Aiden-Jeon title=GitHub target=_blank rel="noopener noreffer me"><i class="fab fa-github-alt fa-fw"></i></a><a href=https://linkedin.com/in/jongseob-jeon title=LinkedIn target=_blank rel="noopener noreffer me"><i class="fab fa-linkedin fa-fw"></i></a><a href=mailto:ells2124@gmail.com title=Email rel=" me"><i class="far fa-envelope fa-fw"></i></a><a href=/index.xml title=RSS target=_blank rel="noopener noreffer me"><i class="fas fa-rss fa-fw"></i></a></div></div>
 <article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
+<a href=/wireguard/>Wireguard 설치하기</a>
+</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-10-15>2021-10-15</time></span>&nbsp;<span class=post-category>included in <a href=/categories/self-hosted/><i class="far fa-folder fa-fw"></i>self-hosted</a></span></div><div class=content>On Orcale Cloud 이제 네트워크에 ingress 를 추가해주어야 합니다.
+Instance 메뉴를 선택합니다.
+Instance를 선택합니다.
+Subnet을 선택합니다.
+Security를 선택합니다. Add Ingress Rules를 눌러 WireGuard를 위한 포트를 추가하겠습니다. 다음 빨간 칸의 내용들을 입력한 후 추가합니다. Prxoy-Manager Proxy Hosts를 추가합니다. On Ubuntu Server Wireguard와 이를 쉽게 사용할 수 있는 Subspace를 실행합니다.
+우선 아래 과정을 통해 Wireguard를 설치합니다. 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 sudo su apt-get update apt-get install -y wireguard # Remove dnsmasq because it will run inside the container.</div><div class=post-footer>
+<a href=/wireguard/>Read More</a><div class=post-tags>
+<i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/self-hosted/>self-hosted</a>,&nbsp;<a href=/tags/wireguard/>wireguard</a></div></div>
+</article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
 <a href=/nginx_proxy/>Nginx Proxy Manager 설정하기</a>
 </h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-10-13>2021-10-13</time></span>&nbsp;<span class=post-category>included in <a href=/categories/self-hosted/><i class="far fa-folder fa-fw"></i>self-hosted</a></span></div><div class=content>이번 포스트에서는 생성한 인스턴스를 nginx proxy로 관리하는 방법에 대해서 설명합니다.
 Ubuntu Instance 기본 설정 1. 기본 패키지 업데이트 1 sudo apt update && sudo apt -y upgrade 2. Swap Memory 생성 Free tier의 메모리는 1G 이므로 스왑 메모리를 생성하도록 하겠습니다.
@@ -113,16 +123,6 @@ Create Instance를 선택합니다. Instances 이름을 입력합니다. 이미�
 1 kubectl get all -n auth 다음과 같은 결과를 얻을 수 있었습니다.
 1 2 3 4 5 6 7 8 9 10 11 NAME READY STATUS RESTARTS AGE pod/dex-6f4f4fd769-wdfhp 0/1 Error 197 16h NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE service/dex NodePort 10.43.69.43 &lt;none> 5556:32000/TCP 16h NAME READY UP-TO-DATE AVAILABLE AGE deployment.apps/dex 0/1 1 0 16h NAME DESIRED CURRENT READY AGE replicaset.</div><div class=post-footer>
 <a href=/issue_with_auth/>Read More</a><div class=post-tags>
-<i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/k8s/>k8s</a>,&nbsp;<a href=/tags/k3s/>k3s</a></div></div>
-</article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
-<a href=/install_k3s/>k3s Installation</a>
-</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-10-01>2021-10-01</time></span>&nbsp;<span class=post-category>included in <a href=/categories/kubernetes/><i class="far fa-folder fa-fw"></i>kubernetes</a></span></div><div class=content>Kubeflow 설치 시리즈
-Pre-Requisites for k3s Setup k3s Installation Kubeflow Installation 이번 포스트에서는 서버에 k3s를 설치하는 과정에 대해서 설명합니다.
-필요한 준비 과정을 확인 후 진행해 주세요.
-k3s Installation k3s 설치
-k3s는 gpu를 사용하기 위해서 도커를 백엔드로 사용하겠습니다.
-docker 백엔드는 --docker를 추가하면 됩니다. 1 curl -sfL https://get.k3s.io | sh -s - server --disable traefik --disable servicelb --disable local-storage --docker k3s config 확인 k3s를 설치후 k3s config를 확인합니다 1 cat /etc/rancher/k3s/k3s.</div><div class=post-footer>
-<a href=/install_k3s/>Read More</a><div class=post-tags>
 <i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/k8s/>k8s</a>,&nbsp;<a href=/tags/k3s/>k3s</a></div></div>
 </article><ul class=pagination><li class="page-item active">
 <span class=page-link>

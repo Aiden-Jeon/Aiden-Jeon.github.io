@@ -154,7 +154,7 @@ Cancel
 </span><span class=lnt>2
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>mv ssh-key-2021-10-13.key ~/.ssh
+<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>mv ssh-key-2021-10-13.key ~/.ssh/oracle.key
 <span class=nb>cd</span> ~/.ssh
 </code></pre></td></tr></table>
 </div>
@@ -165,7 +165,7 @@ Cancel
 <pre tabindex=0 class=chroma><code><span class=lnt>1
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>chmod <span class=m>400</span> ssh-key-2021-10-13.key
+<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>chmod <span class=m>400</span> oracle.key
 </code></pre></td></tr></table>
 </div>
 </div></li>
@@ -175,7 +175,7 @@ Cancel
 <pre tabindex=0 class=chroma><code><span class=lnt>1
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>ssh ubuntu@&lt;PUBLIC IP&gt; -i ssh-key-2021-10-13.key
+<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>ssh ubuntu@&lt;PUBLIC IP&gt; -i ~/.ssh/oracle.key
 </code></pre></td></tr></table>
 </div>
 </div></li>
