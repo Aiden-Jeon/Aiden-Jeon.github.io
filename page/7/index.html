@@ -80,6 +80,14 @@ Cancel
 <main class=main>
 <div class=container><div class="page home" posts><div class=home-profile><div class=home-avatar><a href=/ title=Home><img class=lazyload src=/svg/loading.min.svg data-src=/icons/ms-icon-310x310.png data-srcset="/icons/ms-icon-310x310.png, /icons/ms-icon-310x310.png 1.5x, /icons/ms-icon-310x310.png 2x" data-sizes=auto alt=/icons/ms-icon-310x310.png title=/icons/ms-icon-310x310.png></a></div><h2 class=home-subtitle><div id=id-1 class=typeit></div></h2><div class=links><a href=https://github.com/Aiden-Jeon title=GitHub target=_blank rel="noopener noreffer me"><i class="fab fa-github-alt fa-fw"></i></a><a href=https://linkedin.com/in/jongseob-jeon title=LinkedIn target=_blank rel="noopener noreffer me"><i class="fab fa-linkedin fa-fw"></i></a><a href=mailto:ells2124@gmail.com title=Email rel=" me"><i class="far fa-envelope fa-fw"></i></a><a href=/index.xml title=RSS target=_blank rel="noopener noreffer me"><i class="fas fa-rss fa-fw"></i></a></div></div>
 <article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
+<a href=/argocd_branch/>argocd를 branch에서 cd</a>
+</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-04-09>2021-04-09</time></span>&nbsp;<span class=post-category>included in <a href=/categories/cicd/><i class="far fa-folder fa-fw"></i>cicd</a></span></div><div class=content>CI/CD Contents 순서
+sphinx-autoapi 를 이용한 자동 api 문서 생성하기 github action을 이용한 ci ghcr을 이용한 kubernetes deployment 만들기 helm을 이용한 deployment chart 만들기 argocd를 이용한 cd argocd를 branch에서 cd 이번 포스트에서는 argocd를 이용해 github branch 에서 cd(continuous delivery) 하는 법에 대해서 알아보겠습니다.
+1. github action 설정하기 1.1 CI CI를 위한 github action을 작성하겠습니다.
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 docker-image-ci:runs-on:ubuntu-18.</div><div class=post-footer>
+<a href=/argocd_branch/>Read More</a><div class=post-tags>
+<i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/argocd/>argocd</a></div></div>
+</article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
 <a href=/2743/>단어 길이 재기</a>
 </h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-04-08>2021-04-08</time></span>&nbsp;<span class=post-category>included in <a href=/categories/algorithm/><i class="far fa-folder fa-fw"></i>algorithm</a></span></div><div class=content> problem number: 2743 link: https://www.acmicpc.net/problem/2743 Define input, output Input: 문자열 Output: 문자열의 길이 설명 source code 1 2 3 4 5 import sys S = sys.stdin.readline().strip() print(len(S)) </div><div class=post-footer>
 <a href=/2743/>Read More</a><div class=post-tags>
@@ -107,11 +115,6 @@ source code 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 import s
 source code 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 import sys def calculator(after, before, cur): if cur == "+": return before + after elif cur == "-": return before - after elif cur == "*": return before * after elif cur == "/": return before / after N = int(sys.</div><div class=post-footer>
 <a href=/1935/>Read More</a><div class=post-tags>
 <i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/acmicpc/>acmicpc</a></div></div>
-</article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
-<a href=/1122/>relative-sort-array</a>
-</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-04-04>2021-04-04</time></span>&nbsp;<span class=post-category>included in <a href=/categories/algorithm/><i class="far fa-folder fa-fw"></i>algorithm</a></span></div><div class=content>problem number: 1122 difficult: Easy https://leetcode.com/problems/relative-sort-array/ Define input, output Input: Two arrays are given, arr1 and arr2 arr2 is distinct and it is subset of arr1 Output: arr2_1: ordered values which are in arr2 arr2_2: values which are not in arr2 with ascending order concat arr2_1, arr2_2 source code 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 from typing import List class Solution: def relativeSortArray(self, arr1: List[int], arr2: List[int]) -> List[int]: order_dict = {v: 0 for v in arr2} not_order_dict = {} result = [] for v in arr1: if v in order_dict: order_dict[v] += 1 else: not_order_dict.</div><div class=post-footer>
-<a href=/1122/>Read More</a><div class=post-tags>
-<i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/leetcode/>leetcode</a></div></div>
 </article><ul class=pagination><li class=page-item>
 <span class=page-link>
 <a href=/>1</a>
