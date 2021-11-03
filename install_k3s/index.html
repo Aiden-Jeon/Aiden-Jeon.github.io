@@ -25,7 +25,7 @@ docker 백엔드는 --docker를 추가하면 됩니다. 1  curl -sfL https://get
 k3s는 gpu를 사용하기 위해서 도커를 백엔드로 사용하겠습니다.
 docker 백엔드는 --docker를 추가하면 됩니다. 1  curl -sfL https://get.k3s.io | sh -s - server --disable traefik --disable servicelb --disable local-storage --docker    k3s config 확인 k3s를 설치후 k3s config를 확인합니다 1  cat /etc/rancher/k3s/k3s.">
 <meta name=application-name content="Aiden's Camp">
-<meta name=apple-mobile-web-app-title content="Aiden's Camp"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=icons/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://aiden-jeon.github.io/install_k3s/><link rel=prev href=https://aiden-jeon.github.io/install_kubeflow/><link rel=next href=https://aiden-jeon.github.io/issue_with_auth/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"k3s Installation","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/aiden-jeon.github.io\/install_k3s\/"},"genre":"posts","keywords":"k8s, k3s","wordcount":612,"url":"https:\/\/aiden-jeon.github.io\/install_k3s\/","datePublished":"2021-10-01T00:00:00+00:00","dateModified":"2021-10-01T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"Jongseob Jeon"},"description":""}</script></head>
+<meta name=apple-mobile-web-app-title content="Aiden's Camp"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=icons/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://aiden-jeon.github.io/install_k3s/><link rel=prev href=https://aiden-jeon.github.io/install_kubeflow/><link rel=next href=https://aiden-jeon.github.io/issue_with_auth/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"k3s Installation","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/aiden-jeon.github.io\/install_k3s\/"},"genre":"posts","keywords":"k8s, k3s","wordcount":609,"url":"https:\/\/aiden-jeon.github.io\/install_k3s\/","datePublished":"2021-10-01T00:00:00+00:00","dateModified":"2021-10-01T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"Jongseob Jeon"},"description":""}</script></head>
 <body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':'light'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'light'==='dark')&&document.body.setAttribute('theme','dark')</script>
 <div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
 <div class=header-wrapper>
@@ -92,8 +92,8 @@ Cancel
 <h2 class=toc-title>Contents</h2>
 <div class="toc-content always-active" id=toc-content-auto></div>
 </div><article class="page single"><h1 class="single-title animated flipInX">k3s Installation</h1><div class=post-meta>
-<div class=post-meta-line><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-category>included in <a href=/categories/kubernetes/><i class="far fa-folder fa-fw"></i>kubernetes</a></span></div>
-<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-10-01>2021-10-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;612 words&nbsp;
+<div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-category>included in <a href=/categories/kubernetes/><i class="far fa-folder fa-fw"></i>kubernetes</a></span></div>
+<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-10-01>2021-10-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;609 words&nbsp;
 <i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;</div>
 </div><div class="details toc" id=toc-static kept>
 <div class="details-summary toc-title">
@@ -373,13 +373,11 @@ COPY ./kubeflow.conf /etc/nginx/conf.d/kubeflow.conf
 </span><span class=lnt>13
 </span><span class=lnt>14
 </span><span class=lnt>15
-</span><span class=lnt>16
 </span></code></pre></td>
 <td class=lntd>
 <pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>server <span class=o>{</span>
     listen 80<span class=p>;</span>
-
-    server_name longhorn.k3s.cluster.local<span class=p>;</span>
+ 
     location / <span class=o>{</span>
         proxy_redirect off<span class=p>;</span>
         proxy_pass_header Server<span class=p>;</span>
@@ -504,7 +502,7 @@ COPY ./kubeflow.conf /etc/nginx/conf.d/kubeflow.conf
 Please enable JavaScript to view the comments powered by <a href=https://utteranc.es/>Utterances</a>.
 </noscript></div></article></div>
 </main><footer class=footer>
-<div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.88.1">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+<div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.89.0">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
 </div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2019 - 2021</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>Jongseob Jeon</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div>
 </div>
 </footer></div>

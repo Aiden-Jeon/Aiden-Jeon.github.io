@@ -17,7 +17,7 @@
 <meta name=twitter:description content="알고리즘 문제 해결 전략을 읽고 요약했습니다.
  6. 무식하게 풀기 6.1 도입 무식하게 풀기  Brute Force 컴퓨터의 빠른 계산 능력을 이용해 가능한 경우의 수를 일일이 나열하면서 답을 찾는 방법  완전 탐색  Exhaustive search 컴퓨터의 장점을 이용한 방법  6.2 재귀호출과 완전탐색 재귀 함수  Recursive Function 자신이 수행한 작업을 유사한 형태의 여러 조각으로 쪼갠 뒤 그 중 한 조각을 수행하고, 나머지를 자기 자신을 호출해 실행하는 함수  eg) 1부터 n까지의 합을 구하는 함수">
 <meta name=application-name content="Aiden's Camp">
-<meta name=apple-mobile-web-app-title content="Aiden's Camp"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=icons/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://aiden-jeon.github.io/chapter-06/><link rel=prev href=https://aiden-jeon.github.io/chapter-05/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"6. 무식하게 풀기","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/aiden-jeon.github.io\/chapter-06\/"},"genre":"posts","keywords":"algorithm","wordcount":797,"url":"https:\/\/aiden-jeon.github.io\/chapter-06\/","datePublished":"2021-10-26T00:00:00+00:00","dateModified":"2021-10-26T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"Jongseob Jeon"},"description":""}</script></head>
+<meta name=apple-mobile-web-app-title content="Aiden's Camp"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=icons/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://aiden-jeon.github.io/chapter-06/><link rel=prev href=https://aiden-jeon.github.io/chapter-05/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"6. 무식하게 풀기","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/aiden-jeon.github.io\/chapter-06\/"},"genre":"posts","keywords":"algorithm","wordcount":1045,"url":"https:\/\/aiden-jeon.github.io\/chapter-06\/","datePublished":"2021-10-26T00:00:00+00:00","dateModified":"2021-10-26T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"Jongseob Jeon"},"description":""}</script></head>
 <body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':'light'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'light'==='dark')&&document.body.setAttribute('theme','dark')</script>
 <div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
 <div class=header-wrapper>
@@ -84,9 +84,9 @@ Cancel
 <h2 class=toc-title>Contents</h2>
 <div class=toc-content id=toc-content-auto></div>
 </div><article class="page single"><h1 class="single-title animated flipInX">6. 무식하게 풀기</h1><div class=post-meta>
-<div class=post-meta-line><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-category>included in <a href=/categories/til/><i class="far fa-folder fa-fw"></i>TIL</a></span></div>
-<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-10-26>2021-10-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;797 words&nbsp;
-<i class="far fa-clock fa-fw"></i>&nbsp;4 minutes&nbsp;</div>
+<div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-category>included in <a href=/categories/til/><i class="far fa-folder fa-fw"></i>TIL</a></span></div>
+<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-10-26>2021-10-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1045 words&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;5 minutes&nbsp;</div>
 </div><div class="details toc" id=toc-static kept>
 <div class="details-summary toc-title">
 <span>Contents</span>
@@ -111,6 +111,16 @@ Cancel
 <li><a href=#이론적-배경-재귀-호출과-부분문제>이론적 배경: 재귀 호출과 부분문제</a>
 <ul>
 <li><a href=#문제와-부문문제>문제와 부문문제</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href=#67-최적화-문제>6.7 최적화 문제</a>
+<ul>
+<li><a href=#예제-여행하는-예판원-문제-traveling-salssman-problem-tsp>예제: 여행하는 예판원 문제 (Traveling Salssman Problem, TSP)</a>
+<ul>
+<li><a href=#무식하게-풀-수-있을까>무식하게 풀 수 있을까?</a></li>
+<li><a href=#재귀-호출을-통한-답안-생성>재귀 호출을 통한 답안 생성</a></li>
 </ul>
 </li>
 </ul>
@@ -385,7 +395,81 @@ eg) PRETTY, GIRL, REPEAT<br>
 </ul>
 </li>
 </ul>
-</div><div class=post-footer id=post-footer>
+<h2 id=67-최적화-문제>6.7 최적화 문제</h2>
+<ul>
+<li>문제의 답이 하나가 아니라 여러 개이고, 그 중에서 어떤 기준에 따라 가장 좋은 답을 찾아내는 문제</li>
+<li>eg) $n$개의 원소 중 $r$개를 순서없이 골라내는 문제
+<ul>
+<li>최적화 문제 x</li>
+<li>우리가 원하는 답은 딱 하나 밖에 없다 -> 더 좋은 답이나 덜 좋은 답이 없음</li>
+</ul>
+</li>
+<li>eg) $n$개 사과 중 $r$개 골라서 무게의 합을 최대화하는 문제
+<ul>
+<li>최적화 문제</li>
+</ul>
+</li>
+<li>최적화 문제 해결 방법
+<ul>
+<li>완전 탐색</li>
+<li>동적 계호기법</li>
+<li>조합 탐색</li>
+<li>최적화 문제 -> 결정 문제로 변환</li>
+</ul>
+</li>
+</ul>
+<h3 id=예제-여행하는-예판원-문제-traveling-salssman-problem-tsp>예제: 여행하는 예판원 문제 (Traveling Salssman Problem, TSP)</h3>
+<p>어떤 나라에 $n(2 \le n \le 10)$개의 큰 도시가 있다.
+한 영업사원이 한 도시에서 출발해 다른 도시들을 전부 한 번씩 방문한 뒤 시작 도시로 돌아오려고 한다.
+각 도시들은 모두 직선도로로 연결되어 있다.
+영업사원이 여행해야 할 거리 중 가장 짧은 경로는 ?</p>
+<h4 id=무식하게-풀-수-있을까>무식하게 풀 수 있을까?</h4>
+<p>시간안에 답을 구할 수 있을까?<br>
+-> $(n-1)!$ -> $9!$ -> $362,880$ -> 1초안에 처리할 수 있는 숫자</p>
+<h4 id=재귀-호출을-통한-답안-생성>재귀 호출을 통한 답안 생성</h4>
+<ul>
+<li>$n$개의 도시로 구성된 경로를 $n$개의 조각으로 나눠 앞에서부터 도시를 하나씩 추가해 경로를 만들기</li>
+<li><code>shortest_path(path)=path</code> -> 지금까지 만든 경로, 나머지 도시를 모두 방문하는 경로들 중 가장 짧은 것을 반환한다.</li>
+</ul>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=k>def</span> <span class=nf>shortest_path</span><span class=p>(</span><span class=n>path</span><span class=p>,</span> <span class=n>visited</span><span class=p>,</span> <span class=n>current_length</span><span class=p>):</span>
+    <span class=c1># 기저 사례: 모든 도시를 다 방문했을 때는 시작도시로 돌아가고 종료</span>
+    <span class=k>if</span> <span class=nb>len</span><span class=p>(</span><span class=n>path</span><span class=p>)</span> <span class=o>==</span> <span class=n>n</span><span class=p>:</span>
+        <span class=k>return</span> <span class=n>current_length</span> <span class=o>+</span> <span class=n>dist</span><span class=p>[</span><span class=n>path</span><span class=p>[</span><span class=mi>0</span><span class=p>]][</span><span class=n>path</span><span class=p>[</span><span class=o>-</span><span class=mi>1</span><span class=p>]]</span>
+    <span class=n>ret</span> <span class=o>=</span> <span class=mi>987654321</span>
+    <span class=k>for</span> <span class=n>next_visit</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=n>n</span><span class=p>):</span>
+        <span class=k>if</span> <span class=n>visited</span><span class=p>[</span><span class=n>next_visit</span><span class=p>]:</span>
+            <span class=k>continue</span>
+        <span class=n>here</span> <span class=o>=</span><span class=n>path</span><span class=p>[</span><span class=o>-</span><span class=mi>1</span><span class=p>]</span>
+        <span class=n>path</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=n>next_visit</span><span class=p>)</span>
+        <span class=n>visited</span><span class=p>[</span><span class=n>next_visit</span><span class=p>]</span> <span class=o>=</span> <span class=kc>True</span>
+        <span class=n>cand</span> <span class=o>=</span> <span class=n>shorted_path</span><span class=p>(</span><span class=n>path</span><span class=p>,</span> <span class=n>visited</span><span class=p>,</span> <span class=n>current_length</span> <span class=o>+</span> <span class=n>dist</span><span class=p>[</span><span class=n>here</span><span class=p>][</span><span class=n>next_visit</span><span class=p>])</span>
+        <span class=n>ret</span> <span class=o>=</span> <span class=nb>min</span><span class=p>(</span><span class=n>ret</span><span class=p>,</span> <span class=n>cand</span><span class=p>)</span>
+        <span class=n>visited</span><span class=p>[</span><span class=n>next_visit</span><span class=p>]</span> <span class=o>=</span> <span class=kc>False</span>
+        <span class=n>path</span><span class=o>.</span><span class=n>pop</span><span class=p>()</span>
+    <span class=k>return</span> <span class=n>ret</span>
+</code></pre></td></tr></table>
+</div>
+</div></div><div class=post-footer id=post-footer>
 <div class=post-info>
 <div class=post-info-line>
 <div class=post-info-mod>
@@ -414,7 +498,7 @@ eg) PRETTY, GIRL, REPEAT<br>
 Please enable JavaScript to view the comments powered by <a href=https://utteranc.es/>Utterances</a>.
 </noscript></div></article></div>
 </main><footer class=footer>
-<div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.88.1">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+<div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.89.0">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
 </div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2019 - 2021</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>Jongseob Jeon</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div>
 </div>
 </footer></div>
