@@ -21,7 +21,7 @@ k8s에서 image를 pull 하기 위해서는 ghcr에 접근할 수 있는 권한�
 k8s에서 image를 pull 하기 위해서는 ghcr에 접근할 수 있는 권한이 필요합니다.
 1 2 3 4 5  kubectl -n seldon create secret docker-registry mrx-ghcr \\ --docker-server=ghcr.io \\ --docker-username=<github id> \\ --docker-password=<secret key> \\ --docker-email=<github mail>   2. aws secrets 이번 포스트에서는 모델을 S3에 저장한다고 가정합니다.">
 <meta name=application-name content="Aiden's Camp">
-<meta name=apple-mobile-web-app-title content="Aiden's Camp"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=icons/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://aiden-jeon.github.io/custom-server/><link rel=prev href=https://aiden-jeon.github.io/09_design_and_install_k8s/><link rel=next href=https://aiden-jeon.github.io/99_review/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"밑바닥부터 시작하는 Seldon-Core - Custom Server","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/aiden-jeon.github.io\/custom-server\/"},"genre":"posts","keywords":"k8s, seldon","wordcount":3427,"url":"https:\/\/aiden-jeon.github.io\/custom-server\/","datePublished":"2021-06-28T00:00:00+00:00","dateModified":"2021-10-01T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"Jongseob Jeon"},"description":""}</script></head>
+<meta name=apple-mobile-web-app-title content="Aiden's Camp"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=icons/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://aiden-jeon.github.io/custom-server/><link rel=prev href=https://aiden-jeon.github.io/09_design_and_install_k8s/><link rel=next href=https://aiden-jeon.github.io/99_review/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"밑바닥부터 시작하는 Seldon-Core - Custom Server","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/aiden-jeon.github.io\/custom-server\/"},"genre":"posts","keywords":"k8s, seldon","wordcount":3818,"url":"https:\/\/aiden-jeon.github.io\/custom-server\/","datePublished":"2021-06-28T00:00:00+00:00","dateModified":"2021-10-01T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"Jongseob Jeon"},"description":""}</script></head>
 <body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':'light'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'light'==='dark')&&document.body.setAttribute('theme','dark')</script>
 <div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
 <div class=header-wrapper>
@@ -89,8 +89,8 @@ Cancel
 <div class="toc-content always-active" id=toc-content-auto></div>
 </div><article class="page single"><h1 class="single-title animated flipInX">밑바닥부터 시작하는 Seldon-Core - Custom Server</h1><div class=post-meta>
 <div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-category>included in <a href=/categories/seldon/><i class="far fa-folder fa-fw"></i>seldon</a></span></div>
-<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-06-28>2021-06-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;3427 words&nbsp;
-<i class="far fa-clock fa-fw"></i>&nbsp;17 minutes&nbsp;</div>
+<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-06-28>2021-06-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;3818 words&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;18 minutes&nbsp;</div>
 </div><div class="details toc" id=toc-static kept>
 <div class="details-summary toc-title">
 <span>Contents</span>
@@ -379,6 +379,22 @@ k8s에서 S3에 있는 모델을 가져오기 위한 aws에 접근할 수 있는
 </span><span class=lnt>122
 </span><span class=lnt>123
 </span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span><span class=lnt>138
+</span><span class=lnt>139
+</span><span class=lnt>140
 </span></code></pre></td>
 <td class=lntd>
 <pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=kn>import</span> <span class=nn>argparse</span>
@@ -388,26 +404,31 @@ k8s에서 S3에 있는 모델을 가져오기 위한 aws에 접근할 수 있는
 <span class=kn>import</span> <span class=nn>shutil</span>
 <span class=kn>import</span> <span class=nn>tempfile</span>
 <span class=kn>from</span> <span class=nn>typing</span> <span class=kn>import</span> <span class=n>Any</span>
- 
+
+<span class=kn>import</span> <span class=nn>yaml</span>
 <span class=kn>from</span> <span class=nn>pip._internal.operations</span> <span class=kn>import</span> <span class=n>freeze</span>
 <span class=kn>from</span> <span class=nn>seldon_core</span> <span class=kn>import</span> <span class=n>Storage</span>
 <span class=kn>from</span> <span class=nn>seldon_core.microservice</span> <span class=kn>import</span> <span class=n>PARAMETERS_ENV_NAME</span><span class=p>,</span> <span class=n>parse_parameters</span>
- 
+
+<span class=n>log</span> <span class=o>=</span> <span class=n>logging</span><span class=o>.</span><span class=n>getLogger</span><span class=p>()</span>
 <span class=n>log</span><span class=o>.</span><span class=n>setLevel</span><span class=p>(</span><span class=s2>&#34;INFO&#34;</span><span class=p>)</span>
- 
+
+<span class=n>parser</span> <span class=o>=</span> <span class=n>argparse</span><span class=o>.</span><span class=n>ArgumentParser</span><span class=p>()</span>
 <span class=n>parser</span><span class=o>.</span><span class=n>add_argument</span><span class=p>(</span>
     <span class=s2>&#34;--parameters&#34;</span><span class=p>,</span>
     <span class=nb>type</span><span class=o>=</span><span class=nb>str</span><span class=p>,</span>
     <span class=n>default</span><span class=o>=</span><span class=n>os</span><span class=o>.</span><span class=n>environ</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=n>PARAMETERS_ENV_NAME</span><span class=p>,</span> <span class=s2>&#34;[]&#34;</span><span class=p>),</span>
 <span class=p>)</span>
- 
+
+<span class=c1># This is already set on the environment_rest and environment_grpc files, but</span>
 <span class=c1># we&#39;ll define a default just in case.</span>
 <span class=n>DEFAULT_CONDA_ENV_NAME</span> <span class=o>=</span> <span class=s2>&#34;mlflow&#34;</span>
 <span class=n>BASE_REQS_PATH</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>join</span><span class=p>(</span>
     <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>dirname</span><span class=p>(</span><span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>abspath</span><span class=p>(</span><span class=vm>__file__</span><span class=p>)),</span>
     <span class=s2>&#34;requirements.txt&#34;</span><span class=p>,</span>
 <span class=p>)</span>
- 
+
+<span class=k>def</span> <span class=nf>setup_env</span><span class=p>(</span><span class=n>model_folder</span><span class=p>:</span> <span class=nb>str</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=kc>None</span><span class=p>:</span>
     <span class=s2>&#34;&#34;&#34;Sets up a pip environment.
 </span><span class=s2>    This methods creates the pip environment described by the `MLmodel` file.
 </span><span class=s2>    Parameters
@@ -416,14 +437,16 @@ k8s에서 S3에 있는 모델을 가져오기 위한 aws에 접근할 수 있는
 </span><span class=s2>        Folder where the MLmodel files are stored.
 </span><span class=s2>    &#34;&#34;&#34;</span>
     <span class=n>mlmodel</span> <span class=o>=</span> <span class=n>read_mlmodel</span><span class=p>(</span><span class=n>model_folder</span><span class=p>)</span>
- 
+
+    <span class=n>flavours</span> <span class=o>=</span> <span class=n>mlmodel</span><span class=p>[</span><span class=s2>&#34;flavors&#34;</span><span class=p>]</span>
     <span class=n>pyfunc_flavour</span> <span class=o>=</span> <span class=n>flavours</span><span class=p>[</span><span class=s2>&#34;python_function&#34;</span><span class=p>]</span>
     <span class=n>env_file_name</span> <span class=o>=</span> <span class=n>pyfunc_flavour</span><span class=p>[</span><span class=s2>&#34;env&#34;</span><span class=p>]</span>
     <span class=n>env_file_path</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=n>model_folder</span><span class=p>,</span> <span class=n>env_file_name</span><span class=p>)</span>
     <span class=n>env_file_path</span> <span class=o>=</span> <span class=n>copy_env</span><span class=p>(</span><span class=n>env_file_path</span><span class=p>)</span>
     <span class=n>copy_pip</span><span class=p>(</span><span class=n>env_file_path</span><span class=p>)</span>
     <span class=n>install_base_reqs</span><span class=p>()</span>
- 
+
+<span class=k>def</span> <span class=nf>read_mlmodel</span><span class=p>(</span><span class=n>model_folder</span><span class=p>:</span> <span class=nb>str</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Any</span><span class=p>:</span>
     <span class=s2>&#34;&#34;&#34;Reads an MLmodel file.
 </span><span class=s2>    Parameters
 </span><span class=s2>    ---------
@@ -437,7 +460,8 @@ k8s에서 S3에 있는 모델을 가져오기 위한 aws에 접근할 수 있는
     <span class=n>log</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=s2>&#34;Reading MLmodel file&#34;</span><span class=p>)</span>
     <span class=n>mlmodel_path</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=n>model_folder</span><span class=p>,</span> <span class=s2>&#34;MLmodel&#34;</span><span class=p>)</span>
     <span class=k>return</span> <span class=n>_read_yaml</span><span class=p>(</span><span class=n>mlmodel_path</span><span class=p>)</span>
- 
+
+<span class=k>def</span> <span class=nf>_read_yaml</span><span class=p>(</span><span class=n>file_path</span><span class=p>:</span> <span class=nb>str</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Any</span><span class=p>:</span>
     <span class=s2>&#34;&#34;&#34;Reads a YAML file.
 </span><span class=s2>    Parameters
 </span><span class=s2>    ---------
@@ -450,7 +474,8 @@ k8s에서 S3에 있는 모델을 가져오기 위한 aws에 접근할 수 있는
 </span><span class=s2>    &#34;&#34;&#34;</span>
     <span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=n>file_path</span><span class=p>,</span> <span class=s2>&#34;r&#34;</span><span class=p>)</span> <span class=k>as</span> <span class=n>file_reader</span><span class=p>:</span>
         <span class=k>return</span> <span class=n>yaml</span><span class=o>.</span><span class=n>safe_load</span><span class=p>(</span><span class=n>file_reader</span><span class=p>)</span>
- 
+
+<span class=k>def</span> <span class=nf>copy_env</span><span class=p>(</span><span class=n>env_file_path</span><span class=p>:</span> <span class=nb>str</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>str</span><span class=p>:</span>
     <span class=s2>&#34;&#34;&#34;Copy conda.yaml to temp dir
 </span><span class=s2>    to prevent the case where the existing file is on Read-only file system.
 </span><span class=s2>    Parameters
@@ -465,8 +490,10 @@ k8s에서 S3에 있는 모델을 가져오기 위한 aws에 접근할 수 있는
     <span class=n>temp_dir</span> <span class=o>=</span> <span class=n>tempfile</span><span class=o>.</span><span class=n>mkdtemp</span><span class=p>()</span>
     <span class=n>new_env_path</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=n>temp_dir</span><span class=p>,</span> <span class=s2>&#34;conda.yaml&#34;</span><span class=p>)</span>
     <span class=n>shutil</span><span class=o>.</span><span class=n>copy2</span><span class=p>(</span><span class=n>env_file_path</span><span class=p>,</span> <span class=n>new_env_path</span><span class=p>)</span>
- 
- 
+
+    <span class=k>return</span> <span class=n>new_env_path</span>
+
+<span class=k>def</span> <span class=nf>copy_pip</span><span class=p>(</span><span class=n>new_env_path</span><span class=p>:</span> <span class=nb>str</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=kc>None</span><span class=p>:</span>
     <span class=s2>&#34;&#34;&#34;Copy pip packages from conda.yaml to requirements.txt
 </span><span class=s2>    Parameters
 </span><span class=s2>    ----------
@@ -482,16 +509,19 @@ k8s에서 S3에 있는 모델을 가져오기 위한 aws에 접근할 수 있는
         <span class=n>name</span> <span class=o>=</span> <span class=n>package</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=s2>&#34;==&#34;</span><span class=p>)[</span><span class=mi>0</span><span class=p>]</span>
         <span class=k>if</span> <span class=n>name</span> <span class=ow>not</span> <span class=ow>in</span> <span class=n>freezed</span><span class=p>:</span>
             <span class=n>package_to_install</span> <span class=o>+=</span> <span class=p>[</span><span class=n>package</span><span class=p>]</span>
- 
+
+    <span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=n>BASE_REQS_PATH</span><span class=p>,</span> <span class=s2>&#34;a&#34;</span><span class=p>)</span> <span class=k>as</span> <span class=n>file_writer</span><span class=p>:</span>
         <span class=n>file_writer</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=s2>&#34;</span><span class=se>\\</span><span class=s2>n&#34;</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=n>package_to_install</span><span class=p>))</span>
- 
+
+<span class=k>def</span> <span class=nf>install_base_reqs</span><span class=p>()</span> <span class=o>-&gt;</span> <span class=kc>None</span><span class=p>:</span>
     <span class=s2>&#34;&#34;&#34;Install additional requirements from requirements.txt.
 </span><span class=s2>    If the variable is not defined, it falls back to `mlflow`.
 </span><span class=s2>    &#34;&#34;&#34;</span>
     <span class=n>log</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=s2>&#34;Install additional package from requirements.txt&#34;</span><span class=p>)</span>
     <span class=n>cmd</span> <span class=o>=</span> <span class=sa>f</span><span class=s2>&#34;pip install -r </span><span class=si>{</span><span class=n>BASE_REQS_PATH</span><span class=si>}</span><span class=s2>&#34;</span>
     <span class=n>os</span><span class=o>.</span><span class=n>system</span><span class=p>(</span><span class=n>cmd</span><span class=p>)</span>
- 
+
+<span class=k>def</span> <span class=nf>main</span><span class=p>(</span><span class=n>arguments</span><span class=p>:</span> <span class=n>argparse</span><span class=o>.</span><span class=n>Namespace</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=kc>None</span><span class=p>:</span>
     <span class=s2>&#34;&#34;&#34;main algorithm.
 </span><span class=s2>    Parameters
 </span><span class=s2>    ----------
@@ -499,10 +529,12 @@ k8s에서 S3에 있는 모델을 가져오기 위한 aws에 접근할 수 있는
 </span><span class=s2>    &#34;&#34;&#34;</span>
     <span class=n>parameters</span> <span class=o>=</span> <span class=n>parse_parameters</span><span class=p>(</span><span class=n>json</span><span class=o>.</span><span class=n>loads</span><span class=p>(</span><span class=n>arguments</span><span class=o>.</span><span class=n>parameters</span><span class=p>))</span>
     <span class=n>model_uri</span> <span class=o>=</span> <span class=n>parameters</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s2>&#34;model_uri&#34;</span><span class=p>,</span> <span class=s2>&#34;/mnt/model/&#34;</span><span class=p>)</span>
- 
+
+    <span class=n>log</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=s2>&#34;Downloading model from </span><span class=si>%s</span><span class=s2>&#34;</span><span class=p>,</span> <span class=n>model_uri</span><span class=p>)</span>
     <span class=n>model_folder</span> <span class=o>=</span> <span class=n>Storage</span><span class=o>.</span><span class=n>download</span><span class=p>(</span><span class=n>model_uri</span><span class=p>)</span>
     <span class=n>setup_env</span><span class=p>(</span><span class=n>model_folder</span><span class=p>)</span>
- 
+
+<span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s2>&#34;__main__&#34;</span><span class=p>:</span>
     <span class=n>args</span> <span class=o>=</span> <span class=n>parser</span><span class=o>.</span><span class=n>parse_args</span><span class=p>()</span>
     <span class=n>main</span><span class=p>(</span><span class=n>args</span><span class=p>)</span>
 </code></pre></td></tr></table>
@@ -515,10 +547,12 @@ k8s에서 S3에 있는 모델을 가져오기 위한 aws에 접근할 수 있는
 <pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
+</span><span class=lnt>4
 </span></code></pre></td>
 <td class=lntd>
 <pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=cp>#!/bin/bash -e
-</span><span class=cp></span> 
+</span><span class=cp></span>
+<span class=nb>echo</span> <span class=s2>&#34;---&gt; Creating environment with pip...&#34;</span>
 python ./pip_env_create.py
 </code></pre></td></tr></table>
 </div>
@@ -586,21 +620,37 @@ python ./pip_env_create.py
 </span><span class=lnt>57
 </span><span class=lnt>58
 </span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span><span class=lnt>71
 </span></code></pre></td>
 <td class=lntd>
 <pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=kn>import</span> <span class=nn>logging</span>
 <span class=kn>import</span> <span class=nn>os</span>
 <span class=kn>from</span> <span class=nn>typing</span> <span class=kn>import</span> <span class=n>Dict</span><span class=p>,</span> <span class=n>List</span><span class=p>,</span> <span class=n>Union</span>
- 
+
+<span class=kn>import</span> <span class=nn>numpy</span> <span class=k>as</span> <span class=nn>np</span>
 <span class=kn>import</span> <span class=nn>pandas</span> <span class=k>as</span> <span class=nn>pd</span>
 <span class=kn>import</span> <span class=nn>requests</span>
 <span class=kn>import</span> <span class=nn>yaml</span>
 <span class=kn>from</span> <span class=nn>mlflow</span> <span class=kn>import</span> <span class=n>pyfunc</span>
 <span class=kn>from</span> <span class=nn>seldon_core</span> <span class=kn>import</span> <span class=n>Storage</span>
 <span class=kn>from</span> <span class=nn>seldon_core.user_model</span> <span class=kn>import</span> <span class=n>SeldonComponent</span>
- 
- 
- 
+
+<span class=n>logger</span> <span class=o>=</span> <span class=n>logging</span><span class=o>.</span><span class=n>getLogger</span><span class=p>()</span>
+
+<span class=n>MLFLOW_SERVER</span> <span class=o>=</span> <span class=s2>&#34;model&#34;</span>
+
+<span class=k>class</span> <span class=nc>MLFlowServer</span><span class=p>(</span><span class=n>SeldonComponent</span><span class=p>):</span>
     <span class=k>def</span> <span class=fm>__init__</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>model_uri</span><span class=p>:</span> <span class=nb>str</span><span class=p>,</span> <span class=n>xtype</span><span class=p>:</span> <span class=nb>str</span> <span class=o>=</span> <span class=s2>&#34;ndarray&#34;</span><span class=p>):</span>
         <span class=nb>super</span><span class=p>()</span><span class=o>.</span><span class=fm>__init__</span><span class=p>()</span>
         <span class=n>logger</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Creating MLFLow server with URI </span><span class=si>{</span><span class=n>model_uri</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
@@ -608,18 +658,22 @@ python ./pip_env_create.py
         <span class=bp>self</span><span class=o>.</span><span class=n>model_uri</span> <span class=o>=</span> <span class=n>model_uri</span>
         <span class=bp>self</span><span class=o>.</span><span class=n>xtype</span> <span class=o>=</span> <span class=n>xtype</span>
         <span class=bp>self</span><span class=o>.</span><span class=n>ready</span> <span class=o>=</span> <span class=kc>False</span>
- 
+
+    <span class=k>def</span> <span class=nf>load</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
         <span class=n>logger</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Downloading model from </span><span class=si>{</span><span class=bp>self</span><span class=o>.</span><span class=n>model_uri</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
         <span class=n>model_folder</span> <span class=o>=</span> <span class=n>Storage</span><span class=o>.</span><span class=n>download</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>model_uri</span><span class=p>)</span>
         <span class=bp>self</span><span class=o>.</span><span class=n>_model</span> <span class=o>=</span> <span class=n>pyfunc</span><span class=o>.</span><span class=n>load_model</span><span class=p>(</span><span class=n>model_folder</span><span class=p>)</span>
         <span class=bp>self</span><span class=o>.</span><span class=n>ready</span> <span class=o>=</span> <span class=kc>True</span>
- 
+
+    <span class=k>def</span> <span class=nf>predict</span><span class=p>(</span>
         <span class=bp>self</span><span class=p>,</span> <span class=n>X</span><span class=p>:</span> <span class=n>np</span><span class=o>.</span><span class=n>ndarray</span><span class=p>,</span> <span class=n>feature_names</span><span class=p>:</span> <span class=n>List</span><span class=p>[</span><span class=nb>str</span><span class=p>]</span> <span class=o>=</span> <span class=p>[],</span> <span class=n>meta</span><span class=p>:</span> <span class=n>Dict</span> <span class=o>=</span> <span class=kc>None</span>
     <span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Union</span><span class=p>[</span><span class=n>np</span><span class=o>.</span><span class=n>ndarray</span><span class=p>,</span> <span class=n>List</span><span class=p>,</span> <span class=n>Dict</span><span class=p>,</span> <span class=nb>str</span><span class=p>,</span> <span class=nb>bytes</span><span class=p>]:</span>
         <span class=n>logger</span><span class=o>.</span><span class=n>debug</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Requesting prediction with: </span><span class=si>{</span><span class=n>X</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
- 
+
+        <span class=k>if</span> <span class=ow>not</span> <span class=bp>self</span><span class=o>.</span><span class=n>ready</span><span class=p>:</span>
             <span class=k>raise</span> <span class=n>requests</span><span class=o>.</span><span class=n>HTTPError</span><span class=p>(</span><span class=s2>&#34;Model not loaded yet&#34;</span><span class=p>)</span>
- 
+
+        <span class=k>if</span> <span class=bp>self</span><span class=o>.</span><span class=n>xtype</span> <span class=o>==</span> <span class=s2>&#34;ndarray&#34;</span><span class=p>:</span>
             <span class=n>result</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model</span><span class=o>.</span><span class=n>predict</span><span class=p>(</span><span class=n>X</span><span class=p>)</span>
         <span class=k>else</span><span class=p>:</span>
             <span class=k>if</span> <span class=n>feature_names</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span> <span class=ow>and</span> <span class=nb>len</span><span class=p>(</span><span class=n>feature_names</span><span class=p>)</span> <span class=o>&gt;</span> <span class=mi>0</span><span class=p>:</span>
@@ -627,11 +681,14 @@ python ./pip_env_create.py
             <span class=k>else</span><span class=p>:</span>
                 <span class=n>df</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>DataFrame</span><span class=p>(</span><span class=n>data</span><span class=o>=</span><span class=n>X</span><span class=p>)</span>
             <span class=n>result</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model</span><span class=o>.</span><span class=n>predict</span><span class=p>(</span><span class=n>df</span><span class=p>)</span>
- 
+
+        <span class=n>logger</span><span class=o>.</span><span class=n>debug</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Prediction result: </span><span class=si>{</span><span class=n>result</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
         <span class=k>return</span> <span class=n>result</span>
- 
+
+    <span class=k>def</span> <span class=nf>init_metadata</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
         <span class=n>file_path</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>model_uri</span><span class=p>,</span> <span class=s2>&#34;metadata.yaml&#34;</span><span class=p>)</span>
- 
+
+        <span class=k>try</span><span class=p>:</span>
             <span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=n>file_path</span><span class=p>,</span> <span class=s2>&#34;r&#34;</span><span class=p>)</span> <span class=k>as</span> <span class=n>f</span><span class=p>:</span>
                 <span class=k>return</span> <span class=n>yaml</span><span class=o>.</span><span class=n>safe_load</span><span class=p>(</span><span class=n>f</span><span class=o>.</span><span class=n>read</span><span class=p>())</span>
         <span class=k>except</span> <span class=ne>FileNotFoundError</span><span class=p>:</span>
@@ -642,7 +699,8 @@ python ./pip_env_create.py
                 <span class=sa>f</span><span class=s2>&#34;metadata file </span><span class=si>{</span><span class=n>file_path</span><span class=si>}</span><span class=s2> present but does not contain valid yaml&#34;</span>
             <span class=p>)</span>
             <span class=k>return</span> <span class=p>{}</span>
- 
+
+        <span class=k>def</span> <span class=nf>class_names</span><span class=p>(</span><span class=bp>self</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Iterable</span><span class=p>[</span><span class=nb>str</span><span class=p>]:</span>
         <span class=n>output_schema</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model</span><span class=o>.</span><span class=n>metadata</span><span class=o>.</span><span class=n>get_output_schema</span><span class=p>()</span>
         <span class=k>if</span> <span class=n>output_schema</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span><span class=p>:</span>
             <span class=n>columns</span> <span class=o>=</span> <span class=p>[</span><span class=n>schema</span><span class=p>[</span><span class=s2>&#34;name&#34;</span><span class=p>]</span> <span class=k>for</span> <span class=n>schema</span> <span class=ow>in</span> <span class=n>output_schema</span><span class=o>.</span><span class=n>to_dict</span><span class=p>()]</span>
@@ -1103,12 +1161,26 @@ python ./pip_env_create.py
 </span><span class=lnt>105
 </span><span class=lnt>106
 </span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
 </span></code></pre></td>
 <td class=lntd>
 <pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=kn>import</span> <span class=nn>importlib</span>
 <span class=kn>import</span> <span class=nn>os</span>
 <span class=kn>from</span> <span class=nn>typing</span> <span class=kn>import</span> <span class=n>Any</span><span class=p>,</span> <span class=n>Dict</span><span class=p>,</span> <span class=n>List</span><span class=p>,</span> <span class=n>Union</span>
- 
+
+<span class=kn>import</span> <span class=nn>mlflow</span>
 <span class=kn>import</span> <span class=nn>numpy</span> <span class=k>as</span> <span class=nn>np</span>
 <span class=kn>import</span> <span class=nn>pandas</span>
 <span class=kn>import</span> <span class=nn>yaml</span>
@@ -1121,15 +1193,18 @@ python ./pip_env_create.py
     <span class=n>_warn_potentially_incompatible_py_version_if_necessary</span><span class=p>,</span>
 <span class=p>)</span>
 <span class=kn>from</span> <span class=nn>mlflow.tracking.artifact_utils</span> <span class=kn>import</span> <span class=n>_download_artifact_from_uri</span>
- 
+
+<span class=n>FLAVOR_NAME</span> <span class=o>=</span> <span class=s2>&#34;python_function&#34;</span>
 <span class=n>MAIN</span> <span class=o>=</span> <span class=s2>&#34;loader_module&#34;</span>
 <span class=n>CODE</span> <span class=o>=</span> <span class=s2>&#34;code&#34;</span>
 <span class=n>DATA</span> <span class=o>=</span> <span class=s2>&#34;data&#34;</span>
 <span class=n>ENV</span> <span class=o>=</span> <span class=s2>&#34;env&#34;</span>
 <span class=n>PY_VERSION</span> <span class=o>=</span> <span class=s2>&#34;python_version&#34;</span>
- 
+
+<span class=n>PyFuncInput</span> <span class=o>=</span> <span class=n>Union</span><span class=p>[</span><span class=n>pandas</span><span class=o>.</span><span class=n>DataFrame</span><span class=p>,</span> <span class=n>np</span><span class=o>.</span><span class=n>ndarray</span><span class=p>,</span> <span class=n>List</span><span class=p>[</span><span class=n>Any</span><span class=p>],</span> <span class=n>Dict</span><span class=p>[</span><span class=nb>str</span><span class=p>,</span> <span class=n>Any</span><span class=p>]]</span>
 <span class=n>PyFuncOutput</span> <span class=o>=</span> <span class=n>Union</span><span class=p>[</span><span class=n>pandas</span><span class=o>.</span><span class=n>DataFrame</span><span class=p>,</span> <span class=n>pandas</span><span class=o>.</span><span class=n>Series</span><span class=p>,</span> <span class=n>np</span><span class=o>.</span><span class=n>ndarray</span><span class=p>,</span> <span class=nb>list</span><span class=p>]</span>
- 
+
+<span class=k>class</span> <span class=nc>PyFuncModel</span><span class=p>:</span>
     <span class=s2>&#34;&#34;&#34;
 </span><span class=s2>    MLflow &#39;python function&#39; model.
 </span><span class=s2>    Wrapper around model implementation and metadata. This class is not meant to be constructed
@@ -1140,13 +1215,15 @@ python ./pip_env_create.py
 </span><span class=s2>    returned by invoking the model&#39;s ``loader_module``.
 </span><span class=s2>    ``model_meta`` contains model metadata loaded from the MLmodel file.
 </span><span class=s2>    &#34;&#34;&#34;</span>
- 
+
+    <span class=c1># Customized from mlflow==1.16.0</span>
     <span class=k>def</span> <span class=fm>__init__</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>model_meta</span><span class=p>:</span> <span class=n>Model</span><span class=p>,</span> <span class=n>model_impl</span><span class=p>:</span> <span class=n>Any</span><span class=p>):</span>
         <span class=k>if</span> <span class=ow>not</span> <span class=n>model_meta</span><span class=p>:</span>
             <span class=k>raise</span> <span class=n>MlflowException</span><span class=p>(</span><span class=s2>&#34;Model is missing metadata.&#34;</span><span class=p>)</span>
         <span class=bp>self</span><span class=o>.</span><span class=n>_model_meta</span> <span class=o>=</span> <span class=n>model_meta</span>
         <span class=bp>self</span><span class=o>.</span><span class=n>_model_impl</span> <span class=o>=</span> <span class=n>model_impl</span>
- 
+
+    <span class=k>def</span> <span class=nf>predict</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>data</span><span class=p>:</span> <span class=n>PyFuncInput</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>PyFuncOutput</span><span class=p>:</span>
         <span class=s2>&#34;&#34;&#34;
 </span><span class=s2>        Generate model predictions.
 </span><span class=s2>        If the model contains signature, enforce the input schema first before calling the model
@@ -1161,20 +1238,23 @@ python ./pip_env_create.py
         <span class=k>if</span> <span class=n>input_schema</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span><span class=p>:</span>
             <span class=n>data</span> <span class=o>=</span> <span class=n>_enforce_schema</span><span class=p>(</span><span class=n>data</span><span class=p>,</span> <span class=n>input_schema</span><span class=p>)</span>
         <span class=k>return</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model_impl</span><span class=o>.</span><span class=n>predict</span><span class=p>(</span><span class=n>data</span><span class=p>)</span>
- 
+
+    <span class=c1># Customized from mlflow==1.16.0</span>
     <span class=k>def</span> <span class=nf>transform</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>data</span><span class=p>:</span> <span class=n>PyFuncInput</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>PyFuncOutput</span><span class=p>:</span>
         <span class=s2>&#34;&#34;&#34;transform method&#34;&#34;&#34;</span>
         <span class=n>input_schema</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>metadata</span><span class=o>.</span><span class=n>get_input_schema</span><span class=p>()</span>
         <span class=k>if</span> <span class=n>input_schema</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span><span class=p>:</span>
             <span class=n>data</span> <span class=o>=</span> <span class=n>_enforce_schema</span><span class=p>(</span><span class=n>data</span><span class=p>,</span> <span class=n>input_schema</span><span class=p>)</span>
         <span class=k>return</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model_impl</span><span class=o>.</span><span class=n>transform</span><span class=p>(</span><span class=n>data</span><span class=p>)</span>
- 
+
+    <span class=nd>@property</span>
     <span class=k>def</span> <span class=nf>metadata</span><span class=p>(</span><span class=bp>self</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Model</span><span class=p>:</span>
         <span class=s2>&#34;&#34;&#34;Model metadata.&#34;&#34;&#34;</span>
         <span class=k>if</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model_meta</span> <span class=ow>is</span> <span class=kc>None</span><span class=p>:</span>
             <span class=k>raise</span> <span class=n>MlflowException</span><span class=p>(</span><span class=s2>&#34;Model is missing metadata.&#34;</span><span class=p>)</span>
         <span class=k>return</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model_meta</span>
- 
+
+    <span class=k>def</span> <span class=fm>__repr__</span><span class=p>(</span><span class=bp>self</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Any</span><span class=p>:</span>
         <span class=n>info</span> <span class=o>=</span> <span class=p>{}</span>
         <span class=k>if</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model_meta</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span><span class=p>:</span>
             <span class=k>if</span> <span class=p>(</span>
@@ -1187,15 +1267,19 @@ python ./pip_env_create.py
                 <span class=ow>and</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model_meta</span><span class=o>.</span><span class=n>artifact_path</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span>
             <span class=p>):</span>
                 <span class=n>info</span><span class=p>[</span><span class=s2>&#34;artifact_path&#34;</span><span class=p>]</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model_meta</span><span class=o>.</span><span class=n>artifact_path</span>
- 
- 
+
+            <span class=n>info</span><span class=p>[</span><span class=s2>&#34;flavor&#34;</span><span class=p>]</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model_meta</span><span class=o>.</span><span class=n>flavors</span><span class=p>[</span><span class=n>FLAVOR_NAME</span><span class=p>][</span><span class=s2>&#34;loader_module&#34;</span><span class=p>]</span>
+
+        <span class=k>return</span> <span class=n>yaml</span><span class=o>.</span><span class=n>safe_dump</span><span class=p>(</span>
             <span class=p>{</span><span class=s2>&#34;mlflow.pyfunc.loaded_model&#34;</span><span class=p>:</span> <span class=n>info</span><span class=p>},</span>
             <span class=n>default_flow_style</span><span class=o>=</span><span class=kc>False</span><span class=p>,</span>
         <span class=p>)</span>
- 
+
+<span class=k>def</span> <span class=nf>load_model</span><span class=p>(</span><span class=n>model_uri</span><span class=p>:</span> <span class=nb>str</span><span class=p>,</span> <span class=n>suppress_warnings</span><span class=p>:</span> <span class=nb>bool</span> <span class=o>=</span> <span class=kc>True</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>PyFuncModel</span><span class=p>:</span>
     <span class=n>local_path</span> <span class=o>=</span> <span class=n>_download_artifact_from_uri</span><span class=p>(</span><span class=n>artifact_uri</span><span class=o>=</span><span class=n>model_uri</span><span class=p>)</span>
     <span class=n>model_meta</span> <span class=o>=</span> <span class=n>Model</span><span class=o>.</span><span class=n>load</span><span class=p>(</span><span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=n>local_path</span><span class=p>,</span> <span class=n>MLMODEL_FILE_NAME</span><span class=p>))</span>
- 
+
+    <span class=n>conf</span> <span class=o>=</span> <span class=n>model_meta</span><span class=o>.</span><span class=n>flavors</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=n>FLAVOR_NAME</span><span class=p>)</span>
     <span class=k>if</span> <span class=n>conf</span> <span class=ow>is</span> <span class=kc>None</span><span class=p>:</span>
         <span class=k>raise</span> <span class=n>MlflowException</span><span class=p>(</span>
             <span class=sa>f</span><span class=s1>&#39;Model does not have the &#34;</span><span class=si>{</span><span class=n>FLAVOR_NAME</span><span class=si>}</span><span class=s1>&#34; flavor&#39;</span><span class=p>,</span>
@@ -1297,21 +1381,42 @@ python ./pip_env_create.py
 </span><span class=lnt>73
 </span><span class=lnt>74
 </span><span class=lnt>75
+</span><span class=lnt>76
+</span><span class=lnt>77
+</span><span class=lnt>78
+</span><span class=lnt>79
+</span><span class=lnt>80
+</span><span class=lnt>81
+</span><span class=lnt>82
+</span><span class=lnt>83
+</span><span class=lnt>84
+</span><span class=lnt>85
+</span><span class=lnt>86
+</span><span class=lnt>87
+</span><span class=lnt>88
+</span><span class=lnt>89
+</span><span class=lnt>90
+</span><span class=lnt>91
 </span></code></pre></td>
 <td class=lntd>
 <pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=kn>import</span> <span class=nn>logging</span>
 <span class=kn>import</span> <span class=nn>os</span>
 <span class=kn>from</span> <span class=nn>typing</span> <span class=kn>import</span> <span class=n>Dict</span><span class=p>,</span> <span class=n>List</span><span class=p>,</span> <span class=n>Union</span>
- 
+
+<span class=kn>import</span> <span class=nn>numpy</span> <span class=k>as</span> <span class=nn>np</span>
 <span class=kn>import</span> <span class=nn>pandas</span> <span class=k>as</span> <span class=nn>pd</span>
 <span class=kn>import</span> <span class=nn>requests</span>
 <span class=kn>import</span> <span class=nn>yaml</span>
 <span class=kn>from</span> <span class=nn>seldon_core</span> <span class=kn>import</span> <span class=n>Storage</span>
 <span class=kn>from</span> <span class=nn>seldon_core.user_model</span> <span class=kn>import</span> <span class=n>SeldonComponent</span>
- 
- 
- 
- 
+
+<span class=kn>from</span> <span class=nn>pyfunc</span> <span class=kn>import</span> <span class=n>load_model</span>
+
+<span class=n>logger</span> <span class=o>=</span> <span class=n>logging</span><span class=o>.</span><span class=n>getLogger</span><span class=p>()</span>
+
+<span class=n>MLFLOW_SERVER</span> <span class=o>=</span> <span class=s2>&#34;model&#34;</span>
+
+<span class=k>class</span> <span class=nc>MLFlowServer</span><span class=p>(</span><span class=n>SeldonComponent</span><span class=p>):</span>
     <span class=k>def</span> <span class=fm>__init__</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>model_uri</span><span class=p>:</span> <span class=nb>str</span><span class=p>,</span> <span class=n>xtype</span><span class=p>:</span> <span class=nb>str</span> <span class=o>=</span> <span class=s2>&#34;ndarray&#34;</span><span class=p>):</span>
         <span class=nb>super</span><span class=p>()</span><span class=o>.</span><span class=fm>__init__</span><span class=p>()</span>
         <span class=n>logger</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Creating MLFLow server with URI </span><span class=si>{</span><span class=n>model_uri</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
@@ -1319,18 +1424,22 @@ python ./pip_env_create.py
         <span class=bp>self</span><span class=o>.</span><span class=n>model_uri</span> <span class=o>=</span> <span class=n>model_uri</span>
         <span class=bp>self</span><span class=o>.</span><span class=n>xtype</span> <span class=o>=</span> <span class=n>xtype</span>
         <span class=bp>self</span><span class=o>.</span><span class=n>ready</span> <span class=o>=</span> <span class=kc>False</span>
- 
+
+    <span class=k>def</span> <span class=nf>load</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
         <span class=n>logger</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Downloading model from </span><span class=si>{</span><span class=bp>self</span><span class=o>.</span><span class=n>model_uri</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
         <span class=n>model_folder</span> <span class=o>=</span> <span class=n>Storage</span><span class=o>.</span><span class=n>download</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>model_uri</span><span class=p>)</span>
         <span class=bp>self</span><span class=o>.</span><span class=n>_model</span> <span class=o>=</span> <span class=n>load_model</span><span class=p>(</span><span class=n>model_folder</span><span class=p>)</span>
         <span class=bp>self</span><span class=o>.</span><span class=n>ready</span> <span class=o>=</span> <span class=kc>True</span>
- 
+
+    <span class=k>def</span> <span class=nf>predict</span><span class=p>(</span>
         <span class=bp>self</span><span class=p>,</span> <span class=n>X</span><span class=p>:</span> <span class=n>np</span><span class=o>.</span><span class=n>ndarray</span><span class=p>,</span> <span class=n>feature_names</span><span class=p>:</span> <span class=n>List</span><span class=p>[</span><span class=nb>str</span><span class=p>]</span> <span class=o>=</span> <span class=p>[],</span> <span class=n>meta</span><span class=p>:</span> <span class=n>Dict</span> <span class=o>=</span> <span class=kc>None</span>
     <span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Union</span><span class=p>[</span><span class=n>np</span><span class=o>.</span><span class=n>ndarray</span><span class=p>,</span> <span class=n>List</span><span class=p>,</span> <span class=n>Dict</span><span class=p>,</span> <span class=nb>str</span><span class=p>,</span> <span class=nb>bytes</span><span class=p>]:</span>
         <span class=n>logger</span><span class=o>.</span><span class=n>debug</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Requesting prediction with: </span><span class=si>{</span><span class=n>X</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
- 
+
+        <span class=k>if</span> <span class=ow>not</span> <span class=bp>self</span><span class=o>.</span><span class=n>ready</span><span class=p>:</span>
             <span class=k>raise</span> <span class=n>requests</span><span class=o>.</span><span class=n>HTTPError</span><span class=p>(</span><span class=s2>&#34;Model not loaded yet&#34;</span><span class=p>)</span>
- 
+
+        <span class=k>if</span> <span class=bp>self</span><span class=o>.</span><span class=n>xtype</span> <span class=o>==</span> <span class=s2>&#34;ndarray&#34;</span><span class=p>:</span>
             <span class=n>result</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model</span><span class=o>.</span><span class=n>predict</span><span class=p>(</span><span class=n>X</span><span class=p>)</span>
         <span class=k>else</span><span class=p>:</span>
             <span class=k>if</span> <span class=n>feature_names</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span> <span class=ow>and</span> <span class=nb>len</span><span class=p>(</span><span class=n>feature_names</span><span class=p>)</span> <span class=o>&gt;</span> <span class=mi>0</span><span class=p>:</span>
@@ -1338,15 +1447,18 @@ python ./pip_env_create.py
             <span class=k>else</span><span class=p>:</span>
                 <span class=n>df</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>DataFrame</span><span class=p>(</span><span class=n>data</span><span class=o>=</span><span class=n>X</span><span class=p>)</span>
             <span class=n>result</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model</span><span class=o>.</span><span class=n>predict</span><span class=p>(</span><span class=n>df</span><span class=p>)</span>
- 
+
+        <span class=n>logger</span><span class=o>.</span><span class=n>debug</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Prediction result: </span><span class=si>{</span><span class=n>result</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
         <span class=k>return</span> <span class=n>result</span>
- 
+
+    <span class=k>def</span> <span class=nf>transform_input</span><span class=p>(</span>
         <span class=bp>self</span><span class=p>,</span> <span class=n>X</span><span class=p>:</span> <span class=n>np</span><span class=o>.</span><span class=n>ndarray</span><span class=p>,</span> <span class=n>feature_names</span><span class=p>:</span> <span class=n>List</span><span class=p>[</span><span class=nb>str</span><span class=p>]</span> <span class=o>=</span> <span class=p>[],</span> <span class=n>meta</span><span class=p>:</span> <span class=n>Dict</span> <span class=o>=</span> <span class=kc>None</span>
     <span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Union</span><span class=p>[</span><span class=n>np</span><span class=o>.</span><span class=n>ndarray</span><span class=p>,</span> <span class=n>List</span><span class=p>,</span> <span class=n>Dict</span><span class=p>,</span> <span class=nb>str</span><span class=p>,</span> <span class=nb>bytes</span><span class=p>]:</span>
         <span class=n>logger</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Requesting transformation with: </span><span class=si>{</span><span class=n>X</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
         <span class=k>if</span> <span class=ow>not</span> <span class=bp>self</span><span class=o>.</span><span class=n>ready</span><span class=p>:</span>
             <span class=k>raise</span> <span class=n>requests</span><span class=o>.</span><span class=n>HTTPError</span><span class=p>(</span><span class=s2>&#34;Model not loaded yet&#34;</span><span class=p>)</span>
- 
+
+        <span class=k>if</span> <span class=bp>self</span><span class=o>.</span><span class=n>xtype</span> <span class=o>==</span> <span class=s2>&#34;ndarray&#34;</span><span class=p>:</span>
             <span class=n>result</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model</span><span class=o>.</span><span class=n>transform</span><span class=p>(</span><span class=n>X</span><span class=p>)</span>
         <span class=k>else</span><span class=p>:</span>
             <span class=k>if</span> <span class=n>feature_names</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span> <span class=ow>and</span> <span class=nb>len</span><span class=p>(</span><span class=n>feature_names</span><span class=p>)</span> <span class=o>&gt;</span> <span class=mi>0</span><span class=p>:</span>
@@ -1354,11 +1466,14 @@ python ./pip_env_create.py
             <span class=k>else</span><span class=p>:</span>
                 <span class=n>df</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>DataFrame</span><span class=p>(</span><span class=n>data</span><span class=o>=</span><span class=n>X</span><span class=p>)</span>
             <span class=n>result</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model</span><span class=o>.</span><span class=n>transform</span><span class=p>(</span><span class=n>df</span><span class=p>)</span>
- 
+
+        <span class=n>logger</span><span class=o>.</span><span class=n>debug</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;transformation result: </span><span class=si>{</span><span class=n>result</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
         <span class=k>return</span> <span class=n>result</span>
- 
+
+    <span class=k>def</span> <span class=nf>init_metadata</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
         <span class=n>file_path</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>model_uri</span><span class=p>,</span> <span class=s2>&#34;metadata.yaml&#34;</span><span class=p>)</span>
- 
+
+        <span class=k>try</span><span class=p>:</span>
             <span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=n>file_path</span><span class=p>,</span> <span class=s2>&#34;r&#34;</span><span class=p>)</span> <span class=k>as</span> <span class=n>f</span><span class=p>:</span>
                 <span class=k>return</span> <span class=n>yaml</span><span class=o>.</span><span class=n>safe_load</span><span class=p>(</span><span class=n>f</span><span class=o>.</span><span class=n>read</span><span class=p>())</span>
         <span class=k>except</span> <span class=ne>FileNotFoundError</span><span class=p>:</span>
@@ -1369,7 +1484,8 @@ python ./pip_env_create.py
                 <span class=sa>f</span><span class=s2>&#34;metadata file </span><span class=si>{</span><span class=n>file_path</span><span class=si>}</span><span class=s2> present but does not contain valid yaml&#34;</span>
             <span class=p>)</span>
             <span class=k>return</span> <span class=p>{}</span>
- 
+
+		<span class=k>def</span> <span class=nf>class_names</span><span class=p>(</span><span class=bp>self</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Iterable</span><span class=p>[</span><span class=nb>str</span><span class=p>]:</span>
         <span class=n>output_schema</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model</span><span class=o>.</span><span class=n>metadata</span><span class=o>.</span><span class=n>get_output_schema</span><span class=p>()</span>
         <span class=k>if</span> <span class=n>output_schema</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span><span class=p>:</span>
             <span class=n>columns</span> <span class=o>=</span> <span class=p>[</span><span class=n>schema</span><span class=p>[</span><span class=s2>&#34;name&#34;</span><span class=p>]</span> <span class=k>for</span> <span class=n>schema</span> <span class=ow>in</span> <span class=n>output_schema</span><span class=o>.</span><span class=n>to_dict</span><span class=p>()]</span>
@@ -1766,12 +1882,26 @@ python ./pip_env_create.py
 </span><span class=lnt>105
 </span><span class=lnt>106
 </span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
 </span></code></pre></td>
 <td class=lntd>
 <pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=kn>import</span> <span class=nn>importlib</span>
 <span class=kn>import</span> <span class=nn>os</span>
 <span class=kn>from</span> <span class=nn>typing</span> <span class=kn>import</span> <span class=n>Any</span><span class=p>,</span> <span class=n>Dict</span><span class=p>,</span> <span class=n>List</span><span class=p>,</span> <span class=n>Union</span>
- 
+
+<span class=kn>import</span> <span class=nn>mlflow</span>
 <span class=kn>import</span> <span class=nn>numpy</span> <span class=k>as</span> <span class=nn>np</span>
 <span class=kn>import</span> <span class=nn>pandas</span>
 <span class=kn>import</span> <span class=nn>yaml</span>
@@ -1784,15 +1914,18 @@ python ./pip_env_create.py
     <span class=n>_warn_potentially_incompatible_py_version_if_necessary</span><span class=p>,</span>
 <span class=p>)</span>
 <span class=kn>from</span> <span class=nn>mlflow.tracking.artifact_utils</span> <span class=kn>import</span> <span class=n>_download_artifact_from_uri</span>
- 
+
+<span class=n>FLAVOR_NAME</span> <span class=o>=</span> <span class=s2>&#34;python_function&#34;</span>
 <span class=n>MAIN</span> <span class=o>=</span> <span class=s2>&#34;loader_module&#34;</span>
 <span class=n>CODE</span> <span class=o>=</span> <span class=s2>&#34;code&#34;</span>
 <span class=n>DATA</span> <span class=o>=</span> <span class=s2>&#34;data&#34;</span>
 <span class=n>ENV</span> <span class=o>=</span> <span class=s2>&#34;env&#34;</span>
 <span class=n>PY_VERSION</span> <span class=o>=</span> <span class=s2>&#34;python_version&#34;</span>
- 
+
+<span class=n>PyFuncInput</span> <span class=o>=</span> <span class=n>Union</span><span class=p>[</span><span class=n>pandas</span><span class=o>.</span><span class=n>DataFrame</span><span class=p>,</span> <span class=n>np</span><span class=o>.</span><span class=n>ndarray</span><span class=p>,</span> <span class=n>List</span><span class=p>[</span><span class=n>Any</span><span class=p>],</span> <span class=n>Dict</span><span class=p>[</span><span class=nb>str</span><span class=p>,</span> <span class=n>Any</span><span class=p>]]</span>
 <span class=n>PyFuncOutput</span> <span class=o>=</span> <span class=n>Union</span><span class=p>[</span><span class=n>pandas</span><span class=o>.</span><span class=n>DataFrame</span><span class=p>,</span> <span class=n>pandas</span><span class=o>.</span><span class=n>Series</span><span class=p>,</span> <span class=n>np</span><span class=o>.</span><span class=n>ndarray</span><span class=p>,</span> <span class=nb>list</span><span class=p>]</span>
- 
+
+<span class=k>class</span> <span class=nc>PyFuncModel</span><span class=p>:</span>
     <span class=s2>&#34;&#34;&#34;
 </span><span class=s2>    MLflow &#39;python function&#39; model.
 </span><span class=s2>    Wrapper around model implementation and metadata. This class is not meant to be constructed
@@ -1803,13 +1936,15 @@ python ./pip_env_create.py
 </span><span class=s2>    returned by invoking the model&#39;s ``loader_module``.
 </span><span class=s2>    ``model_meta`` contains model metadata loaded from the MLmodel file.
 </span><span class=s2>    &#34;&#34;&#34;</span>
- 
+
+    <span class=c1># Customized from mlflow==1.16.0</span>
     <span class=k>def</span> <span class=fm>__init__</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>model_meta</span><span class=p>:</span> <span class=n>Model</span><span class=p>,</span> <span class=n>model_impl</span><span class=p>:</span> <span class=n>Any</span><span class=p>):</span>
         <span class=k>if</span> <span class=ow>not</span> <span class=n>model_meta</span><span class=p>:</span>
             <span class=k>raise</span> <span class=n>MlflowException</span><span class=p>(</span><span class=s2>&#34;Model is missing metadata.&#34;</span><span class=p>)</span>
         <span class=bp>self</span><span class=o>.</span><span class=n>_model_meta</span> <span class=o>=</span> <span class=n>model_meta</span>
         <span class=bp>self</span><span class=o>.</span><span class=n>_model_impl</span> <span class=o>=</span> <span class=n>model_impl</span>
- 
+
+    <span class=k>def</span> <span class=nf>predict</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>data</span><span class=p>:</span> <span class=n>PyFuncInput</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>PyFuncOutput</span><span class=p>:</span>
         <span class=s2>&#34;&#34;&#34;
 </span><span class=s2>        Generate model predictions.
 </span><span class=s2>        If the model contains signature, enforce the input schema first before calling the model
@@ -1824,20 +1959,23 @@ python ./pip_env_create.py
         <span class=k>if</span> <span class=n>input_schema</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span><span class=p>:</span>
             <span class=n>data</span> <span class=o>=</span> <span class=n>_enforce_schema</span><span class=p>(</span><span class=n>data</span><span class=p>,</span> <span class=n>input_schema</span><span class=p>)</span>
         <span class=k>return</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model_impl</span><span class=o>.</span><span class=n>predict</span><span class=p>(</span><span class=n>data</span><span class=p>)</span>
- 
+
+    <span class=c1># Customized from mlflow==1.16.0</span>
     <span class=k>def</span> <span class=nf>transform</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>data</span><span class=p>:</span> <span class=n>PyFuncInput</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>PyFuncOutput</span><span class=p>:</span>
         <span class=s2>&#34;&#34;&#34;transform method&#34;&#34;&#34;</span>
         <span class=n>input_schema</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>metadata</span><span class=o>.</span><span class=n>get_input_schema</span><span class=p>()</span>
         <span class=k>if</span> <span class=n>input_schema</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span><span class=p>:</span>
             <span class=n>data</span> <span class=o>=</span> <span class=n>_enforce_schema</span><span class=p>(</span><span class=n>data</span><span class=p>,</span> <span class=n>input_schema</span><span class=p>)</span>
         <span class=k>return</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model_impl</span><span class=o>.</span><span class=n>transform</span><span class=p>(</span><span class=n>data</span><span class=p>)</span>
- 
+
+    <span class=nd>@property</span>
     <span class=k>def</span> <span class=nf>metadata</span><span class=p>(</span><span class=bp>self</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Model</span><span class=p>:</span>
         <span class=s2>&#34;&#34;&#34;Model metadata.&#34;&#34;&#34;</span>
         <span class=k>if</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model_meta</span> <span class=ow>is</span> <span class=kc>None</span><span class=p>:</span>
             <span class=k>raise</span> <span class=n>MlflowException</span><span class=p>(</span><span class=s2>&#34;Model is missing metadata.&#34;</span><span class=p>)</span>
         <span class=k>return</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model_meta</span>
- 
+
+    <span class=k>def</span> <span class=fm>__repr__</span><span class=p>(</span><span class=bp>self</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Any</span><span class=p>:</span>
         <span class=n>info</span> <span class=o>=</span> <span class=p>{}</span>
         <span class=k>if</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model_meta</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span><span class=p>:</span>
             <span class=k>if</span> <span class=p>(</span>
@@ -1850,15 +1988,19 @@ python ./pip_env_create.py
                 <span class=ow>and</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model_meta</span><span class=o>.</span><span class=n>artifact_path</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span>
             <span class=p>):</span>
                 <span class=n>info</span><span class=p>[</span><span class=s2>&#34;artifact_path&#34;</span><span class=p>]</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model_meta</span><span class=o>.</span><span class=n>artifact_path</span>
- 
- 
+
+            <span class=n>info</span><span class=p>[</span><span class=s2>&#34;flavor&#34;</span><span class=p>]</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model_meta</span><span class=o>.</span><span class=n>flavors</span><span class=p>[</span><span class=n>FLAVOR_NAME</span><span class=p>][</span><span class=s2>&#34;loader_module&#34;</span><span class=p>]</span>
+
+        <span class=k>return</span> <span class=n>yaml</span><span class=o>.</span><span class=n>safe_dump</span><span class=p>(</span>
             <span class=p>{</span><span class=s2>&#34;mlflow.pyfunc.loaded_model&#34;</span><span class=p>:</span> <span class=n>info</span><span class=p>},</span>
             <span class=n>default_flow_style</span><span class=o>=</span><span class=kc>False</span><span class=p>,</span>
         <span class=p>)</span>
- 
+
+<span class=k>def</span> <span class=nf>load_model</span><span class=p>(</span><span class=n>model_uri</span><span class=p>:</span> <span class=nb>str</span><span class=p>,</span> <span class=n>suppress_warnings</span><span class=p>:</span> <span class=nb>bool</span> <span class=o>=</span> <span class=kc>True</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>PyFuncModel</span><span class=p>:</span>
     <span class=n>local_path</span> <span class=o>=</span> <span class=n>_download_artifact_from_uri</span><span class=p>(</span><span class=n>artifact_uri</span><span class=o>=</span><span class=n>model_uri</span><span class=p>)</span>
     <span class=n>model_meta</span> <span class=o>=</span> <span class=n>Model</span><span class=o>.</span><span class=n>load</span><span class=p>(</span><span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=n>local_path</span><span class=p>,</span> <span class=n>MLMODEL_FILE_NAME</span><span class=p>))</span>
- 
+
+    <span class=n>conf</span> <span class=o>=</span> <span class=n>model_meta</span><span class=o>.</span><span class=n>flavors</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=n>FLAVOR_NAME</span><span class=p>)</span>
     <span class=k>if</span> <span class=n>conf</span> <span class=ow>is</span> <span class=kc>None</span><span class=p>:</span>
         <span class=k>raise</span> <span class=n>MlflowException</span><span class=p>(</span>
             <span class=sa>f</span><span class=s1>&#39;Model does not have the &#34;</span><span class=si>{</span><span class=n>FLAVOR_NAME</span><span class=si>}</span><span class=s1>&#34; flavor&#39;</span><span class=p>,</span>
@@ -1960,21 +2102,42 @@ python ./pip_env_create.py
 </span><span class=lnt>73
 </span><span class=lnt>74
 </span><span class=lnt>75
+</span><span class=lnt>76
+</span><span class=lnt>77
+</span><span class=lnt>78
+</span><span class=lnt>79
+</span><span class=lnt>80
+</span><span class=lnt>81
+</span><span class=lnt>82
+</span><span class=lnt>83
+</span><span class=lnt>84
+</span><span class=lnt>85
+</span><span class=lnt>86
+</span><span class=lnt>87
+</span><span class=lnt>88
+</span><span class=lnt>89
+</span><span class=lnt>90
+</span><span class=lnt>91
 </span></code></pre></td>
 <td class=lntd>
 <pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=kn>import</span> <span class=nn>logging</span>
 <span class=kn>import</span> <span class=nn>os</span>
 <span class=kn>from</span> <span class=nn>typing</span> <span class=kn>import</span> <span class=n>Dict</span><span class=p>,</span> <span class=n>List</span><span class=p>,</span> <span class=n>Union</span>
- 
+
+<span class=kn>import</span> <span class=nn>numpy</span> <span class=k>as</span> <span class=nn>np</span>
 <span class=kn>import</span> <span class=nn>pandas</span> <span class=k>as</span> <span class=nn>pd</span>
 <span class=kn>import</span> <span class=nn>requests</span>
 <span class=kn>import</span> <span class=nn>yaml</span>
 <span class=kn>from</span> <span class=nn>seldon_core</span> <span class=kn>import</span> <span class=n>Storage</span>
 <span class=kn>from</span> <span class=nn>seldon_core.user_model</span> <span class=kn>import</span> <span class=n>SeldonComponent</span>
- 
- 
- 
- 
+
+<span class=kn>from</span> <span class=nn>pyfunc</span> <span class=kn>import</span> <span class=n>load_model</span>
+
+<span class=n>logger</span> <span class=o>=</span> <span class=n>logging</span><span class=o>.</span><span class=n>getLogger</span><span class=p>()</span>
+
+<span class=n>MLFLOW_SERVER</span> <span class=o>=</span> <span class=s2>&#34;model&#34;</span>
+
+<span class=k>class</span> <span class=nc>MLFlowServer</span><span class=p>(</span><span class=n>SeldonComponent</span><span class=p>):</span>
     <span class=k>def</span> <span class=fm>__init__</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>model_uri</span><span class=p>:</span> <span class=nb>str</span><span class=p>,</span> <span class=n>xtype</span><span class=p>:</span> <span class=nb>str</span> <span class=o>=</span> <span class=s2>&#34;ndarray&#34;</span><span class=p>):</span>
         <span class=nb>super</span><span class=p>()</span><span class=o>.</span><span class=fm>__init__</span><span class=p>()</span>
         <span class=n>logger</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Creating MLFLow server with URI </span><span class=si>{</span><span class=n>model_uri</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
@@ -1982,18 +2145,22 @@ python ./pip_env_create.py
         <span class=bp>self</span><span class=o>.</span><span class=n>model_uri</span> <span class=o>=</span> <span class=n>model_uri</span>
         <span class=bp>self</span><span class=o>.</span><span class=n>xtype</span> <span class=o>=</span> <span class=n>xtype</span>
         <span class=bp>self</span><span class=o>.</span><span class=n>ready</span> <span class=o>=</span> <span class=kc>False</span>
- 
+
+    <span class=k>def</span> <span class=nf>load</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
         <span class=n>logger</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Downloading model from </span><span class=si>{</span><span class=bp>self</span><span class=o>.</span><span class=n>model_uri</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
         <span class=n>model_folder</span> <span class=o>=</span> <span class=n>Storage</span><span class=o>.</span><span class=n>download</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>model_uri</span><span class=p>)</span>
         <span class=bp>self</span><span class=o>.</span><span class=n>_model</span> <span class=o>=</span> <span class=n>load_model</span><span class=p>(</span><span class=n>model_folder</span><span class=p>)</span>
         <span class=bp>self</span><span class=o>.</span><span class=n>ready</span> <span class=o>=</span> <span class=kc>True</span>
- 
+
+    <span class=k>def</span> <span class=nf>predict</span><span class=p>(</span>
         <span class=bp>self</span><span class=p>,</span> <span class=n>X</span><span class=p>:</span> <span class=n>np</span><span class=o>.</span><span class=n>ndarray</span><span class=p>,</span> <span class=n>feature_names</span><span class=p>:</span> <span class=n>List</span><span class=p>[</span><span class=nb>str</span><span class=p>]</span> <span class=o>=</span> <span class=p>[],</span> <span class=n>meta</span><span class=p>:</span> <span class=n>Dict</span> <span class=o>=</span> <span class=kc>None</span>
     <span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Union</span><span class=p>[</span><span class=n>np</span><span class=o>.</span><span class=n>ndarray</span><span class=p>,</span> <span class=n>List</span><span class=p>,</span> <span class=n>Dict</span><span class=p>,</span> <span class=nb>str</span><span class=p>,</span> <span class=nb>bytes</span><span class=p>]:</span>
         <span class=n>logger</span><span class=o>.</span><span class=n>debug</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Requesting prediction with: </span><span class=si>{</span><span class=n>X</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
- 
+
+        <span class=k>if</span> <span class=ow>not</span> <span class=bp>self</span><span class=o>.</span><span class=n>ready</span><span class=p>:</span>
             <span class=k>raise</span> <span class=n>requests</span><span class=o>.</span><span class=n>HTTPError</span><span class=p>(</span><span class=s2>&#34;Model not loaded yet&#34;</span><span class=p>)</span>
- 
+
+        <span class=k>if</span> <span class=bp>self</span><span class=o>.</span><span class=n>xtype</span> <span class=o>==</span> <span class=s2>&#34;ndarray&#34;</span><span class=p>:</span>
             <span class=n>result</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model</span><span class=o>.</span><span class=n>predict</span><span class=p>(</span><span class=n>X</span><span class=p>)</span>
         <span class=k>else</span><span class=p>:</span>
             <span class=k>if</span> <span class=n>feature_names</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span> <span class=ow>and</span> <span class=nb>len</span><span class=p>(</span><span class=n>feature_names</span><span class=p>)</span> <span class=o>&gt;</span> <span class=mi>0</span><span class=p>:</span>
@@ -2001,15 +2168,18 @@ python ./pip_env_create.py
             <span class=k>else</span><span class=p>:</span>
                 <span class=n>df</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>DataFrame</span><span class=p>(</span><span class=n>data</span><span class=o>=</span><span class=n>X</span><span class=p>)</span>
             <span class=n>result</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model</span><span class=o>.</span><span class=n>predict</span><span class=p>(</span><span class=n>df</span><span class=p>)</span>
- 
+
+        <span class=n>logger</span><span class=o>.</span><span class=n>debug</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Prediction result: </span><span class=si>{</span><span class=n>result</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
         <span class=k>return</span> <span class=n>result</span>
- 
+
+    <span class=k>def</span> <span class=nf>transform_output</span><span class=p>(</span>
         <span class=bp>self</span><span class=p>,</span> <span class=n>X</span><span class=p>:</span> <span class=n>np</span><span class=o>.</span><span class=n>ndarray</span><span class=p>,</span> <span class=n>feature_names</span><span class=p>:</span> <span class=n>List</span><span class=p>[</span><span class=nb>str</span><span class=p>]</span> <span class=o>=</span> <span class=p>[],</span> <span class=n>meta</span><span class=p>:</span> <span class=n>Dict</span> <span class=o>=</span> <span class=kc>None</span>
     <span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Union</span><span class=p>[</span><span class=n>np</span><span class=o>.</span><span class=n>ndarray</span><span class=p>,</span> <span class=n>List</span><span class=p>,</span> <span class=n>Dict</span><span class=p>,</span> <span class=nb>str</span><span class=p>,</span> <span class=nb>bytes</span><span class=p>]:</span>
         <span class=n>logger</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Requesting transformation with: </span><span class=si>{</span><span class=n>X</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
         <span class=k>if</span> <span class=ow>not</span> <span class=bp>self</span><span class=o>.</span><span class=n>ready</span><span class=p>:</span>
             <span class=k>raise</span> <span class=n>requests</span><span class=o>.</span><span class=n>HTTPError</span><span class=p>(</span><span class=s2>&#34;Model not loaded yet&#34;</span><span class=p>)</span>
- 
+
+        <span class=k>if</span> <span class=bp>self</span><span class=o>.</span><span class=n>xtype</span> <span class=o>==</span> <span class=s2>&#34;ndarray&#34;</span><span class=p>:</span>
             <span class=n>result</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model</span><span class=o>.</span><span class=n>transform</span><span class=p>(</span><span class=n>X</span><span class=p>)</span>
         <span class=k>else</span><span class=p>:</span>
             <span class=k>if</span> <span class=n>feature_names</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span> <span class=ow>and</span> <span class=nb>len</span><span class=p>(</span><span class=n>feature_names</span><span class=p>)</span> <span class=o>&gt;</span> <span class=mi>0</span><span class=p>:</span>
@@ -2017,11 +2187,14 @@ python ./pip_env_create.py
             <span class=k>else</span><span class=p>:</span>
                 <span class=n>df</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>DataFrame</span><span class=p>(</span><span class=n>data</span><span class=o>=</span><span class=n>X</span><span class=p>)</span>
             <span class=n>result</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model</span><span class=o>.</span><span class=n>transform</span><span class=p>(</span><span class=n>df</span><span class=p>)</span>
- 
+
+        <span class=n>logger</span><span class=o>.</span><span class=n>debug</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;transformation result: </span><span class=si>{</span><span class=n>result</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
         <span class=k>return</span> <span class=n>result</span>
- 
+
+    <span class=k>def</span> <span class=nf>init_metadata</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
         <span class=n>file_path</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>model_uri</span><span class=p>,</span> <span class=s2>&#34;metadata.yaml&#34;</span><span class=p>)</span>
- 
+
+        <span class=k>try</span><span class=p>:</span>
             <span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=n>file_path</span><span class=p>,</span> <span class=s2>&#34;r&#34;</span><span class=p>)</span> <span class=k>as</span> <span class=n>f</span><span class=p>:</span>
                 <span class=k>return</span> <span class=n>yaml</span><span class=o>.</span><span class=n>safe_load</span><span class=p>(</span><span class=n>f</span><span class=o>.</span><span class=n>read</span><span class=p>())</span>
         <span class=k>except</span> <span class=ne>FileNotFoundError</span><span class=p>:</span>
@@ -2032,7 +2205,8 @@ python ./pip_env_create.py
                 <span class=sa>f</span><span class=s2>&#34;metadata file </span><span class=si>{</span><span class=n>file_path</span><span class=si>}</span><span class=s2> present but does not contain valid yaml&#34;</span>
             <span class=p>)</span>
             <span class=k>return</span> <span class=p>{}</span>
- 
+
+    <span class=k>def</span> <span class=nf>class_names</span><span class=p>(</span><span class=bp>self</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Iterable</span><span class=p>[</span><span class=nb>str</span><span class=p>]:</span>
         <span class=n>output_schema</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>_model</span><span class=o>.</span><span class=n>metadata</span><span class=o>.</span><span class=n>get_output_schema</span><span class=p>()</span>
         <span class=k>if</span> <span class=n>output_schema</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span><span class=p>:</span>
             <span class=n>columns</span> <span class=o>=</span> <span class=p>[</span><span class=n>schema</span><span class=p>[</span><span class=s2>&#34;name&#34;</span><span class=p>]</span> <span class=k>for</span> <span class=n>schema</span> <span class=ow>in</span> <span class=n>output_schema</span><span class=o>.</span><span class=n>to_dict</span><span class=p>()]</span>
@@ -2322,7 +2496,7 @@ python ./pip_env_create.py
 Please enable JavaScript to view the comments powered by <a href=https://utteranc.es/>Utterances</a>.
 </noscript></div></article></div>
 </main><footer class=footer>
-<div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.89.0">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+<div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.89.4">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
 </div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2019 - 2021</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>Jongseob Jeon</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div>
 </div>
 </footer></div>
