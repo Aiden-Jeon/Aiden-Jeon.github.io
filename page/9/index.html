@@ -1,6 +1,6 @@
 <!doctype html><html lang=en>
 <head>
-<meta name=generator content="Hugo 0.90.1">
+<meta name=generator content="Hugo 0.91.2">
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=robots content="noodp">
@@ -80,6 +80,11 @@ Cancel
 <main class=main>
 <div class=container><div class="page home" posts><div class=home-profile><div class=home-avatar><a href=/ title=Home><img class=lazyload src=/svg/loading.min.svg data-src=/icons/ms-icon-310x310.png data-srcset="/icons/ms-icon-310x310.png, /icons/ms-icon-310x310.png 1.5x, /icons/ms-icon-310x310.png 2x" data-sizes=auto alt=/icons/ms-icon-310x310.png title=/icons/ms-icon-310x310.png></a></div><h2 class=home-subtitle><div id=id-1 class=typeit></div></h2><div class=links><a href=https://github.com/Aiden-Jeon title=GitHub target=_blank rel="noopener noreffer me"><i class="fab fa-github-alt fa-fw"></i></a><a href=https://linkedin.com/in/jongseob-jeon title=LinkedIn target=_blank rel="noopener noreffer me"><i class="fab fa-linkedin fa-fw"></i></a><a href=mailto:ells2124@gmail.com title=Email rel=me><i class="far fa-envelope fa-fw"></i></a><a href=/index.xml title=RSS target=_blank rel="noopener noreffer me"><i class="fas fa-rss fa-fw"></i></a></div></div>
 <article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
+<a href=/introduction/>Introduction to XAI</a>
+</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-03-31>2021-03-31</time></span>&nbsp;<span class=post-category>included in <a href=/categories/xai/><i class="far fa-folder fa-fw"></i>xai</a></span></div><div class=content>Introduction to XAI(eXplainable AI) 최근 많은 산업에서 딥러닝을 적용을 시도하고 있습니다. 하지만 모델의 결과가 어떤 과정을 통해서 그런 예측을 했는지 해석하기 어려운 &lsquo;블랙박스&rsquo; 문제는 딥러닝 적용을 blocking하는 큰 요인입니다.
+예를 들어 신규 대출을 받으려는 고객이 있습니다. 은행에서는 이 고객이 대출을 잘 갚을 수 있을지에 대해 심사를 하고 대출을 승인을 결정합니다. 이 은행에서는 딥러닝 모델을 이용해 고객들의 대출 심사를 합니다. 모델은 이 고객에게 대출을 거절했습니다. 고객과 대출 담당자는 대출이 거절된 이유가 고객의 나이, 직업 등 어떤 이유로 대출이 거절 되었는지 알고 싶습니다.</div><div class=post-footer>
+<a href=/introduction/>Read More</a></div>
+</article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
 <a href=/lime_with_code/>LIME with code</a>
 </h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-03-31>2021-03-31</time></span>&nbsp;<span class=post-category>included in <a href=/categories/xai/><i class="far fa-folder fa-fw"></i>xai</a></span></div><div class=content>(LIME) Local Interpretable Model-agnostic Explanations​ Objective of LIME $$\xi(x)=\underset{g\in G}{\operatorname{argmin}} L(f,g,\pi_{x})+\Omega(g)$$
 ​
@@ -107,16 +112,6 @@ Train $f$ 이번 포스트에서는 예제 데이터로 fetch_20newsgroups를 �
 </h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-03-30>2021-03-30</time></span>&nbsp;<span class=post-category>included in <a href=/categories/algorithm/><i class="far fa-folder fa-fw"></i>algorithm</a></span></div><div class=content>problem number: 9093 link: https://www.acmicpc.net/problem/9093 Define input, output Input: sentence with words 단어의 기준은 space 대문자는 유지 Output: 문장에서 단어들의 위치는 보존하고 각 단어들의 역순으로 이루어진 문장 source code 1 2 3 4 5 6 7 8 9 10 import sys N = int(sys.stdin.readline()) for _ in range(N): words = sys.stdin.readline().split(" ") words = list(map(lambda x :x[::-1], words)) sentence = " ".</div><div class=post-footer>
 <a href=/9093/>Read More</a><div class=post-tags>
 <i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/acmicpc/>acmicpc</a></div></div>
-</article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
-<a href=/1874/>스택수열</a>
-</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-publish>published on <time datetime=2021-03-30>2021-03-30</time></span>&nbsp;<span class=post-category>included in <a href=/categories/algorithm/><i class="far fa-folder fa-fw"></i>algorithm</a></span></div><div class=content>problem number: 1874 link: https://www.acmicpc.net/problem/1874 Define input, output Input: empty stack 1 // n Output: array &lt;a1, a2, &mldr;> ai = (push, pop) if cannot return NO 설명 스택 수열 동작 예시
-stack = [] / / 4
-stack = [1] / / 4
-stack = [1, 2] / / 4
-stack = [1, 2, 3] / / 4
-stack = [1, 2, 3, 4] / / 4</div><div class=post-footer>
-<a href=/1874/>Read More</a><div class=post-tags>
-<i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/acmicpc/>acmicpc</a></div></div>
 </article><ul class=pagination><li class=page-item>
 <span class=page-link>
 <a href=/>1</a>
@@ -143,10 +138,14 @@ stack = [1, 2, 3, 4] / / 4</div><div class=post-footer>
 <span class=page-link>
 <a href=/page/11/>11</a>
 </span>
+</li><li class=page-item>
+<span class=page-link>
+<a href=/page/12/>12</a>
+</span>
 </li></ul></div></div>
 </main><footer class=footer>
-<div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.90.1">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-</div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2019 - 2021</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>Jongseob Jeon</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div>
+<div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.91.2">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+</div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2019 - 2022</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>Jongseob Jeon</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div>
 </div>
 </footer></div>
 <div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top">
