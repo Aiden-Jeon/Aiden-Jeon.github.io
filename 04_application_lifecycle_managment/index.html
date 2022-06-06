@@ -1,207 +1,27 @@
-<!doctype html><html lang=en>
-<head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=robots content="noodp">
-<meta http-equiv=x-ua-compatible content="IE=edge, chrome=1">
-<title>(CKA) 04. Application Lifecycle Management - Aiden's Camp</title><meta name=Description content="Welcome to Aiden's Camp"><meta property="og:title" content="(CKA) 04. Application Lifecycle Management">
-<meta property="og:description" content="CKA를 준비하면서 공부한 요약 내용입니다.
- 강의 What is CKA?  Rollout and Versioning Rollout Command  kubectl rollout status deployment/myapp-deployment kubectl rollout history deployment/myapp-deployment  Deployment Strategy Recreate  destruction 5 create 5  Rolling Update → default strategy
- destruction and create one by one  Revision  kubectl apply -f deployment.yaml kubectl set image deployment/myapp-deployment nginx=nginx:1.9.1  Upgrades  make new replicaset when upgrade deploy  Rollback  kubectl rollout undo deployment/myapp-deployment before rollback vs after rollback   Commands and Arguments   docker">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://aiden-jeon.github.io/04_application_lifecycle_managment/"><meta property="og:image" content="https://aiden-jeon.github.io/logo.png"><meta property="article:section" content="posts">
-<meta property="article:published_time" content="2021-05-18T00:00:00+00:00">
-<meta property="article:modified_time" content="2021-05-18T00:00:00+00:00">
-<meta name=twitter:card content="summary_large_image">
-<meta name=twitter:image content="https://aiden-jeon.github.io/logo.png">
-<meta name=twitter:title content="(CKA) 04. Application Lifecycle Management">
-<meta name=twitter:description content="CKA를 준비하면서 공부한 요약 내용입니다.
- 강의 What is CKA?  Rollout and Versioning Rollout Command  kubectl rollout status deployment/myapp-deployment kubectl rollout history deployment/myapp-deployment  Deployment Strategy Recreate  destruction 5 create 5  Rolling Update → default strategy
- destruction and create one by one  Revision  kubectl apply -f deployment.yaml kubectl set image deployment/myapp-deployment nginx=nginx:1.9.1  Upgrades  make new replicaset when upgrade deploy  Rollback  kubectl rollout undo deployment/myapp-deployment before rollback vs after rollback   Commands and Arguments   docker">
-<meta name=application-name content="Aiden's Camp">
-<meta name=apple-mobile-web-app-title content="Aiden's Camp"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=icons/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://aiden-jeon.github.io/04_application_lifecycle_managment/><link rel=prev href=https://aiden-jeon.github.io/03_logging_monitoring/><link rel=next href=https://aiden-jeon.github.io/05_cluster_maintenance/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"(CKA) 04. Application Lifecycle Management","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/aiden-jeon.github.io\/04_application_lifecycle_managment\/"},"genre":"posts","keywords":"k8s, cka","wordcount":374,"url":"https:\/\/aiden-jeon.github.io\/04_application_lifecycle_managment\/","datePublished":"2021-05-18T00:00:00+00:00","dateModified":"2021-05-18T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"Jongseob Jeon"},"description":""}</script></head>
-<body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':'light'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'light'==='dark')&&document.body.setAttribute('theme','dark')</script>
-<div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
-<div class=header-wrapper>
-<div class=header-title>
-<a href=/ title="Aiden's Camp"></a>
-</div>
-<div class=menu>
-<div class=menu-inner><a class=menu-item href=/> Home </a><a class=menu-item href=/posts/> Posts </a><a class=menu-item href=/tags/> Tags </a><a class=menu-item href=/categories/> Categories </a><a class=menu-item href=/about/> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><title>(CKA) 04. Application Lifecycle Management - Aiden's Camp</title><meta name=Description content="Welcome to Aiden's Camp"><meta property="og:title" content="(CKA) 04. Application Lifecycle Management"><meta property="og:description" content="CKA를 준비하면서 공부한 요약 내용입니다.
+강의 What is CKA? Rollout and Versioning Rollout Command kubectl rollout status deployment/myapp-deployment kubectl rollout history deployment/myapp-deployment Deployment Strategy Recreate destruction 5 create 5 Rolling Update → default strategy
+destruction and create one by one Revision kubectl apply -f deployment.yaml kubectl set image deployment/myapp-deployment nginx=nginx:1.9.1 Upgrades make new replicaset when upgrade deploy Rollback kubectl rollout undo deployment/myapp-deployment before rollback vs after rollback Commands and Arguments docker"><meta property="og:type" content="article"><meta property="og:url" content="https://aiden-jeon.github.io/04_application_lifecycle_managment/"><meta property="og:image" content="https://aiden-jeon.github.io/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2021-05-18T00:00:00+00:00"><meta property="article:modified_time" content="2021-05-18T00:00:00+00:00"><meta property="og:site_name" content="My cool site"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://aiden-jeon.github.io/logo.png"><meta name=twitter:title content="(CKA) 04. Application Lifecycle Management"><meta name=twitter:description content="CKA를 준비하면서 공부한 요약 내용입니다.
+강의 What is CKA? Rollout and Versioning Rollout Command kubectl rollout status deployment/myapp-deployment kubectl rollout history deployment/myapp-deployment Deployment Strategy Recreate destruction 5 create 5 Rolling Update → default strategy
+destruction and create one by one Revision kubectl apply -f deployment.yaml kubectl set image deployment/myapp-deployment nginx=nginx:1.9.1 Upgrades make new replicaset when upgrade deploy Rollback kubectl rollout undo deployment/myapp-deployment before rollback vs after rollback Commands and Arguments docker"><meta name=application-name content="Aiden's Camp"><meta name=apple-mobile-web-app-title content="Aiden's Camp"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=icons/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://aiden-jeon.github.io/04_application_lifecycle_managment/><link rel=prev href=https://aiden-jeon.github.io/03_logging_monitoring/><link rel=next href=https://aiden-jeon.github.io/05_cluster_maintenance/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"(CKA) 04. Application Lifecycle Management","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/aiden-jeon.github.io\/04_application_lifecycle_managment\/"},"genre":"posts","keywords":"k8s, cka","wordcount":541,"url":"https:\/\/aiden-jeon.github.io\/04_application_lifecycle_managment\/","datePublished":"2021-05-18T00:00:00+00:00","dateModified":"2021-05-18T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"Jongseob Jeon"},"description":""}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':'light'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'light'==='dark')&&document.body.setAttribute('theme','dark')</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="Aiden's Camp"></a></div><div class=menu><div class=menu-inner><a class=menu-item href=/>Home </a><a class=menu-item href=/posts/>Posts </a><a class=menu-item href=/tags/>Tags </a><a class=menu-item href=/categories/>Categories </a><a class=menu-item href=/about/>About </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
 <input type=text placeholder="Search titles or contents..." id=search-input-desktop>
-<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search>
-<i class="fas fa-search fa-fw"></i>
-</a>
-<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear>
-<i class="fas fa-times-circle fa-fw"></i>
-</a>
-<span class="search-button search-loading" id=search-loading-desktop>
-<i class="fas fa-spinner fa-fw fa-spin"></i>
-</span>
-</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
-<i class="fas fa-adjust fa-fw"></i>
-</a>
-</div>
-</div>
-</div>
-</header><header class=mobile id=header-mobile>
-<div class=header-container>
-<div class=header-wrapper>
-<div class=header-title>
-<a href=/ title="Aiden's Camp"></a>
-</div>
-<div class=menu-toggle id=menu-toggle-mobile>
-<span></span><span></span><span></span>
-</div>
-</div>
-<div class=menu id=menu-mobile><div class=search-wrapper>
-<div class="search mobile" id=search-mobile>
-<input type=text placeholder="Search titles or contents..." id=search-input-mobile>
-<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search>
-<i class="fas fa-search fa-fw"></i>
-</a>
-<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear>
-<i class="fas fa-times-circle fa-fw"></i>
-</a>
-<span class="search-button search-loading" id=search-loading-mobile>
-<i class="fas fa-spinner fa-fw fa-spin"></i>
-</span>
-</div>
-<a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>
-Cancel
-</a>
-</div><a class=menu-item href=/ title>Home</a><a class=menu-item href=/posts/ title>Posts</a><a class=menu-item href=/tags/ title>Tags</a><a class=menu-item href=/categories/ title>Categories</a><a class=menu-item href=/about/ title>About</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
-<i class="fas fa-adjust fa-fw"></i>
-</a></div>
-</div>
-</header>
-<div class="search-dropdown desktop">
-<div id=search-dropdown-desktop></div>
-</div>
-<div class="search-dropdown mobile">
-<div id=search-dropdown-mobile></div>
-</div>
-<main class=main>
-<div class=container><div class=toc id=toc-auto>
-<h2 class=toc-title>Contents</h2>
-<div class=toc-content id=toc-content-auto></div>
-</div><article class="page single"><h1 class="single-title animated flipInX">(CKA) 04. Application Lifecycle Management</h1><div class=post-meta>
-<div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-category>included in <a href=/categories/kubernetes/><i class="far fa-folder fa-fw"></i>kubernetes</a></span></div>
-<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-05-18>2021-05-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;374 words&nbsp;
-<i class="far fa-clock fa-fw"></i>&nbsp;2 minutes&nbsp;</div>
-</div><div class="details toc" id=toc-static kept>
-<div class="details-summary toc-title">
-<span>Contents</span>
-<span><i class="details-icon fas fa-angle-right"></i></span>
-</div>
-<div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
-<ul>
-<li>
-<ul>
-<li><a href=#rollout-and-versioning>Rollout and Versioning</a>
-<ul>
-<li><a href=#rollout-command>Rollout Command</a></li>
-<li><a href=#deployment-strategy>Deployment Strategy</a>
-<ul>
-<li><a href=#recreate>Recreate</a></li>
-<li><a href=#rolling-update>Rolling Update</a></li>
-</ul>
-</li>
-<li><a href=#revision>Revision</a></li>
-<li><a href=#upgrades>Upgrades</a></li>
-<li><a href=#rollback>Rollback</a></li>
-</ul>
-</li>
-<li><a href=#commands-and-arguments>Commands and Arguments</a></li>
-<li><a href=#environment>Environment</a></li>
-<li><a href=#configmaps>ConfigMaps</a>
-<ul>
-<li><a href=#create>create</a></li>
-<li><a href=#view>view</a></li>
-<li><a href=#configmap-in-pods>ConfigMap in Pods</a></li>
-</ul>
-</li>
-<li><a href=#secrets>Secrets</a>
-<ul>
-<li><a href=#create-1>create</a></li>
-<li><a href=#view-1>view</a>
-<ul>
-<li><a href=#decode>decode</a></li>
-</ul>
-</li>
-<li><a href=#secrets-in-pods>Secrets in Pods</a></li>
-</ul>
-</li>
-<li><a href=#initcontainers>InitContainers</a></li>
-</ul>
-</li>
-</ul>
-</nav></div>
-</div><div class=content id=content><p>CKA를 준비하면서 공부한 요약 내용입니다.</p>
-<ul>
-<li><a href=https://www.udemy.com/course/certified-kubernetes-administrator-with-practice-tests/ target=_blank rel="noopener noreffer">강의</a></li>
-<li><a href=https://www.cncf.io/certification/cka/ target=_blank rel="noopener noreffer">What is CKA?</a></li>
-</ul>
-<h2 id=rollout-and-versioning>Rollout and Versioning</h2>
-<p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/cka/05-1.png data-srcset="/imgs/cka/05-1.png, /imgs/cka/05-1.png 1.5x, /imgs/cka/05-1.png 2x" data-sizes=auto alt=/imgs/cka/05-1.png title=img-1></p>
-<h3 id=rollout-command>Rollout Command</h3>
-<ul>
-<li><code>kubectl rollout status deployment/myapp-deployment</code></li>
-<li><code>kubectl rollout history deployment/myapp-deployment</code></li>
-</ul>
-<h3 id=deployment-strategy>Deployment Strategy</h3>
-<h4 id=recreate>Recreate</h4>
-<p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/cka/05-2.png data-srcset="/imgs/cka/05-2.png, /imgs/cka/05-2.png 1.5x, /imgs/cka/05-2.png 2x" data-sizes=auto alt=/imgs/cka/05-2.png title=img-2></p>
-<ul>
-<li>destruction 5</li>
-<li>create 5</li>
-</ul>
-<p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/cka/05-3.png data-srcset="/imgs/cka/05-3.png, /imgs/cka/05-3.png 1.5x, /imgs/cka/05-3.png 2x" data-sizes=auto alt=/imgs/cka/05-3.png title=img-3></p>
-<h4 id=rolling-update>Rolling Update</h4>
-<p>→ default strategy</p>
-<p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/cka/05-4.png data-srcset="/imgs/cka/05-4.png, /imgs/cka/05-4.png 1.5x, /imgs/cka/05-4.png 2x" data-sizes=auto alt=/imgs/cka/05-4.png title=img-4></p>
-<ul>
-<li>destruction and create one by one</li>
-</ul>
-<h3 id=revision>Revision</h3>
-<ul>
-<li><code>kubectl apply -f deployment.yaml</code></li>
-<li><code>kubectl set image deployment/myapp-deployment nginx=nginx:1.9.1</code></li>
-</ul>
-<h3 id=upgrades>Upgrades</h3>
-<p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/cka/05-5.png data-srcset="/imgs/cka/05-5.png, /imgs/cka/05-5.png 1.5x, /imgs/cka/05-5.png 2x" data-sizes=auto alt=/imgs/cka/05-5.png title=img-5></p>
-<ul>
-<li>make new replicaset when upgrade deploy</li>
-</ul>
-<h3 id=rollback>Rollback</h3>
-<p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/cka/05-6.png data-srcset="/imgs/cka/05-6.png, /imgs/cka/05-6.png 1.5x, /imgs/cka/05-6.png 2x" data-sizes=auto alt=/imgs/cka/05-6.png title=img-6></p>
-<ul>
-<li><code>kubectl rollout undo deployment/myapp-deployment</code></li>
-<li>before rollback vs after rollback
-<img class=lazyload src=/svg/loading.min.svg data-src=/imgs/cka/05-7.png data-srcset="/imgs/cka/05-7.png, /imgs/cka/05-7.png 1.5x, /imgs/cka/05-7.png 2x" data-sizes=auto alt=/imgs/cka/05-7.png title=img-7></li>
-</ul>
-<h2 id=commands-and-arguments>Commands and Arguments</h2>
-<ul>
-<li>
-<p>docker</p>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme"><i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="Aiden's Camp"></a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="Search titles or contents..." id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>Cancel</a></div><a class=menu-item href=/ title>Home</a><a class=menu-item href=/posts/ title>Posts</a><a class=menu-item href=/tags/ title>Tags</a><a class=menu-item href=/categories/ title>Categories</a><a class=menu-item href=/about/ title>About</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>Contents</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">(CKA) 04. Application Lifecycle Management</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>Jongseob Jeon</a>
+</span>&nbsp;<span class=post-category>included in <a href=/categories/kubernetes/><i class="far fa-folder fa-fw" aria-hidden=true></i>kubernetes</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2021-05-18>2021-05-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;541 words&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;3 minutes&nbsp;</div></div><div class="details toc" id=toc-static data-kept><div class="details-summary toc-title"><span>Contents</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><ul><li><a href=#rollout-and-versioning>Rollout and Versioning</a><ul><li><a href=#rollout-command>Rollout Command</a></li><li><a href=#deployment-strategy>Deployment Strategy</a><ul><li><a href=#recreate>Recreate</a></li><li><a href=#rolling-update>Rolling Update</a></li></ul></li><li><a href=#revision>Revision</a></li><li><a href=#upgrades>Upgrades</a></li><li><a href=#rollback>Rollback</a></li></ul></li><li><a href=#commands-and-arguments>Commands and Arguments</a></li><li><a href=#environment>Environment</a></li><li><a href=#configmaps>ConfigMaps</a><ul><li><a href=#create>create</a></li><li><a href=#view>view</a></li><li><a href=#configmap-in-pods>ConfigMap in Pods</a></li></ul></li><li><a href=#secrets>Secrets</a><ul><li><a href=#create-1>create</a></li><li><a href=#view-1>view</a><ul><li><a href=#decode>decode</a></li></ul></li><li><a href=#secrets-in-pods>Secrets in Pods</a></li></ul></li><li><a href=#initcontainers>InitContainers</a></li></ul></li></ul></nav></div></div><div class=content id=content><p>CKA를 준비하면서 공부한 요약 내용입니다.</p><ul><li><a href=https://www.udemy.com/course/certified-kubernetes-administrator-with-practice-tests/ target=_blank rel="noopener noreffer">강의</a></li><li><a href=https://www.cncf.io/certification/cka/ target=_blank rel="noopener noreffer">What is CKA?</a></li></ul><h2 id=rollout-and-versioning>Rollout and Versioning</h2><p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/cka/05-1.png data-srcset="/imgs/cka/05-1.png, /imgs/cka/05-1.png 1.5x, /imgs/cka/05-1.png 2x" data-sizes=auto alt=/imgs/cka/05-1.png title=img-1></p><h3 id=rollout-command>Rollout Command</h3><ul><li><code>kubectl rollout status deployment/myapp-deployment</code></li><li><code>kubectl rollout history deployment/myapp-deployment</code></li></ul><h3 id=deployment-strategy>Deployment Strategy</h3><h4 id=recreate>Recreate</h4><p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/cka/05-2.png data-srcset="/imgs/cka/05-2.png, /imgs/cka/05-2.png 1.5x, /imgs/cka/05-2.png 2x" data-sizes=auto alt=/imgs/cka/05-2.png title=img-2></p><ul><li>destruction 5</li><li>create 5</li></ul><p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/cka/05-3.png data-srcset="/imgs/cka/05-3.png, /imgs/cka/05-3.png 1.5x, /imgs/cka/05-3.png 2x" data-sizes=auto alt=/imgs/cka/05-3.png title=img-3></p><h4 id=rolling-update>Rolling Update</h4><p>→ default strategy</p><p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/cka/05-4.png data-srcset="/imgs/cka/05-4.png, /imgs/cka/05-4.png 1.5x, /imgs/cka/05-4.png 2x" data-sizes=auto alt=/imgs/cka/05-4.png title=img-4></p><ul><li>destruction and create one by one</li></ul><h3 id=revision>Revision</h3><ul><li><code>kubectl apply -f deployment.yaml</code></li><li><code>kubectl set image deployment/myapp-deployment nginx=nginx:1.9.1</code></li></ul><h3 id=upgrades>Upgrades</h3><p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/cka/05-5.png data-srcset="/imgs/cka/05-5.png, /imgs/cka/05-5.png 1.5x, /imgs/cka/05-5.png 2x" data-sizes=auto alt=/imgs/cka/05-5.png title=img-5></p><ul><li>make new replicaset when upgrade deploy</li></ul><h3 id=rollback>Rollback</h3><p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/cka/05-6.png data-srcset="/imgs/cka/05-6.png, /imgs/cka/05-6.png 1.5x, /imgs/cka/05-6.png 2x" data-sizes=auto alt=/imgs/cka/05-6.png title=img-6></p><ul><li><code>kubectl rollout undo deployment/myapp-deployment</code></li><li>before rollback vs after rollback
+<img class=lazyload src=/svg/loading.min.svg data-src=/imgs/cka/05-7.png data-srcset="/imgs/cka/05-7.png, /imgs/cka/05-7.png 1.5x, /imgs/cka/05-7.png 2x" data-sizes=auto alt=/imgs/cka/05-7.png title=img-7></li></ul><h2 id=commands-and-arguments>Commands and Arguments</h2><ul><li><p>docker</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-docker data-lang=docker><span class=k>From</span><span class=s> Ubuntu</span><span class=err>
-</span><span class=err></span><span class=k>Entrypoint</span> <span class=p>[</span><span class=s2>&#34;sleep&#34;</span><span class=p>]</span><span class=err>
-</span><span class=err></span><span class=k>cmd</span> <span class=p>[</span><span class=s2>&#34;5&#34;</span><span class=p>]</span><span class=err>
-</span></code></pre></td></tr></table>
-</div>
-</div></li>
-<li>
-<p>definition</p>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-docker data-lang=docker><span class=line><span class=cl><span class=k>From</span><span class=s> Ubuntu</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>Entrypoint</span> <span class=p>[</span><span class=s2>&#34;sleep&#34;</span><span class=p>]</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>cmd</span> <span class=p>[</span><span class=s2>&#34;5&#34;</span><span class=p>]</span><span class=err>
+</span></span></span></code></pre></td></tr></table></div></div></li><li><p>definition</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -211,132 +31,59 @@ Cancel
 </span><span class=lnt> 8
 </span><span class=lnt> 9
 </span><span class=lnt>10
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>v1</span><span class=w>
-</span><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>Pod</span><span class=w>
-</span><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>ubuntu-sleeper-pod</span><span class=w>
-</span><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span><span class=nt>containers</span><span class=p>:</span><span class=w>
-</span><span class=w>    </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>ubuntu-sleeper</span><span class=w>
-</span><span class=w>      </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>ubuntu-sleeper</span><span class=w>
-</span><span class=w>      </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=s2>&#34;sleep2.0&#34;</span><span class=p>]</span><span class=w>
-</span><span class=w>      </span><span class=nt>args</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=s2>&#34;10&#34;</span><span class=p>]</span><span class=w>
-</span></code></pre></td></tr></table>
-</div>
-</div></li>
-</ul>
-<h2 id=environment>Environment</h2>
-<ul>
-<li>
-<p>plain Key Value</p>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>v1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>Pod</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>ubuntu-sleeper-pod</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>containers</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>ubuntu-sleeper</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>ubuntu-sleeper</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=s2>&#34;sleep2.0&#34;</span><span class=p>]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>args</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=s2>&#34;10&#34;</span><span class=p>]</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div></li></ul><h2 id=environment>Environment</h2><ul><li><p>plain Key Value</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=nt>env</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>APP_COLOR</span><span class=w>
-</span><span class=w>    </span><span class=nt>value</span><span class=p>:</span><span class=w> </span><span class=l>pink</span><span class=w>
-</span></code></pre></td></tr></table>
-</div>
-</div></li>
-<li>
-<p>configMap</p>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>env</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>APP_COLOR</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>value</span><span class=p>:</span><span class=w> </span><span class=l>pink</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div></li><li><p>configMap</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=nt>env</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>APP_COLOR</span><span class=w>
-</span><span class=w>    </span><span class=nt>valueFrom</span><span class=p>:</span><span class=w>
-</span><span class=w>      </span><span class=nt>configMapKeyRef</span><span class=p>:</span><span class=w>
-</span></code></pre></td></tr></table>
-</div>
-</div></li>
-<li>
-<p>Secrets</p>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>env</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>APP_COLOR</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>valueFrom</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>configMapKeyRef</span><span class=p>:</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div></li><li><p>Secrets</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=nt>env</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>APP_COLOR</span><span class=w>
-</span><span class=w>    </span><span class=nt>valueFrom</span><span class=p>:</span><span class=w>
-</span><span class=w>      </span><span class=nt>secretKeyRef</span><span class=p>:</span><span class=w>
-</span></code></pre></td></tr></table>
-</div>
-</div></li>
-</ul>
-<h2 id=configmaps>ConfigMaps</h2>
-<ul>
-<li>create ConfigMap</li>
-<li>Inject into pod</li>
-</ul>
-<h3 id=create>create</h3>
-<ul>
-<li>
-<p>imperative</p>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>env</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>APP_COLOR</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>valueFrom</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>secretKeyRef</span><span class=p>:</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div></li></ul><h2 id=configmaps>ConfigMaps</h2><ul><li>create ConfigMap</li><li>Inject into pod</li></ul><h3 id=create>create</h3><ul><li><p>imperative</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>kubectl create configmap<span class=se>\\</span>
-  app-config --from-literal<span class=o>=</span><span class=nv>APP_COLOR</span><span class=o>=</span>blue <span class=se>\\</span>
-            --from-literal<span class=o>=</span><span class=nv>APP_MODE</span><span class=o>=</span>prod
-</code></pre></td></tr></table>
-</div>
-</div><ul>
-<li><code>kubectl create configmap app-config --from-file=&lt;path-to-file></code></li>
-</ul>
-</li>
-<li>
-<p>declartive</p>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kubectl create configmap<span class=se>\\</span>
+</span></span><span class=line><span class=cl>  app-config --from-literal<span class=o>=</span><span class=nv>APP_COLOR</span><span class=o>=</span>blue <span class=se>\\</span>
+</span></span><span class=line><span class=cl>            --from-literal<span class=o>=</span><span class=nv>APP_MODE</span><span class=o>=</span>prod
+</span></span></code></pre></td></tr></table></div></div><ul><li><code>kubectl create configmap app-config --from-file=&lt;path-to-file></code></li></ul></li><li><p>declartive</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
 </span><span class=lnt>5
 </span><span class=lnt>6
 </span><span class=lnt>7
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>v1</span><span class=w>
-</span><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>ConfigMap</span><span class=w>
-</span><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>app-config</span><span class=w>
-</span><span class=w></span><span class=nt>data</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span><span class=nt>APP_COLOR</span><span class=p>:</span><span class=w> </span><span class=l>blue</span><span class=w>
-</span><span class=w>  </span><span class=nt>APP_MODE</span><span class=p>:</span><span class=w> </span><span class=l>prod</span><span class=w>
-</span></code></pre></td></tr></table>
-</div>
-</div></li>
-</ul>
-<h3 id=view>view</h3>
-<ul>
-<li><code>kubectl get configmaps</code></li>
-<li><code>kubectl describe configmaps</code></li>
-</ul>
-<h3 id=configmap-in-pods>ConfigMap in Pods</h3>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>v1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>ConfigMap</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>app-config</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>data</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>APP_COLOR</span><span class=p>:</span><span class=w> </span><span class=l>blue</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>APP_MODE</span><span class=p>:</span><span class=w> </span><span class=l>prod</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div></li></ul><h3 id=view>view</h3><ul><li><code>kubectl get configmaps</code></li><li><code>kubectl describe configmaps</code></li></ul><h3 id=configmap-in-pods>ConfigMap in Pods</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -347,49 +94,22 @@ Cancel
 </span><span class=lnt> 9
 </span><span class=lnt>10
 </span><span class=lnt>11
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>v1</span><span class=w>
-</span><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>Pod</span><span class=w>
-</span><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>simple-webapp-color</span><span class=w>
-</span><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span><span class=nt>containers</span><span class=p>:</span><span class=w>
-</span><span class=w>    </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>simple-webapp-color</span><span class=w>
-</span><span class=w>      </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>simple-webapp-color</span><span class=w>
-</span><span class=w>      </span><span class=nt>envFrom</span><span class=p>:</span><span class=w>
-</span><span class=w>        </span>- <span class=nt>configMapRef</span><span class=p>:</span><span class=w>
-</span><span class=w>            </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>app-config</span><span class=w>
-</span></code></pre></td></tr></table>
-</div>
-</div><h2 id=secrets>Secrets</h2>
-<ul>
-<li>create secret</li>
-<li>inject into pod</li>
-</ul>
-<h3 id=create-1>create</h3>
-<ul>
-<li>
-<p>imperative</p>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>v1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>Pod</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>simple-webapp-color</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>containers</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>simple-webapp-color</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>simple-webapp-color</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>envFrom</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=nt>configMapRef</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>app-config</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h2 id=secrets>Secrets</h2><ul><li>create secret</li><li>inject into pod</li></ul><h3 id=create-1>create</h3><ul><li><p>imperative</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>kubectl create secret generic<span class=se>\\</span>
-  &lt;secret-name&gt; --from-literal<span class=o>=</span>&lt;key&gt;<span class=o>=</span>&lt;value&gt;
-</code></pre></td></tr></table>
-</div>
-</div><ul>
-<li><code>kubectl create secret &lt;secret-name> --from-file=&lt;path-to-file></code></li>
-</ul>
-</li>
-<li>
-<p>declartive</p>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kubectl create secret generic<span class=se>\\</span>
+</span></span><span class=line><span class=cl>  &lt;secret-name&gt; --from-literal<span class=o>=</span>&lt;key&gt;<span class=o>=</span>&lt;value&gt;
+</span></span></code></pre></td></tr></table></div></div><ul><li><code>kubectl create secret &lt;secret-name> --from-file=&lt;path-to-file></code></li></ul></li><li><p>declartive</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
@@ -397,40 +117,15 @@ Cancel
 </span><span class=lnt>6
 </span><span class=lnt>7
 </span><span class=lnt>8
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>v1</span><span class=w>
-</span><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>Secret</span><span class=w>
-</span><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>app-secret</span><span class=w>
-</span><span class=w></span><span class=nt>data</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span><span class=nt>DB_Host</span><span class=p>:</span><span class=w> </span><span class=l>mysql</span><span class=w>
-</span><span class=w>  </span><span class=nt>DB_User</span><span class=p>:</span><span class=w> </span><span class=l>root</span><span class=w>
-</span><span class=w>  </span><span class=nt>DB_Passwird</span><span class=p>:</span><span class=w> </span><span class=l>paswrd</span><span class=w>
-</span></code></pre></td></tr></table>
-</div>
-</div><ul>
-<li>data → encoded format for safe</li>
-<li><code>echo -n 'mysql' | base64</code></li>
-</ul>
-</li>
-</ul>
-<h3 id=view-1>view</h3>
-<ul>
-<li><code>kubectl get secrets</code></li>
-<li><code>kubectl describe secrets</code></li>
-</ul>
-<h4 id=decode>decode</h4>
-<ul>
-<li><code>echo -n 'abalksdfas=' | base54 --decode</code></li>
-</ul>
-<h3 id=secrets-in-pods>Secrets in Pods</h3>
-<ul>
-<li>
-<p>defintion</p>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>v1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>Secret</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>app-secret</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>data</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>DB_Host</span><span class=p>:</span><span class=w> </span><span class=l>mysql</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>DB_User</span><span class=p>:</span><span class=w> </span><span class=l>root</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>DB_Passwird</span><span class=p>:</span><span class=w> </span><span class=l>paswrd</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><ul><li>data → encoded format for safe</li><li><code>echo -n 'mysql' | base64</code></li></ul></li></ul><h3 id=view-1>view</h3><ul><li><code>kubectl get secrets</code></li><li><code>kubectl describe secrets</code></li></ul><h4 id=decode>decode</h4><ul><li><code>echo -n 'abalksdfas=' | base54 --decode</code></li></ul><h3 id=secrets-in-pods>Secrets in Pods</h3><ul><li><p>defintion</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -441,110 +136,48 @@ Cancel
 </span><span class=lnt> 9
 </span><span class=lnt>10
 </span><span class=lnt>11
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>v1</span><span class=w>
-</span><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>Pod</span><span class=w>
-</span><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>simple-webapp-color</span><span class=w>
-</span><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span><span class=nt>containers</span><span class=p>:</span><span class=w>
-</span><span class=w>    </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>simple-webapp-color</span><span class=w>
-</span><span class=w>      </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>simple-webapp-color</span><span class=w>
-</span><span class=w>      </span><span class=nt>envFrom</span><span class=p>:</span><span class=w>
-</span><span class=w>        </span>- <span class=nt>configMapRef</span><span class=p>:</span><span class=w>
-</span><span class=w>            </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>app-secret</span><span class=w>
-</span></code></pre></td></tr></table>
-</div>
-</div></li>
-<li>
-<p>env</p>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>v1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>Pod</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>simple-webapp-color</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>containers</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>simple-webapp-color</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>simple-webapp-color</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>envFrom</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=nt>configMapRef</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>app-secret</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div></li><li><p>env</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=nt>envFrom</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span>- <span class=nt>secretRef</span><span class=p>:</span><span class=w>
-</span><span class=w>      </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>app-config</span><span class=w>
-</span></code></pre></td></tr></table>
-</div>
-</div></li>
-<li>
-<p>single env</p>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>envFrom</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=nt>secretRef</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>app-config</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div></li><li><p>single env</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
 </span><span class=lnt>5
 </span><span class=lnt>6
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=nt>env</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>DB_Password</span><span class=w>
-</span><span class=w>    </span><span class=nt>valueFrom</span><span class=p>:</span><span class=w>
-</span><span class=w>      </span><span class=nt>secretKeyRef</span><span class=p>:</span><span class=w>
-</span><span class=w>        </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>app-secret</span><span class=w>
-</span><span class=w>        </span><span class=nt>key</span><span class=p>:</span><span class=w> </span><span class=l>DB_Password</span><span class=w>
-</span></code></pre></td></tr></table>
-</div>
-</div></li>
-<li>
-<p>volume</p>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>env</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>DB_Password</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>valueFrom</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>secretKeyRef</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>app-secret</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>key</span><span class=p>:</span><span class=w> </span><span class=l>DB_Password</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div></li><li><p>volume</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=nt>volumes</span><span class=p>:</span><span class=w>
-</span><span class=w></span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>app-secret-volumne</span><span class=w>
-</span><span class=w>  </span><span class=nt>secret</span><span class=p>:</span><span class=w>
-</span><span class=w>    </span><span class=nt>secretName</span><span class=p>:</span><span class=w> </span><span class=l>app-secret</span><span class=w>
-</span></code></pre></td></tr></table>
-</div>
-</div><ul>
-<li>inside the container
-<ul>
-<li>list
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>ls /opt/app-secret-volumes
-</code></pre></td></tr></table>
-</div>
-</div></li>
-<li>content
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>cat /opt/app-secret-volumes/DB_Password
-</code></pre></td></tr></table>
-</div>
-</div></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id=initcontainers>InitContainers</h2>
-<p>In multi-container pod, want to run a process that runs to completion in a container</p>
-<ul>
-<li>
-<p>initContainer</p>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>volumes</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>app-secret-volumne</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>secret</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>secretName</span><span class=p>:</span><span class=w> </span><span class=l>app-secret</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><ul><li>inside the container<ul><li>list<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>ls /opt/app-secret-volumes
+</span></span></code></pre></td></tr></table></div></div></li><li>content<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>cat /opt/app-secret-volumes/DB_Password
+</span></span></code></pre></td></tr></table></div></div></li></ul></li></ul></li></ul><h2 id=initcontainers>InitContainers</h2><p>In multi-container pod, want to run a process that runs to completion in a container</p><ul><li><p>initContainer</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -559,31 +192,22 @@ Cancel
 </span><span class=lnt>13
 </span><span class=lnt>14
 </span><span class=lnt>15
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>v1</span><span class=w>
-</span><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>Pod</span><span class=w>
-</span><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>myapp-pod</span><span class=w>
-</span><span class=w>  </span><span class=nt>labels</span><span class=p>:</span><span class=w>
-</span><span class=w>    </span><span class=nt>app</span><span class=p>:</span><span class=w> </span><span class=l>myapp</span><span class=w>
-</span><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span><span class=nt>containers</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>myapp-container</span><span class=w>
-</span><span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>busybox:1.28</span><span class=w>
-</span><span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=s1>&#39;sh&#39;</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;-c&#39;</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;echo The app is running! &amp;&amp; sleep 3600&#39;</span><span class=p>]</span><span class=w>
-</span><span class=w>  </span><span class=nt>initContainers</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>init-myservice</span><span class=w>
-</span><span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>busybox</span><span class=w>
-</span><span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=s1>&#39;sh&#39;</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;-c&#39;</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;git clone &lt;some-repository-that-will-be-used-by-application&gt; ; done;&#39;</span><span class=p>]</span><span class=w>
-</span></code></pre></td></tr></table>
-</div>
-</div></li>
-<li>
-<p>multiple initContainers</p>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>v1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>Pod</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>myapp-pod</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>labels</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>app</span><span class=p>:</span><span class=w> </span><span class=l>myapp</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>containers</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>myapp-container</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>busybox:1.28</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=s1>&#39;sh&#39;</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;-c&#39;</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;echo The app is running! &amp;&amp; sleep 3600&#39;</span><span class=p>]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>initContainers</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>init-myservice</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>busybox</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=s1>&#39;sh&#39;</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;-c&#39;</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;git clone &lt;some-repository-that-will-be-used-by-application&gt; ; done;&#39;</span><span class=p>]</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div></li><li><p>multiple initContainers</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -601,68 +225,24 @@ Cancel
 </span><span class=lnt>16
 </span><span class=lnt>17
 </span><span class=lnt>18
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>v1</span><span class=w>
-</span><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>Pod</span><span class=w>
-</span><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>myapp-pod</span><span class=w>
-</span><span class=w>  </span><span class=nt>labels</span><span class=p>:</span><span class=w>
-</span><span class=w>    </span><span class=nt>app</span><span class=p>:</span><span class=w> </span><span class=l>myapp</span><span class=w>
-</span><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span><span class=nt>containers</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>myapp-container</span><span class=w>
-</span><span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>busybox:1.28</span><span class=w>
-</span><span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=s1>&#39;sh&#39;</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;-c&#39;</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;echo The app is running! &amp;&amp; sleep 3600&#39;</span><span class=p>]</span><span class=w>
-</span><span class=w>  </span><span class=nt>initContainers</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>init-myservice</span><span class=w>
-</span><span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>busybox:1.28</span><span class=w>
-</span><span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=s1>&#39;sh&#39;</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;-c&#39;</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;until nslookup myservice; do echo waiting for myservice; sleep 2; done;&#39;</span><span class=p>]</span><span class=w>
-</span><span class=w>  </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>init-mydb</span><span class=w>
-</span><span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>busybox:1.28</span><span class=w>
-</span><span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=s1>&#39;sh&#39;</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;-c&#39;</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;until nslookup mydb; do echo waiting for mydb; sleep 2; done;&#39;</span><span class=p>]</span><span class=w>
-</span></code></pre></td></tr></table>
-</div>
-</div></li>
-</ul>
-</div><div class=post-footer id=post-footer>
-<div class=post-info>
-<div class=post-info-line>
-<div class=post-info-mod>
-<span>Updated on 2021-05-18</span>
-</div>
-<div class=post-info-license></div>
-</div>
-<div class=post-info-line>
-<div class=post-info-md><span>
-<a class=link-to-markdown href=/04_application_lifecycle_managment/index.md target=_blank>Read Markdown</a>
-</span></div>
-<div class=post-info-share>
-<span><a href=javascript:void(0); title="Share on Twitter" data-sharer=twitter data-url=https://aiden-jeon.github.io/04_application_lifecycle_managment/ data-title="(CKA) 04. Application Lifecycle Management" data-hashtags=k8s,cka><i class="fab fa-twitter fa-fw"></i></a><a href=javascript:void(0); title="Share on Facebook" data-sharer=facebook data-url=https://aiden-jeon.github.io/04_application_lifecycle_managment/ data-hashtag=k8s><i class="fab fa-facebook-square fa-fw"></i></a><a href=javascript:void(0); title="Share on Linkedin" data-sharer=linkedin data-url=https://aiden-jeon.github.io/04_application_lifecycle_managment/><i class="fab fa-linkedin fa-fw"></i></a><a href=javascript:void(0); title="Share on Reddit" data-sharer=reddit data-url=https://aiden-jeon.github.io/04_application_lifecycle_managment/><i class="fab fa-reddit fa-fw"></i></a><a href=javascript:void(0); title="Share on Evernote" data-sharer=evernote data-url=https://aiden-jeon.github.io/04_application_lifecycle_managment/ data-title="(CKA) 04. Application Lifecycle Management"><i class="fab fa-evernote fa-fw"></i></a></span>
-</div>
-</div>
-</div>
-<div class=post-info-more>
-<section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/k8s/>k8s</a>,&nbsp;<a href=/tags/cka/>cka</a></section>
-<section>
-<span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span>
-</section>
-</div>
-<div class=post-nav><a href=/03_logging_monitoring/ class=prev rel=prev title="(CKA) 03. Logging & Monitoring"><i class="fas fa-angle-left fa-fw"></i>(CKA) 03. Logging & Monitoring</a>
-<a href=/05_cluster_maintenance/ class=next rel=next title="(CKA) 05. Cluster Maintenance">(CKA) 05. Cluster Maintenance<i class="fas fa-angle-right fa-fw"></i></a></div>
-</div>
-<div id=comments><div id=utterances></div><noscript>
-Please enable JavaScript to view the comments powered by <a href=https://utteranc.es/>Utterances</a>.
-</noscript></div></article></div>
-</main><footer class=footer>
-<div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.91.2">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-</div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2019 - 2022</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>Jongseob Jeon</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div>
-</div>
-</footer></div>
-<div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top">
-<i class="fas fa-arrow-up fa-fw"></i>
-</a><a href=# id=view-comments class=fixed-button title="View Comments">
-<i class="fas fa-comment fa-fw"></i>
-</a>
-</div><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/smooth-scroll/smooth-scroll.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:30},comment:{utterances:{darkTheme:"github-dark",issueTerm:"pathname",label:"",lightTheme:"github-light",repo:"aiden-jeon/aiden-jeon.github.io"}},cookieconsent:{content:{dismiss:"Got it!",link:"Learn more",message:"This website uses Cookies to improve your experience."},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",lunrIndexURL:"/index.json",maxResultLength:10,noResultsFound:"No results found",snippetLength:30,type:"lunr"}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','UA-173612846-1',{anonymize_ip:!0})</script><script type=text/javascript src="https://www.googletagmanager.com/gtag/js?id=UA-173612846-1" async></script></body>
-</html>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>v1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>Pod</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>myapp-pod</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>labels</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>app</span><span class=p>:</span><span class=w> </span><span class=l>myapp</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>containers</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>myapp-container</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>busybox:1.28</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=s1>&#39;sh&#39;</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;-c&#39;</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;echo The app is running! &amp;&amp; sleep 3600&#39;</span><span class=p>]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>initContainers</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>init-myservice</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>busybox:1.28</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=s1>&#39;sh&#39;</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;-c&#39;</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;until nslookup myservice; do echo waiting for myservice; sleep 2; done;&#39;</span><span class=p>]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>init-mydb</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>busybox:1.28</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=s1>&#39;sh&#39;</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;-c&#39;</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;until nslookup mydb; do echo waiting for mydb; sleep 2; done;&#39;</span><span class=p>]</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div></li></ul></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>Updated on 2021-05-18</span></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/04_application_lifecycle_managment/index.md target=_blank>Read Markdown</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="Share on Twitter" data-sharer=twitter data-url=https://aiden-jeon.github.io/04_application_lifecycle_managment/ data-title="(CKA) 04. Application Lifecycle Management" data-hashtags=k8s,cka><i class="fab fa-twitter fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Facebook" data-sharer=facebook data-url=https://aiden-jeon.github.io/04_application_lifecycle_managment/ data-hashtag=k8s><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Linkedin" data-sharer=linkedin data-url=https://aiden-jeon.github.io/04_application_lifecycle_managment/><i class="fab fa-linkedin fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Hacker News" data-sharer=hackernews data-url=https://aiden-jeon.github.io/04_application_lifecycle_managment/ data-title="(CKA) 04. Application Lifecycle Management"><i class="fab fa-hacker-news fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Reddit" data-sharer=reddit data-url=https://aiden-jeon.github.io/04_application_lifecycle_managment/><i class="fab fa-reddit fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Line" data-sharer=line data-url=https://aiden-jeon.github.io/04_application_lifecycle_managment/ data-title="(CKA) 04. Application Lifecycle Management"><i data-svg-src=/lib/simple-icons/icons/line.min.svg aria-hidden=true></i></a><a href=javascript:void(0); title="Share on 微博" data-sharer=weibo data-url=https://aiden-jeon.github.io/04_application_lifecycle_managment/ data-title="(CKA) 04. Application Lifecycle Management"><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Evernote" data-sharer=evernote data-url=https://aiden-jeon.github.io/04_application_lifecycle_managment/ data-title="(CKA) 04. Application Lifecycle Management"><i class="fab fa-evernote fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/k8s/>k8s</a>,&nbsp;<a href=/tags/cka/>cka</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span></section></div><div class=post-nav><a href=/03_logging_monitoring/ class=prev rel=prev title="(CKA) 03. Logging & Monitoring"><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>(CKA) 03. Logging & Monitoring</a>
+<a href=/05_cluster_maintenance/ class=next rel=next title="(CKA) 05. Cluster Maintenance">(CKA) 05. Cluster Maintenance<i class="fas fa-angle-right fa-fw" aria-hidden=true></i></a></div></div><div id=comments><div id=utterances class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://utteranc.es/>Utterances</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.100.1">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden=true></i> LoveIt</a></div><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2019 - 2022</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>Jongseob Jeon</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top"><i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title="View Comments"><i class="fas fa-comment fa-fw" aria-hidden=true></i></a></div><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:30},comment:{utterances:{darkTheme:"github-dark",issueTerm:"pathname",label:"",lightTheme:"github-light",repo:"aiden-jeon/aiden-jeon.github.io"}},cookieconsent:{content:{dismiss:"Got it!",link:"Learn more",message:"This website uses Cookies to improve your experience."},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",lunrIndexURL:"/index.json",maxResultLength:10,noResultsFound:"No results found",snippetLength:30,type:"lunr"}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','UA-173612846-1',{anonymize_ip:!0})</script><script type=text/javascript src="https://www.googletagmanager.com/gtag/js?id=UA-173612846-1" async></script></body></html>

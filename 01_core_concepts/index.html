@@ -1,201 +1,22 @@
-<!doctype html><html lang=en>
-<head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=robots content="noodp">
-<meta http-equiv=x-ua-compatible content="IE=edge, chrome=1">
-<title>(CKA) 01. Core Concepts - Aiden's Camp</title><meta name=Description content="Welcome to Aiden's Camp"><meta property="og:title" content="(CKA) 01. Core Concepts">
-<meta property="og:description" content="CKA를 준비하면서 공부한 요약 내용입니다.
- 강의 What is CKA?  0. Tips  ailias kubectl to k  1 2  alias k=&#34;kubectl&#34; k get po   shortcuts   pod = po service = svc namespace = ns replicasets = rs  do not write all config file   use dry run  kubectl run nginx --image=nginx --dry-run=client -o yaml kubectl create deployment --image=nginx nginx --dry-run=client -o yaml   export it to yaml file  kubectl create deployment --image=nginx nginx --dry-run=client -o yaml > nginx-deployment.">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://aiden-jeon.github.io/01_core_concepts/"><meta property="og:image" content="https://aiden-jeon.github.io/logo.png"><meta property="article:section" content="posts">
-<meta property="article:published_time" content="2021-05-10T00:00:00+00:00">
-<meta property="article:modified_time" content="2021-05-10T00:00:00+00:00">
-<meta name=twitter:card content="summary_large_image">
-<meta name=twitter:image content="https://aiden-jeon.github.io/logo.png">
-<meta name=twitter:title content="(CKA) 01. Core Concepts">
-<meta name=twitter:description content="CKA를 준비하면서 공부한 요약 내용입니다.
- 강의 What is CKA?  0. Tips  ailias kubectl to k  1 2  alias k=&#34;kubectl&#34; k get po   shortcuts   pod = po service = svc namespace = ns replicasets = rs  do not write all config file   use dry run  kubectl run nginx --image=nginx --dry-run=client -o yaml kubectl create deployment --image=nginx nginx --dry-run=client -o yaml   export it to yaml file  kubectl create deployment --image=nginx nginx --dry-run=client -o yaml > nginx-deployment.">
-<meta name=application-name content="Aiden's Camp">
-<meta name=apple-mobile-web-app-title content="Aiden's Camp"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=icons/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://aiden-jeon.github.io/01_core_concepts/><link rel=prev href=https://aiden-jeon.github.io/tf-idf/><link rel=next href=https://aiden-jeon.github.io/install-istio/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"(CKA) 01. Core Concepts","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/aiden-jeon.github.io\/01_core_concepts\/"},"genre":"posts","keywords":"k8s, cka","wordcount":1164,"url":"https:\/\/aiden-jeon.github.io\/01_core_concepts\/","datePublished":"2021-05-10T00:00:00+00:00","dateModified":"2021-05-10T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"Jongseob Jeon"},"description":""}</script></head>
-<body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':'light'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'light'==='dark')&&document.body.setAttribute('theme','dark')</script>
-<div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
-<div class=header-wrapper>
-<div class=header-title>
-<a href=/ title="Aiden's Camp"></a>
-</div>
-<div class=menu>
-<div class=menu-inner><a class=menu-item href=/> Home </a><a class=menu-item href=/posts/> Posts </a><a class=menu-item href=/tags/> Tags </a><a class=menu-item href=/categories/> Categories </a><a class=menu-item href=/about/> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><title>(CKA) 01. Core Concepts - Aiden's Camp</title><meta name=Description content="Welcome to Aiden's Camp"><meta property="og:title" content="(CKA) 01. Core Concepts"><meta property="og:description" content="CKA를 준비하면서 공부한 요약 내용입니다.
+강의 What is CKA? 0. Tips ailias kubectl to k 1 2 alias k=&#34;kubectl&#34; k get po shortcuts pod = po service = svc namespace = ns replicasets = rs do not write all config file use dry run kubectl run nginx --image=nginx --dry-run=client -o yaml kubectl create deployment --image=nginx nginx --dry-run=client -o yaml export it to yaml file kubectl create deployment --image=nginx nginx --dry-run=client -o yaml > nginx-deployment."><meta property="og:type" content="article"><meta property="og:url" content="https://aiden-jeon.github.io/01_core_concepts/"><meta property="og:image" content="https://aiden-jeon.github.io/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2021-05-10T00:00:00+00:00"><meta property="article:modified_time" content="2021-05-10T00:00:00+00:00"><meta property="og:site_name" content="My cool site"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://aiden-jeon.github.io/logo.png"><meta name=twitter:title content="(CKA) 01. Core Concepts"><meta name=twitter:description content="CKA를 준비하면서 공부한 요약 내용입니다.
+강의 What is CKA? 0. Tips ailias kubectl to k 1 2 alias k=&#34;kubectl&#34; k get po shortcuts pod = po service = svc namespace = ns replicasets = rs do not write all config file use dry run kubectl run nginx --image=nginx --dry-run=client -o yaml kubectl create deployment --image=nginx nginx --dry-run=client -o yaml export it to yaml file kubectl create deployment --image=nginx nginx --dry-run=client -o yaml > nginx-deployment."><meta name=application-name content="Aiden's Camp"><meta name=apple-mobile-web-app-title content="Aiden's Camp"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=icons/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://aiden-jeon.github.io/01_core_concepts/><link rel=prev href=https://aiden-jeon.github.io/tf-idf/><link rel=next href=https://aiden-jeon.github.io/install-istio/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"(CKA) 01. Core Concepts","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/aiden-jeon.github.io\/01_core_concepts\/"},"genre":"posts","keywords":"k8s, cka","wordcount":1228,"url":"https:\/\/aiden-jeon.github.io\/01_core_concepts\/","datePublished":"2021-05-10T00:00:00+00:00","dateModified":"2021-05-10T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"Jongseob Jeon"},"description":""}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':'light'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'light'==='dark')&&document.body.setAttribute('theme','dark')</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="Aiden's Camp"></a></div><div class=menu><div class=menu-inner><a class=menu-item href=/>Home </a><a class=menu-item href=/posts/>Posts </a><a class=menu-item href=/tags/>Tags </a><a class=menu-item href=/categories/>Categories </a><a class=menu-item href=/about/>About </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
 <input type=text placeholder="Search titles or contents..." id=search-input-desktop>
-<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search>
-<i class="fas fa-search fa-fw"></i>
-</a>
-<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear>
-<i class="fas fa-times-circle fa-fw"></i>
-</a>
-<span class="search-button search-loading" id=search-loading-desktop>
-<i class="fas fa-spinner fa-fw fa-spin"></i>
-</span>
-</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
-<i class="fas fa-adjust fa-fw"></i>
-</a>
-</div>
-</div>
-</div>
-</header><header class=mobile id=header-mobile>
-<div class=header-container>
-<div class=header-wrapper>
-<div class=header-title>
-<a href=/ title="Aiden's Camp"></a>
-</div>
-<div class=menu-toggle id=menu-toggle-mobile>
-<span></span><span></span><span></span>
-</div>
-</div>
-<div class=menu id=menu-mobile><div class=search-wrapper>
-<div class="search mobile" id=search-mobile>
-<input type=text placeholder="Search titles or contents..." id=search-input-mobile>
-<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search>
-<i class="fas fa-search fa-fw"></i>
-</a>
-<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear>
-<i class="fas fa-times-circle fa-fw"></i>
-</a>
-<span class="search-button search-loading" id=search-loading-mobile>
-<i class="fas fa-spinner fa-fw fa-spin"></i>
-</span>
-</div>
-<a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>
-Cancel
-</a>
-</div><a class=menu-item href=/ title>Home</a><a class=menu-item href=/posts/ title>Posts</a><a class=menu-item href=/tags/ title>Tags</a><a class=menu-item href=/categories/ title>Categories</a><a class=menu-item href=/about/ title>About</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
-<i class="fas fa-adjust fa-fw"></i>
-</a></div>
-</div>
-</header>
-<div class="search-dropdown desktop">
-<div id=search-dropdown-desktop></div>
-</div>
-<div class="search-dropdown mobile">
-<div id=search-dropdown-mobile></div>
-</div>
-<main class=main>
-<div class=container><div class=toc id=toc-auto>
-<h2 class=toc-title>Contents</h2>
-<div class=toc-content id=toc-content-auto></div>
-</div><article class="page single"><h1 class="single-title animated flipInX">(CKA) 01. Core Concepts</h1><div class=post-meta>
-<div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-category>included in <a href=/categories/kubernetes/><i class="far fa-folder fa-fw"></i>kubernetes</a></span></div>
-<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-05-10>2021-05-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1164 words&nbsp;
-<i class="far fa-clock fa-fw"></i>&nbsp;6 minutes&nbsp;</div>
-</div><div class="details toc" id=toc-static kept>
-<div class="details-summary toc-title">
-<span>Contents</span>
-<span><i class="details-icon fas fa-angle-right"></i></span>
-</div>
-<div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
-<ul>
-<li>
-<ul>
-<li><a href=#0-tips>0. Tips</a></li>
-<li><a href=#1-pods>1. Pods</a>
-<ul>
-<li><a href=#생성>생성</a></li>
-<li><a href=#상태>상태</a></li>
-<li><a href=#삭제>삭제</a></li>
-<li><a href=#수정>수정</a></li>
-</ul>
-</li>
-<li><a href=#2-replication-controller>2. Replication Controller</a>
-<ul>
-<li><a href=#특징>특징</a></li>
-<li><a href=#종류>종류</a></li>
-<li><a href=#생성-1>생성</a></li>
-<li><a href=#상태-1>상태</a></li>
-<li><a href=#수정-1>수정</a></li>
-<li><a href=#삭제-1>삭제</a></li>
-<li><a href=#scale>scale</a></li>
-</ul>
-</li>
-<li><a href=#3-deployments>3. Deployments</a></li>
-<li><a href=#4-namespaces>4. Namespaces</a>
-<ul>
-<li><a href=#생성-2>생성</a></li>
-<li><a href=#목록>목록</a></li>
-<li><a href=#상태-2>상태</a></li>
-<li><a href=#change-default>change default</a></li>
-<li><a href=#pod-생성>pod 생성</a></li>
-<li><a href=#전체-확인>전체 확인</a></li>
-</ul>
-</li>
-<li><a href=#5-services>5. Services</a>
-<ul>
-<li><a href=#상태-3>상태</a></li>
-<li><a href=#명령어>명령어</a></li>
-<li><a href=#expose>expose</a></li>
-</ul>
-</li>
-<li><a href=#6-imperative-vs-declaritive>6. Imperative vs Declaritive</a>
-<ul>
-<li><a href=#infrastructure-as-code>Infrastructure as Code</a></li>
-<li><a href=#kubernetes>Kubernetes</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</nav></div>
-</div><div class=content id=content><p>CKA를 준비하면서 공부한 요약 내용입니다.</p>
-<ul>
-<li><a href=https://www.udemy.com/course/certified-kubernetes-administrator-with-practice-tests/ target=_blank rel="noopener noreffer">강의</a></li>
-<li><a href=https://www.cncf.io/certification/cka/ target=_blank rel="noopener noreffer">What is CKA?</a></li>
-</ul>
-<h2 id=0-tips>0. Tips</h2>
-<ol>
-<li>ailias <code>kubectl</code> to <code>k</code></li>
-</ol>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme"><i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="Aiden's Camp"></a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="Search titles or contents..." id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>Cancel</a></div><a class=menu-item href=/ title>Home</a><a class=menu-item href=/posts/ title>Posts</a><a class=menu-item href=/tags/ title>Tags</a><a class=menu-item href=/categories/ title>Categories</a><a class=menu-item href=/about/ title>About</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>Contents</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">(CKA) 01. Core Concepts</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>Jongseob Jeon</a>
+</span>&nbsp;<span class=post-category>included in <a href=/categories/kubernetes/><i class="far fa-folder fa-fw" aria-hidden=true></i>kubernetes</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2021-05-10>2021-05-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;1228 words&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;6 minutes&nbsp;</div></div><div class="details toc" id=toc-static data-kept><div class="details-summary toc-title"><span>Contents</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><ul><li><a href=#0-tips>0. Tips</a></li><li><a href=#1-pods>1. Pods</a><ul><li><a href=#생성>생성</a></li><li><a href=#상태>상태</a></li><li><a href=#삭제>삭제</a></li><li><a href=#수정>수정</a></li></ul></li><li><a href=#2-replication-controller>2. Replication Controller</a><ul><li><a href=#특징>특징</a></li><li><a href=#종류>종류</a></li><li><a href=#생성-1>생성</a></li><li><a href=#상태-1>상태</a></li><li><a href=#수정-1>수정</a></li><li><a href=#삭제-1>삭제</a></li><li><a href=#scale>scale</a></li></ul></li><li><a href=#3-deployments>3. Deployments</a></li><li><a href=#4-namespaces>4. Namespaces</a><ul><li><a href=#생성-2>생성</a></li><li><a href=#목록>목록</a></li><li><a href=#상태-2>상태</a></li><li><a href=#change-default>change default</a></li><li><a href=#pod-생성>pod 생성</a></li><li><a href=#전체-확인>전체 확인</a></li></ul></li><li><a href=#5-services>5. Services</a><ul><li><a href=#상태-3>상태</a></li><li><a href=#명령어>명령어</a></li><li><a href=#expose>expose</a></li></ul></li><li><a href=#6-imperative-vs-declaritive>6. Imperative vs Declaritive</a><ul><li><a href=#infrastructure-as-code>Infrastructure as Code</a></li><li><a href=#kubernetes>Kubernetes</a></li></ul></li></ul></li></ul></nav></div></div><div class=content id=content><p>CKA를 준비하면서 공부한 요약 내용입니다.</p><ul><li><a href=https://www.udemy.com/course/certified-kubernetes-administrator-with-practice-tests/ target=_blank rel="noopener noreffer">강의</a></li><li><a href=https://www.cncf.io/certification/cka/ target=_blank rel="noopener noreffer">What is CKA?</a></li></ul><h2 id=0-tips>0. Tips</h2><ol><li>ailias <code>kubectl</code> to <code>k</code></li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=nb>alias</span> <span class=nv>k</span><span class=o>=</span><span class=s2>&#34;kubectl&#34;</span>
-k get po
-</code></pre></td></tr></table>
-</div>
-</div><ol start=2>
-<li>shortcuts</li>
-</ol>
-<ul>
-<li>pod = po</li>
-<li>service = svc</li>
-<li>namespace = ns</li>
-<li>replicasets = rs</li>
-</ul>
-<ol start=3>
-<li>do not write all config file</li>
-</ol>
-<ul>
-<li>use dry run
-<ul>
-<li><code>kubectl run nginx --image=nginx --dry-run=client -o yaml</code></li>
-<li><code>kubectl create deployment --image=nginx nginx --dry-run=client -o yaml</code></li>
-</ul>
-</li>
-<li>export it to yaml file
-<ul>
-<li><code>kubectl create deployment --image=nginx nginx --dry-run=client -o yaml > nginx-deployment.yaml</code></li>
-</ul>
-</li>
-</ul>
-<h2 id=1-pods>1. Pods</h2>
-<h3 id=생성>생성</h3>
-<ol>
-<li>yaml</li>
-</ol>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>alias</span> <span class=nv>k</span><span class=o>=</span><span class=s2>&#34;kubectl&#34;</span>
+</span></span><span class=line><span class=cl>k get po
+</span></span></code></pre></td></tr></table></div></div><ol start=2><li>shortcuts</li></ol><ul><li>pod = po</li><li>service = svc</li><li>namespace = ns</li><li>replicasets = rs</li></ul><ol start=3><li>do not write all config file</li></ol><ul><li>use dry run<ul><li><code>kubectl run nginx --image=nginx --dry-run=client -o yaml</code></li><li><code>kubectl create deployment --image=nginx nginx --dry-run=client -o yaml</code></li></ul></li><li>export it to yaml file<ul><li><code>kubectl create deployment --image=nginx nginx --dry-run=client -o yaml > nginx-deployment.yaml</code></li></ul></li></ul><h2 id=1-pods>1. Pods</h2><h3 id=생성>생성</h3><ol><li>yaml</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
@@ -204,99 +25,46 @@ k get po
 </span><span class=lnt>7
 </span><span class=lnt>8
 </span><span class=lnt>9
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=c># pod.yaml</span><span class=w>
-</span><span class=w></span><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>v1</span><span class=w>
-</span><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>pod</span><span class=w>
-</span><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>nginx</span><span class=w>
-</span><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span><span class=nt>containers</span><span class=p>:</span><span class=w>
-</span><span class=w>    </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>nginx-container</span><span class=w>
-</span><span class=w>      </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>nginx</span><span class=w>
-</span></code></pre></td></tr></table>
-</div>
-</div><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>kubectl apply -f pod.yaml
-</code></pre></td></tr></table>
-</div>
-</div><ol start=2>
-<li>run</li>
-</ol>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>kubectl run nginx --image<span class=o>=</span>nginx
-</code></pre></td></tr></table>
-</div>
-</div><h3 id=상태>상태</h3>
-<ul>
-<li>
-<p>기본</p>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=c># pod.yaml</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>v1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>pod</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>nginx</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>containers</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>nginx-container</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>nginx</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kubectl apply -f pod.yaml
+</span></span></code></pre></td></tr></table></div></div><ol start=2><li>run</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kubectl run nginx --image<span class=o>=</span>nginx
+</span></span></code></pre></td></tr></table></div></div><h3 id=상태>상태</h3><ul><li><p>기본</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
 </span><span class=lnt>5
 </span><span class=lnt>6
 </span><span class=lnt>7
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>&gt; k get po
-NAME            READY   STATUS             RESTARTS   AGE
-newpods-6nl8r   1/1     Running            <span class=m>0</span>          3m
-newpods-9sp8p   1/1     Running            <span class=m>0</span>          3m
-newpods-tplx9   1/1     Running            <span class=m>0</span>          3m
-nginx           1/1     Running            <span class=m>0</span>          3m11s
-webapp          1/2     ImagePullBackOff   <span class=m>0</span>          54s
-</code></pre></td></tr></table>
-</div>
-</div><ul>
-<li>READY means
-<ul>
-<li>running_containers in pod / total_containers in pod</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p>wide</p>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>&gt; k get po
+</span></span><span class=line><span class=cl>NAME            READY   STATUS             RESTARTS   AGE
+</span></span><span class=line><span class=cl>newpods-6nl8r   1/1     Running            <span class=m>0</span>          3m
+</span></span><span class=line><span class=cl>newpods-9sp8p   1/1     Running            <span class=m>0</span>          3m
+</span></span><span class=line><span class=cl>newpods-tplx9   1/1     Running            <span class=m>0</span>          3m
+</span></span><span class=line><span class=cl>nginx           1/1     Running            <span class=m>0</span>          3m11s
+</span></span><span class=line><span class=cl>webapp          1/2     ImagePullBackOff   <span class=m>0</span>          54s
+</span></span></code></pre></td></tr></table></div></div><ul><li>READY means<ul><li>running_containers in pod / total_containers in pod</li></ul></li></ul></li><li><p>wide</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
 </span><span class=lnt>5
 </span><span class=lnt>6
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>&gt; k get po -o wide
-NAME            READY   STATUS              RESTARTS   AGE   IP       NODE           NOMINATED NODE   READINESS GATES
-newpods-6nl8r   0/1     ContainerCreating   <span class=m>0</span>          14s   &lt;none&gt;   controlplane   &lt;none&gt;           &lt;none&gt;
-newpods-9sp8p   0/1     ContainerCreating   <span class=m>0</span>          14s   &lt;none&gt;   controlplane   &lt;none&gt;           &lt;none&gt;
-newpods-tplx9   0/1     ContainerCreating   <span class=m>0</span>          14s   &lt;none&gt;   controlplane   &lt;none&gt;           &lt;none&gt;
-nginx           0/1     ContainerCreating   <span class=m>0</span>          25s   &lt;none&gt;   controlplane   &lt;none&gt;           &lt;none&gt;
-</code></pre></td></tr></table>
-</div>
-</div><ul>
-<li>NODE</li>
-</ul>
-</li>
-<li>
-<p>describe</p>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>&gt; k get po -o wide
+</span></span><span class=line><span class=cl>NAME            READY   STATUS              RESTARTS   AGE   IP       NODE           NOMINATED NODE   READINESS GATES
+</span></span><span class=line><span class=cl>newpods-6nl8r   0/1     ContainerCreating   <span class=m>0</span>          14s   &lt;none&gt;   controlplane   &lt;none&gt;           &lt;none&gt;
+</span></span><span class=line><span class=cl>newpods-9sp8p   0/1     ContainerCreating   <span class=m>0</span>          14s   &lt;none&gt;   controlplane   &lt;none&gt;           &lt;none&gt;
+</span></span><span class=line><span class=cl>newpods-tplx9   0/1     ContainerCreating   <span class=m>0</span>          14s   &lt;none&gt;   controlplane   &lt;none&gt;           &lt;none&gt;
+</span></span><span class=line><span class=cl>nginx           0/1     ContainerCreating   <span class=m>0</span>          25s   &lt;none&gt;   controlplane   &lt;none&gt;           &lt;none&gt;
+</span></span></code></pre></td></tr></table></div></div><ul><li>NODE</li></ul></li><li><p>describe</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -363,136 +131,80 @@ nginx           0/1     ContainerCreating   <span class=m>0</span>          25s 
 </span><span class=lnt>65
 </span><span class=lnt>66
 </span><span class=lnt>67
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>&gt; k describe po webapp
-Name:         webapp
-Namespace:    default
-Priority:     <span class=m>0</span>
-Node:         controlplane/10.77.67.9
-Start Time:   Mon, <span class=m>10</span> May <span class=m>2021</span> 03:54:38 +0000
-Labels:       &lt;none&gt;
-Annotations:  &lt;none&gt;
-Status:       Pending
-IP:           10.244.0.8
-IPs:
-  IP:  10.244.0.8
-Containers:
-  nginx:
-    Container ID:   docker://f9580f7e4b7c51b53f0cb0d94ff913b643706a65a103a58614c3c254cf26043f
-    Image:          nginx
-    Image ID:       docker-pullable://nginx@sha256:75a55d33ecc73c2a242450a9f1cc858499d468f077ea942867e662c247b5e412
-    Port:           &lt;none&gt;
-    Host Port:      &lt;none&gt;
-    State:          Running
-      Started:      Mon, <span class=m>10</span> May <span class=m>2021</span> 03:54:41 +0000
-    Ready:          True
-    Restart Count:  <span class=m>0</span>
-    Environment:    &lt;none&gt;
-    Mounts:
-      /var/run/secrets/kubernetes.io/serviceaccount from default-token-pz92t <span class=o>(</span>ro<span class=o>)</span>
-  agentx:
-    Container ID:   
-    Image:          agentx
-    Image ID:       
-    Port:           &lt;none&gt;
-    Host Port:      &lt;none&gt;
-    State:          Waiting
-      Reason:       ImagePullBackOff
-    Ready:          False
-    Restart Count:  <span class=m>0</span>
-    Environment:    &lt;none&gt;
-    Mounts:
-      /var/run/secrets/kubernetes.io/serviceaccount from default-token-pz92t <span class=o>(</span>ro<span class=o>)</span>
-Conditions:
-  Type              Status
-  Initialized       True 
-  Ready             False 
-  ContainersReady   False 
-  PodScheduled      True 
-Volumes:
-  default-token-pz92t:
-    Type:        Secret <span class=o>(</span>a volume populated by a Secret<span class=o>)</span>
-    SecretName:  default-token-pz92t
-    Optional:    <span class=nb>false</span>
-QoS Class:       BestEffort
-Node-Selectors:  &lt;none&gt;
-Tolerations:     node.kubernetes.io/not-ready:NoExecute <span class=nv>op</span><span class=o>=</span>Exists <span class=k>for</span> 300s
-                 node.kubernetes.io/unreachable:NoExecute <span class=nv>op</span><span class=o>=</span>Exists <span class=k>for</span> 300s
-Events:
-  Type     Reason     Age                From               Message
-  ----     ------     ----               ----               -------
-  Normal   Scheduled  17s                default-scheduler  Successfully assigned default/webapp to controlplane
-  Normal   Pulling    15s                kubelet            Pulling image <span class=s2>&#34;nginx&#34;</span>
-  Normal   Pulled     15s                kubelet            Successfully pulled image <span class=s2>&#34;nginx&#34;</span> in 170.242045ms
-  Normal   Created    15s                kubelet            Created container nginx
-  Normal   Started    14s                kubelet            Started container nginx
-  Normal   Pulling    14s                kubelet            Pulling image <span class=s2>&#34;agentx&#34;</span>
-  Warning  Failed     13s                kubelet            Failed to pull image <span class=s2>&#34;agentx&#34;</span>: rpc error: <span class=nv>code</span> <span class=o>=</span> Unknown <span class=nv>desc</span> <span class=o>=</span> Error response from daemon: pull access denied <span class=k>for</span> agentx, repository does not exist or may require <span class=s1>&#39;docker login&#39;</span>: denied: requested access to the resource is denied
-  Warning  Failed     13s                kubelet            Error: ErrImagePull
-  Normal   BackOff    12s <span class=o>(</span>x2 over 13s<span class=o>)</span>  kubelet            Back-off pulling image <span class=s2>&#34;agentx&#34;</span>
-  Warning  Failed     12s <span class=o>(</span>x2 over 13s<span class=o>)</span>  kubelet            Error: ImagePullBackOff
-</code></pre></td></tr></table>
-</div>
-</div></li>
-</ul>
-<h3 id=삭제>삭제</h3>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>&gt; k describe po webapp
+</span></span><span class=line><span class=cl>Name:         webapp
+</span></span><span class=line><span class=cl>Namespace:    default
+</span></span><span class=line><span class=cl>Priority:     <span class=m>0</span>
+</span></span><span class=line><span class=cl>Node:         controlplane/10.77.67.9
+</span></span><span class=line><span class=cl>Start Time:   Mon, <span class=m>10</span> May <span class=m>2021</span> 03:54:38 +0000
+</span></span><span class=line><span class=cl>Labels:       &lt;none&gt;
+</span></span><span class=line><span class=cl>Annotations:  &lt;none&gt;
+</span></span><span class=line><span class=cl>Status:       Pending
+</span></span><span class=line><span class=cl>IP:           10.244.0.8
+</span></span><span class=line><span class=cl>IPs:
+</span></span><span class=line><span class=cl>  IP:  10.244.0.8
+</span></span><span class=line><span class=cl>Containers:
+</span></span><span class=line><span class=cl>  nginx:
+</span></span><span class=line><span class=cl>    Container ID:   docker://f9580f7e4b7c51b53f0cb0d94ff913b643706a65a103a58614c3c254cf26043f
+</span></span><span class=line><span class=cl>    Image:          nginx
+</span></span><span class=line><span class=cl>    Image ID:       docker-pullable://nginx@sha256:75a55d33ecc73c2a242450a9f1cc858499d468f077ea942867e662c247b5e412
+</span></span><span class=line><span class=cl>    Port:           &lt;none&gt;
+</span></span><span class=line><span class=cl>    Host Port:      &lt;none&gt;
+</span></span><span class=line><span class=cl>    State:          Running
+</span></span><span class=line><span class=cl>      Started:      Mon, <span class=m>10</span> May <span class=m>2021</span> 03:54:41 +0000
+</span></span><span class=line><span class=cl>    Ready:          True
+</span></span><span class=line><span class=cl>    Restart Count:  <span class=m>0</span>
+</span></span><span class=line><span class=cl>    Environment:    &lt;none&gt;
+</span></span><span class=line><span class=cl>    Mounts:
+</span></span><span class=line><span class=cl>      /var/run/secrets/kubernetes.io/serviceaccount from default-token-pz92t <span class=o>(</span>ro<span class=o>)</span>
+</span></span><span class=line><span class=cl>  agentx:
+</span></span><span class=line><span class=cl>    Container ID:   
+</span></span><span class=line><span class=cl>    Image:          agentx
+</span></span><span class=line><span class=cl>    Image ID:       
+</span></span><span class=line><span class=cl>    Port:           &lt;none&gt;
+</span></span><span class=line><span class=cl>    Host Port:      &lt;none&gt;
+</span></span><span class=line><span class=cl>    State:          Waiting
+</span></span><span class=line><span class=cl>      Reason:       ImagePullBackOff
+</span></span><span class=line><span class=cl>    Ready:          False
+</span></span><span class=line><span class=cl>    Restart Count:  <span class=m>0</span>
+</span></span><span class=line><span class=cl>    Environment:    &lt;none&gt;
+</span></span><span class=line><span class=cl>    Mounts:
+</span></span><span class=line><span class=cl>      /var/run/secrets/kubernetes.io/serviceaccount from default-token-pz92t <span class=o>(</span>ro<span class=o>)</span>
+</span></span><span class=line><span class=cl>Conditions:
+</span></span><span class=line><span class=cl>  Type              Status
+</span></span><span class=line><span class=cl>  Initialized       True 
+</span></span><span class=line><span class=cl>  Ready             False 
+</span></span><span class=line><span class=cl>  ContainersReady   False 
+</span></span><span class=line><span class=cl>  PodScheduled      True 
+</span></span><span class=line><span class=cl>Volumes:
+</span></span><span class=line><span class=cl>  default-token-pz92t:
+</span></span><span class=line><span class=cl>    Type:        Secret <span class=o>(</span>a volume populated by a Secret<span class=o>)</span>
+</span></span><span class=line><span class=cl>    SecretName:  default-token-pz92t
+</span></span><span class=line><span class=cl>    Optional:    <span class=nb>false</span>
+</span></span><span class=line><span class=cl>QoS Class:       BestEffort
+</span></span><span class=line><span class=cl>Node-Selectors:  &lt;none&gt;
+</span></span><span class=line><span class=cl>Tolerations:     node.kubernetes.io/not-ready:NoExecute <span class=nv>op</span><span class=o>=</span>Exists <span class=k>for</span> 300s
+</span></span><span class=line><span class=cl>                 node.kubernetes.io/unreachable:NoExecute <span class=nv>op</span><span class=o>=</span>Exists <span class=k>for</span> 300s
+</span></span><span class=line><span class=cl>Events:
+</span></span><span class=line><span class=cl>  Type     Reason     Age                From               Message
+</span></span><span class=line><span class=cl>  ----     ------     ----               ----               -------
+</span></span><span class=line><span class=cl>  Normal   Scheduled  17s                default-scheduler  Successfully assigned default/webapp to controlplane
+</span></span><span class=line><span class=cl>  Normal   Pulling    15s                kubelet            Pulling image <span class=s2>&#34;nginx&#34;</span>
+</span></span><span class=line><span class=cl>  Normal   Pulled     15s                kubelet            Successfully pulled image <span class=s2>&#34;nginx&#34;</span> in 170.242045ms
+</span></span><span class=line><span class=cl>  Normal   Created    15s                kubelet            Created container nginx
+</span></span><span class=line><span class=cl>  Normal   Started    14s                kubelet            Started container nginx
+</span></span><span class=line><span class=cl>  Normal   Pulling    14s                kubelet            Pulling image <span class=s2>&#34;agentx&#34;</span>
+</span></span><span class=line><span class=cl>  Warning  Failed     13s                kubelet            Failed to pull image <span class=s2>&#34;agentx&#34;</span>: rpc error: <span class=nv>code</span> <span class=o>=</span> Unknown <span class=nv>desc</span> <span class=o>=</span> Error response from daemon: pull access denied <span class=k>for</span> agentx, repository does not exist or may require <span class=s1>&#39;docker login&#39;</span>: denied: requested access to the resource is denied
+</span></span><span class=line><span class=cl>  Warning  Failed     13s                kubelet            Error: ErrImagePull
+</span></span><span class=line><span class=cl>  Normal   BackOff    12s <span class=o>(</span>x2 over 13s<span class=o>)</span>  kubelet            Back-off pulling image <span class=s2>&#34;agentx&#34;</span>
+</span></span><span class=line><span class=cl>  Warning  Failed     12s <span class=o>(</span>x2 over 13s<span class=o>)</span>  kubelet            Error: ImagePullBackOff
+</span></span></code></pre></td></tr></table></div></div></li></ul><h3 id=삭제>삭제</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>&gt; k delete po webapp
-pod <span class=s2>&#34;webapp&#34;</span> deleted
-</code></pre></td></tr></table>
-</div>
-</div><h3 id=수정>수정</h3>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>k edit po redis
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=2-replication-controller>2. Replication Controller</h2>
-<p>What is replica and why need controller?<br>
--> replication controller runs multiple instances of a single pod in the k8s cluster</p>
-<h3 id=특징>특징</h3>
-<ol>
-<li>high availability
-<ul>
-<li>multiplie pod or single pod</li>
-<li>replication controller ensures that the specified number of pods are running at all times.</li>
-</ul>
-</li>
-<li>Load Balancing & Scaling
-<ul>
-<li>balance the load</li>
-<li>spans across multiple nodes</li>
-</ul>
-</li>
-</ol>
-<h3 id=종류>종류</h3>
-<ul>
-<li>replication controller
-<ul>
-<li>old technology</li>
-</ul>
-</li>
-<li>replica set
-<ul>
-<li>recommended</li>
-</ul>
-</li>
-</ul>
-<h3 id=생성-1>생성</h3>
-<ul>
-<li>defintion
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>&gt; k delete po webapp
+</span></span><span class=line><span class=cl>pod <span class=s2>&#34;webapp&#34;</span> deleted
+</span></span></code></pre></td></tr></table></div></div><h3 id=수정>수정</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>k edit po redis
+</span></span></code></pre></td></tr></table></div></div><h2 id=2-replication-controller>2. Replication Controller</h2><p>What is replica and why need controller?<br>-> replication controller runs multiple instances of a single pod in the k8s cluster</p><h3 id=특징>특징</h3><ol><li>high availability<ul><li>multiplie pod or single pod</li><li>replication controller ensures that the specified number of pods are running at all times.</li></ul></li><li>Load Balancing & Scaling<ul><li>balance the load</li><li>spans across multiple nodes</li></ul></li></ol><h3 id=종류>종류</h3><ul><li>replication controller<ul><li>old technology</li></ul></li><li>replica set<ul><li>recommended</li></ul></li></ul><h3 id=생성-1>생성</h3><ul><li>defintion<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -515,72 +227,42 @@ pod <span class=s2>&#34;webapp&#34;</span> deleted
 </span><span class=lnt>21
 </span><span class=lnt>22
 </span><span class=lnt>23
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=c># ReplicaSet</span><span class=w>
-</span><span class=w></span><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>apps/v1</span><span class=w>
-</span><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>ReplicaSet</span><span class=w>
-</span><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>myapp-replicaset</span><span class=w>
-</span><span class=w>  </span><span class=nt>labels</span><span class=p>:</span><span class=w>
-</span><span class=w>    </span><span class=nt>app</span><span class=p>:</span><span class=w> </span><span class=l>myapp</span><span class=w>
-</span><span class=w>    </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class=l>front-end</span><span class=w>
-</span><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span><span class=nt>template</span><span class=p>:</span><span class=w>
-</span><span class=w>    </span><span class=nt>metadata</span><span class=p>:</span><span class=w> </span><span class=l>myapp-pod</span><span class=w>
-</span><span class=w>      </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>myapp-pod</span><span class=w>
-</span><span class=w>      </span><span class=nt>labels</span><span class=p>:</span><span class=w>
-</span><span class=w>        </span><span class=nt>app</span><span class=p>:</span><span class=w> </span><span class=l>myapp</span><span class=w>
-</span><span class=w>        </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class=l>front-end</span><span class=w>
-</span><span class=w>      </span><span class=nt>spec</span><span class=p>:</span><span class=w>
-</span><span class=w>        </span><span class=nt>containers</span><span class=p>:</span><span class=w>
-</span><span class=w>          </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>nginx-container</span><span class=w>
-</span><span class=w>            </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>nginx</span><span class=w>
-</span><span class=w>  </span><span class=nt>replicas</span><span class=p>:</span><span class=w> </span><span class=m>3</span><span class=w>
-</span><span class=w>  </span><span class=nt>selector</span><span class=p>:</span><span class=w>
-</span><span class=w>    </span><span class=nt>matchLabels</span><span class=p>:</span><span class=w>
-</span><span class=w>      </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class=l>front-end</span><span class=w>
-</span></code></pre></td></tr></table>
-</div>
-</div></li>
-</ul>
-<h3 id=상태-1>상태</h3>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=c># ReplicaSet</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>apps/v1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>ReplicaSet</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>myapp-replicaset</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>labels</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>app</span><span class=p>:</span><span class=w> </span><span class=l>myapp</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class=l>front-end</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>template</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>metadata</span><span class=p>:</span><span class=w> </span><span class=l>myapp-pod</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>myapp-pod</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>labels</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>app</span><span class=p>:</span><span class=w> </span><span class=l>myapp</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class=l>front-end</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>spec</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>containers</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>nginx-container</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>nginx</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>replicas</span><span class=p>:</span><span class=w> </span><span class=m>3</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>selector</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>matchLabels</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class=l>front-end</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div></li></ul><h3 id=상태-1>상태</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>&gt; k get replicasets
-NAME              DESIRED   CURRENT   READY   AGE
-new-replica-set   <span class=m>4</span>         <span class=m>4</span>         <span class=m>0</span>       11s
-</code></pre></td></tr></table>
-</div>
-</div><h3 id=수정-1>수정</h3>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>&gt; k get replicasets
+</span></span><span class=line><span class=cl>NAME              DESIRED   CURRENT   READY   AGE
+</span></span><span class=line><span class=cl>new-replica-set   <span class=m>4</span>         <span class=m>4</span>         <span class=m>0</span>       11s
+</span></span></code></pre></td></tr></table></div></div><h3 id=수정-1>수정</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>&gt; k edit replicaset            
-replicaset.apps/new-replica-set edited
-</code></pre></td></tr></table>
-</div>
-</div><h3 id=삭제-1>삭제</h3>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>&gt; k delete po --all
-</code></pre></td></tr></table>
-</div>
-</div><p>-> 자동으로 다시 pod 생성 됨</p>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>&gt; k edit replicaset            
+</span></span><span class=line><span class=cl>replicaset.apps/new-replica-set edited
+</span></span></code></pre></td></tr></table></div></div><h3 id=삭제-1>삭제</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>&gt; k delete po --all
+</span></span></code></pre></td></tr></table></div></div><p>-> 자동으로 다시 pod 생성 됨</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -590,125 +272,33 @@ replicaset.apps/new-replica-set edited
 </span><span class=lnt> 8
 </span><span class=lnt> 9
 </span><span class=lnt>10
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>ot@controlplane:~# k get po
-NAME                    READY   STATUS              RESTARTS   AGE
-new-replica-set-7mx8k   0/1     Terminating         <span class=m>0</span>          4m22s
-new-replica-set-7p95n   0/1     ContainerCreating   <span class=m>0</span>          17s
-new-replica-set-dcl5m   0/1     Terminating         <span class=m>0</span>          4m22s
-new-replica-set-hhpm9   0/1     ContainerCreating   <span class=m>0</span>          17s
-new-replica-set-hr54x   0/1     ContainerCreating   <span class=m>0</span>          17s
-new-replica-set-m6dmb   0/1     Terminating         <span class=m>0</span>          4m22s
-new-replica-set-v2vr5   0/1     ContainerCreating   <span class=m>0</span>          17s
-new-replica-set-vmts5   0/1     Terminating         <span class=m>0</span>          4m22s
-</code></pre></td></tr></table>
-</div>
-</div><h3 id=scale>scale</h3>
-<ol>
-<li>replace w\ file
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>kubectl replace -f ~~.yaml
-</code></pre></td></tr></table>
-</div>
-</div></li>
-<li>scale w\ file
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>kubectl scale --replicas<span class=o>=</span><span class=m>6</span> -f ~~.yaml
-</code></pre></td></tr></table>
-</div>
-</div></li>
-<li>scale w\ resource
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>kubectl scale --replicas<span class=o>=</span><span class=m>6</span> replicaset myapp-replicaset
-</code></pre></td></tr></table>
-</div>
-</div></li>
-<li>edit
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>kubectl edit replicaset
-</code></pre></td></tr></table>
-</div>
-</div></li>
-</ol>
-<ul>
-<li>실습
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>ot@controlplane:~# k get po
+</span></span><span class=line><span class=cl>NAME                    READY   STATUS              RESTARTS   AGE
+</span></span><span class=line><span class=cl>new-replica-set-7mx8k   0/1     Terminating         <span class=m>0</span>          4m22s
+</span></span><span class=line><span class=cl>new-replica-set-7p95n   0/1     ContainerCreating   <span class=m>0</span>          17s
+</span></span><span class=line><span class=cl>new-replica-set-dcl5m   0/1     Terminating         <span class=m>0</span>          4m22s
+</span></span><span class=line><span class=cl>new-replica-set-hhpm9   0/1     ContainerCreating   <span class=m>0</span>          17s
+</span></span><span class=line><span class=cl>new-replica-set-hr54x   0/1     ContainerCreating   <span class=m>0</span>          17s
+</span></span><span class=line><span class=cl>new-replica-set-m6dmb   0/1     Terminating         <span class=m>0</span>          4m22s
+</span></span><span class=line><span class=cl>new-replica-set-v2vr5   0/1     ContainerCreating   <span class=m>0</span>          17s
+</span></span><span class=line><span class=cl>new-replica-set-vmts5   0/1     Terminating         <span class=m>0</span>          4m22s
+</span></span></code></pre></td></tr></table></div></div><h3 id=scale>scale</h3><ol><li>replace w\ file<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kubectl replace -f ~~.yaml
+</span></span></code></pre></td></tr></table></div></div></li><li>scale w\ file<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kubectl scale --replicas<span class=o>=</span><span class=m>6</span> -f ~~.yaml
+</span></span></code></pre></td></tr></table></div></div></li><li>scale w\ resource<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kubectl scale --replicas<span class=o>=</span><span class=m>6</span> replicaset myapp-replicaset
+</span></span></code></pre></td></tr></table></div></div></li><li>edit<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kubectl edit replicaset
+</span></span></code></pre></td></tr></table></div></div></li></ol><ul><li>실습<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>&gt; k scale --replicas<span class=o>=</span><span class=m>5</span> rs new-replica-set 
-replicaset.apps/new-replica-set scaled
-</code></pre></td></tr></table>
-</div>
-</div></li>
-</ul>
-<h2 id=3-deployments>3. Deployments</h2>
-<ul>
-<li>rolling updates</li>
-<li>rolling back</li>
-</ul>
-<p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/cka/core_concepts-1.png data-srcset="/imgs/cka/core_concepts-1.png, /imgs/cka/core_concepts-1.png 1.5x, /imgs/cka/core_concepts-1.png 2x" data-sizes=auto alt=/imgs/cka/core_concepts-1.png title=img-1></p>
-<h2 id=4-namespaces>4. Namespaces</h2>
-<ul>
-<li>user의 실수부터 보호하기 위해서 처음 3개의 namespace가 생성됨
-<ul>
-<li>Default</li>
-<li>kube-system</li>
-<li>kube-public</li>
-</ul>
-</li>
-<li>isolate resources between namespace</li>
-<li>own policies
-<ul>
-<li>each namespace is guaranteed certain amount and does not to use more.</li>
-</ul>
-</li>
-<li>to reach in same namespace
-<ul>
-<li><code>mysql.connect("db-service")</code></li>
-</ul>
-</li>
-<li>to reach in other namespace
-<ul>
-<li><code>mysql.connect(db-service.dev.svc.cluster.local)</code></li>
-<li><code>{service-name}.{namespace}.{service}-{domain-name}</code></li>
-</ul>
-</li>
-</ul>
-<h3 id=생성-2>생성</h3>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>&gt; k scale --replicas<span class=o>=</span><span class=m>5</span> rs new-replica-set 
+</span></span><span class=line><span class=cl>replicaset.apps/new-replica-set scaled
+</span></span></code></pre></td></tr></table></div></div></li></ul><h2 id=3-deployments>3. Deployments</h2><ul><li>rolling updates</li><li>rolling back</li></ul><p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/cka/core_concepts-1.png data-srcset="/imgs/cka/core_concepts-1.png, /imgs/cka/core_concepts-1.png 1.5x, /imgs/cka/core_concepts-1.png 2x" data-sizes=auto alt=/imgs/cka/core_concepts-1.png title=img-1></p><h2 id=4-namespaces>4. Namespaces</h2><ul><li>user의 실수부터 보호하기 위해서 처음 3개의 namespace가 생성됨<ul><li>Default</li><li>kube-system</li><li>kube-public</li></ul></li><li>isolate resources between namespace</li><li>own policies<ul><li>each namespace is guaranteed certain amount and does not to use more.</li></ul></li><li>to reach in same namespace<ul><li><code>mysql.connect("db-service")</code></li></ul></li><li>to reach in other namespace<ul><li><code>mysql.connect(db-service.dev.svc.cluster.local)</code></li><li><code>{service-name}.{namespace}.{service}-{domain-name}</code></li></ul></li></ul><h3 id=생성-2>생성</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>k create ns dev-ns
-namespace/dev-ns created
-</code></pre></td></tr></table>
-</div>
-</div><h3 id=목록>목록</h3>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>k create ns dev-ns
+</span></span><span class=line><span class=cl>namespace/dev-ns created
+</span></span></code></pre></td></tr></table></div></div><h3 id=목록>목록</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -721,126 +311,34 @@ namespace/dev-ns created
 </span><span class=lnt>11
 </span><span class=lnt>12
 </span><span class=lnt>13
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>&gt; k get ns
-
-NAME              STATUS   AGE
-default           Active   88s
-dev               Active   34s
-finance           Active   34s
-kube-node-lease   Active   93s
-kube-public       Active   94s
-kube-system       Active   95s
-manufacturing     Active   33s
-marketing         Active   34s
-prod              Active   33s
-research          Active   33s
-</code></pre></td></tr></table>
-</div>
-</div><h3 id=상태-2>상태</h3>
-<ol>
-<li><code>--namespace</code>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>kubectl get pods --namespace<span class=o>=</span>kube-system
-</code></pre></td></tr></table>
-</div>
-</div></li>
-<li><code>-n</code>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>kubectl get pods -n kube-system
-</code></pre></td></tr></table>
-</div>
-</div></li>
-</ol>
-<h3 id=change-default>change default</h3>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>kubectl config set-context <span class=k>$(</span>kubectl config current-context<span class=k>)</span> --namespace<span class=o>=</span>dev
-</code></pre></td></tr></table>
-</div>
-</div><h3 id=pod-생성>pod 생성</h3>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>&gt; k get ns
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>NAME              STATUS   AGE
+</span></span><span class=line><span class=cl>default           Active   88s
+</span></span><span class=line><span class=cl>dev               Active   34s
+</span></span><span class=line><span class=cl>finance           Active   34s
+</span></span><span class=line><span class=cl>kube-node-lease   Active   93s
+</span></span><span class=line><span class=cl>kube-public       Active   94s
+</span></span><span class=line><span class=cl>kube-system       Active   95s
+</span></span><span class=line><span class=cl>manufacturing     Active   33s
+</span></span><span class=line><span class=cl>marketing         Active   34s
+</span></span><span class=line><span class=cl>prod              Active   33s
+</span></span><span class=line><span class=cl>research          Active   33s
+</span></span></code></pre></td></tr></table></div></div><h3 id=상태-2>상태</h3><ol><li><code>--namespace</code><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kubectl get pods --namespace<span class=o>=</span>kube-system
+</span></span></code></pre></td></tr></table></div></div></li><li><code>-n</code><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kubectl get pods -n kube-system
+</span></span></code></pre></td></tr></table></div></div></li></ol><h3 id=change-default>change default</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kubectl config set-context <span class=k>$(</span>kubectl config current-context<span class=k>)</span> --namespace<span class=o>=</span>dev
+</span></span></code></pre></td></tr></table></div></div><h3 id=pod-생성>pod 생성</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>k run redis --image<span class=o>=</span>redis --namespace<span class=o>=</span>finance
-pod/redis created
-</code></pre></td></tr></table>
-</div>
-</div><h3 id=전체-확인>전체 확인</h3>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>k get po --all-namespaces
-</code></pre></td></tr></table>
-</div>
-</div><ul>
-<li>
-<p>하나의 값만 찾고 싶을 때</p>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>k get po --all-namespaces <span class=p>|</span> grep -i blue
-</code></pre></td></tr></table>
-</div>
-</div></li>
-</ul>
-<h2 id=5-services>5. Services</h2>
-<p>allow to communicate w\ people, backend, frontend, extra data source</p>
-<p><strong>types</strong></p>
-<ul>
-<li>node port
-<ul>
-<li>make an internal pod accessible on a port on node</li>
-</ul>
-</li>
-<li>cluster ip
-<ul>
-<li>creates a virtual IP inside the cluster to enable communication b2n different services</li>
-</ul>
-</li>
-<li>load balancer
-<ul>
-<li>provisions a load balancer for service for cloud provider</li>
-</ul>
-</li>
-</ul>
-<p><strong>NodePort</strong></p>
-<p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/cka/core_concepts-2.png data-srcset="/imgs/cka/core_concepts-2.png, /imgs/cka/core_concepts-2.png 1.5x, /imgs/cka/core_concepts-2.png 2x" data-sizes=auto alt=/imgs/cka/core_concepts-2.png title=img-2></p>
-<ul>
-<li>target port</li>
-<li>port
-<ul>
-<li>port of service itself</li>
-</ul>
-</li>
-<li>node port
-<ul>
-<li>valid range: 30000 ~ 32767</li>
-</ul>
-</li>
-</ul>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>k run redis --image<span class=o>=</span>redis --namespace<span class=o>=</span>finance
+</span></span><span class=line><span class=cl>pod/redis created
+</span></span></code></pre></td></tr></table></div></div><h3 id=전체-확인>전체 확인</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>k get po --all-namespaces
+</span></span></code></pre></td></tr></table></div></div><ul><li><p>하나의 값만 찾고 싶을 때</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>k get po --all-namespaces <span class=p>|</span> grep -i blue
+</span></span></code></pre></td></tr></table></div></div></li></ul><h2 id=5-services>5. Services</h2><p>allow to communicate w\ people, backend, frontend, extra data source</p><p><strong>types</strong></p><ul><li>node port<ul><li>make an internal pod accessible on a port on node</li></ul></li><li>cluster ip<ul><li>creates a virtual IP inside the cluster to enable communication b2n different services</li></ul></li><li>load balancer<ul><li>provisions a load balancer for service for cloud provider</li></ul></li></ul><p><strong>NodePort</strong></p><p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/cka/core_concepts-2.png data-srcset="/imgs/cka/core_concepts-2.png, /imgs/cka/core_concepts-2.png 1.5x, /imgs/cka/core_concepts-2.png 2x" data-sizes=auto alt=/imgs/cka/core_concepts-2.png title=img-2></p><ul><li>target port</li><li>port<ul><li>port of service itself</li></ul></li><li>node port<ul><li>valid range: 30000 ~ 32767</li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -850,149 +348,33 @@ pod/redis created
 </span><span class=lnt> 8
 </span><span class=lnt> 9
 </span><span class=lnt>10
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>v1</span><span class=w>
-</span><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>SErvice</span><span class=w>
-</span><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>myapp-service</span><span class=w>
-</span><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
-</span><span class=w>  </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class=l>NodePort</span><span class=w>
-</span><span class=w>  </span><span class=nt>ports</span><span class=p>:</span><span class=w>
-</span><span class=w>    </span>- <span class=nt>targetPort</span><span class=p>:</span><span class=w> </span><span class=m>80</span><span class=w>
-</span><span class=w>      </span><span class=nt>port</span><span class=p>:</span><span class=w> </span><span class=m>80</span><span class=w>
-</span><span class=w>      </span><span class=nt>nodePort</span><span class=p>:</span><span class=w> </span><span class=m>30008</span><span class=w>
-</span></code></pre></td></tr></table>
-</div>
-</div><ul>
-<li>if <code>targetPort</code> is not given
-<ul>
-<li>same as <code>port</code></li>
-</ul>
-</li>
-<li>if <code>nodePort</code> is not given
-<ul>
-<li>automatically allocated</li>
-</ul>
-</li>
-<li>randomly distributed if same port is exists</li>
-</ul>
-<p><strong>ClusterIP</strong>
-<img class=lazyload src=/svg/loading.min.svg data-src=/imgs/cka/core_concepts-3.png data-srcset="/imgs/cka/core_concepts-3.png, /imgs/cka/core_concepts-3.png 1.5x, /imgs/cka/core_concepts-3.png 2x" data-sizes=auto alt=/imgs/cka/core_concepts-3.png title=img-3></p>
-<p><strong>LoadBalancer</strong></p>
-<h3 id=상태-3>상태</h3>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>v1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>SErvice</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>myapp-service</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class=l>NodePort</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>ports</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=nt>targetPort</span><span class=p>:</span><span class=w> </span><span class=m>80</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>port</span><span class=p>:</span><span class=w> </span><span class=m>80</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>nodePort</span><span class=p>:</span><span class=w> </span><span class=m>30008</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><ul><li>if <code>targetPort</code> is not given<ul><li>same as <code>port</code></li></ul></li><li>if <code>nodePort</code> is not given<ul><li>automatically allocated</li></ul></li><li>randomly distributed if same port is exists</li></ul><p><strong>ClusterIP</strong>
+<img class=lazyload src=/svg/loading.min.svg data-src=/imgs/cka/core_concepts-3.png data-srcset="/imgs/cka/core_concepts-3.png, /imgs/cka/core_concepts-3.png 1.5x, /imgs/cka/core_concepts-3.png 2x" data-sizes=auto alt=/imgs/cka/core_concepts-3.png title=img-3></p><p><strong>LoadBalancer</strong></p><h3 id=상태-3>상태</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>&gt; k get svc
-
-NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT<span class=o>(</span>S<span class=o>)</span>   AGE
-kubernetes   ClusterIP   10.96.0.1    &lt;none&gt;        443/TCP   3m46s
-</code></pre></td></tr></table>
-</div>
-</div><h3 id=명령어>명령어</h3>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>&gt; kubectl expose pod redis --port<span class=o>=</span><span class=m>6379</span> --name redis-service
-</code></pre></td></tr></table>
-</div>
-</div><h3 id=expose>expose</h3>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>&gt; k get svc
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT<span class=o>(</span>S<span class=o>)</span>   AGE
+</span></span><span class=line><span class=cl>kubernetes   ClusterIP   10.96.0.1    &lt;none&gt;        443/TCP   3m46s
+</span></span></code></pre></td></tr></table></div></div><h3 id=명령어>명령어</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>&gt; kubectl expose pod redis --port<span class=o>=</span><span class=m>6379</span> --name redis-service
+</span></span></code></pre></td></tr></table></div></div><h3 id=expose>expose</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>&gt; kubectl run custom-nginx --image<span class=o>=</span>nginx --port<span class=o>=</span><span class=m>8080</span>
-kubectl run httpd --image<span class=o>=</span>httpd:alpine --port<span class=o>=</span><span class=m>80</span> --expose
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=6-imperative-vs-declaritive>6. Imperative vs Declaritive</h2>
-<p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/cka/core_concepts-4.png data-srcset="/imgs/cka/core_concepts-4.png, /imgs/cka/core_concepts-4.png 1.5x, /imgs/cka/core_concepts-4.png 2x" data-sizes=auto alt=/imgs/cka/core_concepts-4.png title=img-4></p>
-<h3 id=infrastructure-as-code>Infrastructure as Code</h3>
-<p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/cka/core_concepts-5.png data-srcset="/imgs/cka/core_concepts-5.png, /imgs/cka/core_concepts-5.png 1.5x, /imgs/cka/core_concepts-5.png 2x" data-sizes=auto alt=/imgs/cka/core_concepts-5.png title=img-5></p>
-<h3 id=kubernetes>Kubernetes</h3>
-<p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/cka/core_concepts-6.png data-srcset="/imgs/cka/core_concepts-6.png, /imgs/cka/core_concepts-6.png 1.5x, /imgs/cka/core_concepts-6.png 2x" data-sizes=auto alt=/imgs/cka/core_concepts-6.png title=img-6>
-<strong>Imperative Commands</strong></p>
-<ul>
-<li>create objects</li>
-<li>update objects
-→ hard to keep track</li>
-</ul>
-<p>Imperative Configuration Files</p>
-<ul>
-<li>create objects
-<ul>
-<li><code>kubectl create -f ~.yaml</code></li>
-</ul>
-</li>
-<li>update obejcts
-<ul>
-<li><code>kubectl edit ~~ ~~</code></li>
-<li><code>kubectl replace -f ~.yaml</code></li>
-</ul>
-</li>
-</ul>
-<p><strong>Declaritve</strong></p>
-<ul>
-<li>create objects
-<ul>
-<li><code>kubectl apply -f ~.yaml</code></li>
-<li><code>kubectl apply -f /path/to/config-files</code></li>
-</ul>
-</li>
-<li>update objects
-<ul>
-<li><code>kubectl apply -f ~.yaml</code></li>
-</ul>
-</li>
-</ul>
-</div><div class=post-footer id=post-footer>
-<div class=post-info>
-<div class=post-info-line>
-<div class=post-info-mod>
-<span>Updated on 2021-05-10</span>
-</div>
-<div class=post-info-license></div>
-</div>
-<div class=post-info-line>
-<div class=post-info-md><span>
-<a class=link-to-markdown href=/01_core_concepts/index.md target=_blank>Read Markdown</a>
-</span></div>
-<div class=post-info-share>
-<span><a href=javascript:void(0); title="Share on Twitter" data-sharer=twitter data-url=https://aiden-jeon.github.io/01_core_concepts/ data-title="(CKA) 01. Core Concepts" data-hashtags=k8s,cka><i class="fab fa-twitter fa-fw"></i></a><a href=javascript:void(0); title="Share on Facebook" data-sharer=facebook data-url=https://aiden-jeon.github.io/01_core_concepts/ data-hashtag=k8s><i class="fab fa-facebook-square fa-fw"></i></a><a href=javascript:void(0); title="Share on Linkedin" data-sharer=linkedin data-url=https://aiden-jeon.github.io/01_core_concepts/><i class="fab fa-linkedin fa-fw"></i></a><a href=javascript:void(0); title="Share on Reddit" data-sharer=reddit data-url=https://aiden-jeon.github.io/01_core_concepts/><i class="fab fa-reddit fa-fw"></i></a><a href=javascript:void(0); title="Share on Evernote" data-sharer=evernote data-url=https://aiden-jeon.github.io/01_core_concepts/ data-title="(CKA) 01. Core Concepts"><i class="fab fa-evernote fa-fw"></i></a></span>
-</div>
-</div>
-</div>
-<div class=post-info-more>
-<section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/k8s/>k8s</a>,&nbsp;<a href=/tags/cka/>cka</a></section>
-<section>
-<span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span>
-</section>
-</div>
-<div class=post-nav><a href=/tf-idf/ class=prev rel=prev title="Pandas를 이용한 tf-idf 구하기"><i class="fas fa-angle-left fa-fw"></i>Pandas를 이용한 tf-idf 구하기</a>
-<a href=/install-istio/ class=next rel=next title="밑바닥부터 시작하는 Seldon-Core - 설치 [Istio Ver.]">밑바닥부터 시작하는 Seldon-Core - 설치 [Istio Ver.]<i class="fas fa-angle-right fa-fw"></i></a></div>
-</div>
-<div id=comments><div id=utterances></div><noscript>
-Please enable JavaScript to view the comments powered by <a href=https://utteranc.es/>Utterances</a>.
-</noscript></div></article></div>
-</main><footer class=footer>
-<div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.91.2">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-</div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2019 - 2022</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>Jongseob Jeon</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div>
-</div>
-</footer></div>
-<div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top">
-<i class="fas fa-arrow-up fa-fw"></i>
-</a><a href=# id=view-comments class=fixed-button title="View Comments">
-<i class="fas fa-comment fa-fw"></i>
-</a>
-</div><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/smooth-scroll/smooth-scroll.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:30},comment:{utterances:{darkTheme:"github-dark",issueTerm:"pathname",label:"",lightTheme:"github-light",repo:"aiden-jeon/aiden-jeon.github.io"}},cookieconsent:{content:{dismiss:"Got it!",link:"Learn more",message:"This website uses Cookies to improve your experience."},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",lunrIndexURL:"/index.json",maxResultLength:10,noResultsFound:"No results found",snippetLength:30,type:"lunr"}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','UA-173612846-1',{anonymize_ip:!0})</script><script type=text/javascript src="https://www.googletagmanager.com/gtag/js?id=UA-173612846-1" async></script></body>
-</html>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>&gt; kubectl run custom-nginx --image<span class=o>=</span>nginx --port<span class=o>=</span><span class=m>8080</span>
+</span></span><span class=line><span class=cl>kubectl run httpd --image<span class=o>=</span>httpd:alpine --port<span class=o>=</span><span class=m>80</span> --expose
+</span></span></code></pre></td></tr></table></div></div><h2 id=6-imperative-vs-declaritive>6. Imperative vs Declaritive</h2><p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/cka/core_concepts-4.png data-srcset="/imgs/cka/core_concepts-4.png, /imgs/cka/core_concepts-4.png 1.5x, /imgs/cka/core_concepts-4.png 2x" data-sizes=auto alt=/imgs/cka/core_concepts-4.png title=img-4></p><h3 id=infrastructure-as-code>Infrastructure as Code</h3><p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/cka/core_concepts-5.png data-srcset="/imgs/cka/core_concepts-5.png, /imgs/cka/core_concepts-5.png 1.5x, /imgs/cka/core_concepts-5.png 2x" data-sizes=auto alt=/imgs/cka/core_concepts-5.png title=img-5></p><h3 id=kubernetes>Kubernetes</h3><p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/cka/core_concepts-6.png data-srcset="/imgs/cka/core_concepts-6.png, /imgs/cka/core_concepts-6.png 1.5x, /imgs/cka/core_concepts-6.png 2x" data-sizes=auto alt=/imgs/cka/core_concepts-6.png title=img-6>
+<strong>Imperative Commands</strong></p><ul><li>create objects</li><li>update objects
+→ hard to keep track</li></ul><p>Imperative Configuration Files</p><ul><li>create objects<ul><li><code>kubectl create -f ~.yaml</code></li></ul></li><li>update obejcts<ul><li><code>kubectl edit ~~ ~~</code></li><li><code>kubectl replace -f ~.yaml</code></li></ul></li></ul><p><strong>Declaritve</strong></p><ul><li>create objects<ul><li><code>kubectl apply -f ~.yaml</code></li><li><code>kubectl apply -f /path/to/config-files</code></li></ul></li><li>update objects<ul><li><code>kubectl apply -f ~.yaml</code></li></ul></li></ul></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>Updated on 2021-05-10</span></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/01_core_concepts/index.md target=_blank>Read Markdown</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="Share on Twitter" data-sharer=twitter data-url=https://aiden-jeon.github.io/01_core_concepts/ data-title="(CKA) 01. Core Concepts" data-hashtags=k8s,cka><i class="fab fa-twitter fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Facebook" data-sharer=facebook data-url=https://aiden-jeon.github.io/01_core_concepts/ data-hashtag=k8s><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Linkedin" data-sharer=linkedin data-url=https://aiden-jeon.github.io/01_core_concepts/><i class="fab fa-linkedin fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Hacker News" data-sharer=hackernews data-url=https://aiden-jeon.github.io/01_core_concepts/ data-title="(CKA) 01. Core Concepts"><i class="fab fa-hacker-news fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Reddit" data-sharer=reddit data-url=https://aiden-jeon.github.io/01_core_concepts/><i class="fab fa-reddit fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Line" data-sharer=line data-url=https://aiden-jeon.github.io/01_core_concepts/ data-title="(CKA) 01. Core Concepts"><i data-svg-src=/lib/simple-icons/icons/line.min.svg aria-hidden=true></i></a><a href=javascript:void(0); title="Share on 微博" data-sharer=weibo data-url=https://aiden-jeon.github.io/01_core_concepts/ data-title="(CKA) 01. Core Concepts"><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Evernote" data-sharer=evernote data-url=https://aiden-jeon.github.io/01_core_concepts/ data-title="(CKA) 01. Core Concepts"><i class="fab fa-evernote fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/k8s/>k8s</a>,&nbsp;<a href=/tags/cka/>cka</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span></section></div><div class=post-nav><a href=/tf-idf/ class=prev rel=prev title="Pandas를 이용한 tf-idf 구하기"><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>Pandas를 이용한 tf-idf 구하기</a>
+<a href=/install-istio/ class=next rel=next title="밑바닥부터 시작하는 Seldon-Core - 설치 [Istio Ver.]">밑바닥부터 시작하는 Seldon-Core - 설치 [Istio Ver.]<i class="fas fa-angle-right fa-fw" aria-hidden=true></i></a></div></div><div id=comments><div id=utterances class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://utteranc.es/>Utterances</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.100.1">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden=true></i> LoveIt</a></div><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2019 - 2022</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>Jongseob Jeon</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top"><i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title="View Comments"><i class="fas fa-comment fa-fw" aria-hidden=true></i></a></div><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:30},comment:{utterances:{darkTheme:"github-dark",issueTerm:"pathname",label:"",lightTheme:"github-light",repo:"aiden-jeon/aiden-jeon.github.io"}},cookieconsent:{content:{dismiss:"Got it!",link:"Learn more",message:"This website uses Cookies to improve your experience."},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",lunrIndexURL:"/index.json",maxResultLength:10,noResultsFound:"No results found",snippetLength:30,type:"lunr"}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','UA-173612846-1',{anonymize_ip:!0})</script><script type=text/javascript src="https://www.googletagmanager.com/gtag/js?id=UA-173612846-1" async></script></body></html>

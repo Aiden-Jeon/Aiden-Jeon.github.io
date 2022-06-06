@@ -1,216 +1,27 @@
-<!doctype html><html lang=en>
-<head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=robots content="noodp">
-<meta http-equiv=x-ua-compatible content="IE=edge, chrome=1">
-<title>Types of Explanatory Methods - Aiden's Camp</title><meta name=Description content="Welcome to Aiden's Camp"><meta property="og:title" content="Types of Explanatory Methods">
-<meta property="og:description" content="들어가기 앞서..
-본 포스트는 Explaining Deep Neural Networks  논문을 읽고 요약한 내용입니다. 더 자세한 내용은 해당 논문을 참고해주세요.
- Types of Explanatory Methods 1. Post-Hoc versus Self-Explanatory Post-hoc explanatory methods
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><title>Types of Explanatory Methods - Aiden's Camp</title><meta name=Description content="Welcome to Aiden's Camp"><meta property="og:title" content="Types of Explanatory Methods"><meta property="og:description" content="들어가기 앞서..
+본 포스트는 Explaining Deep Neural Networks 논문을 읽고 요약한 내용입니다. 더 자세한 내용은 해당 논문을 참고해주세요.
+Types of Explanatory Methods 1. Post-Hoc versus Self-Explanatory Post-hoc explanatory methods
 사후 설명 방법은 이미 학습이 끝나서 고정된 모델을 대상으로 합니다.
 이러한 방법의 대표적인 예시로는 LIME이 있습니다. LIME은 설명하고자 하는 모델의 예측을 그 주변의 값들을 이용해 선형 회귀와 같은 해석 가능한 모델을 학습시켜서 설명합니다.
-- 장점) 고정된 모델을 대상으로 하기 때문에 모델에 영향을 미치지 않음">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://aiden-jeon.github.io/explaining_dnn_types/"><meta property="og:image" content="https://aiden-jeon.github.io/logo.png"><meta property="article:section" content="posts">
-<meta property="article:published_time" content="2021-07-14T00:00:00+00:00">
-<meta property="article:modified_time" content="2021-07-14T00:00:00+00:00">
-<meta name=twitter:card content="summary_large_image">
-<meta name=twitter:image content="https://aiden-jeon.github.io/logo.png">
-<meta name=twitter:title content="Types of Explanatory Methods">
-<meta name=twitter:description content="들어가기 앞서..
-본 포스트는 Explaining Deep Neural Networks  논문을 읽고 요약한 내용입니다. 더 자세한 내용은 해당 논문을 참고해주세요.
- Types of Explanatory Methods 1. Post-Hoc versus Self-Explanatory Post-hoc explanatory methods
+- 장점) 고정된 모델을 대상으로 하기 때문에 모델에 영향을 미치지 않음"><meta property="og:type" content="article"><meta property="og:url" content="https://aiden-jeon.github.io/explaining_dnn_types/"><meta property="og:image" content="https://aiden-jeon.github.io/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2021-07-14T00:00:00+00:00"><meta property="article:modified_time" content="2021-07-14T00:00:00+00:00"><meta property="og:site_name" content="My cool site"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://aiden-jeon.github.io/logo.png"><meta name=twitter:title content="Types of Explanatory Methods"><meta name=twitter:description content="들어가기 앞서..
+본 포스트는 Explaining Deep Neural Networks 논문을 읽고 요약한 내용입니다. 더 자세한 내용은 해당 논문을 참고해주세요.
+Types of Explanatory Methods 1. Post-Hoc versus Self-Explanatory Post-hoc explanatory methods
 사후 설명 방법은 이미 학습이 끝나서 고정된 모델을 대상으로 합니다.
 이러한 방법의 대표적인 예시로는 LIME이 있습니다. LIME은 설명하고자 하는 모델의 예측을 그 주변의 값들을 이용해 선형 회귀와 같은 해석 가능한 모델을 학습시켜서 설명합니다.
-- 장점) 고정된 모델을 대상으로 하기 때문에 모델에 영향을 미치지 않음">
-<meta name=application-name content="Aiden's Camp">
-<meta name=apple-mobile-web-app-title content="Aiden's Camp"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=icons/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://aiden-jeon.github.io/explaining_dnn_types/><link rel=prev href=https://aiden-jeon.github.io/antipatterns_for_mlops/><link rel=next href=https://aiden-jeon.github.io/explaining_dnn_feature_based/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Types of Explanatory Methods","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/aiden-jeon.github.io\/explaining_dnn_types\/"},"genre":"posts","keywords":"xai","wordcount":622,"url":"https:\/\/aiden-jeon.github.io\/explaining_dnn_types\/","datePublished":"2021-07-14T00:00:00+00:00","dateModified":"2021-07-14T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"Jongseob Jeon"},"description":""}</script></head>
-<body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':'light'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'light'==='dark')&&document.body.setAttribute('theme','dark')</script>
-<div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
-<div class=header-wrapper>
-<div class=header-title>
-<a href=/ title="Aiden's Camp"></a>
-</div>
-<div class=menu>
-<div class=menu-inner><a class=menu-item href=/> Home </a><a class=menu-item href=/posts/> Posts </a><a class=menu-item href=/tags/> Tags </a><a class=menu-item href=/categories/> Categories </a><a class=menu-item href=/about/> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+- 장점) 고정된 모델을 대상으로 하기 때문에 모델에 영향을 미치지 않음"><meta name=application-name content="Aiden's Camp"><meta name=apple-mobile-web-app-title content="Aiden's Camp"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=icons/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://aiden-jeon.github.io/explaining_dnn_types/><link rel=prev href=https://aiden-jeon.github.io/antipatterns_for_mlops/><link rel=next href=https://aiden-jeon.github.io/explaining_dnn_feature_based/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Types of Explanatory Methods","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/aiden-jeon.github.io\/explaining_dnn_types\/"},"genre":"posts","keywords":"xai","wordcount":622,"url":"https:\/\/aiden-jeon.github.io\/explaining_dnn_types\/","datePublished":"2021-07-14T00:00:00+00:00","dateModified":"2021-07-14T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"Jongseob Jeon"},"description":""}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':'light'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'light'==='dark')&&document.body.setAttribute('theme','dark')</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="Aiden's Camp"></a></div><div class=menu><div class=menu-inner><a class=menu-item href=/>Home </a><a class=menu-item href=/posts/>Posts </a><a class=menu-item href=/tags/>Tags </a><a class=menu-item href=/categories/>Categories </a><a class=menu-item href=/about/>About </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
 <input type=text placeholder="Search titles or contents..." id=search-input-desktop>
-<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search>
-<i class="fas fa-search fa-fw"></i>
-</a>
-<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear>
-<i class="fas fa-times-circle fa-fw"></i>
-</a>
-<span class="search-button search-loading" id=search-loading-desktop>
-<i class="fas fa-spinner fa-fw fa-spin"></i>
-</span>
-</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
-<i class="fas fa-adjust fa-fw"></i>
-</a>
-</div>
-</div>
-</div>
-</header><header class=mobile id=header-mobile>
-<div class=header-container>
-<div class=header-wrapper>
-<div class=header-title>
-<a href=/ title="Aiden's Camp"></a>
-</div>
-<div class=menu-toggle id=menu-toggle-mobile>
-<span></span><span></span><span></span>
-</div>
-</div>
-<div class=menu id=menu-mobile><div class=search-wrapper>
-<div class="search mobile" id=search-mobile>
-<input type=text placeholder="Search titles or contents..." id=search-input-mobile>
-<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search>
-<i class="fas fa-search fa-fw"></i>
-</a>
-<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear>
-<i class="fas fa-times-circle fa-fw"></i>
-</a>
-<span class="search-button search-loading" id=search-loading-mobile>
-<i class="fas fa-spinner fa-fw fa-spin"></i>
-</span>
-</div>
-<a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>
-Cancel
-</a>
-</div><a class=menu-item href=/ title>Home</a><a class=menu-item href=/posts/ title>Posts</a><a class=menu-item href=/tags/ title>Tags</a><a class=menu-item href=/categories/ title>Categories</a><a class=menu-item href=/about/ title>About</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
-<i class="fas fa-adjust fa-fw"></i>
-</a></div>
-</div>
-</header>
-<div class="search-dropdown desktop">
-<div id=search-dropdown-desktop></div>
-</div>
-<div class="search-dropdown mobile">
-<div id=search-dropdown-mobile></div>
-</div>
-<main class=main>
-<div class=container><div class=toc id=toc-auto>
-<h2 class=toc-title>Contents</h2>
-<div class="toc-content always-active" id=toc-content-auto></div>
-</div><article class="page single"><h1 class="single-title animated flipInX">Types of Explanatory Methods</h1><div class=post-meta>
-<div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-category>included in <a href=/categories/xai/><i class="far fa-folder fa-fw"></i>xai</a></span></div>
-<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-07-14>2021-07-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;622 words&nbsp;
-<i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;</div>
-</div><div class="details toc" id=toc-static kept>
-<div class="details-summary toc-title">
-<span>Contents</span>
-<span><i class="details-icon fas fa-angle-right"></i></span>
-</div>
-<div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
-<ul>
-<li><a href=#types-of-explanatory-methods>Types of Explanatory Methods</a>
-<ul>
-<li><a href=#1-post-hoc-versus-self-explanatory>1. Post-Hoc versus Self-Explanatory</a></li>
-<li><a href=#2-black-box-versus-white-box>2. Black-Box versus White-Box</a></li>
-<li><a href=#3-instance-wise-versus-global>3. Instance-Wise versus Global</a></li>
-<li><a href=#4-forms-of-explanations>4. Forms of Explanations</a>
-<ul>
-<li><a href=#feature-based-explanations>Feature-based explanations</a></li>
-<li><a href=#natural-language-explanations>Natural language explanations</a></li>
-<li><a href=#concept-based-explanations>Concept-based explanations</a></li>
-<li><a href=#example-based-explanations>Example-based explanations</a></li>
-<li><a href=#surrogate-explanations>Surrogate explanations</a></li>
-<li><a href=#combinations-of-forms-of-explanations>Combinations of forms of explanations</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</nav></div>
-</div><div class=content id=content><p><strong>들어가기 앞서..</strong><br>
-본 포스트는 <a href="https://arxiv.org/abs/2010.01496?fbclid=IwAR3Y5gfxtckZR4lHpFpQgo6ba-v_O0Fj-93G0sRMtXKYTBdESeH29uN4mg8" target=_blank rel="noopener noreffer">Explaining Deep Neural Networks
-</a> 논문을 읽고 요약한 내용입니다.
-더 자세한 내용은 해당 논문을 참고해주세요.</p>
-<hr>
-<h1 id=types-of-explanatory-methods>Types of Explanatory Methods</h1>
-<h2 id=1-post-hoc-versus-self-explanatory>1. Post-Hoc versus Self-Explanatory</h2>
-<p><strong>Post-hoc explanatory methods</strong><br>
-사후 설명 방법은 이미 학습이 끝나서 고정된 모델을 대상으로 합니다.<br>
-이러한 방법의 대표적인 예시로는 LIME이 있습니다. LIME은 설명하고자 하는 모델의 예측을 그 주변의 값들을 이용해 선형 회귀와 같은 해석 가능한 모델을 학습시켜서 설명합니다.<br>
-- 장점) 고정된 모델을 대상으로 하기 때문에 모델에 영향을 미치지 않음<br>
-- 단점) 모델 학습 외에 추가적인 학습이 필요하며 이를 위한 설명이 있는 데이터셋이 필요</p>
-<p><strong>Self-explanatory models</strong><br>
-자기 설명(Self-explanatory)이 가능한 모델들은 아키텍쳐 속에 모델의 예측의 해석을 제공할 수 있는 방법을 내장하고 있습니다. 큰 그림으로 보자면 self-explanatory model들은 두 개의 모듈, predictor 와 explanation generator를 갖고 있습니다.<br>
-- 장점) 모델의 학습과 explanation generator를 동시에 함으로 추가적인 데이터가 필요 없음<br>
-- 단점) predictor와 explanation generator가 묶여서(jointly) 학습되는데 이 때 explanation generator 가 predictor의 학습에 영향을 미치고 이는 모델의 성능의 저하로 이어짐</p>
-<h2 id=2-black-box-versus-white-box>2. Black-Box versus White-Box</h2>
-<p>모델을 설명하기 위해서 다른 분류 방법으로는 모델의 구조의 이해가 필요한지에 따라 나눌 수 있습니다. 이 분류 방법은 Post-hoc explanatory methods의 세분화한 것입니다.</p>
-<p><strong>Black-box/model-agnostic explainers</strong><br>
-블랙 박스 explainer들은 대상 모델에 input에 대한 결과만을 요청할 수 있습니다. 대표적으로 LIME, KernalSHAP, L2X 그리고 LS-Tree 와 같은 방법들이 있습니다.<br>
-- 장점) 모델에 대한 이해가 필요 없기 때문에 어떤 형태의 모델에도 빠르게 적용할 수 있음<br>
-- 단점) 모델에 대한 이해가 없기 때문에 input과 prediction 사이의 correlation에 영향을 받아모델의 설명력이 부정확해질 수 있음</p>
-<p><strong>White-box/model-dependant explainers</strong><br>
-화이트 박스 explainer들은 대상 모델의 구조(Architecture)에 접근이 가능해야 합니다. 대표적으로 LRP, DeepLIFT, saliency maps, integrated gradients, Grad-CAM, DeepSHAP 그리고 MaxSHAP와 같은 방법이 있습니다.</p>
-<h2 id=3-instance-wise-versus-global>3. Instance-Wise versus Global</h2>
-<p>모델을 설명하는 또 다른 분류 방법은 설명의 범위에 따라 나눌 수 있습니다. 이 분류 방법 또한 주로 Post-hoc explanatory methods을 세분화한 것 입니다. Self-explanatory model들은 기본적으로 Instance-wise explainers 입니다.</p>
-<p><strong>Instance-wise explainers</strong><br>
-모델의 단일 예측(individual instance) 결과에 대해서 설명을 제공합니다. 예를 들어 LIME은 instance 별로 linear regression을 학습해 설명합니다.<br>
-- 장점) End user가 요구하는 모델의 결정에 대한 설명을 제공할 수 있음</p>
-<p><strong>Global explainers</strong><br>
-조금 더 high-level에서 모델의 내부 동작 방식에 대해서 설명합니다. 예를 들어서 뉴럴 네트워크를 soft decision tree로 distilling 하여서 전체 설명력을 제공합니다.<br>
-- 장점) 모델에 발생할 수 있는 biases를 빠르게 진단하거나 지식의 발견에 유용함</p>
-<p>Global explainers은 주로 모델을 해석할 수 있는 모델로 distiling 하기 때문에 instance-wise에 대한 설명도 제공 할 수 있습니다. 하지만 Instance-wise explainer로 모델의 전체 동작 방식을 설명하기에는 어려움이 있습니다. 비록 Instance-wise explainer 방법이 모델의 전체 동작 방식을 설명하기에는 어렵지만, 전체 모델의 설명력을 얻기 위한 시작점으로 사용할 수 있습니다.</p>
-<h2 id=4-forms-of-explanations>4. Forms of Explanations</h2>
-<p>모델을 설명하기 위한 방법에 따라서 나눌 수 도 있습니다. 각 방법에 따른 방법론들은 논문을 참고해주세요. 이 챕터에서는 간단하게 개념만 설명하고 넘어갑니다.</p>
-<h3 id=feature-based-explanations>Feature-based explanations</h3>
-<p>Feature에 기반한 설명은 현재 가장 많이 사용되는 방법입니다. 이 방법은 모델의 개별 예측을 중요도(importance)또는 기여도(contribution)로 평가하는 방식입니다. 텍스트의 토큰과 이미지의 super-pixel 도 feature에 포함합니다.</p>
-<p><strong>importance weights</strong><br>
-Importance weights explanation은 입력 feature의 모델이 수행한 예측에 대한 기여 정도를 숫자로 나타냅니다.</p>
-<p><strong>subsets of features</strong><br>
-Subset explanation은 각 instance 별로 예측에 중요한 feature의 subset을 제공합니다.</p>
-<p>예를 들어서문장 감정 분류 모델이 <code>“The movie was very good."</code>를, <code>"4/5점, 긍정"</code>이라고 분류했습니다. 이 때 subset explanation은 <code>{“very”, “good”}</code>을 중요한 feature로 제공합니다. 반면, importance weights explanation는 <code>{"good": 3, "very":1}</code>(이 때 두 점수의 합은 분류 모델의 예측인 4점 입니다)을 제공합니다.</p>
-<h3 id=natural-language-explanations>Natural language explanations</h3>
-<p>자연어에 대한 설명은 예측에 대한 결과를 사람과 같은 방식으로 전달합니다. 예를 들어서 “A woman is walking her dog in the park.”라는 문장에 “A person is in the park.”를 포함시켜서 설명한다면, “A woman is a person, and walking in the park implies being in the park.”과 같이 설명할 수 있습니다.</p>
-<h3 id=concept-based-explanations>Concept-based explanations</h3>
-<p>Concept-based explainers는 사용자가 정의한 high-level의 컨셉의 중요도를 정령화 하는 것을 목표로 합니다.</p>
-<h3 id=example-based-explanations>Example-based explanations</h3>
-<p>Example-based는 모델이 예측한 결과에 영향을 미친 training set의 instance를 제시합니다.</p>
-<h3 id=surrogate-explanations>Surrogate explanations</h3>
-<p>Surrogate explainers는 설명이 가능한 대체 모델을 제공하고자 합니다.</p>
-<h3 id=combinations-of-forms-of-explanations>Combinations of forms of explanations</h3>
-<p>단일 explainer는 여러 개의 설명을 제공할 수 있습니다.</p>
-</div><div class=post-footer id=post-footer>
-<div class=post-info>
-<div class=post-info-line>
-<div class=post-info-mod>
-<span>Updated on 2021-07-14</span>
-</div>
-<div class=post-info-license></div>
-</div>
-<div class=post-info-line>
-<div class=post-info-md><span>
-<a class=link-to-markdown href=/explaining_dnn_types/index.md target=_blank>Read Markdown</a>
-</span></div>
-<div class=post-info-share>
-<span><a href=javascript:void(0); title="Share on Twitter" data-sharer=twitter data-url=https://aiden-jeon.github.io/explaining_dnn_types/ data-title="Types of Explanatory Methods" data-hashtags=xai><i class="fab fa-twitter fa-fw"></i></a><a href=javascript:void(0); title="Share on Facebook" data-sharer=facebook data-url=https://aiden-jeon.github.io/explaining_dnn_types/ data-hashtag=xai><i class="fab fa-facebook-square fa-fw"></i></a><a href=javascript:void(0); title="Share on Linkedin" data-sharer=linkedin data-url=https://aiden-jeon.github.io/explaining_dnn_types/><i class="fab fa-linkedin fa-fw"></i></a><a href=javascript:void(0); title="Share on Reddit" data-sharer=reddit data-url=https://aiden-jeon.github.io/explaining_dnn_types/><i class="fab fa-reddit fa-fw"></i></a><a href=javascript:void(0); title="Share on Evernote" data-sharer=evernote data-url=https://aiden-jeon.github.io/explaining_dnn_types/ data-title="Types of Explanatory Methods"><i class="fab fa-evernote fa-fw"></i></a></span>
-</div>
-</div>
-</div>
-<div class=post-info-more>
-<section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/xai/>xai</a></section>
-<section>
-<span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span>
-</section>
-</div>
-<div class=post-nav><a href=/antipatterns_for_mlops/ class=prev rel=prev title="Using AntiPatterns to avoid MLOps Mistakes"><i class="fas fa-angle-left fa-fw"></i>Using AntiPatterns to avoid MLOps Mistakes</a>
-<a href=/explaining_dnn_feature_based/ class=next rel=next title="Feature-Based Explanations">Feature-Based Explanations<i class="fas fa-angle-right fa-fw"></i></a></div>
-</div>
-<div id=comments><div id=utterances></div><noscript>
-Please enable JavaScript to view the comments powered by <a href=https://utteranc.es/>Utterances</a>.
-</noscript></div></article></div>
-</main><footer class=footer>
-<div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.91.2">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-</div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2019 - 2022</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>Jongseob Jeon</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div>
-</div>
-</footer></div>
-<div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top">
-<i class="fas fa-arrow-up fa-fw"></i>
-</a><a href=# id=view-comments class=fixed-button title="View Comments">
-<i class="fas fa-comment fa-fw"></i>
-</a>
-</div><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/smooth-scroll/smooth-scroll.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:30},comment:{utterances:{darkTheme:"github-dark",issueTerm:"pathname",label:"",lightTheme:"github-light",repo:"aiden-jeon/aiden-jeon.github.io"}},cookieconsent:{content:{dismiss:"Got it!",link:"Learn more",message:"This website uses Cookies to improve your experience."},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",lunrIndexURL:"/index.json",maxResultLength:10,noResultsFound:"No results found",snippetLength:30,type:"lunr"}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','UA-173612846-1',{anonymize_ip:!0})</script><script type=text/javascript src="https://www.googletagmanager.com/gtag/js?id=UA-173612846-1" async></script></body>
-</html>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme"><i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="Aiden's Camp"></a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="Search titles or contents..." id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>Cancel</a></div><a class=menu-item href=/ title>Home</a><a class=menu-item href=/posts/ title>Posts</a><a class=menu-item href=/tags/ title>Tags</a><a class=menu-item href=/categories/ title>Categories</a><a class=menu-item href=/about/ title>About</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>Contents</h2><div class="toc-content always-active" id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Types of Explanatory Methods</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>Jongseob Jeon</a>
+</span>&nbsp;<span class=post-category>included in <a href=/categories/xai/><i class="far fa-folder fa-fw" aria-hidden=true></i>xai</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2021-07-14>2021-07-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;622 words&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;3 minutes&nbsp;</div></div><div class="details toc" id=toc-static data-kept><div class="details-summary toc-title"><span>Contents</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#types-of-explanatory-methods>Types of Explanatory Methods</a><ul><li><a href=#1-post-hoc-versus-self-explanatory>1. Post-Hoc versus Self-Explanatory</a></li><li><a href=#2-black-box-versus-white-box>2. Black-Box versus White-Box</a></li><li><a href=#3-instance-wise-versus-global>3. Instance-Wise versus Global</a></li><li><a href=#4-forms-of-explanations>4. Forms of Explanations</a><ul><li><a href=#feature-based-explanations>Feature-based explanations</a></li><li><a href=#natural-language-explanations>Natural language explanations</a></li><li><a href=#concept-based-explanations>Concept-based explanations</a></li><li><a href=#example-based-explanations>Example-based explanations</a></li><li><a href=#surrogate-explanations>Surrogate explanations</a></li><li><a href=#combinations-of-forms-of-explanations>Combinations of forms of explanations</a></li></ul></li></ul></li></ul></nav></div></div><div class=content id=content><p><strong>들어가기 앞서..</strong><br>본 포스트는 <a href="https://arxiv.org/abs/2010.01496?fbclid=IwAR3Y5gfxtckZR4lHpFpQgo6ba-v_O0Fj-93G0sRMtXKYTBdESeH29uN4mg8" target=_blank rel="noopener noreffer">Explaining Deep Neural Networks</a>
+논문을 읽고 요약한 내용입니다.
+더 자세한 내용은 해당 논문을 참고해주세요.</p><hr><h1 id=types-of-explanatory-methods>Types of Explanatory Methods</h1><h2 id=1-post-hoc-versus-self-explanatory>1. Post-Hoc versus Self-Explanatory</h2><p><strong>Post-hoc explanatory methods</strong><br>사후 설명 방법은 이미 학습이 끝나서 고정된 모델을 대상으로 합니다.<br>이러한 방법의 대표적인 예시로는 LIME이 있습니다. LIME은 설명하고자 하는 모델의 예측을 그 주변의 값들을 이용해 선형 회귀와 같은 해석 가능한 모델을 학습시켜서 설명합니다.<br>- 장점) 고정된 모델을 대상으로 하기 때문에 모델에 영향을 미치지 않음<br>- 단점) 모델 학습 외에 추가적인 학습이 필요하며 이를 위한 설명이 있는 데이터셋이 필요</p><p><strong>Self-explanatory models</strong><br>자기 설명(Self-explanatory)이 가능한 모델들은 아키텍쳐 속에 모델의 예측의 해석을 제공할 수 있는 방법을 내장하고 있습니다. 큰 그림으로 보자면 self-explanatory model들은 두 개의 모듈, predictor 와 explanation generator를 갖고 있습니다.<br>- 장점) 모델의 학습과 explanation generator를 동시에 함으로 추가적인 데이터가 필요 없음<br>- 단점) predictor와 explanation generator가 묶여서(jointly) 학습되는데 이 때 explanation generator 가 predictor의 학습에 영향을 미치고 이는 모델의 성능의 저하로 이어짐</p><h2 id=2-black-box-versus-white-box>2. Black-Box versus White-Box</h2><p>모델을 설명하기 위해서 다른 분류 방법으로는 모델의 구조의 이해가 필요한지에 따라 나눌 수 있습니다. 이 분류 방법은 Post-hoc explanatory methods의 세분화한 것입니다.</p><p><strong>Black-box/model-agnostic explainers</strong><br>블랙 박스 explainer들은 대상 모델에 input에 대한 결과만을 요청할 수 있습니다. 대표적으로 LIME, KernalSHAP, L2X 그리고 LS-Tree 와 같은 방법들이 있습니다.<br>- 장점) 모델에 대한 이해가 필요 없기 때문에 어떤 형태의 모델에도 빠르게 적용할 수 있음<br>- 단점) 모델에 대한 이해가 없기 때문에 input과 prediction 사이의 correlation에 영향을 받아모델의 설명력이 부정확해질 수 있음</p><p><strong>White-box/model-dependant explainers</strong><br>화이트 박스 explainer들은 대상 모델의 구조(Architecture)에 접근이 가능해야 합니다. 대표적으로 LRP, DeepLIFT, saliency maps, integrated gradients, Grad-CAM, DeepSHAP 그리고 MaxSHAP와 같은 방법이 있습니다.</p><h2 id=3-instance-wise-versus-global>3. Instance-Wise versus Global</h2><p>모델을 설명하는 또 다른 분류 방법은 설명의 범위에 따라 나눌 수 있습니다. 이 분류 방법 또한 주로 Post-hoc explanatory methods을 세분화한 것 입니다. Self-explanatory model들은 기본적으로 Instance-wise explainers 입니다.</p><p><strong>Instance-wise explainers</strong><br>모델의 단일 예측(individual instance) 결과에 대해서 설명을 제공합니다. 예를 들어 LIME은 instance 별로 linear regression을 학습해 설명합니다.<br>- 장점) End user가 요구하는 모델의 결정에 대한 설명을 제공할 수 있음</p><p><strong>Global explainers</strong><br>조금 더 high-level에서 모델의 내부 동작 방식에 대해서 설명합니다. 예를 들어서 뉴럴 네트워크를 soft decision tree로 distilling 하여서 전체 설명력을 제공합니다.<br>- 장점) 모델에 발생할 수 있는 biases를 빠르게 진단하거나 지식의 발견에 유용함</p><p>Global explainers은 주로 모델을 해석할 수 있는 모델로 distiling 하기 때문에 instance-wise에 대한 설명도 제공 할 수 있습니다. 하지만 Instance-wise explainer로 모델의 전체 동작 방식을 설명하기에는 어려움이 있습니다. 비록 Instance-wise explainer 방법이 모델의 전체 동작 방식을 설명하기에는 어렵지만, 전체 모델의 설명력을 얻기 위한 시작점으로 사용할 수 있습니다.</p><h2 id=4-forms-of-explanations>4. Forms of Explanations</h2><p>모델을 설명하기 위한 방법에 따라서 나눌 수 도 있습니다. 각 방법에 따른 방법론들은 논문을 참고해주세요. 이 챕터에서는 간단하게 개념만 설명하고 넘어갑니다.</p><h3 id=feature-based-explanations>Feature-based explanations</h3><p>Feature에 기반한 설명은 현재 가장 많이 사용되는 방법입니다. 이 방법은 모델의 개별 예측을 중요도(importance)또는 기여도(contribution)로 평가하는 방식입니다. 텍스트의 토큰과 이미지의 super-pixel 도 feature에 포함합니다.</p><p><strong>importance weights</strong><br>Importance weights explanation은 입력 feature의 모델이 수행한 예측에 대한 기여 정도를 숫자로 나타냅니다.</p><p><strong>subsets of features</strong><br>Subset explanation은 각 instance 별로 예측에 중요한 feature의 subset을 제공합니다.</p><p>예를 들어서문장 감정 분류 모델이 <code>“The movie was very good."</code>를, <code>"4/5점, 긍정"</code>이라고 분류했습니다. 이 때 subset explanation은 <code>{“very”, “good”}</code>을 중요한 feature로 제공합니다. 반면, importance weights explanation는 <code>{"good": 3, "very":1}</code>(이 때 두 점수의 합은 분류 모델의 예측인 4점 입니다)을 제공합니다.</p><h3 id=natural-language-explanations>Natural language explanations</h3><p>자연어에 대한 설명은 예측에 대한 결과를 사람과 같은 방식으로 전달합니다. 예를 들어서 “A woman is walking her dog in the park.”라는 문장에 “A person is in the park.”를 포함시켜서 설명한다면, “A woman is a person, and walking in the park implies being in the park.”과 같이 설명할 수 있습니다.</p><h3 id=concept-based-explanations>Concept-based explanations</h3><p>Concept-based explainers는 사용자가 정의한 high-level의 컨셉의 중요도를 정령화 하는 것을 목표로 합니다.</p><h3 id=example-based-explanations>Example-based explanations</h3><p>Example-based는 모델이 예측한 결과에 영향을 미친 training set의 instance를 제시합니다.</p><h3 id=surrogate-explanations>Surrogate explanations</h3><p>Surrogate explainers는 설명이 가능한 대체 모델을 제공하고자 합니다.</p><h3 id=combinations-of-forms-of-explanations>Combinations of forms of explanations</h3><p>단일 explainer는 여러 개의 설명을 제공할 수 있습니다.</p></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>Updated on 2021-07-14</span></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/explaining_dnn_types/index.md target=_blank>Read Markdown</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="Share on Twitter" data-sharer=twitter data-url=https://aiden-jeon.github.io/explaining_dnn_types/ data-title="Types of Explanatory Methods" data-hashtags=xai><i class="fab fa-twitter fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Facebook" data-sharer=facebook data-url=https://aiden-jeon.github.io/explaining_dnn_types/ data-hashtag=xai><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Linkedin" data-sharer=linkedin data-url=https://aiden-jeon.github.io/explaining_dnn_types/><i class="fab fa-linkedin fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Hacker News" data-sharer=hackernews data-url=https://aiden-jeon.github.io/explaining_dnn_types/ data-title="Types of Explanatory Methods"><i class="fab fa-hacker-news fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Reddit" data-sharer=reddit data-url=https://aiden-jeon.github.io/explaining_dnn_types/><i class="fab fa-reddit fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Line" data-sharer=line data-url=https://aiden-jeon.github.io/explaining_dnn_types/ data-title="Types of Explanatory Methods"><i data-svg-src=/lib/simple-icons/icons/line.min.svg aria-hidden=true></i></a><a href=javascript:void(0); title="Share on 微博" data-sharer=weibo data-url=https://aiden-jeon.github.io/explaining_dnn_types/ data-title="Types of Explanatory Methods"><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Evernote" data-sharer=evernote data-url=https://aiden-jeon.github.io/explaining_dnn_types/ data-title="Types of Explanatory Methods"><i class="fab fa-evernote fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/xai/>xai</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span></section></div><div class=post-nav><a href=/antipatterns_for_mlops/ class=prev rel=prev title="Using AntiPatterns to avoid MLOps Mistakes"><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>Using AntiPatterns to avoid MLOps Mistakes</a>
+<a href=/explaining_dnn_feature_based/ class=next rel=next title="Feature-Based Explanations">Feature-Based Explanations<i class="fas fa-angle-right fa-fw" aria-hidden=true></i></a></div></div><div id=comments><div id=utterances class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://utteranc.es/>Utterances</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.100.1">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden=true></i> LoveIt</a></div><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2019 - 2022</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>Jongseob Jeon</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top"><i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title="View Comments"><i class="fas fa-comment fa-fw" aria-hidden=true></i></a></div><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:30},comment:{utterances:{darkTheme:"github-dark",issueTerm:"pathname",label:"",lightTheme:"github-light",repo:"aiden-jeon/aiden-jeon.github.io"}},cookieconsent:{content:{dismiss:"Got it!",link:"Learn more",message:"This website uses Cookies to improve your experience."},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",lunrIndexURL:"/index.json",maxResultLength:10,noResultsFound:"No results found",snippetLength:30,type:"lunr"}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','UA-173612846-1',{anonymize_ip:!0})</script><script type=text/javascript src="https://www.googletagmanager.com/gtag/js?id=UA-173612846-1" async></script></body></html>

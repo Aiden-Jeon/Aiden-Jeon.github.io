@@ -1,129 +1,23 @@
-<!doctype html><html lang=en>
-<head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=robots content="noodp">
-<meta http-equiv=x-ua-compatible content="IE=edge, chrome=1">
-<title>argocd를 이용한 cd - Aiden's Camp</title><meta name=Description content="Welcome to Aiden's Camp"><meta property="og:title" content="argocd를 이용한 cd">
-<meta property="og:description" content="CI/CD Contents 순서
- sphinx-autoapi 를 이용한 자동 api 문서 생성하기 github action을 이용한 ci ghcr을 이용한 kubernetes deployment 만들기 helm을 이용한 deployment chart 만들기 argocd를 이용한 cd   이번 포스트에서는 argocd를 이용해 helm chart를 cd(continuous delivery) 하는 법에 대해서 알아보겠습니다.
-1. 설치 argocd 설치는 tutorial을 따라했습니다.
-2. 실행 1 2 3 4 5 6 7 8 9  # 1. argocd namespace kubectl create namespace argocd kubectl apply -n argocd -f https://raw.">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://aiden-jeon.github.io/argocd_cd/"><meta property="og:image" content="https://aiden-jeon.github.io/logo.png"><meta property="article:section" content="posts">
-<meta property="article:published_time" content="2021-03-04T00:00:00+00:00">
-<meta property="article:modified_time" content="2021-03-04T00:00:00+00:00">
-<meta name=twitter:card content="summary_large_image">
-<meta name=twitter:image content="https://aiden-jeon.github.io/logo.png">
-<meta name=twitter:title content="argocd를 이용한 cd">
-<meta name=twitter:description content="CI/CD Contents 순서
- sphinx-autoapi 를 이용한 자동 api 문서 생성하기 github action을 이용한 ci ghcr을 이용한 kubernetes deployment 만들기 helm을 이용한 deployment chart 만들기 argocd를 이용한 cd   이번 포스트에서는 argocd를 이용해 helm chart를 cd(continuous delivery) 하는 법에 대해서 알아보겠습니다.
-1. 설치 argocd 설치는 tutorial을 따라했습니다.
-2. 실행 1 2 3 4 5 6 7 8 9  # 1. argocd namespace kubectl create namespace argocd kubectl apply -n argocd -f https://raw.">
-<meta name=application-name content="Aiden's Camp">
-<meta name=apple-mobile-web-app-title content="Aiden's Camp"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=icons/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://aiden-jeon.github.io/argocd_cd/><link rel=prev href=https://aiden-jeon.github.io/ghcr_k8s_deploy/><link rel=next href=https://aiden-jeon.github.io/pylintrc/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"argocd를 이용한 cd","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/aiden-jeon.github.io\/argocd_cd\/"},"genre":"posts","keywords":"argocd","wordcount":283,"url":"https:\/\/aiden-jeon.github.io\/argocd_cd\/","datePublished":"2021-03-04T00:00:00+00:00","dateModified":"2021-03-04T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"Jongseob Jeon"},"description":""}</script></head>
-<body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':'light'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'light'==='dark')&&document.body.setAttribute('theme','dark')</script>
-<div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
-<div class=header-wrapper>
-<div class=header-title>
-<a href=/ title="Aiden's Camp"></a>
-</div>
-<div class=menu>
-<div class=menu-inner><a class=menu-item href=/> Home </a><a class=menu-item href=/posts/> Posts </a><a class=menu-item href=/tags/> Tags </a><a class=menu-item href=/categories/> Categories </a><a class=menu-item href=/about/> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><title>argocd를 이용한 cd - Aiden's Camp</title><meta name=Description content="Welcome to Aiden's Camp"><meta property="og:title" content="argocd를 이용한 cd"><meta property="og:description" content="CI/CD Contents 순서
+sphinx-autoapi 를 이용한 자동 api 문서 생성하기 github action을 이용한 ci ghcr을 이용한 kubernetes deployment 만들기 helm을 이용한 deployment chart 만들기 argocd를 이용한 cd 이번 포스트에서는 argocd를 이용해 helm chart를 cd(continuous delivery) 하는 법에 대해서 알아보겠습니다.
+1. 설치 argocd 설치는 tutorial 을 따라했습니다.
+2. 실행 1 2 3 4 5 6 7 8 9 # 1. argocd namespace kubectl create namespace argocd kubectl apply -n argocd -f https://raw."><meta property="og:type" content="article"><meta property="og:url" content="https://aiden-jeon.github.io/argocd_cd/"><meta property="og:image" content="https://aiden-jeon.github.io/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2021-03-04T00:00:00+00:00"><meta property="article:modified_time" content="2021-03-04T00:00:00+00:00"><meta property="og:site_name" content="My cool site"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://aiden-jeon.github.io/logo.png"><meta name=twitter:title content="argocd를 이용한 cd"><meta name=twitter:description content="CI/CD Contents 순서
+sphinx-autoapi 를 이용한 자동 api 문서 생성하기 github action을 이용한 ci ghcr을 이용한 kubernetes deployment 만들기 helm을 이용한 deployment chart 만들기 argocd를 이용한 cd 이번 포스트에서는 argocd를 이용해 helm chart를 cd(continuous delivery) 하는 법에 대해서 알아보겠습니다.
+1. 설치 argocd 설치는 tutorial 을 따라했습니다.
+2. 실행 1 2 3 4 5 6 7 8 9 # 1. argocd namespace kubectl create namespace argocd kubectl apply -n argocd -f https://raw."><meta name=application-name content="Aiden's Camp"><meta name=apple-mobile-web-app-title content="Aiden's Camp"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=icons/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://aiden-jeon.github.io/argocd_cd/><link rel=prev href=https://aiden-jeon.github.io/ghcr_k8s_deploy/><link rel=next href=https://aiden-jeon.github.io/pylintrc/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"argocd를 이용한 cd","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/aiden-jeon.github.io\/argocd_cd\/"},"genre":"posts","keywords":"argocd","wordcount":284,"url":"https:\/\/aiden-jeon.github.io\/argocd_cd\/","datePublished":"2021-03-04T00:00:00+00:00","dateModified":"2021-03-04T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"Jongseob Jeon"},"description":""}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':'light'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'light'==='dark')&&document.body.setAttribute('theme','dark')</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="Aiden's Camp"></a></div><div class=menu><div class=menu-inner><a class=menu-item href=/>Home </a><a class=menu-item href=/posts/>Posts </a><a class=menu-item href=/tags/>Tags </a><a class=menu-item href=/categories/>Categories </a><a class=menu-item href=/about/>About </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
 <input type=text placeholder="Search titles or contents..." id=search-input-desktop>
-<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search>
-<i class="fas fa-search fa-fw"></i>
-</a>
-<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear>
-<i class="fas fa-times-circle fa-fw"></i>
-</a>
-<span class="search-button search-loading" id=search-loading-desktop>
-<i class="fas fa-spinner fa-fw fa-spin"></i>
-</span>
-</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
-<i class="fas fa-adjust fa-fw"></i>
-</a>
-</div>
-</div>
-</div>
-</header><header class=mobile id=header-mobile>
-<div class=header-container>
-<div class=header-wrapper>
-<div class=header-title>
-<a href=/ title="Aiden's Camp"></a>
-</div>
-<div class=menu-toggle id=menu-toggle-mobile>
-<span></span><span></span><span></span>
-</div>
-</div>
-<div class=menu id=menu-mobile><div class=search-wrapper>
-<div class="search mobile" id=search-mobile>
-<input type=text placeholder="Search titles or contents..." id=search-input-mobile>
-<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search>
-<i class="fas fa-search fa-fw"></i>
-</a>
-<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear>
-<i class="fas fa-times-circle fa-fw"></i>
-</a>
-<span class="search-button search-loading" id=search-loading-mobile>
-<i class="fas fa-spinner fa-fw fa-spin"></i>
-</span>
-</div>
-<a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>
-Cancel
-</a>
-</div><a class=menu-item href=/ title>Home</a><a class=menu-item href=/posts/ title>Posts</a><a class=menu-item href=/tags/ title>Tags</a><a class=menu-item href=/categories/ title>Categories</a><a class=menu-item href=/about/ title>About</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
-<i class="fas fa-adjust fa-fw"></i>
-</a></div>
-</div>
-</header>
-<div class="search-dropdown desktop">
-<div id=search-dropdown-desktop></div>
-</div>
-<div class="search-dropdown mobile">
-<div id=search-dropdown-mobile></div>
-</div>
-<main class=main>
-<div class=container><div class=toc id=toc-auto>
-<h2 class=toc-title>Contents</h2>
-<div class="toc-content always-active" id=toc-content-auto></div>
-</div><article class="page single"><h1 class="single-title animated flipInX">argocd를 이용한 cd</h1><div class=post-meta>
-<div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw"></i>Jongseob Jeon</a></span>&nbsp;<span class=post-category>included in <a href=/categories/cicd/><i class="far fa-folder fa-fw"></i>cicd</a></span></div>
-<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-03-04>2021-03-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;283 words&nbsp;
-<i class="far fa-clock fa-fw"></i>&nbsp;2 minutes&nbsp;</div>
-</div><div class="details toc" id=toc-static kept>
-<div class="details-summary toc-title">
-<span>Contents</span>
-<span><i class="details-icon fas fa-angle-right"></i></span>
-</div>
-<div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
-<ul>
-<li>
-<ul>
-<li><a href=#1-설치>1. 설치</a></li>
-<li><a href=#2-실행>2. 실행</a></li>
-<li><a href=#3-app-생성>3. APP 생성</a></li>
-<li><a href=#4-확인>4. 확인</a></li>
-</ul>
-</li>
-</ul>
-</nav></div>
-</div><div class=content id=content><p><strong>CI/CD Contents 순서</strong></p>
-<ol>
-<li><a href=/sphinx_autoapi/ rel>sphinx-autoapi 를 이용한 자동 api 문서 생성하기</a></li>
-<li><a href=/github_action_ci/ rel>github action을 이용한 ci</a></li>
-<li><a href=/ghcr_k8s_deploy/ rel>ghcr을 이용한 kubernetes deployment 만들기</a></li>
-<li><a href=/helm_deployment_chart/ rel>helm을 이용한 deployment chart 만들기</a></li>
-<li><a href=/argocd_cd/ rel>argocd를 이용한 cd</a></li>
-</ol>
-<hr>
-<p>이번 포스트에서는 argocd를 이용해 helm chart를 cd(continuous delivery) 하는 법에 대해서 알아보겠습니다.</p>
-<h2 id=1-설치>1. 설치</h2>
-<p>argocd 설치는 <a href=https://argoproj.github.io/argo-cd/getting_started/ target=_blank rel="noopener noreffer">tutorial</a>을 따라했습니다.</p>
-<h2 id=2-실행>2. 실행</h2>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme"><i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="Aiden's Camp"></a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="Search titles or contents..." id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>Cancel</a></div><a class=menu-item href=/ title>Home</a><a class=menu-item href=/posts/ title>Posts</a><a class=menu-item href=/tags/ title>Tags</a><a class=menu-item href=/categories/ title>Categories</a><a class=menu-item href=/about/ title>About</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>Contents</h2><div class="toc-content always-active" id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">argocd를 이용한 cd</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>Jongseob Jeon</a>
+</span>&nbsp;<span class=post-category>included in <a href=/categories/cicd/><i class="far fa-folder fa-fw" aria-hidden=true></i>cicd</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2021-03-04>2021-03-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;284 words&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;2 minutes&nbsp;</div></div><div class="details toc" id=toc-static data-kept><div class="details-summary toc-title"><span>Contents</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><ul><li><a href=#1-설치>1. 설치</a></li><li><a href=#2-실행>2. 실행</a></li><li><a href=#3-app-생성>3. APP 생성</a></li><li><a href=#4-확인>4. 확인</a></li></ul></li></ul></nav></div></div><div class=content id=content><p><strong>CI/CD Contents 순서</strong></p><ol><li><a href=/sphinx_autoapi/ rel>sphinx-autoapi 를 이용한 자동 api 문서 생성하기</a></li><li><a href=/github_action_ci/ rel>github action을 이용한 ci</a></li><li><a href=/ghcr_k8s_deploy/ rel>ghcr을 이용한 kubernetes deployment 만들기</a></li><li><a href=/helm_deployment_chart/ rel>helm을 이용한 deployment chart 만들기</a></li><li><a href=/argocd_cd/ rel>argocd를 이용한 cd</a></li></ol><hr><p>이번 포스트에서는 argocd를 이용해 helm chart를 cd(continuous delivery) 하는 법에 대해서 알아보겠습니다.</p><h2 id=1-설치>1. 설치</h2><p>argocd 설치는 <a href=https://argoproj.github.io/argo-cd/getting_started/ target=_blank rel="noopener noreffer">tutorial</a>
+을 따라했습니다.</p><h2 id=2-실행>2. 실행</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
@@ -132,57 +26,21 @@ Cancel
 </span><span class=lnt>7
 </span><span class=lnt>8
 </span><span class=lnt>9
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=c1># 1. argocd namespace</span>
-kubectl create namespace argocd
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-
-<span class=c1># access argo cd api server</span>
-kubectl patch svc argocd-server -n argocd -p <span class=s1>&#39;{&#34;spec&#34;: {&#34;type&#34;: &#34;LoadBalancer&#34;}}&#39;</span>
-
-<span class=c1>#port forward</span>
-kubectl port-forward svc/argocd-server -n argocd 8080:80
-</code></pre></td></tr></table>
-</div>
-</div><p>argocd 를 실행시켰으면 https://localhost:8080 으로 들어갑니다.<br>
-기본으로 설정되어 있는 아이디는 admin이며 비밀번호는 아래 명령어로 확인할 수 있습니다.</p>
-<p>v1.8.0 이하는 아래 명령어로 확인할 수 있습니다.</p>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>kubectl get pods -n argocd -l app.kubernetes.io/name<span class=o>=</span>argocd-server -o name <span class=p>|</span> cut -d<span class=s1>&#39;/&#39;</span> -f <span class=m>2</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>v1.9.0 이상은 아래 명령어로 확인할 수 있습니다.</p>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>kubectl -n argocd get secret argocd-initial-admin-secret -o <span class=nv>jsonpath</span><span class=o>=</span><span class=s2>&#34;{.data.password}&#34;</span> <span class=p>|</span> base64 -d
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=3-app-생성>3. APP 생성</h2>
-<p>처음 나오는 화면은 다음과 같이 아무런 app이 없습니다.</p>
-<p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/github/cicd-8.png data-srcset="/imgs/github/cicd-8.png, /imgs/github/cicd-8.png 1.5x, /imgs/github/cicd-8.png 2x" data-sizes=auto alt=/imgs/github/cicd-8.png title=그림-1></p>
-<p>NEW APP 을 눌러 추가하겠습니다.</p>
-<p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/github/cicd-9.png data-srcset="/imgs/github/cicd-9.png, /imgs/github/cicd-9.png 1.5x, /imgs/github/cicd-9.png 2x" data-sizes=auto alt=/imgs/github/cicd-9.png title=그림-2>
-<img class=lazyload src=/svg/loading.min.svg data-src=/imgs/github/cicd-10.png data-srcset="/imgs/github/cicd-10.png, /imgs/github/cicd-10.png 1.5x, /imgs/github/cicd-10.png 2x" data-sizes=auto alt=/imgs/github/cicd-10.png title=그림-3></p>
-<p>그림-3과 같이 config를 입력하고 create를 해줍니다. 완성되면 아래와 같이 app이 생성됩니다.</p>
-<p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/github/cicd-11.png data-srcset="/imgs/github/cicd-11.png, /imgs/github/cicd-11.png 1.5x, /imgs/github/cicd-11.png 2x" data-sizes=auto alt=/imgs/github/cicd-11.png title=그림-4></p>
-<p>app에 클릭해서 들어가면 다음과 같이 나옵니다. 여기서 SYNC 버튼을 눌러줍니다</p>
-<p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/github/cicd-12.png data-srcset="/imgs/github/cicd-12.png, /imgs/github/cicd-12.png 1.5x, /imgs/github/cicd-12.png 2x" data-sizes=auto alt=/imgs/github/cicd-12.png title=그림-5></p>
-<p>SYNCHRONIZE 버튼을 누릅니다.</p>
-<p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/github/cicd-13.png data-srcset="/imgs/github/cicd-13.png, /imgs/github/cicd-13.png 1.5x, /imgs/github/cicd-13.png 2x" data-sizes=auto alt=/imgs/github/cicd-13.png title=그림-6></p>
-<p>다음은 sync가 완료된 화면입니다.</p>
-<p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/github/cicd-14.png data-srcset="/imgs/github/cicd-14.png, /imgs/github/cicd-14.png 1.5x, /imgs/github/cicd-14.png 2x" data-sizes=auto alt=/imgs/github/cicd-14.png title=그림-7></p>
-<p>command창에서 정상적으로 떴는지 확인해봅니다.</p>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># 1. argocd namespace</span>
+</span></span><span class=line><span class=cl>kubectl create namespace argocd
+</span></span><span class=line><span class=cl>kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># access argo cd api server</span>
+</span></span><span class=line><span class=cl>kubectl patch svc argocd-server -n argocd -p <span class=s1>&#39;{&#34;spec&#34;: {&#34;type&#34;: &#34;LoadBalancer&#34;}}&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#port forward</span>
+</span></span><span class=line><span class=cl>kubectl port-forward svc/argocd-server -n argocd 8080:80
+</span></span></code></pre></td></tr></table></div></div><p>argocd 를 실행시켰으면 https://localhost:8080 으로 들어갑니다.<br>기본으로 설정되어 있는 아이디는 admin이며 비밀번호는 아래 명령어로 확인할 수 있습니다.</p><p>v1.8.0 이하는 아래 명령어로 확인할 수 있습니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kubectl get pods -n argocd -l app.kubernetes.io/name<span class=o>=</span>argocd-server -o name <span class=p>|</span> cut -d<span class=s1>&#39;/&#39;</span> -f <span class=m>2</span>
+</span></span></code></pre></td></tr></table></div></div><p>v1.9.0 이상은 아래 명령어로 확인할 수 있습니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kubectl -n argocd get secret argocd-initial-admin-secret -o <span class=nv>jsonpath</span><span class=o>=</span><span class=s2>&#34;{.data.password}&#34;</span> <span class=p>|</span> base64 -d
+</span></span></code></pre></td></tr></table></div></div><h2 id=3-app-생성>3. APP 생성</h2><p>처음 나오는 화면은 다음과 같이 아무런 app이 없습니다.</p><p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/github/cicd-8.png data-srcset="/imgs/github/cicd-8.png, /imgs/github/cicd-8.png 1.5x, /imgs/github/cicd-8.png 2x" data-sizes=auto alt=/imgs/github/cicd-8.png title=그림-1></p><p>NEW APP 을 눌러 추가하겠습니다.</p><p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/github/cicd-9.png data-srcset="/imgs/github/cicd-9.png, /imgs/github/cicd-9.png 1.5x, /imgs/github/cicd-9.png 2x" data-sizes=auto alt=/imgs/github/cicd-9.png title=그림-2>
+<img class=lazyload src=/svg/loading.min.svg data-src=/imgs/github/cicd-10.png data-srcset="/imgs/github/cicd-10.png, /imgs/github/cicd-10.png 1.5x, /imgs/github/cicd-10.png 2x" data-sizes=auto alt=/imgs/github/cicd-10.png title=그림-3></p><p>그림-3과 같이 config를 입력하고 create를 해줍니다. 완성되면 아래와 같이 app이 생성됩니다.</p><p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/github/cicd-11.png data-srcset="/imgs/github/cicd-11.png, /imgs/github/cicd-11.png 1.5x, /imgs/github/cicd-11.png 2x" data-sizes=auto alt=/imgs/github/cicd-11.png title=그림-4></p><p>app에 클릭해서 들어가면 다음과 같이 나옵니다. 여기서 SYNC 버튼을 눌러줍니다</p><p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/github/cicd-12.png data-srcset="/imgs/github/cicd-12.png, /imgs/github/cicd-12.png 1.5x, /imgs/github/cicd-12.png 2x" data-sizes=auto alt=/imgs/github/cicd-12.png title=그림-5></p><p>SYNCHRONIZE 버튼을 누릅니다.</p><p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/github/cicd-13.png data-srcset="/imgs/github/cicd-13.png, /imgs/github/cicd-13.png 1.5x, /imgs/github/cicd-13.png 2x" data-sizes=auto alt=/imgs/github/cicd-13.png title=그림-6></p><p>다음은 sync가 완료된 화면입니다.</p><p><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/github/cicd-14.png data-srcset="/imgs/github/cicd-14.png, /imgs/github/cicd-14.png 1.5x, /imgs/github/cicd-14.png 2x" data-sizes=auto alt=/imgs/github/cicd-14.png title=그림-7></p><p>command창에서 정상적으로 떴는지 확인해봅니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -194,75 +52,24 @@ kubectl port-forward svc/argocd-server -n argocd 8080:80
 </span><span class=lnt>10
 </span><span class=lnt>11
 </span><span class=lnt>12
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>&gt; kubectl get all -n sphinx-doc
-NAME                                             READY   STATUS    RESTARTS   AGE
-pod/sphinx-api-doc-sphinx-doc-5576ff677b-d4xzl   1/1     Running   <span class=m>0</span>          89s
-
-NAME                                TYPE       CLUSTER-IP      EXTERNAL-IP   PORT<span class=o>(</span>S<span class=o>)</span>        AGE
-service/sphinx-api-doc-sphinx-doc   NodePort   10.105.22.158   &lt;none&gt;        80:31058/TCP   89s
-
-NAME                                        READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/sphinx-api-doc-sphinx-doc   1/1     <span class=m>1</span>            <span class=m>1</span>           89s
-
-NAME                                                   DESIRED   CURRENT   READY   AGE
-replicaset.apps/sphinx-api-doc-sphinx-doc-5576ff677b   <span class=m>1</span>         <span class=m>1</span>         <span class=m>1</span>       89s
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=4-확인>4. 확인</h2>
-<p>다음 명령어로 접속할 ip와 포트를 얻습니다.</p>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>&gt; kubectl get all -n sphinx-doc
+</span></span><span class=line><span class=cl>NAME                                             READY   STATUS    RESTARTS   AGE
+</span></span><span class=line><span class=cl>pod/sphinx-api-doc-sphinx-doc-5576ff677b-d4xzl   1/1     Running   <span class=m>0</span>          89s
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>NAME                                TYPE       CLUSTER-IP      EXTERNAL-IP   PORT<span class=o>(</span>S<span class=o>)</span>        AGE
+</span></span><span class=line><span class=cl>service/sphinx-api-doc-sphinx-doc   NodePort   10.105.22.158   &lt;none&gt;        80:31058/TCP   89s
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>NAME                                        READY   UP-TO-DATE   AVAILABLE   AGE
+</span></span><span class=line><span class=cl>deployment.apps/sphinx-api-doc-sphinx-doc   1/1     <span class=m>1</span>            <span class=m>1</span>           89s
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>NAME                                                   DESIRED   CURRENT   READY   AGE
+</span></span><span class=line><span class=cl>replicaset.apps/sphinx-api-doc-sphinx-doc-5576ff677b   <span class=m>1</span>         <span class=m>1</span>         <span class=m>1</span>       89s
+</span></span></code></pre></td></tr></table></div></div><h2 id=4-확인>4. 확인</h2><p>다음 명령어로 접속할 ip와 포트를 얻습니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>&gt; minikube service -n sphinx-doc --url sphinx-api-doc-sphinx-doc
-
-http://192.168.64.2:31058
-</code></pre></td></tr></table>
-</div>
-</div><p>정상적으로 실행이 되었는지 확인합니다.</p>
-</div><div class=post-footer id=post-footer>
-<div class=post-info>
-<div class=post-info-line>
-<div class=post-info-mod>
-<span>Updated on 2021-03-04</span>
-</div>
-<div class=post-info-license></div>
-</div>
-<div class=post-info-line>
-<div class=post-info-md><span>
-<a class=link-to-markdown href=/argocd_cd/index.md target=_blank>Read Markdown</a>
-</span></div>
-<div class=post-info-share>
-<span><a href=javascript:void(0); title="Share on Twitter" data-sharer=twitter data-url=https://aiden-jeon.github.io/argocd_cd/ data-title="argocd를 이용한 cd" data-hashtags=argocd><i class="fab fa-twitter fa-fw"></i></a><a href=javascript:void(0); title="Share on Facebook" data-sharer=facebook data-url=https://aiden-jeon.github.io/argocd_cd/ data-hashtag=argocd><i class="fab fa-facebook-square fa-fw"></i></a><a href=javascript:void(0); title="Share on Linkedin" data-sharer=linkedin data-url=https://aiden-jeon.github.io/argocd_cd/><i class="fab fa-linkedin fa-fw"></i></a><a href=javascript:void(0); title="Share on Reddit" data-sharer=reddit data-url=https://aiden-jeon.github.io/argocd_cd/><i class="fab fa-reddit fa-fw"></i></a><a href=javascript:void(0); title="Share on Evernote" data-sharer=evernote data-url=https://aiden-jeon.github.io/argocd_cd/ data-title="argocd를 이용한 cd"><i class="fab fa-evernote fa-fw"></i></a></span>
-</div>
-</div>
-</div>
-<div class=post-info-more>
-<section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/argocd/>argocd</a></section>
-<section>
-<span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span>
-</section>
-</div>
-<div class=post-nav><a href=/ghcr_k8s_deploy/ class=prev rel=prev title="ghcr을 이용한 kubernetes deployment 만들기"><i class="fas fa-angle-left fa-fw"></i>ghcr을 이용한 kubernetes deployment 만들기</a>
-<a href=/pylintrc/ class=next rel=next title="프로젝트별 pylint 설정하기">프로젝트별 pylint 설정하기<i class="fas fa-angle-right fa-fw"></i></a></div>
-</div>
-<div id=comments><div id=utterances></div><noscript>
-Please enable JavaScript to view the comments powered by <a href=https://utteranc.es/>Utterances</a>.
-</noscript></div></article></div>
-</main><footer class=footer>
-<div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.91.2">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-</div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2019 - 2022</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>Jongseob Jeon</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div>
-</div>
-</footer></div>
-<div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top">
-<i class="fas fa-arrow-up fa-fw"></i>
-</a><a href=# id=view-comments class=fixed-button title="View Comments">
-<i class="fas fa-comment fa-fw"></i>
-</a>
-</div><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/smooth-scroll/smooth-scroll.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:30},comment:{utterances:{darkTheme:"github-dark",issueTerm:"pathname",label:"",lightTheme:"github-light",repo:"aiden-jeon/aiden-jeon.github.io"}},cookieconsent:{content:{dismiss:"Got it!",link:"Learn more",message:"This website uses Cookies to improve your experience."},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",lunrIndexURL:"/index.json",maxResultLength:10,noResultsFound:"No results found",snippetLength:30,type:"lunr"}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','UA-173612846-1',{anonymize_ip:!0})</script><script type=text/javascript src="https://www.googletagmanager.com/gtag/js?id=UA-173612846-1" async></script></body>
-</html>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>&gt; minikube service -n sphinx-doc --url sphinx-api-doc-sphinx-doc
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>http://192.168.64.2:31058
+</span></span></code></pre></td></tr></table></div></div><p>정상적으로 실행이 되었는지 확인합니다.</p></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>Updated on 2021-03-04</span></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/argocd_cd/index.md target=_blank>Read Markdown</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="Share on Twitter" data-sharer=twitter data-url=https://aiden-jeon.github.io/argocd_cd/ data-title="argocd를 이용한 cd" data-hashtags=argocd><i class="fab fa-twitter fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Facebook" data-sharer=facebook data-url=https://aiden-jeon.github.io/argocd_cd/ data-hashtag=argocd><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Linkedin" data-sharer=linkedin data-url=https://aiden-jeon.github.io/argocd_cd/><i class="fab fa-linkedin fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Hacker News" data-sharer=hackernews data-url=https://aiden-jeon.github.io/argocd_cd/ data-title="argocd를 이용한 cd"><i class="fab fa-hacker-news fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Reddit" data-sharer=reddit data-url=https://aiden-jeon.github.io/argocd_cd/><i class="fab fa-reddit fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Line" data-sharer=line data-url=https://aiden-jeon.github.io/argocd_cd/ data-title="argocd를 이용한 cd"><i data-svg-src=/lib/simple-icons/icons/line.min.svg aria-hidden=true></i></a><a href=javascript:void(0); title="Share on 微博" data-sharer=weibo data-url=https://aiden-jeon.github.io/argocd_cd/ data-title="argocd를 이용한 cd"><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Evernote" data-sharer=evernote data-url=https://aiden-jeon.github.io/argocd_cd/ data-title="argocd를 이용한 cd"><i class="fab fa-evernote fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/argocd/>argocd</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span></section></div><div class=post-nav><a href=/ghcr_k8s_deploy/ class=prev rel=prev title="ghcr을 이용한 kubernetes deployment 만들기"><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>ghcr을 이용한 kubernetes deployment 만들기</a>
+<a href=/pylintrc/ class=next rel=next title="프로젝트별 pylint 설정하기">프로젝트별 pylint 설정하기<i class="fas fa-angle-right fa-fw" aria-hidden=true></i></a></div></div><div id=comments><div id=utterances class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://utteranc.es/>Utterances</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.100.1">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden=true></i> LoveIt</a></div><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2019 - 2022</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>Jongseob Jeon</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top"><i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title="View Comments"><i class="fas fa-comment fa-fw" aria-hidden=true></i></a></div><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:30},comment:{utterances:{darkTheme:"github-dark",issueTerm:"pathname",label:"",lightTheme:"github-light",repo:"aiden-jeon/aiden-jeon.github.io"}},cookieconsent:{content:{dismiss:"Got it!",link:"Learn more",message:"This website uses Cookies to improve your experience."},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",lunrIndexURL:"/index.json",maxResultLength:10,noResultsFound:"No results found",snippetLength:30,type:"lunr"}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','UA-173612846-1',{anonymize_ip:!0})</script><script type=text/javascript src="https://www.googletagmanager.com/gtag/js?id=UA-173612846-1" async></script></body></html>
