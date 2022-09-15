@@ -18148,8 +18148,7 @@ alt="그림-7"
 &lt;li>&lt;a class="link" href="https://aiden-jeon.github.io/post/mlops/cicd/argocd_cd/" >argocd를 이용한 cd&lt;/a>&lt;/li>
 &lt;/ol>
 &lt;hr>
-&lt;p>이번 포스트에서는 minikube를 이용해 &lt;a class="link" href="https://aiden-jeon.github.io/cicd/github-cicd-2" target="_blank" rel="noopener"
->이전 포스트&lt;/a>에서 만든 ghcr package를 이용해 deployment를 만드는 법에 대해서 알아보겠습니다.&lt;/p>
+&lt;p>이번 포스트에서는 minikube를 이용해 이전 포스트에서 만든 ghcr package를 이용해 deployment를 만드는 법에 대해서 알아보겠습니다.&lt;/p>
 &lt;h2 id="0-requirements">0. requirements&lt;/h2>
 &lt;p>본 포스트에서는 local환경에서 minikube를 사용하고 있습니다.&lt;/p>
 &lt;h2 id="1-deploymentyaml">1. &lt;code>deployment.yaml&lt;/code>&lt;/h2>
@@ -18774,10 +18773,10 @@ alt="그림-11"
 &lt;li>&lt;a class="link" href="https://aiden-jeon.github.io/post/mlops/cicd/ghcr_k8s_deploy/" >ghcr을 이용한 kubernetes deployment 만들기&lt;/a>&lt;/li>
 &lt;li>&lt;a class="link" href="https://aiden-jeon.github.io/post/mlops/cicd/helm_deployment_chart/" >helm을 이용한 deployment chart 만들기&lt;/a>&lt;/li>
 &lt;li>&lt;a class="link" href="https://aiden-jeon.github.io/post/mlops/cicd/argocd_cd/" >argocd를 이용한 cd&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://aiden-jeon.github.io/post/mlops/cicd/argocd_branch/" >argocd를 branch에서 cd&lt;/a>&lt;/li>
 &lt;/ol>
 &lt;hr>
-&lt;p>이번 포스트에서는 helm 을 이용해 &lt;a class="link" href="https://aiden-jeon.github.io/cicd/github-cicd-2" target="_blank" rel="noopener"
->이전 포스트&lt;/a> 에서 작성한 파일들을 자동화 하는 법에 대해서 알아 보겠습니다.&lt;/p>
+&lt;p>이번 포스트에서는 helm 을 이용해 이전 포스트에서 작성한 파일들을 자동화 하는 법에 대해서 알아 보겠습니다.&lt;/p>
 &lt;h2 id="1-helm-start">1. helm start&lt;/h2>
 &lt;p>helm 을 시작하려는 repo 최상단에서 다음과 같이 입력해줍니다.&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
