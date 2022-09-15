@@ -1,0 +1,226 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="0. 참고 자료 검색 빵형의 개발도상국 1. mp4 동영상 다운로드 youtube 영상 다운로드 ssyoutube로 바꾸면 다운로드 할 수 있는 사이트로 연결됨. https://www.youtube.com/watch?v=naRRqAGIAqQ https://www.ssyoutube.com/watch?v=naRRqAGIAqQ 2. 프로젝트를 위한 가상환경 만들기 1 2 3 pyenv virtualenv 3.7.8 tracking_idol pyenv activate tracking_idol pip install opencv-python==4.1.2.30 opencv-contrib-python==4.1.2.30 numpy opencv 최신 버전은 mac catalina 버전에서 실행이 안된다. https://solarianprogrammer.com/2019/10/21/install-opencv-python-macos/ 3. opencv 를 이용해서 동영상 실행시켜보기 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 import cv2 video_path = &amp;#34;tracking_myidol/dumbi_dumbdi."><title>동영상에서 원하는 인물 따라가기</title><link rel=canonical href=https://aiden-jeon.github.io/post/machine_learning/project/tracking_my_idol/><link rel=stylesheet href=/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css><meta property="og:title" content="동영상에서 원하는 인물 따라가기"><meta property="og:description" content="0. 참고 자료 검색 빵형의 개발도상국 1. mp4 동영상 다운로드 youtube 영상 다운로드 ssyoutube로 바꾸면 다운로드 할 수 있는 사이트로 연결됨. https://www.youtube.com/watch?v=naRRqAGIAqQ https://www.ssyoutube.com/watch?v=naRRqAGIAqQ 2. 프로젝트를 위한 가상환경 만들기 1 2 3 pyenv virtualenv 3.7.8 tracking_idol pyenv activate tracking_idol pip install opencv-python==4.1.2.30 opencv-contrib-python==4.1.2.30 numpy opencv 최신 버전은 mac catalina 버전에서 실행이 안된다. https://solarianprogrammer.com/2019/10/21/install-opencv-python-macos/ 3. opencv 를 이용해서 동영상 실행시켜보기 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 import cv2 video_path = &amp;#34;tracking_myidol/dumbi_dumbdi."><meta property="og:url" content="https://aiden-jeon.github.io/post/machine_learning/project/tracking_my_idol/"><meta property="og:site_name" content="Aiden's Camp"><meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:published_time" content="2020-10-04T00:00:00+00:00"><meta property="article:modified_time" content="2020-10-04T00:00:00+00:00"><meta name=twitter:title content="동영상에서 원하는 인물 따라가기"><meta name=twitter:description content="0. 참고 자료 검색 빵형의 개발도상국 1. mp4 동영상 다운로드 youtube 영상 다운로드 ssyoutube로 바꾸면 다운로드 할 수 있는 사이트로 연결됨. https://www.youtube.com/watch?v=naRRqAGIAqQ https://www.ssyoutube.com/watch?v=naRRqAGIAqQ 2. 프로젝트를 위한 가상환경 만들기 1 2 3 pyenv virtualenv 3.7.8 tracking_idol pyenv activate tracking_idol pip install opencv-python==4.1.2.30 opencv-contrib-python==4.1.2.30 numpy opencv 최신 버전은 mac catalina 버전에서 실행이 안된다. https://solarianprogrammer.com/2019/10/21/install-opencv-python-macos/ 3. opencv 를 이용해서 동영상 실행시켜보기 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 import cv2 video_path = &amp;#34;tracking_myidol/dumbi_dumbdi."><link rel="shortcut icon" href=icons/favicon.ico><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(e,t,n,s,o,i,a){e.GoogleAnalyticsObject=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date,i=t.createElement(n),a=t.getElementsByTagName(n)[0],i.async=1,i.src=s,a.parentNode.insertBefore(i,a)}(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-173612846-1","auto"),ga("send","pageview"))</script></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"dark")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/imgs/avatar.png width=300 height=300 class=site-logo loading=lazy alt=Avatar></a>
+<span class=emoji>🍥</span></figure><div class=site-meta><h1 class=site-name><a href=/>Aiden's Camp</a></h1><h2 class=site-description>Welcome to Aiden's Camp</h2></div></header><ol class=menu id=main-menu><li><a href=/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg><span>Home</span></a></li><li><a href=/page/about/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg><span>About Me</span></a></li><li><a href=/page/archives/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg><span>Archives</span></a></li><li><a href=/page/search/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg><span>Search</span></a></li><li><a href=/page/links/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg><span>Links</span></a></li><div class=menu-bottom-section><li id=dark-mode-toggle><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><span>Dark Mode</span></li></div></ol></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/project/>project</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/post/machine_learning/project/tracking_my_idol/>동영상에서 원하는 인물 따라가기</a></h2></div><footer class=article-time><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg><time class=article-time--published>Oct 04, 2020</time></div><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg><time class=article-time--reading>3 minute read</time></div></footer></div></header><section class=article-content><h2 id=0-참고-자료-검색>0. 참고 자료 검색</h2><ul><li><a class=link href="https://www.youtube.com/watch?v=cx7VONjFEE0&t=83s" target=_blank rel=noopener>빵형의 개발도상국</a></li></ul><h2 id=1-mp4-동영상-다운로드>1. mp4 동영상 다운로드</h2><ul><li>youtube 영상 다운로드<ul><li>ssyoutube로 바꾸면 다운로드 할 수 있는 사이트로 연결됨.</li><li><a class=link href="https://www.youtube.com/watch?v=naRRqAGIAqQ" target=_blank rel=noopener>https://www.youtube.com/watch?v=naRRqAGIAqQ</a></li><li><a class=link href="https://www.ssyoutube.com/watch?v=naRRqAGIAqQ" target=_blank rel=noopener>https://www.ssyoutube.com/watch?v=naRRqAGIAqQ</a></li></ul></li></ul><h2 id=2-프로젝트를-위한-가상환경-만들기>2. 프로젝트를 위한 가상환경 만들기</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>pyenv virtualenv 3.7.8 tracking_idol
+</span></span><span class=line><span class=cl>pyenv activate tracking_idol
+</span></span><span class=line><span class=cl>pip install opencv-python<span class=o>==</span>4.1.2.30 opencv-contrib-python<span class=o>==</span>4.1.2.30 numpy
+</span></span></code></pre></td></tr></table></div></div><ul><li>opencv 최신 버전은 mac catalina 버전에서 실행이 안된다.<ul><li><a class=link href=https://solarianprogrammer.com/2019/10/21/install-opencv-python-macos/ target=_blank rel=noopener>https://solarianprogrammer.com/2019/10/21/install-opencv-python-macos/</a></li></ul></li></ul><h2 id=3-opencv-를-이용해서-동영상-실행시켜보기>3. opencv 를 이용해서 동영상 실행시켜보기</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>cv2</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>video_path</span> <span class=o>=</span> <span class=s2>&#34;tracking_myidol/dumbi_dumbdi.mp4&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>cap</span> <span class=o>=</span> <span class=n>cv2</span><span class=o>.</span><span class=n>VideoCapture</span><span class=p>(</span><span class=n>video_path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>ret</span><span class=p>,</span> <span class=n>img</span> <span class=o>=</span> <span class=n>cap</span><span class=o>.</span><span class=n>read</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=n>cv2</span><span class=o>.</span><span class=n>imshow</span><span class=p>(</span><span class=s2>&#34;img&#34;</span><span class=p>,</span> <span class=n>img</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>while</span> <span class=n>cap</span><span class=o>.</span><span class=n>isOpened</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=n>ret</span><span class=p>,</span> <span class=n>img</span> <span class=o>=</span> <span class=n>cap</span><span class=o>.</span><span class=n>read</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=ow>not</span> <span class=n>ret</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>exit</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>cv2</span><span class=o>.</span><span class=n>imshow</span><span class=p>(</span><span class=s2>&#34;img&#34;</span><span class=p>,</span> <span class=n>img</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>cv2</span><span class=o>.</span><span class=n>waitKey</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span> <span class=o>==</span> <span class=nb>ord</span><span class=p>(</span><span class=s2>&#34;q&#34;</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=k>break</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=4-roi-setting>4. ROI Setting</h2><ul><li>ROI (Region of Interest)<ul><li>관심 영역, 영상처리할 때 쓰는 보편적인 용어</li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>ret</span><span class=p>,</span> <span class=n>img</span> <span class=o>=</span> <span class=n>cap</span><span class=o>.</span><span class=n>read</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=n>cv2</span><span class=o>.</span><span class=n>namedWindow</span><span class=p>(</span><span class=s2>&#34;Select Window&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>cv2</span><span class=o>.</span><span class=n>imshow</span><span class=p>(</span><span class=s2>&#34;Select Window&#34;</span><span class=p>,</span> <span class=n>img</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>rect</span> <span class=o>=</span> <span class=n>cv2</span><span class=o>.</span><span class=n>selectROI</span><span class=p>(</span><span class=s2>&#34;Select Window&#34;</span><span class=p>,</span> <span class=n>img</span><span class=p>,</span> <span class=n>fromCenter</span><span class=o>=</span><span class=kc>False</span><span class=p>,</span> <span class=n>showCrosshair</span><span class=o>=</span><span class=kc>True</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>cv2</span><span class=o>.</span><span class=n>destroyWindow</span><span class=p>(</span><span class=s2>&#34;Select Window&#34;</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><p>동영상 제일 처음 frame을 불러와서 cv2.selectROI 를 이용해 처음에 ROI 를 세팅할 수 있는 창을 만든다.</p><h2 id=5-tracker>5. tracker</h2><p>user가 선택한 ROI를 rect 라는 변수에 저장을 하는데, 이를 계속해서 추적하는 obejct tracker가 필요하다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=c1># init tracker</span>
+</span></span><span class=line><span class=cl><span class=n>tracker</span> <span class=o>=</span> <span class=n>cv2</span><span class=o>.</span><span class=n>TrackerCSRT_create</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=n>tracker</span><span class=o>.</span><span class=n>init</span><span class=p>(</span><span class=n>img</span><span class=p>,</span> <span class=n>rect</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>while</span> <span class=n>cap</span><span class=o>.</span><span class=n>isOpened</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=n>ret</span><span class=p>,</span> <span class=n>img</span> <span class=o>=</span> <span class=n>cap</span><span class=o>.</span><span class=n>read</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=ow>not</span> <span class=n>ret</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>exit</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>success</span><span class=p>,</span> <span class=n>box</span> <span class=o>=</span> <span class=n>tracker</span><span class=o>.</span><span class=n>update</span><span class=p>(</span><span class=n>img</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>(</span><span class=n>left</span><span class=p>,</span> <span class=n>top</span><span class=p>,</span> <span class=n>w</span><span class=p>,</span> <span class=n>h</span><span class=p>)</span> <span class=o>=</span> <span class=nb>list</span><span class=p>(</span><span class=nb>map</span><span class=p>(</span><span class=nb>int</span><span class=p>,</span> <span class=n>box</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=n>cv2</span><span class=o>.</span><span class=n>rectangle</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=n>img</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>pt1</span><span class=o>=</span><span class=p>(</span><span class=n>left</span><span class=p>,</span> <span class=n>top</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>        <span class=n>pt2</span><span class=o>=</span><span class=p>(</span><span class=n>left</span> <span class=o>+</span> <span class=n>w</span><span class=p>,</span> <span class=n>top</span> <span class=o>+</span> <span class=n>h</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>        <span class=n>color</span><span class=o>=</span><span class=p>(</span><span class=mi>255</span><span class=p>,</span> <span class=mi>255</span><span class=p>,</span> <span class=mi>255</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>        <span class=n>thickness</span><span class=o>=</span><span class=mi>3</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>cv2</span><span class=o>.</span><span class=n>imshow</span><span class=p>(</span><span class=s2>&#34;img&#34;</span><span class=p>,</span> <span class=n>img</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>cv2</span><span class=o>.</span><span class=n>waitKey</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span> <span class=o>==</span> <span class=nb>ord</span><span class=p>(</span><span class=s2>&#34;q&#34;</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=k>break</span>
+</span></span></code></pre></td></tr></table></div></div><p>이렇게 하면 Select Window 창에서 선택된 ROI를 계속해서 tracking 하는 것을 볼 수 있다.</p><h2 id=6-예상되는-문제점>6. 예상되는 문제점</h2><ul><li>첫 frame에 원하는 인물이 나오지 않을 경우 다음 frame으로 넘길 수 있는 기능이 필요 (2020.08.17 해결)<ul><li>while loop으로 q 외에 다른 키를 누를 경우 frame 넘길 수 있게 처리함.</li><li>그리고 rect가 없을 경우 (0,0,0,0) 의 값을 갖는데 bounding box가 (0,0,0,0) 일 경우는 없다고 판단해서 합이 0이 아니면 break로 while loop 을 break 시킴.</li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>cv2</span><span class=o>.</span><span class=n>namedWindow</span><span class=p>(</span><span class=s2>&#34;Select Window&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>while</span> <span class=n>cap</span><span class=o>.</span><span class=n>isOpened</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=n>i</span> <span class=o>+=</span> <span class=mi>1</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=n>i</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>ret</span><span class=p>,</span> <span class=n>img</span> <span class=o>=</span> <span class=n>cap</span><span class=o>.</span><span class=n>read</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>cv2</span><span class=o>.</span><span class=n>imshow</span><span class=p>(</span><span class=s2>&#34;Select Window&#34;</span><span class=p>,</span> <span class=n>img</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>key</span> <span class=o>=</span> <span class=n>cv2</span><span class=o>.</span><span class=n>waitKey</span><span class=p>(</span><span class=mi>10</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=c1># Quit when &#39;q&#39; is pressed</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>key</span> <span class=o>==</span> <span class=nb>ord</span><span class=p>(</span><span class=s1>&#39;q&#39;</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=k>break</span>
+</span></span><span class=line><span class=cl>    <span class=n>rect</span> <span class=o>=</span> <span class=n>cv2</span><span class=o>.</span><span class=n>selectROI</span><span class=p>(</span><span class=s2>&#34;Select Window&#34;</span><span class=p>,</span> <span class=n>img</span><span class=p>,</span> <span class=n>fromCenter</span><span class=o>=</span><span class=kc>False</span><span class=p>,</span> <span class=n>showCrosshair</span><span class=o>=</span><span class=kc>True</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=n>rect</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=nb>sum</span><span class=p>(</span><span class=n>rect</span><span class=p>)</span> <span class=o>!=</span> <span class=mi>0</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>cv2</span><span class=o>.</span><span class=n>destroyWindow</span><span class=p>(</span><span class=s2>&#34;Select Window&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>break</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>처음 ROI 설정 할 경우 앉은 상태에서 시작할 때, 일어나는 사람의 전체 size를 tracking 하지 못함</li><li>인물이 다른 인물에 가려져서 안보일 경우 어떻게 처리해야 할지.</li></ul><h2 id=7-전체코드>7. 전체코드</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>cv2</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>video_path</span> <span class=o>=</span> <span class=s2>&#34;tracking_myidol/dumbi_dumbdi.mp4&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>cap</span> <span class=o>=</span> <span class=n>cv2</span><span class=o>.</span><span class=n>VideoCapture</span><span class=p>(</span><span class=n>video_path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>cap</span><span class=o>.</span><span class=n>set</span><span class=p>(</span><span class=n>cv2</span><span class=o>.</span><span class=n>CAP_PROP_POS_FRAMES</span><span class=p>,</span> <span class=mi>80</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## ROI Setting</span>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=ow>not</span> <span class=n>cap</span><span class=o>.</span><span class=n>isOpened</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>exit</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>cv2</span><span class=o>.</span><span class=n>namedWindow</span><span class=p>(</span><span class=s2>&#34;Select Window&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>while</span> <span class=n>cap</span><span class=o>.</span><span class=n>isOpened</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=n>ret</span><span class=p>,</span> <span class=n>img</span> <span class=o>=</span> <span class=n>cap</span><span class=o>.</span><span class=n>read</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>cv2</span><span class=o>.</span><span class=n>imshow</span><span class=p>(</span><span class=s2>&#34;Select Window&#34;</span><span class=p>,</span> <span class=n>img</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>key</span> <span class=o>=</span> <span class=n>cv2</span><span class=o>.</span><span class=n>waitKey</span><span class=p>(</span><span class=mi>10</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=c1># Quit when &#39;q&#39; is pressed</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>key</span> <span class=o>==</span> <span class=nb>ord</span><span class=p>(</span><span class=s1>&#39;q&#39;</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=k>break</span>
+</span></span><span class=line><span class=cl>    <span class=n>rect</span> <span class=o>=</span> <span class=n>cv2</span><span class=o>.</span><span class=n>selectROI</span><span class=p>(</span><span class=s2>&#34;Select Window&#34;</span><span class=p>,</span> <span class=n>img</span><span class=p>,</span> <span class=n>fromCenter</span><span class=o>=</span><span class=kc>False</span><span class=p>,</span> <span class=n>showCrosshair</span><span class=o>=</span><span class=kc>True</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=n>rect</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=nb>sum</span><span class=p>(</span><span class=n>rect</span><span class=p>)</span> <span class=o>!=</span> <span class=mi>0</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>cv2</span><span class=o>.</span><span class=n>destroyWindow</span><span class=p>(</span><span class=s2>&#34;Select Window&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>break</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># init tracker</span>
+</span></span><span class=line><span class=cl><span class=n>tracker</span> <span class=o>=</span> <span class=n>cv2</span><span class=o>.</span><span class=n>TrackerCSRT_create</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=n>tracker</span><span class=o>.</span><span class=n>init</span><span class=p>(</span><span class=n>img</span><span class=p>,</span> <span class=n>rect</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>while</span> <span class=n>cap</span><span class=o>.</span><span class=n>isOpened</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=n>ret</span><span class=p>,</span> <span class=n>img</span> <span class=o>=</span> <span class=n>cap</span><span class=o>.</span><span class=n>read</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=ow>not</span> <span class=n>ret</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>exit</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>success</span><span class=p>,</span> <span class=n>box</span> <span class=o>=</span> <span class=n>tracker</span><span class=o>.</span><span class=n>update</span><span class=p>(</span><span class=n>img</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>(</span><span class=n>left</span><span class=p>,</span> <span class=n>top</span><span class=p>,</span> <span class=n>w</span><span class=p>,</span> <span class=n>h</span><span class=p>)</span> <span class=o>=</span> <span class=nb>list</span><span class=p>(</span><span class=nb>map</span><span class=p>(</span><span class=nb>int</span><span class=p>,</span> <span class=n>box</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=n>cv2</span><span class=o>.</span><span class=n>rectangle</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=n>img</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>pt1</span><span class=o>=</span><span class=p>(</span><span class=n>left</span><span class=p>,</span> <span class=n>top</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>        <span class=n>pt2</span><span class=o>=</span><span class=p>(</span><span class=n>left</span> <span class=o>+</span> <span class=n>w</span><span class=p>,</span> <span class=n>top</span> <span class=o>+</span> <span class=n>h</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>        <span class=n>color</span><span class=o>=</span><span class=p>(</span><span class=mi>255</span><span class=p>,</span> <span class=mi>255</span><span class=p>,</span> <span class=mi>255</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>        <span class=n>thickness</span><span class=o>=</span><span class=mi>3</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>cv2</span><span class=o>.</span><span class=n>imshow</span><span class=p>(</span><span class=s2>&#34;img&#34;</span><span class=p>,</span> <span class=n>img</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>cv2</span><span class=o>.</span><span class=n>waitKey</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span> <span class=o>==</span> <span class=nb>ord</span><span class=p>(</span><span class=s2>&#34;q&#34;</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=k>break</span>
+</span></span></code></pre></td></tr></table></div></div></section><footer class=article-footer></footer><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.css integrity="sha256-J+iAE0sgH8QSz9hpcDxXIftnj65JEZgNhGcgReTTK9s=" crossorigin=anonymous><script src=https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.js integrity="sha256-InsNdER1b2xUewP+pKCUJpkhiqwHgqiPXDlIk7GzBu4=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/contrib/auto-render.min.js integrity="sha256-y39Mpg7V3D4lhBX4x6O0bUqTV4pSrfgwEfGKfxkOdgI=" crossorigin=anonymous defer></script><script>window.addEventListener("DOMContentLoaded",()=>{renderMathInElement(document.querySelector(`.article-content`),{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script></article><script src=https://utteranc.es/client.js repo=aiden-jeon/aiden-jeon.github.io issue-term=pathname label=comment crossorigin=anonymous async></script><style>.utterances{max-width:unset}</style><script>function setUtterancesTheme(e){let t=document.querySelector(".utterances iframe");t&&t.contentWindow.postMessage({type:"set-theme",theme:`github-${e}`},"https://utteranc.es")}addEventListener("message",e=>{if(e.origin!=="https://utteranc.es")return;setUtterancesTheme(document.documentElement.dataset.scheme)}),window.addEventListener("onColorSchemeChange",e=>{setUtterancesTheme(e.detail)})</script><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2022 Aiden's Camp</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.13.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#0-참고-자료-검색>0. 참고 자료 검색</a></li><li><a href=#1-mp4-동영상-다운로드>1. mp4 동영상 다운로드</a></li><li><a href=#2-프로젝트를-위한-가상환경-만들기>2. 프로젝트를 위한 가상환경 만들기</a></li><li><a href=#3-opencv-를-이용해서-동영상-실행시켜보기>3. opencv 를 이용해서 동영상 실행시켜보기</a></li><li><a href=#4-roi-setting>4. ROI Setting</a></li><li><a href=#5-tracker>5. tracker</a></li><li><a href=#6-예상되는-문제점>6. 예상되는 문제점</a></li><li><a href=#7-전체코드>7. 전체코드</a></li></ol></nav></div></section></aside></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script>
+<script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

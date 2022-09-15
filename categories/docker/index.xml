@@ -1,2 +1,304 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>docker - Category - Aiden's Camp</title><link>https://aiden-jeon.github.io/categories/docker/</link><description>docker - Category - Aiden's Camp</description><generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>ells2124@gmail.com (Jongseob Jeon)</managingEditor><webMaster>ells2124@gmail.com (Jongseob Jeon)</webMaster><lastBuildDate>Thu, 27 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://aiden-jeon.github.io/categories/docker/" rel="self" type="application/rss+xml"/><item><title>Docker Commands &amp; Run</title><link>https://aiden-jeon.github.io/docker_commands_run/</link><pubDate>Thu, 27 May 2021 00:00:00 +0000</pubDate><author>Jongseob Jeon</author><guid>https://aiden-jeon.github.io/docker_commands_run/</guid><description><![CDATA[Basic Docker Commands Containers Start a container docker run nginx if image is not present pull image from docker hub if image is present it will reuse docker run -it nginx bash to see directly in terminal use -it option Give name to a container docker run --name &lt;name&gt; &lt;image&gt; List containers → docker randomly give conatiner_id and names to running container
-docker ps list containers running containers docker ps -a running containers + previously stopped or exited containers Stop a container docker stop &lt;container id&gt; docker stop &lt;docker name&gt; no running containers remains in docker ps -a with Exited status Remove containers → when want to get rid of it from lying space]]></description></item><item><title>Docker Images</title><link>https://aiden-jeon.github.io/docker_images/</link><pubDate>Thu, 27 May 2021 00:00:00 +0000</pubDate><author>Jongseob Jeon</author><guid>https://aiden-jeon.github.io/docker_images/</guid><description><![CDATA[Docker Images How to create my own image? Order OS - Ubuntu Update apt repo Install dependencies using apt Install Python dependencies using pip Copy source code to /opt folder Run the web server using &ldquo;flask&rdquo; command Dockerfile 1 2 3 4 5 6 7 8 9 FROM Ubuntu RUN apt-get update &amp;&amp; apt-get -y install python RUN pip install flask flask-mysql COPY . /opt/source-code ENTRYPOINT FLASK_APP=/opt/source-code/app.py flask run INSTRUCTION ARGUMENT Build docker build .]]></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>docker on Aiden's Camp</title><link>https://aiden-jeon.github.io/categories/docker/</link><description>Recent content in docker on Aiden's Camp</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 27 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://aiden-jeon.github.io/categories/docker/index.xml" rel="self" type="application/rss+xml"/><item><title>Docker Commands &amp; Run</title><link>https://aiden-jeon.github.io/post/mlops/docker/docker_commands_run/</link><pubDate>Thu, 27 May 2021 00:00:00 +0000</pubDate><guid>https://aiden-jeon.github.io/post/mlops/docker/docker_commands_run/</guid><description>&lt;h2 id="basic-docker-commands">Basic Docker Commands&lt;/h2>
+&lt;h3 id="containers">Containers&lt;/h3>
+&lt;h4 id="start-a-container">Start a container&lt;/h4>
+&lt;ul>
+&lt;li>&lt;code>docker run nginx&lt;/code>
+&lt;ul>
+&lt;li>if image is not present pull image from docker hub&lt;/li>
+&lt;li>if image is present it will reuse&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;code>docker run -it nginx bash&lt;/code>
+&lt;ul>
+&lt;li>to see directly in terminal use &lt;code>-it&lt;/code> option&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h4 id="give-name-to-a-container">Give name to a container&lt;/h4>
+&lt;ul>
+&lt;li>&lt;code>docker run --name &amp;lt;name&amp;gt; &amp;lt;image&amp;gt;&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h4 id="list-containers">List containers&lt;/h4>
+&lt;p>→ docker randomly give &lt;code>conatiner_id&lt;/code> and &lt;code>names&lt;/code> to running container&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>docker ps&lt;/code>
+&lt;ul>
+&lt;li>list containers&lt;/li>
+&lt;li>running containers&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;code>docker ps -a&lt;/code>
+&lt;ul>
+&lt;li>running containers + previously stopped or exited containers&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h4 id="stop-a-container">Stop a container&lt;/h4>
+&lt;ul>
+&lt;li>&lt;code>docker stop &amp;lt;container id&amp;gt;&lt;/code>&lt;/li>
+&lt;li>&lt;code>docker stop &amp;lt;docker name&amp;gt;&lt;/code>
+&lt;ul>
+&lt;li>no running containers&lt;/li>
+&lt;li>remains in &lt;code>docker ps -a&lt;/code> with &lt;code>Exited&lt;/code> status&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h4 id="remove-containers">Remove containers&lt;/h4>
+&lt;p>→ when want to get rid of it from lying space&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>docker rm &amp;lt;container id&amp;gt;&lt;/code>&lt;/li>
+&lt;li>&lt;code>docker rm &amp;lt;docker name&amp;gt;&lt;/code>
+&lt;ul>
+&lt;li>no longer present in &lt;code>docker ps -a&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h4 id="get-container-ids">Get container ids&lt;/h4>
+&lt;ul>
+&lt;li>&lt;code>docker ps -aq&lt;/code>&lt;/li>
+&lt;li>remove all containers
+&lt;ul>
+&lt;li>&lt;code>docker rm $(docker ps -aq)&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="images">Images&lt;/h3>
+&lt;h4 id="list-images">List images&lt;/h4>
+&lt;ul>
+&lt;li>&lt;code>docker images&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h4 id="get-all-image-ids">Get all image ids&lt;/h4>
+&lt;ul>
+&lt;li>&lt;code>docker images -aq&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h4 id="remove-images">Remove images&lt;/h4>
+&lt;ul>
+&lt;li>&lt;code>docker rmi nginx&lt;/code>
+&lt;ul>
+&lt;li>delete all dependent containers to remove image!&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h4 id="download-an-image">Download an image&lt;/h4>
+&lt;ul>
+&lt;li>&lt;code>docker pull nginx&lt;/code>
+&lt;ul>
+&lt;li>only pull image, not run docker image&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="docker-run">Docker run&lt;/h3>
+&lt;h4 id="no-hosting-in-docker">No hosting in docker&lt;/h4>
+&lt;p>Containers are not meant to host an operating system.&lt;br>
+Containers are meant to run a specific task or process.&lt;/p>
+&lt;ul>
+&lt;li>such as to host an instance of a web server or application server, &amp;hellip;&lt;/li>
+&lt;/ul>
+&lt;p>Once the task is complete the container exits a container.&lt;br>
+Container only lives as long as the process inside it is alive.&lt;/p>
+&lt;h4 id="append-a-command">Append a command&lt;/h4>
+&lt;ul>
+&lt;li>&lt;code>docker run ubuntu sleep 5&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h4 id="execute-a-command">Execute a command&lt;/h4>
+&lt;p>I would like to see the contents of a file inside some particular containers.&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>docker exec &amp;lt;run name&amp;gt; cat /etc/hosts&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h4 id="attach-and-detach">Attach and Detach&lt;/h4>
+&lt;ul>
+&lt;li>&lt;code>docker run kodekloud/simple-webapp&lt;/code>
+&lt;ul>
+&lt;li>when attached, you can not do anything.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;code>docker run -d kodekloud/simple-webapp&lt;/code>
+&lt;ul>
+&lt;li>detach mode, it runs in background mode.&lt;/li>
+&lt;li>To attach again
+&lt;ul>
+&lt;li>&lt;code>docker attach &amp;lt;name or run_id&amp;gt;&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="docker-run-1">Docker Run&lt;/h2>
+&lt;h3 id="tag">Tag&lt;/h3>
+&lt;ul>
+&lt;li>&lt;code>docker run &amp;lt;image&amp;gt;:&amp;lt;tag&amp;gt;&lt;/code>
+&lt;ul>
+&lt;li>no specific tag → use &lt;code>latest&lt;/code> tag.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="stdin">STDIN&lt;/h3>
+&lt;p>by default, docker container does not listen to standard input, even attached.&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>-i&lt;/code>
+&lt;ul>
+&lt;li>interactive mode&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;code>-t&lt;/code>
+&lt;ul>
+&lt;li>pseudo terminal&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;code>-it&lt;/code>
+&lt;ul>
+&lt;li>use two options&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="port-mapping">PORT Mapping&lt;/h3>
+&lt;p>&lt;img src="https://aiden-jeon.github.io/imgs/docker/docker-0.png"
+loading="lazy"
+alt="docker-port-mapping"
+>&lt;/p>
+&lt;ul>
+&lt;li>IP of docker container
+&lt;ul>
+&lt;li>internal IP and is only accessible within the docker host.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>IP of docker host
+&lt;ul>
+&lt;li>&lt;code>-p&lt;/code>&lt;/li>
+&lt;li>&lt;code>docker run -p &amp;lt;host_port&amp;gt;:&amp;lt;internal_port&amp;gt; &amp;lt;image name&amp;gt;&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="volume-mapping">Volume Mapping&lt;/h3>
+&lt;p>&lt;img src="https://aiden-jeon.github.io/imgs/docker/docker-1.png"
+loading="lazy"
+alt="docker-volume-mapping"
+>&lt;/p>
+&lt;ul>
+&lt;li>docker container has its own isolated file system.&lt;/li>
+&lt;li>if want to persist data, map a directory outside the container on the docker host to ad directory inside the container&lt;/li>
+&lt;li>&lt;code>-v&lt;/code>&lt;/li>
+&lt;li>&lt;code>docker run -v &amp;lt;host volume&amp;gt;:&amp;lt;docker volume &amp;lt;image name&amp;gt;&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h3 id="inspect-container">Inspect Container&lt;/h3>
+&lt;ul>
+&lt;li>&lt;code>docker inspect &amp;lt;container id | name&amp;gt;&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h3 id="container-logs">Container Logs&lt;/h3>
+&lt;ul>
+&lt;li>&lt;code>docker logs &amp;lt;container id | name&amp;gt;&lt;/code>&lt;/li>
+&lt;/ul></description></item><item><title>Docker Images</title><link>https://aiden-jeon.github.io/post/mlops/docker/docker_images/</link><pubDate>Thu, 27 May 2021 00:00:00 +0000</pubDate><guid>https://aiden-jeon.github.io/post/mlops/docker/docker_images/</guid><description>&lt;h2 id="docker-images">Docker Images&lt;/h2>
+&lt;h3 id="how-to-create-my-own-image">How to create my own image?&lt;/h3>
+&lt;h4 id="order">Order&lt;/h4>
+&lt;ol>
+&lt;li>OS - Ubuntu&lt;/li>
+&lt;li>Update apt repo&lt;/li>
+&lt;li>Install dependencies using apt&lt;/li>
+&lt;li>Install Python dependencies using pip&lt;/li>
+&lt;li>Copy source code to /opt folder&lt;/li>
+&lt;li>Run the web server using &amp;ldquo;flask&amp;rdquo; command&lt;/li>
+&lt;/ol>
+&lt;h4 id="dockerfile">Dockerfile&lt;/h4>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-docker" data-lang="docker">&lt;span class="line">&lt;span class="cl">&lt;span class="k">FROM&lt;/span>&lt;span class="s"> Ubuntu&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">RUN&lt;/span> apt-get update &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> apt-get -y install python&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">RUN&lt;/span> pip install flask flask-mysql&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">COPY&lt;/span> . /opt/source-code&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">ENTRYPOINT&lt;/span> &lt;span class="nv">FLASK_APP&lt;/span>&lt;span class="o">=&lt;/span>/opt/source-code/app.py flask run&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>&lt;code>INSTRUCTION ARGUMENT&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h4 id="build">Build&lt;/h4>
+&lt;ul>
+&lt;li>&lt;code>docker build . -f Dockerfile -t &amp;lt;image name&amp;gt;&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h4 id="push">Push&lt;/h4>
+&lt;ul>
+&lt;li>&lt;code>docker push &amp;lt;image name&amp;gt;&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h3 id="layered-architecture">Layered architecture&lt;/h3>
+&lt;p>&lt;img src="https://aiden-jeon.github.io/imgs/docker/docker-image-1.png"
+loading="lazy"
+alt="layered-architecture"
+>&lt;/p>
+&lt;ul>
+&lt;li>each layer only store the changes from the previous layer&lt;/li>
+&lt;li>&lt;code>docker history &amp;lt;image name&amp;gt;&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h2 id="environment-variables">Environment Variables&lt;/h2>
+&lt;ul>
+&lt;li>&lt;code>-e&lt;/code>
+&lt;ul>
+&lt;li>&lt;code>docker run -e &amp;lt;KEY&amp;gt;=&amp;lt;value&amp;gt; &amp;lt;image name&amp;gt;&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="inspect-environment-variable">Inspect Environment Variable&lt;/h3>
+&lt;ul>
+&lt;li>&lt;code>docker inspect &amp;lt;container name | id&amp;gt;&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h2 id="command-vs-entrypoint">Command vs Entrypoint&lt;/h2>
+&lt;h3 id="설명">설명&lt;/h3>
+&lt;h4 id="command">Command&lt;/h4>
+&lt;ul>
+&lt;li>&lt;code>CMD&lt;/code>&lt;/li>
+&lt;li>instruction the command line parameters passed will get replaced entirely.&lt;/li>
+&lt;/ul>
+&lt;h4 id="entrypoint">Entrypoint&lt;/h4>
+&lt;ul>
+&lt;li>&lt;code>ENTRYPOINT&lt;/code>&lt;/li>
+&lt;li>command line parameters will get appended.&lt;/li>
+&lt;li>if parameter is not given, it will get error that the operand is missing
+&lt;ul>
+&lt;li>How to give and default value for entrypoint?
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-Docker" data-lang="Docker">&lt;span class="line">&lt;span class="cl">&lt;span class="k">ENTRYPOINT&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;command&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">CMD&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;param1&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>how to override entrypoint?
+&lt;ul>
+&lt;li>&lt;code>docker run --entrypoint &amp;lt;executable&amp;gt; &amp;lt;image-name&amp;gt; &amp;lt;param&amp;gt;&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="명령어">명령어&lt;/h3>
+&lt;ul>
+&lt;li>&lt;code>CMD&lt;/code>
+&lt;ul>
+&lt;li>&lt;code>CMD command param1&lt;/code>&lt;/li>
+&lt;li>&lt;code>CMD [&amp;quot;command&amp;quot;, &amp;quot;param1&amp;quot;]&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;code>ENTRYPOINT&lt;/code>
+&lt;ul>
+&lt;li>&lt;code>ENTRYPOINT [&amp;quot;command&amp;quot;]&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul></description></item></channel></rss>

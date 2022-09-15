@@ -1,0 +1,186 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="이번 포스트에서는 생성한 인스턴스를 nginx proxy로 관리하는 방법에 대해서 설명합니다.
+Ubuntu Instance 기본 설정 1. 기본 패키지 업데이트 1 sudo apt update &amp;amp;&amp;amp; sudo apt -y upgrade 2. Swap Memory 생성 Free tier의 메모리는 1G 이므로 스왑 메모리를 생성하도록 하겠습니다.
+1 2 3 sudo fallocate -l 2G /swapfile sudo chmod 600 /swapfile sudo mkswap /swapfile 생성된 스왑 메모리를 확인합니다.
+1 free -h 재부팅해도 스왑 메모리가 유지되도록 수정합니다.
+1 sudo vim /etc/fstab 아래 내용을 추가합니다."><title>Nginx Proxy Manager 설정하기</title><link rel=canonical href=https://aiden-jeon.github.io/post/self-hosted/nginx_proxy/><link rel=stylesheet href=/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css><meta property="og:title" content="Nginx Proxy Manager 설정하기"><meta property="og:description" content="이번 포스트에서는 생성한 인스턴스를 nginx proxy로 관리하는 방법에 대해서 설명합니다.
+Ubuntu Instance 기본 설정 1. 기본 패키지 업데이트 1 sudo apt update &amp;amp;&amp;amp; sudo apt -y upgrade 2. Swap Memory 생성 Free tier의 메모리는 1G 이므로 스왑 메모리를 생성하도록 하겠습니다.
+1 2 3 sudo fallocate -l 2G /swapfile sudo chmod 600 /swapfile sudo mkswap /swapfile 생성된 스왑 메모리를 확인합니다.
+1 free -h 재부팅해도 스왑 메모리가 유지되도록 수정합니다.
+1 sudo vim /etc/fstab 아래 내용을 추가합니다."><meta property="og:url" content="https://aiden-jeon.github.io/post/self-hosted/nginx_proxy/"><meta property="og:site_name" content="Aiden's Camp"><meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="self-hosted"><meta property="article:tag" content="nginx"><meta property="article:published_time" content="2021-10-13T00:00:00+00:00"><meta property="article:modified_time" content="2021-10-13T00:00:00+00:00"><meta name=twitter:title content="Nginx Proxy Manager 설정하기"><meta name=twitter:description content="이번 포스트에서는 생성한 인스턴스를 nginx proxy로 관리하는 방법에 대해서 설명합니다.
+Ubuntu Instance 기본 설정 1. 기본 패키지 업데이트 1 sudo apt update &amp;amp;&amp;amp; sudo apt -y upgrade 2. Swap Memory 생성 Free tier의 메모리는 1G 이므로 스왑 메모리를 생성하도록 하겠습니다.
+1 2 3 sudo fallocate -l 2G /swapfile sudo chmod 600 /swapfile sudo mkswap /swapfile 생성된 스왑 메모리를 확인합니다.
+1 free -h 재부팅해도 스왑 메모리가 유지되도록 수정합니다.
+1 sudo vim /etc/fstab 아래 내용을 추가합니다."><link rel="shortcut icon" href=icons/favicon.ico><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(e,t,n,s,o,i,a){e.GoogleAnalyticsObject=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date,i=t.createElement(n),a=t.getElementsByTagName(n)[0],i.async=1,i.src=s,a.parentNode.insertBefore(i,a)}(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-173612846-1","auto"),ga("send","pageview"))</script></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"dark")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/imgs/avatar.png width=300 height=300 class=site-logo loading=lazy alt=Avatar></a>
+<span class=emoji>🍥</span></figure><div class=site-meta><h1 class=site-name><a href=/>Aiden's Camp</a></h1><h2 class=site-description>Welcome to Aiden's Camp</h2></div></header><ol class=menu id=main-menu><li><a href=/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg><span>Home</span></a></li><li><a href=/page/about/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg><span>About Me</span></a></li><li><a href=/page/archives/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg><span>Archives</span></a></li><li><a href=/page/search/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg><span>Search</span></a></li><li><a href=/page/links/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg><span>Links</span></a></li><div class=menu-bottom-section><li id=dark-mode-toggle><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><span>Dark Mode</span></li></div></ol></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/self-hosted/>self-hosted</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/post/self-hosted/nginx_proxy/>Nginx Proxy Manager 설정하기</a></h2></div><footer class=article-time><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg><time class=article-time--published>Oct 13, 2021</time></div><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg><time class=article-time--reading>3 minute read</time></div></footer></div></header><section class=article-content><p>이번 포스트에서는 생성한 인스턴스를 nginx proxy로 관리하는 방법에 대해서 설명합니다.</p><h2 id=ubuntu-instance-기본-설정>Ubuntu Instance 기본 설정</h2><h3 id=1-기본-패키지-업데이트>1. 기본 패키지 업데이트</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo apt update <span class=o>&amp;&amp;</span> sudo apt -y upgrade
+</span></span></code></pre></td></tr></table></div></div><h3 id=2-swap-memory-생성>2. Swap Memory 생성</h3><p>Free tier의 메모리는 1G 이므로 스왑 메모리를 생성하도록 하겠습니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo fallocate -l 2G /swapfile
+</span></span><span class=line><span class=cl>sudo chmod <span class=m>600</span> /swapfile
+</span></span><span class=line><span class=cl>sudo mkswap /swapfile
+</span></span></code></pre></td></tr></table></div></div><p>생성된 스왑 메모리를 확인합니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>free -h
+</span></span></code></pre></td></tr></table></div></div><p>재부팅해도 스왑 메모리가 유지되도록 수정합니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo vim /etc/fstab
+</span></span></code></pre></td></tr></table></div></div><p>아래 내용을 추가합니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>/swapfile swap swap defaults 0 0
+</span></span></code></pre></td></tr></table></div></div><p>추가한 후의 모습은 다음과 같습니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl><span class=nv>LABEL</span><span class=o>=</span>cloudimg-rootfs   /        ext4   defaults        <span class=m>0</span> <span class=m>0</span>
+</span></span><span class=line><span class=cl><span class=nv>LABEL</span><span class=o>=</span>UEFI      /boot/efi       vfat    defaults        <span class=m>0</span> <span class=m>0</span>
+</span></span><span class=line><span class=cl>/swapfile swap swap defaults <span class=m>0</span> <span class=m>0</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=3-시간-설정>3. 시간 설정</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo timedatectl set-timezone Asia/Seoul
+</span></span></code></pre></td></tr></table></div></div><h2 id=nginx-proxy-manager>Nginx Proxy Manager</h2><h3 id=1-iptable-초기화>1. iptable 초기화</h3><p>oracle에서 기본적으로 설치한 iptable 규칙을 초기화합니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo iptables -F
+</span></span><span class=line><span class=cl>sudo iptables -X
+</span></span><span class=line><span class=cl>sudo netfilter-persistent save
+</span></span><span class=line><span class=cl>sudo netfilter-persistent reload
+</span></span></code></pre></td></tr></table></div></div><h3 id=2-docker-설치>2. docker 설치</h3><p><a class=link href=https://docs.docker.com/engine/install/ubuntu/ target=_blank rel=noopener>공식 홈페이지</a>를 참고해 docker를 설치합니다.</p><ol><li>Setup repository<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo apt-get update
+</span></span><span class=line><span class=cl>sudo apt-get install <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    apt-transport-https <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    ca-certificates <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    curl <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    gnupg <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    lsb-release
+</span></span></code></pre></td></tr></table></div></div></li><li>Add Docker&rsquo;s official GPG key<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>curl -fsSL https://download.docker.com/linux/ubuntu/gpg <span class=p>|</span> sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl> <span class=nb>echo</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    <span class=s2>&#34;deb [arch=</span><span class=k>$(</span>dpkg --print-architecture<span class=k>)</span><span class=s2> signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+</span></span></span><span class=line><span class=cl><span class=s2>    </span><span class=k>$(</span>lsb_release -cs<span class=k>)</span><span class=s2> stable&#34;</span> <span class=p>|</span> sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null
+</span></span></code></pre></td></tr></table></div></div></li><li>Install docker<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo apt-get update
+</span></span><span class=line><span class=cl>sudo apt-get install docker-ce docker-ce-cli containerd.io
+</span></span></code></pre></td></tr></table></div></div></li><li>실행 확인<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>docker ps
+</span></span></code></pre></td></tr></table></div></div><ul><li>실행이 안될 경우 <a class=link href="/post/mlops/kubernetes/k3s_prerequisite/###1.3 권한 문제 해결">포스트</a>를 참고하세요.</li></ul></li></ol><h3 id=3-docker-compose-설치>3. docker-compose 설치</h3><p><a class=link href=https://docs.docker.com/compose/install/ target=_blank rel=noopener>공식 홈페이지</a>를 참고해 docker-compose를 설치합니다.</p><ol><li>Download Docker Compose<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo curl -L <span class=s2>&#34;https://github.com/docker/compose/releases/download/1.29.2/docker-compose-</span><span class=k>$(</span>uname -s<span class=k>)</span><span class=s2>-</span><span class=k>$(</span>uname -m<span class=k>)</span><span class=s2>&#34;</span> -o /usr/local/bin/docker-compose
+</span></span></code></pre></td></tr></table></div></div></li><li>Apply permission<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo chmod +x /usr/local/bin/docker-compose
+</span></span></code></pre></td></tr></table></div></div></li><li>Add Path<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+</span></span></code></pre></td></tr></table></div></div></li><li>Test<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>docker-compose --version
+</span></span></code></pre></td></tr></table></div></div></li></ol><h3 id=4-docker-composeyaml-작성>4. <code>docker-compose.yaml</code> 작성</h3><ol><li>폴더 생성<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>mkdir ~/npm<span class=p>;</span> <span class=nb>cd</span> ~/npm
+</span></span></code></pre></td></tr></table></div></div></li><li><code>docker-compose.yaml</code> 작성</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>cat &gt; docker-compose.yml <span class=s>&lt;&lt; EOF
+</span></span></span><span class=line><span class=cl><span class=s>version: &#34;3&#34;
+</span></span></span><span class=line><span class=cl><span class=s>services:
+</span></span></span><span class=line><span class=cl><span class=s>  app:
+</span></span></span><span class=line><span class=cl><span class=s>    image: &#39;jc21/nginx-proxy-manager:latest&#39;
+</span></span></span><span class=line><span class=cl><span class=s>    restart: always
+</span></span></span><span class=line><span class=cl><span class=s>    network_mode: &#34;host&#34;
+</span></span></span><span class=line><span class=cl><span class=s>    environment:
+</span></span></span><span class=line><span class=cl><span class=s>      # These are the settings to access your db
+</span></span></span><span class=line><span class=cl><span class=s>      DB_MYSQL_HOST: localhost
+</span></span></span><span class=line><span class=cl><span class=s>      DB_MYSQL_PORT: 3306
+</span></span></span><span class=line><span class=cl><span class=s>      DB_MYSQL_USER: &#34;npm&#34;
+</span></span></span><span class=line><span class=cl><span class=s>      DB_MYSQL_PASSWORD: &#34;npm&#34;
+</span></span></span><span class=line><span class=cl><span class=s>      DB_MYSQL_NAME: &#34;npm&#34;
+</span></span></span><span class=line><span class=cl><span class=s>      # If you would rather use Sqlite uncomment this
+</span></span></span><span class=line><span class=cl><span class=s>      # and remove all DB_MYSQL_* lines above
+</span></span></span><span class=line><span class=cl><span class=s>      # DB_SQLITE_FILE: &#34;/data/database.sqlite&#34;
+</span></span></span><span class=line><span class=cl><span class=s>      # Uncomment this if IPv6 is not enabled on your host
+</span></span></span><span class=line><span class=cl><span class=s>      # DISABLE_IPV6: &#39;true&#39;
+</span></span></span><span class=line><span class=cl><span class=s>    volumes:
+</span></span></span><span class=line><span class=cl><span class=s>      - /home/ubuntu/npm/data:/data
+</span></span></span><span class=line><span class=cl><span class=s>      - /home/ubuntu/npm/letsencrypt:/etc/letsencrypt
+</span></span></span><span class=line><span class=cl><span class=s>    depends_on:
+</span></span></span><span class=line><span class=cl><span class=s>      - db
+</span></span></span><span class=line><span class=cl><span class=s>  db:
+</span></span></span><span class=line><span class=cl><span class=s>    image: &#39;jc21/mariadb-aria:latest&#39;
+</span></span></span><span class=line><span class=cl><span class=s>    restart: always
+</span></span></span><span class=line><span class=cl><span class=s>    network_mode: &#34;host&#34;
+</span></span></span><span class=line><span class=cl><span class=s>    environment:
+</span></span></span><span class=line><span class=cl><span class=s>      MYSQL_ROOT_PASSWORD: &#39;npm&#39;
+</span></span></span><span class=line><span class=cl><span class=s>      MYSQL_DATABASE: &#39;npm&#39;
+</span></span></span><span class=line><span class=cl><span class=s>      MYSQL_USER: &#39;npm&#39;
+</span></span></span><span class=line><span class=cl><span class=s>      MYSQL_PASSWORD: &#39;npm&#39;
+</span></span></span><span class=line><span class=cl><span class=s>    volumes:
+</span></span></span><span class=line><span class=cl><span class=s>      - /home/ubuntu/npm/mysql:/var/lib/mysql
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span></code></pre></td></tr></table></div></div><ol start=3><li>docker-compose 실행<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>docker-compose up -d
+</span></span></code></pre></td></tr></table></div></div></li><li>실행 확인<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>docker-compose logs
+</span></span></code></pre></td></tr></table></div></div>로그의 제일 마지막에 다음과 같은 출력이 있다면 정상적으로 실행된 것입니다.<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>app_1  <span class=p>|</span> <span class=o>[</span>10/13/2021<span class=o>]</span> <span class=o>[</span>9:53:02 AM<span class=o>]</span> <span class=o>[</span>SSL      <span class=o>]</span> › ℹ  info      Renewing SSL certs close to expiry...
+</span></span><span class=line><span class=cl>app_1  <span class=p>|</span> <span class=o>[</span>10/13/2021<span class=o>]</span> <span class=o>[</span>9:53:02 AM<span class=o>]</span> <span class=o>[</span>IP Ranges<span class=o>]</span> › ℹ  info      IP Ranges Renewal Timer initialized
+</span></span><span class=line><span class=cl>app_1  <span class=p>|</span> <span class=o>[</span>10/13/2021<span class=o>]</span> <span class=o>[</span>9:53:02 AM<span class=o>]</span> <span class=o>[</span>Global   <span class=o>]</span> › ℹ  info      Backend PID <span class=m>246</span> listening on port <span class=m>3000</span> ...
+</span></span><span class=line><span class=cl>app_1  <span class=p>|</span> <span class=o>[</span>10/13/2021<span class=o>]</span> <span class=o>[</span>9:53:03 AM<span class=o>]</span> <span class=o>[</span>Nginx    <span class=o>]</span> › ℹ  info      Reloading Nginx
+</span></span><span class=line><span class=cl>app_1  <span class=p>|</span> <span class=o>[</span>10/13/2021<span class=o>]</span> <span class=o>[</span>9:53:03 AM<span class=o>]</span> <span class=o>[</span>SSL      <span class=o>]</span> › ℹ  info      Renew Complete
+</span></span></code></pre></td></tr></table></div></div></li></ol><h3 id=5-dns-설정>5. DNS 설정</h3><p>무료로 이용할 수 있는 <a class=link href=https://www.duckdns.org/ target=_blank rel=noopener>duckdns</a>를 사용해 DNS를 연결하겠습니다.</p><ol><li>로그인 한 뒤 사용할 dns를 추가합니다.
+<img src=/imgs/self-hosted/nginx_proxy-0.png loading=lazy alt="add dns"></li><li>oracle에서 받은 public ip를 입력합니다.
+<img src=/imgs/self-hosted/nginx_proxy-1.png loading=lazy alt="update current ip"></li></ol><h3 id=6-nginx-proxy-연결>6. Nginx Proxy 연결</h3><p><code>http://&lt;Public IP>:81</code>로 접속합니다.</p><p>다음과 같이 화면이 출력됩니다.
+<img src=/imgs/self-hosted/nginx_proxy-2.png loading=lazy alt=login></p><p>기본 아이디와 비밀번호는 다음과 같습니다.</p><ul><li>id: <a class=link href=mailto:admin@example.com>admin@example.com</a></li><li>pw: changeme</li></ul><p>접속 후 아이디와 비밀번호를 바꿔줍니다.</p><h3 id=7-nginx-dns-연결>7. Nginx DNS 연결</h3><ol><li>Proxy Hosts를 선택합니다.
+<img src=/imgs/self-hosted/nginx_proxy-3.png loading=lazy alt="select proxy hosts"></li><li>Add Proxy Host를 선택합니다.
+<img src=/imgs/self-hosted/nginx_proxy-4.png loading=lazy alt="add proxy hosts"></li><li>Nginx Proxy Host를 접속한 dns를 입력해줍니다.
+저는 npm을 subdomain으로 생성했습니다.
+<img src=/imgs/self-hosted/nginx_proxy-5.png loading=lazy alt="select dns"></li><li>설정한 dns로 접속되는지 확인합니다.</li><li>https 접속을 위한 ssl를 설정해주어야 합니다.
+<img src=/imgs/self-hosted/nginx_proxy-6.png loading=lazy alt=edit></li><li>다음과 같은 내용으로 작성합니다.<br><img src=/imgs/self-hosted/nginx_proxy-7.png loading=lazy alt=ssl></li><li>oracle cloud에서 81번 포트를 삭제합니다.
+<img src=/imgs/self-hosted/nginx_proxy-8.png loading=lazy alt="erase port"></li></ol></section><footer class=article-footer><section class=article-tags><a href=/tags/self-hosted/>self-hosted</a>
+<a href=/tags/nginx/>nginx</a></section></footer><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.css integrity="sha256-J+iAE0sgH8QSz9hpcDxXIftnj65JEZgNhGcgReTTK9s=" crossorigin=anonymous><script src=https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.js integrity="sha256-InsNdER1b2xUewP+pKCUJpkhiqwHgqiPXDlIk7GzBu4=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/contrib/auto-render.min.js integrity="sha256-y39Mpg7V3D4lhBX4x6O0bUqTV4pSrfgwEfGKfxkOdgI=" crossorigin=anonymous defer></script><script>window.addEventListener("DOMContentLoaded",()=>{renderMathInElement(document.querySelector(`.article-content`),{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/post/self-hosted/wireguard/><div class=article-details><h2 class=article-title>Wireguard 설치하기</h2></div></a></article><article><a href=/post/self-hosted/expose_public_ip/><div class=article-details><h2 class=article-title>Oracle Cloud Public IP 사용하기</h2></div></a></article><article><a href=/post/self-hosted/oracle_public_ip/><div class=article-details><h2 class=article-title>Oracle Cloud Public IP 할당 받기</h2></div></a></article></div></div></aside><script src=https://utteranc.es/client.js repo=aiden-jeon/aiden-jeon.github.io issue-term=pathname label=comment crossorigin=anonymous async></script><style>.utterances{max-width:unset}</style><script>function setUtterancesTheme(e){let t=document.querySelector(".utterances iframe");t&&t.contentWindow.postMessage({type:"set-theme",theme:`github-${e}`},"https://utteranc.es")}addEventListener("message",e=>{if(e.origin!=="https://utteranc.es")return;setUtterancesTheme(document.documentElement.dataset.scheme)}),window.addEventListener("onColorSchemeChange",e=>{setUtterancesTheme(e.detail)})</script><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2022 Aiden's Camp</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.13.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#ubuntu-instance-기본-설정>Ubuntu Instance 기본 설정</a><ol><li><a href=#1-기본-패키지-업데이트>1. 기본 패키지 업데이트</a></li><li><a href=#2-swap-memory-생성>2. Swap Memory 생성</a></li><li><a href=#3-시간-설정>3. 시간 설정</a></li></ol></li><li><a href=#nginx-proxy-manager>Nginx Proxy Manager</a><ol><li><a href=#1-iptable-초기화>1. iptable 초기화</a></li><li><a href=#2-docker-설치>2. docker 설치</a></li><li><a href=#3-docker-compose-설치>3. docker-compose 설치</a></li><li><a href=#4-docker-composeyaml-작성>4. <code>docker-compose.yaml</code> 작성</a></li><li><a href=#5-dns-설정>5. DNS 설정</a></li><li><a href=#6-nginx-proxy-연결>6. Nginx Proxy 연결</a></li><li><a href=#7-nginx-dns-연결>7. Nginx DNS 연결</a></li></ol></li></ol></nav></div></section></aside></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script>
+<script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

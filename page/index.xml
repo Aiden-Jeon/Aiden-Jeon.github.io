@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Pages on Aiden's Camp</title><link>https://aiden-jeon.github.io/page/</link><description>Recent content in Pages on Aiden's Camp</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 01 Jul 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://aiden-jeon.github.io/page/index.xml" rel="self" type="application/rss+xml"/><item><title>About Me</title><link>https://aiden-jeon.github.io/page/about/</link><pubDate>Thu, 01 Jul 2021 00:00:00 +0000</pubDate><guid>https://aiden-jeon.github.io/page/about/</guid><description>&lt;h2 id="profile">Profile&lt;/h2>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>&lt;/th>
+&lt;th>&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;strong>Name&lt;/strong>&lt;/td>
+&lt;td>Jongseob Jeon (Aiden Jeon)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Mail&lt;/strong>&lt;/td>
+&lt;td>&lt;a class="link" href="mailto:aiden.jongseob@gmail.com" >aiden.jongseob@gmail.com&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Github&lt;/strong>&lt;/td>
+&lt;td>&lt;a class="link" href="https://github.com/Aiden-Jeon" target="_blank" rel="noopener"
+>https://github.com/Aiden-Jeon&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>LinkedIn&lt;/strong>&lt;/td>
+&lt;td>&lt;a class="link" href="https://www.linkedin.com/in/jongseob-jeon/" target="_blank" rel="noopener"
+>https://www.linkedin.com/in/jongseob-jeon/&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Resume(KOR)&lt;/strong>&lt;/td>
+&lt;td>&lt;a class="link" href="https://www.notion.so/Aiden-Little-Fire-14df30999c5c4c4b9c05d1f9f2d14776" target="_blank" rel="noopener"
+>https://www.notion.so/Aiden-Little-Fire-14df30999c5c4c4b9c05d1f9f2d14776&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;hr>
+&lt;h2 id="certification">Certification&lt;/h2>
+&lt;p>&lt;em>CKA: Certified Kubernetes Administrator (The Linux Foundation)&lt;/em>
+&lt;img src="https://aiden-jeon.github.io/imgs/cka/review_02.png"
+loading="lazy"
+alt="CKA"
+>&lt;/p>
+&lt;hr>
+&lt;h2 id="publication">Publication&lt;/h2>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;em>RaPP: Novelty Detection with Reconstruction along Projection Pathway&lt;/em>&lt;br>
+Ki Hyun Kim, Sangwoo Shim, Yongsub Lim, &lt;strong>Jongseob Jeon&lt;/strong>, Jeongwoo Choi, Byungchan Kim, Andre S. Yoon&lt;br>
+ICLR, 2020, &lt;a class="link" href="https://openreview.net/forum?id=HkgeGeBYDB" target="_blank" rel="noopener"
+>paper&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;em>Non-Invasive Prediction of Laparoscopy-Based Score System Using Preoperative CT in Advanced Ovarian Cancer Patients&lt;/em>&lt;br>
+Nayoung Kim, Dae Chul Jung, Kyunghwa Han, &lt;strong>Jeon Jong Seob&lt;/strong>, Young Taik Oh&lt;br>
+RSNA, 2019, &lt;a class="link" href="http://archive.rsna.org/2019/19015767.html" target="_blank" rel="noopener"
+>paper&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;em>Prediction Model for Aortic Stenosis Severity Based on Aortic Valve Calcium on Cardiac Computed Tomography: Incorporation into Radiomics and Machine Learning&lt;/em>&lt;br>
+Nam-Kyu Kang, Young Joo Suh, Kyunghwa Han, &lt;strong>Jong Seub Jeon&lt;/strong>, Young Jin Kim, Byoung Wook Choi, Sang A Lee&lt;br>
+RSNA, 2019, &lt;a class="link" href="http://archive.rsna.org/2019/19012505.html" target="_blank" rel="noopener"
+>paper&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="project">Project&lt;/h2>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;em>GANG, 2019.04 ~ 2019.07&lt;/em>&lt;br>
+AE와 GAN을 이용해 부동산 중개 플랫폼에 올라오는 광각렌즈로 왜곡된 사진을 일반적인 사진으로 돌려주는 프로젝트&lt;br>
+&lt;a class="link" href="http://www.datamarket.kr/xe/board_pdzw77/56002" target="_blank" rel="noopener"
+>project link&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;em>투빅스쿨, 2018.01 ~ 2019.01&lt;/em>&lt;br>
+NLP의 SOTA모델인 BERT를 수능영어 문제 풀이에 적용한 프로젝트&lt;br>
+&lt;a class="link" href="http://www.datamarket.kr/xe/board_pdzw77/50240" target="_blank" rel="noopener"
+>project link&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;em>합격하소서, 2018.04 ~ 2018.07&lt;/em>&lt;br>
+자기소개서 작성 중 생기는 문제점을 해결하기 위한 솔루션&lt;/p>
+&lt;ul>
+&lt;li>작성한 자기소개서와 유사한 글의 전문가 조언 추천&lt;/li>
+&lt;li>문장을 작성 중 막힐 때 다음 단어를 추천&lt;br>
+&lt;a class="link" href="http://www.datamarket.kr/xe/index.php?mid=board_pdzw77&amp;amp;page=2&amp;amp;document_srl=44666" target="_blank" rel="noopener"
+>project link&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;em>합격하소서 (보완), 2018.07 ~ 2018.08&lt;/em>&lt;br>
+기존 프로젝트의 성능 보완&lt;br>
+&lt;a class="link" href="http://www.datamarket.kr/xe/board_pdzw77/46033" target="_blank" rel="noopener"
+>project link&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;em>투무빅스, 2017.01 ~ 2018.01&lt;/em>&lt;br>
+개봉 전 리뷰를 이용한 영화 손익분기점 예측한 프로젝트&lt;br>
+&lt;a class="link" href="http://www.datamarket.kr/xe/index.php?mid=board_pdzw77&amp;amp;page=2&amp;amp;document_srl=37919" target="_blank" rel="noopener"
+>project link&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;em>DJ Bamboo, 2017.04 ~ 2017.07&lt;/em>&lt;br>
+라디오에서 사연을 읽어주고 노래를 틀어주는 것처럼 대나무숲 사연과 어울리는 노래를 추천해주는 프로젝트&lt;br>
+&lt;a class="link" href="http://www.datamarket.kr/xe/index.php?mid=board_pdzw77&amp;amp;page=2&amp;amp;document_srl=29247" target="_blank" rel="noopener"
+>project link&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ul></description></item><item><title>Archives</title><link>https://aiden-jeon.github.io/page/archives/</link><pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate><guid>https://aiden-jeon.github.io/page/archives/</guid><description/></item><item><title>Links</title><link>https://aiden-jeon.github.io/page/links/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://aiden-jeon.github.io/page/links/</guid><description/></item><item><title>Search</title><link>https://aiden-jeon.github.io/page/search/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://aiden-jeon.github.io/page/search/</guid><description/></item></channel></rss>

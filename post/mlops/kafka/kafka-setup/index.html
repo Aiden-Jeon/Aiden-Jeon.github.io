@@ -1,0 +1,155 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Kafka CLI 카프카 명령어를 사용할 수 있는 CLI를 설정하는 과정에 대해서 설명합니다.
+kafka_2.13-2.8.1 를 다운로드 받습니다. (버전은 작성일 기준 도커로 이용할 수 있는 최신 버전입니다.)
+1 wget https://dlcdn.apache.org/kafka/2.8.1/kafka_2.13-2.8.1.tgz 압축을 풉니다.
+1 tar -xzf kafka_2.13-2.8.1.tgz 압축이 해제된 폴더를 홈 디렉토리로 이동합니다.
+1 2 mv kafka_2.13-2.8.1 ~/ cd ~/ 아래 항목이 실행되는지 확인합니다.
+1 2 cd kafka_2.13-2.8.1 bin/kafka-topics.sh kafka는 백엔드로 java를 사용하는데 자바가 설치되어 있지 않다면 다음 에러 메세지가 나옵니다.
+1 2 The operation couldn’t be completed."><title>Kafka Setup</title><link rel=canonical href=https://aiden-jeon.github.io/post/mlops/kafka/kafka-setup/><link rel=stylesheet href=/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css><meta property="og:title" content="Kafka Setup"><meta property="og:description" content="Kafka CLI 카프카 명령어를 사용할 수 있는 CLI를 설정하는 과정에 대해서 설명합니다.
+kafka_2.13-2.8.1 를 다운로드 받습니다. (버전은 작성일 기준 도커로 이용할 수 있는 최신 버전입니다.)
+1 wget https://dlcdn.apache.org/kafka/2.8.1/kafka_2.13-2.8.1.tgz 압축을 풉니다.
+1 tar -xzf kafka_2.13-2.8.1.tgz 압축이 해제된 폴더를 홈 디렉토리로 이동합니다.
+1 2 mv kafka_2.13-2.8.1 ~/ cd ~/ 아래 항목이 실행되는지 확인합니다.
+1 2 cd kafka_2.13-2.8.1 bin/kafka-topics.sh kafka는 백엔드로 java를 사용하는데 자바가 설치되어 있지 않다면 다음 에러 메세지가 나옵니다.
+1 2 The operation couldn’t be completed."><meta property="og:url" content="https://aiden-jeon.github.io/post/mlops/kafka/kafka-setup/"><meta property="og:site_name" content="Aiden's Camp"><meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="kafka"><meta property="article:published_time" content="2022-01-02T00:00:00+00:00"><meta property="article:modified_time" content="2022-01-02T00:00:00+00:00"><meta name=twitter:title content="Kafka Setup"><meta name=twitter:description content="Kafka CLI 카프카 명령어를 사용할 수 있는 CLI를 설정하는 과정에 대해서 설명합니다.
+kafka_2.13-2.8.1 를 다운로드 받습니다. (버전은 작성일 기준 도커로 이용할 수 있는 최신 버전입니다.)
+1 wget https://dlcdn.apache.org/kafka/2.8.1/kafka_2.13-2.8.1.tgz 압축을 풉니다.
+1 tar -xzf kafka_2.13-2.8.1.tgz 압축이 해제된 폴더를 홈 디렉토리로 이동합니다.
+1 2 mv kafka_2.13-2.8.1 ~/ cd ~/ 아래 항목이 실행되는지 확인합니다.
+1 2 cd kafka_2.13-2.8.1 bin/kafka-topics.sh kafka는 백엔드로 java를 사용하는데 자바가 설치되어 있지 않다면 다음 에러 메세지가 나옵니다.
+1 2 The operation couldn’t be completed."><link rel="shortcut icon" href=icons/favicon.ico><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(e,t,n,s,o,i,a){e.GoogleAnalyticsObject=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date,i=t.createElement(n),a=t.getElementsByTagName(n)[0],i.async=1,i.src=s,a.parentNode.insertBefore(i,a)}(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-173612846-1","auto"),ga("send","pageview"))</script></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"dark")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/imgs/avatar.png width=300 height=300 class=site-logo loading=lazy alt=Avatar></a>
+<span class=emoji>🍥</span></figure><div class=site-meta><h1 class=site-name><a href=/>Aiden's Camp</a></h1><h2 class=site-description>Welcome to Aiden's Camp</h2></div></header><ol class=menu id=main-menu><li><a href=/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg><span>Home</span></a></li><li><a href=/page/about/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg><span>About Me</span></a></li><li><a href=/page/archives/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg><span>Archives</span></a></li><li><a href=/page/search/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg><span>Search</span></a></li><li><a href=/page/links/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg><span>Links</span></a></li><div class=menu-bottom-section><li id=dark-mode-toggle><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><span>Dark Mode</span></li></div></ol></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/kafka/>kafka</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/post/mlops/kafka/kafka-setup/>Kafka Setup</a></h2></div><footer class=article-time><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg><time class=article-time--published>Jan 02, 2022</time></div><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg><time class=article-time--reading>3 minute read</time></div></footer></div></header><section class=article-content><h2 id=kafka-cli>Kafka CLI</h2><p>카프카 명령어를 사용할 수 있는 CLI를 설정하는 과정에 대해서 설명합니다.<br>kafka_2.13-2.8.1 를 다운로드 받습니다. (버전은 작성일 기준 도커로 이용할 수 있는 최신 버전입니다.)</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>wget https://dlcdn.apache.org/kafka/2.8.1/kafka_2.13-2.8.1.tgz
+</span></span></code></pre></td></tr></table></div></div><p>압축을 풉니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>tar -xzf kafka_2.13-2.8.1.tgz
+</span></span></code></pre></td></tr></table></div></div><p>압축이 해제된 폴더를 홈 디렉토리로 이동합니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>mv kafka_2.13-2.8.1 ~/
+</span></span><span class=line><span class=cl><span class=nb>cd</span> ~/
+</span></span></code></pre></td></tr></table></div></div><p>아래 항목이 실행되는지 확인합니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>cd</span> kafka_2.13-2.8.1
+</span></span><span class=line><span class=cl>bin/kafka-topics.sh
+</span></span></code></pre></td></tr></table></div></div><p>kafka는 백엔드로 java를 사용하는데 자바가 설치되어 있지 않다면 다음 에러 메세지가 나옵니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>The operation couldn’t be completed. Unable to locate a Java Runtime.
+</span></span><span class=line><span class=cl>Please visit http://www.java.com for information on installing Java.
+</span></span></code></pre></td></tr></table></div></div><p>또한 카프카를 구동하기 위해 필요한 자바 버전은 8 로 본인의 자바 버전이 맞는지 확인합니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>java -version
+</span></span></code></pre></td></tr></table></div></div><p>만약 호환되는 자바또는 자바 버전이 없을 경우 각 OS별로 자바를 설치합니다.<br>Mac OS의 경우 brew를 통해 쉽게 설치할 수 있습니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>brew tap homebrew/cask-versions
+</span></span><span class=line><span class=cl>brew install --cask adoptopenjdk8
+</span></span></code></pre></td></tr></table></div></div><p>설치 후 자바 버전을 확인합니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>java -version
+</span></span></code></pre></td></tr></table></div></div><p>다음과 같이 출력 되면 정상적으로 설치되었습니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>openjdk version <span class=s2>&#34;1.8.0_292&#34;</span>
+</span></span><span class=line><span class=cl>OpenJDK Runtime Environment <span class=o>(</span>AdoptOpenJDK<span class=o>)(</span>build 1.8.0_292-b10<span class=o>)</span>
+</span></span><span class=line><span class=cl>OpenJDK 64-Bit Server VM <span class=o>(</span>AdoptOpenJDK<span class=o>)(</span>build 25.292-b10, mixed mode
+</span></span></code></pre></td></tr></table></div></div><p>다시 아래 명령어를 실행합니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>bin/kafka-topics.sh
+</span></span></code></pre></td></tr></table></div></div><p>정상적으로 실해오디면 다음과 같이 나옵니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>Create, delete, describe, or change a topic.
+</span></span><span class=line><span class=cl>Option                                   Description                            
+</span></span><span class=line><span class=cl>------                                   -----------                            
+</span></span><span class=line><span class=cl>--alter                                  Alter the number of partitions,        
+</span></span><span class=line><span class=cl>                                           replica assignment, and/or           
+</span></span><span class=line><span class=cl>                                           configuration <span class=k>for</span> the topic.         
+</span></span><span class=line><span class=cl>--at-min-isr-partitions                  <span class=k>if</span> <span class=nb>set</span> when describing topics, only    
+</span></span><span class=line><span class=cl>                                           show partitions whose isr count is   
+</span></span><span class=line><span class=cl>                                           equal to the configured minimum. Not 
+</span></span><span class=line><span class=cl>                                           supported with the --zookeeper       
+</span></span><span class=line><span class=cl>                                           option.                              
+</span></span><span class=line><span class=cl>...<span class=o>(</span>생략<span class=o>)</span>
+</span></span></code></pre></td></tr></table></div></div><p>이제 bin 파일에 있는 명령어를 CLI로 사용할 수 있도록 설정합니다.
+사용하고 있는 shell profile 파일에 경로를 추가합니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>cd</span> ~/kafka_2.13-2.8.1/bin
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=k>$(</span><span class=nb>pwd</span><span class=k>)</span>
+</span></span></code></pre></td></tr></table></div></div><p>위 명령어를 통해 출력되는 경로를 아래 명령어의 <code>&lt;YOUR-KAFKA-BIN-PATH></code>를 수정하여서 실행합니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>echo</span> <span class=s1>&#39;export PATH=&#34;$PATH:&lt;YOUR-KAFKA-BIN-PATH&gt;&#34;&#39;</span> &gt;&gt; ~/.zshrc
+</span></span><span class=line><span class=cl><span class=nb>source</span> ~/.zshrc
+</span></span></code></pre></td></tr></table></div></div><p>다음 명령어가 정상적으로 수행되는지 확인합니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kafka-topics.sh
+</span></span></code></pre></td></tr></table></div></div><h2 id=docker-compose>Docker-compose</h2><p>다음과 같은 docker-compose.yaml 파일을 작성합니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>version</span><span class=p>:</span><span class=w> </span><span class=s1>&#39;3&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>services</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>zookeeper</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class=l>zookeeper</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>wurstmeister/zookeeper</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>ports</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=s2>&#34;2181:2181&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>kafka</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>wurstmeister/kafka:2.13-2.8.1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>ports</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=s2>&#34;9092:9092&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>environment</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>KAFKA_ADVERTISED_HOST_NAME</span><span class=p>:</span><span class=w> </span><span class=l>localhost</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>KAFKA_ZOOKEEPER_CONNECT</span><span class=p>:</span><span class=w> </span><span class=l>zookeeper:2181</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>/var/run/docker.sock:/var/run/docker.sock</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>docker-compose를 실행합니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>docker-compose up -d
+</span></span></code></pre></td></tr></table></div></div><p>정상적으로 실행되면 다음과 같이 출력됩니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>Creating network <span class=s2>&#34;kafka_default&#34;</span> with the default driver
+</span></span><span class=line><span class=cl>Creating kafka_kafka_1 ... <span class=k>done</span>
+</span></span><span class=line><span class=cl>Creating zookeeper     ... <span class=k>done</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=kafka-topic>Kafka Topic</h2><h3 id=create>Create</h3><p>테스트 토픽을 생성합니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor <span class=m>1</span> --partitions <span class=m>1</span> --topic <span class=nb>test</span>
+</span></span></code></pre></td></tr></table></div></div><p>정상적으로 수행되면 다음과 같이 출력됩니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>Created topic test.
+</span></span></code></pre></td></tr></table></div></div><h3 id=list>List</h3><p>생성된 토픽을 확인해 보겠습니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kafka-topics.sh --list --bootstrap-server localhost:9092
+</span></span></code></pre></td></tr></table></div></div><p>다음과 같이 출력됩니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>test</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=message>Message</h2><h3 id=전송>전송</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kafka-console-producer.sh --broker-list localhost:9092 --topic <span class=nb>test</span>
+</span></span></code></pre></td></tr></table></div></div><p>위 명령어를 입력하면 console창이 실행됩니다.
+실행된 콘솔창에서 다음과 같이 입력합니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-Bash data-lang=Bash><span class=line><span class=cl>&gt; This is <span class=nb>test</span> message.
+</span></span></code></pre></td></tr></table></div></div><p>입력 후 단축키를 이용해 콘솔창을 종료합니다.</p><h3 id=읽기>읽기</h3><p>이제 위에서 작성한 메세지를 확인해 보겠습니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic <span class=nb>test</span> --from-beginning
+</span></span></code></pre></td></tr></table></div></div><p>정상적으로 실행되면 다음과 같이 출력됩니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>This is <span class=nb>test</span> message.
+</span></span></code></pre></td></tr></table></div></div><p>단축키를 이용해 콘솔창을 종료합니다.
+콘솔창이 종료되면 다음과 같은 메세지가 출력됩니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>Processed a total of <span class=m>1</span> messages
+</span></span></code></pre></td></tr></table></div></div></section><footer class=article-footer><section class=article-tags><a href=/tags/kafka/>kafka</a></section></footer><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.css integrity="sha256-J+iAE0sgH8QSz9hpcDxXIftnj65JEZgNhGcgReTTK9s=" crossorigin=anonymous><script src=https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.js integrity="sha256-InsNdER1b2xUewP+pKCUJpkhiqwHgqiPXDlIk7GzBu4=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/contrib/auto-render.min.js integrity="sha256-y39Mpg7V3D4lhBX4x6O0bUqTV4pSrfgwEfGKfxkOdgI=" crossorigin=anonymous defer></script><script>window.addEventListener("DOMContentLoaded",()=>{renderMathInElement(document.querySelector(`.article-content`),{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script></article><script src=https://utteranc.es/client.js repo=aiden-jeon/aiden-jeon.github.io issue-term=pathname label=comment crossorigin=anonymous async></script><style>.utterances{max-width:unset}</style><script>function setUtterancesTheme(e){let t=document.querySelector(".utterances iframe");t&&t.contentWindow.postMessage({type:"set-theme",theme:`github-${e}`},"https://utteranc.es")}addEventListener("message",e=>{if(e.origin!=="https://utteranc.es")return;setUtterancesTheme(document.documentElement.dataset.scheme)}),window.addEventListener("onColorSchemeChange",e=>{setUtterancesTheme(e.detail)})</script><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2022 Aiden's Camp</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.13.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#kafka-cli>Kafka CLI</a></li><li><a href=#docker-compose>Docker-compose</a></li><li><a href=#kafka-topic>Kafka Topic</a><ol><li><a href=#create>Create</a></li><li><a href=#list>List</a></li></ol></li><li><a href=#message>Message</a><ol><li><a href=#전송>전송</a></li><li><a href=#읽기>읽기</a></li></ol></li></ol></nav></div></section></aside></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script>
+<script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

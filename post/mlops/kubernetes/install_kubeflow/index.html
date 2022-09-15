@@ -1,0 +1,219 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Kubeflow 설치 시리즈
+Pre-Requisites for k3s Setup k3s Installation Kubeflow Installation 이번 포스트에서는 서버에 kubeflow를 설치하는 과정에 대해서 설명합니다.
+필요한 준비 과정을 확인 후 진행해 주세요.
+Pre-Requisites for k3s Setup k3s Installation 이번 포스트에서 사용하는 kubeflow의 버전은 1.3.0 입니다.
+버전이 바뀔 경우 해당 설치 과정과 달라질 수 있습니다.
+자세한 내용은 링크를 확인해 주세요.
+Kustomize Kubeflow를 설치하기 위해서는 kustmoize와 kubeflow manifest가 필요합니다.
+Clone kubeflow/manifest
+Clone 받는 위치는 편한 곳에 하면 됩니다."><title>Kubeflow Installation</title><link rel=canonical href=https://aiden-jeon.github.io/post/mlops/kubernetes/install_kubeflow/><link rel=stylesheet href=/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css><meta property="og:title" content="Kubeflow Installation"><meta property="og:description" content="Kubeflow 설치 시리즈
+Pre-Requisites for k3s Setup k3s Installation Kubeflow Installation 이번 포스트에서는 서버에 kubeflow를 설치하는 과정에 대해서 설명합니다.
+필요한 준비 과정을 확인 후 진행해 주세요.
+Pre-Requisites for k3s Setup k3s Installation 이번 포스트에서 사용하는 kubeflow의 버전은 1.3.0 입니다.
+버전이 바뀔 경우 해당 설치 과정과 달라질 수 있습니다.
+자세한 내용은 링크를 확인해 주세요.
+Kustomize Kubeflow를 설치하기 위해서는 kustmoize와 kubeflow manifest가 필요합니다.
+Clone kubeflow/manifest
+Clone 받는 위치는 편한 곳에 하면 됩니다."><meta property="og:url" content="https://aiden-jeon.github.io/post/mlops/kubernetes/install_kubeflow/"><meta property="og:site_name" content="Aiden's Camp"><meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="k8s"><meta property="article:tag" content="k3s"><meta property="article:published_time" content="2021-10-01T00:00:00+00:00"><meta property="article:modified_time" content="2021-10-01T00:00:00+00:00"><meta name=twitter:title content="Kubeflow Installation"><meta name=twitter:description content="Kubeflow 설치 시리즈
+Pre-Requisites for k3s Setup k3s Installation Kubeflow Installation 이번 포스트에서는 서버에 kubeflow를 설치하는 과정에 대해서 설명합니다.
+필요한 준비 과정을 확인 후 진행해 주세요.
+Pre-Requisites for k3s Setup k3s Installation 이번 포스트에서 사용하는 kubeflow의 버전은 1.3.0 입니다.
+버전이 바뀔 경우 해당 설치 과정과 달라질 수 있습니다.
+자세한 내용은 링크를 확인해 주세요.
+Kustomize Kubeflow를 설치하기 위해서는 kustmoize와 kubeflow manifest가 필요합니다.
+Clone kubeflow/manifest
+Clone 받는 위치는 편한 곳에 하면 됩니다."><link rel="shortcut icon" href=icons/favicon.ico><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(e,t,n,s,o,i,a){e.GoogleAnalyticsObject=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date,i=t.createElement(n),a=t.getElementsByTagName(n)[0],i.async=1,i.src=s,a.parentNode.insertBefore(i,a)}(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-173612846-1","auto"),ga("send","pageview"))</script></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"dark")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/imgs/avatar.png width=300 height=300 class=site-logo loading=lazy alt=Avatar></a>
+<span class=emoji>🍥</span></figure><div class=site-meta><h1 class=site-name><a href=/>Aiden's Camp</a></h1><h2 class=site-description>Welcome to Aiden's Camp</h2></div></header><ol class=menu id=main-menu><li><a href=/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg><span>Home</span></a></li><li><a href=/page/about/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg><span>About Me</span></a></li><li><a href=/page/archives/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg><span>Archives</span></a></li><li><a href=/page/search/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg><span>Search</span></a></li><li><a href=/page/links/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg><span>Links</span></a></li><div class=menu-bottom-section><li id=dark-mode-toggle><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><span>Dark Mode</span></li></div></ol></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/kubernetes/>kubernetes</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/post/mlops/kubernetes/install_kubeflow/>Kubeflow Installation</a></h2></div><footer class=article-time><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg><time class=article-time--published>Oct 01, 2021</time></div><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg><time class=article-time--reading>4 minute read</time></div></footer></div></header><section class=article-content><p><strong>Kubeflow 설치 시리즈</strong></p><ol><li><a class=link href=/post/mlops/kubernetes/k3s_prerequisite/>Pre-Requisites for k3s Setup</a></li><li><a class=link href=/post/mlops/kubernetes/install_k3s/>k3s Installation</a></li><li><a class=link href=/post/mlops/kubernetes/install_kubeflow/>Kubeflow Installation</a></li></ol><hr><p>이번 포스트에서는 서버에 kubeflow를 설치하는 과정에 대해서 설명합니다.<br>필요한 준비 과정을 확인 후 진행해 주세요.</p><ol><li><a class=link href=/post/mlops/kubernetes/k3s_prerequisite/>Pre-Requisites for k3s Setup</a></li><li><a class=link href=/post/mlops/kubernetes/install_k3s/>k3s Installation</a></li></ol><hr><p>이번 포스트에서 사용하는 kubeflow의 버전은 <code>1.3.0</code> 입니다.<br>버전이 바뀔 경우 해당 설치 과정과 달라질 수 있습니다.<br>자세한 내용은 <a class=link href=https://github.com/kubeflow/manifests/tree/v1.3.0 target=_blank rel=noopener>링크</a>를 확인해 주세요.</p><h1 id=kustomize>Kustomize</h1><p>Kubeflow를 설치하기 위해서는 kustmoize와 kubeflow manifest가 필요합니다.</p><ol><li><p>Clone kubeflow/manifest<br>Clone 받는 위치는 편한 곳에 하면 됩니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>git clone https://github.com/kubeflow/manifests
+</span></span></code></pre></td></tr></table></div></div></li><li><p>kustomize 다운로드<br>kubelfow manifest를 지원하는 kustomize를 다운 받습니다.
+포스트를 작성하는 기준으로는 3.2.0을 지원합니다.</p><blockquote><p>kustomize (version 3.2.0)<br>⚠️ Kubeflow 1.3.0 is not compatible with the latest versions of of kustomize 4.x. This is due to changes in the order resources are sorted and printed. Please see kubernetes-sigs/kustomize#3794 and kubeflow/manifests#1797. We know this is not ideal and are working with the upstream kustomize team to add support for the latest versions of kustomize as soon as we can.</p></blockquote><p><a class=link href=https://github.com/kubernetes-sigs/kustomize/releases/tag/v3.2.0 target=_blank rel=noopener>https://github.com/kubernetes-sigs/kustomize/releases/tag/v3.2.0</a></p></li><li><p>kubeflow/manifest 경로로 이동
+다운받은 kustomize를 <code>kubeflow/manifest</code>로 옮겨줍니다.<br>이 때 cli에서 편하게 사용하기 위해서 이름을 <code>kustomize</code> 로 수정하면 좋습니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>mv ~/Downloads/kustomize_3.2.0_darwin_amd64 manifests/kustomize
+</span></span></code></pre></td></tr></table></div></div></li><li><p>실행 권한 주기<br>옮긴 kustomize에 실행 권한을 줍니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>cd</span> manifests
+</span></span><span class=line><span class=cl>chmod a+x kustomize
+</span></span></code></pre></td></tr></table></div></div></li><li><p>Checkout to Version 1.3.0<br>manifest를 1.3.0 버전으로 맞춰 줍니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>git checkout v1.3.0
+</span></span></code></pre></td></tr></table></div></div></li></ol><h1 id=kubeflow-manifest-설치하기>Kubeflow Manifest 설치하기</h1><p>Kubeflow를 설치하기 위한 Manifest를 설치합니다.</p><ol><li><p>Cert-Manager</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kustomize build common/cert-manager/cert-manager-kube-system-resources/base <span class=p>|</span> kubectl apply -f -
+</span></span><span class=line><span class=cl>kustomize build common/cert-manager/cert-manager-crds/base <span class=p>|</span> kubectl apply -f -
+</span></span><span class=line><span class=cl>kustomize build common/cert-manager/cert-manager/overlays/self-signed <span class=p>|</span> kubectl apply -f -
+</span></span></code></pre></td></tr></table></div></div></li><li><p>Istio</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kustomize build common/istio-1-9-0/istio-crds/base <span class=p>|</span> kubectl apply -f -
+</span></span><span class=line><span class=cl>kustomize build common/istio-1-9-0/istio-namespace/base <span class=p>|</span> kubectl apply -f -
+</span></span><span class=line><span class=cl>kustomize build common/istio-1-9-0/istio-install/base <span class=p>|</span> kubectl apply -f -
+</span></span></code></pre></td></tr></table></div></div></li><li><p>Dex</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kustomize build common/dex/overlays/istio <span class=p>|</span> kubectl apply -f -
+</span></span></code></pre></td></tr></table></div></div></li><li><p>OIDC AuthService
+authoservice의 경우 spec의 변경이 필요합니다.</p><ol><li>authservice spec 다운 받기<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kustomize build common/oidc-authservice/base &gt; oidc-authservice.yaml
+</span></span></code></pre></td></tr></table></div></div></li><li>spec 수정<br>authservice 의 spec을 변경합니다.<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>apps/v1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>StatefulSet</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>authservice</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class=l>istio-system</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>replicas</span><span class=p>:</span><span class=w> </span><span class=m>1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>selector</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>matchLabels</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>app</span><span class=p>:</span><span class=w> </span><span class=l>authservice</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>serviceName</span><span class=p>:</span><span class=w> </span><span class=l>authservice</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>template</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>metadata</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>annotations</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>sidecar.istio.io/inject</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;false&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>labels</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>app</span><span class=p>:</span><span class=w> </span><span class=l>authservice</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>spec</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>containers</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=nt>envFrom</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=nt>secretRef</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>oidc-authservice-client</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=nt>configMapRef</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>oidc-authservice-parameters</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>gcr.io/arrikto/kubeflow/oidc-authservice:28c59ef</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>imagePullPolicy</span><span class=p>:</span><span class=w> </span><span class=l>Always</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>authservice</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>ports</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=nt>containerPort</span><span class=p>:</span><span class=w> </span><span class=m>8080</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>http-api</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>readinessProbe</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>httpGet</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=nt>path</span><span class=p>:</span><span class=w> </span><span class=l>/</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=nt>port</span><span class=p>:</span><span class=w> </span><span class=m>8081</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>volumeMounts</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=nt>mountPath</span><span class=p>:</span><span class=w> </span><span class=l>/var/lib/authservice</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>data</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>securityContext</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>runAsUser</span><span class=p>:</span><span class=w> </span><span class=m>0</span><span class=w>  </span><span class=c># 추가 하기</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c># fsGroup: 111  # 지우기</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>data</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>persistentVolumeClaim</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>claimName</span><span class=p>:</span><span class=w> </span><span class=l>authservice-pvc</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div></li><li>설치<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kubectl apply -f oidc-authservice.yaml
+</span></span></code></pre></td></tr></table></div></div></li></ol></li><li><p>Knative</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kustomize build common/knative/knative-serving-crds/base <span class=p>|</span> kubectl apply -f -
+</span></span><span class=line><span class=cl>kustomize build common/knative/knative-serving-install/base <span class=p>|</span> kubectl apply -f -
+</span></span><span class=line><span class=cl>kustomize build common/istio-1-9-0/cluster-local-gateway/base <span class=p>|</span> kubectl apply -f -
+</span></span></code></pre></td></tr></table></div></div><p>Optionally, you can install Knative Eventing which can be used for inference request logging:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kustomize build common/knative/knative-eventing-crds/base <span class=p>|</span> kubectl apply -f -
+</span></span><span class=line><span class=cl>kustomize build common/knative/knative-eventing-install/base <span class=p>|</span> kubectl apply -f -
+</span></span></code></pre></td></tr></table></div></div></li><li><p>Kubeflow Namespace</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kustomize build common/kubeflow-namespace/base <span class=p>|</span> kubectl apply -f -
+</span></span></code></pre></td></tr></table></div></div></li><li><p>Kubeflow Roles</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kustomize build common/kubeflow-roles/base <span class=p>|</span> kubectl apply -f -
+</span></span></code></pre></td></tr></table></div></div></li><li><p>Kubeflow Istio Resources</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kustomize build common/istio-1-9-0/kubeflow-istio-resources/base <span class=p>|</span> kubectl apply -f -
+</span></span></code></pre></td></tr></table></div></div></li><li><p>Kubeflow Pipelines using Docker</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kustomize build apps/pipeline/upstream/env/platform-agnostic-multi-user <span class=p>|</span> kubectl apply -f -
+</span></span></code></pre></td></tr></table></div></div></li></ol><h1 id=microservice>Microservice</h1><p>Kubeflow에서 사용하는 Microservice들을 설치합니다.</p><ol><li><p>KFServing</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kustomize build apps/kfserving/upstream/overlays/kubeflow <span class=p>|</span> kubectl apply -f -
+</span></span></code></pre></td></tr></table></div></div></li><li><p>Katib</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kustomize build apps/katib/upstream/installs/katib-with-kubeflow <span class=p>|</span> kubectl apply -f -
+</span></span></code></pre></td></tr></table></div></div></li><li><p>Central Dashboard</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kustomize build apps/centraldashboard/upstream/overlays/istio <span class=p>|</span> kubectl apply -f -
+</span></span></code></pre></td></tr></table></div></div></li><li><p>Admission Webhook</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kustomize build apps/admission-webhook/upstream/overlays/cert-manager <span class=p>|</span> kubectl apply -f -
+</span></span></code></pre></td></tr></table></div></div></li><li><p>Notebooks</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kustomize build apps/jupyter/notebook-controller/upstream/overlays/kubeflow <span class=p>|</span> kubectl apply -f -
+</span></span><span class=line><span class=cl>kustomize build apps/jupyter/jupyter-web-app/upstream/overlays/istio <span class=p>|</span> kubectl apply -f -
+</span></span></code></pre></td></tr></table></div></div></li><li><p>Profiles + KFAM</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kustomize build apps/profiles/upstream/overlays/kubeflow <span class=p>|</span> kubectl apply -f -
+</span></span></code></pre></td></tr></table></div></div></li><li><p>Volumes Web App</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kustomize build apps/volumes-web-app/upstream/overlays/istio <span class=p>|</span> kubectl apply -f -
+</span></span></code></pre></td></tr></table></div></div></li><li><p>Tensorboard</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kustomize build apps/tensorboard/tensorboards-web-app/upstream/overlays/istio <span class=p>|</span> kubectl apply -f -
+</span></span><span class=line><span class=cl>kustomize build apps/tensorboard/tensorboard-controller/upstream/overlays/kubeflow <span class=p>|</span> kubectl apply -f -
+</span></span></code></pre></td></tr></table></div></div></li><li><p>User Namespace</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kustomize build common/user-namespace/base <span class=p>|</span> kubectl apply -f -
+</span></span></code></pre></td></tr></table></div></div></li></ol><h1 id=설치-확인하기>설치 확인하기</h1><p>다음 명령어를 통해 모든 pod들이 정상적으로 생성되고 있는지 확인합니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kubectl get pods -n cert-manager
+</span></span><span class=line><span class=cl>kubectl get pods -n istio-system
+</span></span><span class=line><span class=cl>kubectl get pods -n auth
+</span></span><span class=line><span class=cl>kubectl get pods -n knative-eventing
+</span></span><span class=line><span class=cl>kubectl get pods -n knative-serving
+</span></span><span class=line><span class=cl>kubectl get pods -n kubeflow
+</span></span><span class=line><span class=cl>kubectl get pods -n kubeflow-user-example-com
+</span></span></code></pre></td></tr></table></div></div><h2 id=port-forwarding>Port-forwarding</h2><p>port-forwarding을 통해 kubeflow 에 접속합니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80
+</span></span></code></pre></td></tr></table></div></div><ol><li>http://localhost:8080 로 접속합니다.</li><li>기본 ID/PW는 다음과 같습니다.<ul><li>ID: <a class=link href=mailto:user@example.com>user@example.com</a></li><li>PW: 12341234</li></ul></li></ol><blockquote><p>포트 포워딩후 연결이 되지 않을 경우 <a class=link href=/post/mlops/kubernetes/issue_with_auth/>포스트</a>를 참고해보시기 바랍니다.</p></blockquote><h2 id=reverse-proxy>Reverse-proxy</h2><p><a class=link href=/post/mlops/kubernetes/install_k3s/#on-server>다음 글</a>에서 설정한 reverse-proxy 도커를 이용해 접속할 수 있습니다.</p><p>우선 ingress-gateway의 연결된 포트를 확인합니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kubectl -n istio-system get service istio-ingressgateway
+</span></span></code></pre></td></tr></table></div></div><p>다음과 같이 포트들이 포워딩된 것을 확인할 수 있습니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>NAME                   TYPE       CLUSTER-IP    EXTERNAL-IP   PORT<span class=o>(</span>S<span class=o>)</span>                                                                      AGE
+</span></span><span class=line><span class=cl>istio-ingressgateway   NodePort   10.43.244.7   &lt;none&gt;        15021:31160/TCP,80:32455/TCP,443:32293/TCP,31400:32132/TCP,15443:32123/TCP   3d21h
+</span></span></code></pre></td></tr></table></div></div><p>이중 80번 포트의 포워딩 포트를 확인합니다. 저는 32455 였습니다.<br>만약 다를 경우 <a class=link href=/post/mlops/kubernetes/install_k3s/#on-server>다음 글</a> 에서 <code>kubeflow.conf</code>의 값을 수정하면 됩니다.</p><p>local에 host를 추가해줍니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo sh -c <span class=s2>&#34;echo &#39;&lt;VPN_IP&gt; kubeflow.k3s.cluster.local&#39; &gt;&gt; /etc/hosts&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p><a class=link href=http://kubeflow.k3s.cluster.local/ target=_blank rel=noopener>http://kubeflow.k3s.cluster.local/</a> 에 접속합니다.</p><h2 id=마무리>마무리</h2><p>설치가 정상적으로 되었다면 다음과 같은 화면이 출력됩니다.
+<img src=/imgs/k3s/kubeflow_home.png loading=lazy alt=kubeflow_home></p></section><footer class=article-footer><section class=article-tags><a href=/tags/k8s/>k8s</a>
+<a href=/tags/k3s/>k3s</a></section></footer><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.css integrity="sha256-J+iAE0sgH8QSz9hpcDxXIftnj65JEZgNhGcgReTTK9s=" crossorigin=anonymous><script src=https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.js integrity="sha256-InsNdER1b2xUewP+pKCUJpkhiqwHgqiPXDlIk7GzBu4=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/contrib/auto-render.min.js integrity="sha256-y39Mpg7V3D4lhBX4x6O0bUqTV4pSrfgwEfGKfxkOdgI=" crossorigin=anonymous defer></script><script>window.addEventListener("DOMContentLoaded",()=>{renderMathInElement(document.querySelector(`.article-content`),{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/post/mlops/kubernetes/issue_with_auth/><div class=article-details><h2 class=article-title>kubeflow 설치 중 auth dex 이슈 해결하기</h2></div></a></article><article><a href=/post/mlops/kubernetes/k3s_prerequisite/><div class=article-details><h2 class=article-title>Pre-Requisites for k3s Setup</h2></div></a></article><article><a href=/post/mlops/kubernetes/install_k3s/><div class=article-details><h2 class=article-title>k3s Installation</h2></div></a></article><article><a href=/post/cka/99_review/><div class=article-details><h2 class=article-title>(CKA) CKA 합격 후기</h2></div></a></article><article><a href=/post/cka/09_design_and_install_k8s/><div class=article-details><h2 class=article-title>(CKA) 09. Design and Install a k8s Cluster</h2></div></a></article></div></div></aside><script src=https://utteranc.es/client.js repo=aiden-jeon/aiden-jeon.github.io issue-term=pathname label=comment crossorigin=anonymous async></script><style>.utterances{max-width:unset}</style><script>function setUtterancesTheme(e){let t=document.querySelector(".utterances iframe");t&&t.contentWindow.postMessage({type:"set-theme",theme:`github-${e}`},"https://utteranc.es")}addEventListener("message",e=>{if(e.origin!=="https://utteranc.es")return;setUtterancesTheme(document.documentElement.dataset.scheme)}),window.addEventListener("onColorSchemeChange",e=>{setUtterancesTheme(e.detail)})</script><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2022 Aiden's Camp</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.13.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#port-forwarding>Port-forwarding</a></li><li><a href=#reverse-proxy>Reverse-proxy</a></li><li><a href=#마무리>마무리</a></li></ol></nav></div></section></aside></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script>
+<script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

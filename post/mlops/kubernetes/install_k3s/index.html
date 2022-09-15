@@ -1,0 +1,219 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Kubeflow 설치 시리즈
+Pre-Requisites for k3s Setup k3s Installation Kubeflow Installation 이번 포스트에서는 서버에 k3s를 설치하는 과정에 대해서 설명합니다.
+필요한 준비 과정을 확인 후 진행해 주세요.
+k3s Installation k3s 설치
+k3s는 gpu를 사용하기 위해서 도커를 백엔드로 사용하겠습니다.
+docker 백엔드는 --docker를 추가하면 됩니다. 1 curl -sfL https://get.k3s.io | sh -s - server --disable traefik --disable servicelb --disable local-storage --docker k3s config 확인 k3s를 설치후 k3s config를 확인합니다 1 cat /etc/rancher/k3s/k3s.yaml k3s config를 kubeconfig로 복사 1 2 3 mkdir ."><title>k3s Installation</title><link rel=canonical href=https://aiden-jeon.github.io/post/mlops/kubernetes/install_k3s/><link rel=stylesheet href=/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css><meta property="og:title" content="k3s Installation"><meta property="og:description" content="Kubeflow 설치 시리즈
+Pre-Requisites for k3s Setup k3s Installation Kubeflow Installation 이번 포스트에서는 서버에 k3s를 설치하는 과정에 대해서 설명합니다.
+필요한 준비 과정을 확인 후 진행해 주세요.
+k3s Installation k3s 설치
+k3s는 gpu를 사용하기 위해서 도커를 백엔드로 사용하겠습니다.
+docker 백엔드는 --docker를 추가하면 됩니다. 1 curl -sfL https://get.k3s.io | sh -s - server --disable traefik --disable servicelb --disable local-storage --docker k3s config 확인 k3s를 설치후 k3s config를 확인합니다 1 cat /etc/rancher/k3s/k3s.yaml k3s config를 kubeconfig로 복사 1 2 3 mkdir ."><meta property="og:url" content="https://aiden-jeon.github.io/post/mlops/kubernetes/install_k3s/"><meta property="og:site_name" content="Aiden's Camp"><meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="k8s"><meta property="article:tag" content="k3s"><meta property="article:published_time" content="2021-10-01T00:00:00+00:00"><meta property="article:modified_time" content="2021-10-01T00:00:00+00:00"><meta name=twitter:title content="k3s Installation"><meta name=twitter:description content="Kubeflow 설치 시리즈
+Pre-Requisites for k3s Setup k3s Installation Kubeflow Installation 이번 포스트에서는 서버에 k3s를 설치하는 과정에 대해서 설명합니다.
+필요한 준비 과정을 확인 후 진행해 주세요.
+k3s Installation k3s 설치
+k3s는 gpu를 사용하기 위해서 도커를 백엔드로 사용하겠습니다.
+docker 백엔드는 --docker를 추가하면 됩니다. 1 curl -sfL https://get.k3s.io | sh -s - server --disable traefik --disable servicelb --disable local-storage --docker k3s config 확인 k3s를 설치후 k3s config를 확인합니다 1 cat /etc/rancher/k3s/k3s.yaml k3s config를 kubeconfig로 복사 1 2 3 mkdir ."><link rel="shortcut icon" href=icons/favicon.ico><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(e,t,n,s,o,i,a){e.GoogleAnalyticsObject=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date,i=t.createElement(n),a=t.getElementsByTagName(n)[0],i.async=1,i.src=s,a.parentNode.insertBefore(i,a)}(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-173612846-1","auto"),ga("send","pageview"))</script></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"dark")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/imgs/avatar.png width=300 height=300 class=site-logo loading=lazy alt=Avatar></a>
+<span class=emoji>🍥</span></figure><div class=site-meta><h1 class=site-name><a href=/>Aiden's Camp</a></h1><h2 class=site-description>Welcome to Aiden's Camp</h2></div></header><ol class=menu id=main-menu><li><a href=/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg><span>Home</span></a></li><li><a href=/page/about/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg><span>About Me</span></a></li><li><a href=/page/archives/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg><span>Archives</span></a></li><li><a href=/page/search/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg><span>Search</span></a></li><li><a href=/page/links/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg><span>Links</span></a></li><div class=menu-bottom-section><li id=dark-mode-toggle><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><span>Dark Mode</span></li></div></ol></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/kubernetes/>kubernetes</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/post/mlops/kubernetes/install_k3s/>k3s Installation</a></h2></div><footer class=article-time><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg><time class=article-time--published>Oct 01, 2021</time></div><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg><time class=article-time--reading>3 minute read</time></div></footer></div></header><section class=article-content><p><strong>Kubeflow 설치 시리즈</strong></p><ol><li><a class=link href=/post/mlops/kubernetes/k3s_prerequisite/>Pre-Requisites for k3s Setup</a></li><li><a class=link href=/post/mlops/kubernetes/install_k3s/>k3s Installation</a></li><li><a class=link href=/post/mlops/kubernetes/install_kubeflow/>Kubeflow Installation</a></li></ol><hr><p>이번 포스트에서는 서버에 k3s를 설치하는 과정에 대해서 설명합니다.<br>필요한 <a class=link href=/post/mlops/kubernetes/k3s_prerequisite/>준비 과정</a>을 확인 후 진행해 주세요.</p><hr><h1 id=k3s-installation>k3s Installation</h1><ol><li>k3s 설치<br>k3s는 gpu를 사용하기 위해서 도커를 백엔드로 사용하겠습니다.<br>docker 백엔드는 <code>--docker</code>를 추가하면 됩니다.<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>curl -sfL https://get.k3s.io <span class=p>|</span> sh -s - server --disable traefik --disable servicelb --disable local-storage --docker
+</span></span></code></pre></td></tr></table></div></div></li><li>k3s config 확인
+k3s를 설치후 k3s config를 확인합니다<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>cat /etc/rancher/k3s/k3s.yaml
+</span></span></code></pre></td></tr></table></div></div></li><li>k3s config를 kubeconfig로 복사<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>mkdir .kube
+</span></span><span class=line><span class=cl>sudo cp /etc/rancher/k3s/k3s.yaml .kube/config
+</span></span><span class=line><span class=cl>sudo chown mrx:mrx .kube/config
+</span></span></code></pre></td></tr></table></div></div></li><li>local로 kube config 옮기기<br>local에서 <code>~/.kube/config</code>로 설정합니다.<br>multi-context인 경우 multi-context에 맞게 설정합니다.<br>multi-context는 <code>kubectl ctx</code> 를 통해 쉽게 변경할 수 있습니다.</li><li>local에서 서버 확인하기<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kubectl get nodes
+</span></span></code></pre></td></tr></table></div></div></li></ol><h1 id=kubernetes-setup>Kubernetes Setup</h1><p>k3s를 설치 후에는 서버로 사용할 수 있도록 써드파티들을 설치해주어야 합니다.<br>위의 k3s installation 과정이 끝났다면 로컬에서 서버를 <code>kubectl</code> 을 통해 관리할 수 있습니다.<br>아래 과정은 모두 local에서 이루어집니다. (<code>kubectl</code>의 context를 잘 확인 후 진행하시기 바랍니다.)</p><h2 id=1-nvidia-device-plugin>1. Nvidia Device Plugin</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>helm repo add nvdp https://nvidia.github.io/k8s-device-plugin
+</span></span><span class=line><span class=cl>helm repo update
+</span></span><span class=line><span class=cl>helm install <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    --version<span class=o>=</span>0.9.0 <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    --generate-name <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    nvdp/nvidia-device-plugin
+</span></span></code></pre></td></tr></table></div></div><h2 id=2-ingress>2. Ingress</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+</span></span><span class=line><span class=cl>helm repo update
+</span></span><span class=line><span class=cl>helm install ingress-nginx/ingress-nginx -g -n ingress-nginx --create-namespace --set controller.service.type<span class=o>=</span><span class=s1>&#39;NodePort&#39;</span> --set controller.service.nodePorts.http<span class=o>=</span><span class=m>32080</span> --set controller.service.nodePorts.https<span class=o>=</span><span class=m>32443</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=3-longhorn>3. Longhorn</h2><p>Longhorn은 k3s에서 StorageClass를 생성을 해줍니다.</p><h3 id=on-local>On Local</h3><ol><li>설치<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>helm repo add longhorn https://charts.longhorn.io
+</span></span><span class=line><span class=cl>helm repo update
+</span></span><span class=line><span class=cl>helm install longhorn longhorn/longhorn --namespace longhorn-system --set csi.kubeletRootDir<span class=o>=</span>/var/lib/kubelet --create-namespace
+</span></span></code></pre></td></tr></table></div></div></li><li>VPN IP 설정하기<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo sh -c <span class=s2>&#34;echo &#39;&lt;VPN_IP&gt; longhorn.k3s.cluster.local&#39; &gt;&gt; /etc/hosts&#34;</span>
+</span></span></code></pre></td></tr></table></div></div></li><li>auth & ingress 생성</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>USER</span><span class=o>=</span>admin<span class=p>;</span> <span class=nv>PASSWORD</span><span class=o>=</span>adminadmin<span class=p>;</span> <span class=nb>echo</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>USER</span><span class=si>}</span><span class=s2>:</span><span class=k>$(</span>openssl passwd -stdin -apr1 <span class=o>&lt;&lt;&lt;</span> <span class=si>${</span><span class=nv>PASSWORD</span><span class=si>}</span><span class=k>)</span><span class=s2>&#34;</span> &gt;&gt; auth
+</span></span><span class=line><span class=cl>kubectl -n longhorn-system create secret generic basic-auth --from-file<span class=o>=</span>auth
+</span></span><span class=line><span class=cl>cat <span class=s>&lt;&lt;EOF | kubectl apply -f -
+</span></span></span><span class=line><span class=cl><span class=s>apiVersion: networking.k8s.io/v1
+</span></span></span><span class=line><span class=cl><span class=s>kind: Ingress
+</span></span></span><span class=line><span class=cl><span class=s>metadata:
+</span></span></span><span class=line><span class=cl><span class=s>  name: longhorn-ingress
+</span></span></span><span class=line><span class=cl><span class=s>  namespace: longhorn-system
+</span></span></span><span class=line><span class=cl><span class=s>  annotations:
+</span></span></span><span class=line><span class=cl><span class=s>    ingress.kubernetes.io/rewrite-target: /
+</span></span></span><span class=line><span class=cl><span class=s>    kubernetes.io/ingress.class: &#34;nginx&#34;
+</span></span></span><span class=line><span class=cl><span class=s>    # type of authentication
+</span></span></span><span class=line><span class=cl><span class=s>    nginx.ingress.kubernetes.io/auth-type: basic
+</span></span></span><span class=line><span class=cl><span class=s>    # prevent the controller from redirecting (308) to HTTPS
+</span></span></span><span class=line><span class=cl><span class=s>    nginx.ingress.kubernetes.io/ssl-redirect: &#39;false&#39;
+</span></span></span><span class=line><span class=cl><span class=s>    # name of the secret that contains the user/password definitions
+</span></span></span><span class=line><span class=cl><span class=s>    nginx.ingress.kubernetes.io/auth-secret: basic-auth
+</span></span></span><span class=line><span class=cl><span class=s>    # message to display with an appropriate context why the authentication is required
+</span></span></span><span class=line><span class=cl><span class=s>    nginx.ingress.kubernetes.io/auth-realm: &#39;Authentication Required &#39;
+</span></span></span><span class=line><span class=cl><span class=s>    # custom max body size for file uploading like backing image uploading
+</span></span></span><span class=line><span class=cl><span class=s>    nginx.ingress.kubernetes.io/proxy-body-size: 10000m
+</span></span></span><span class=line><span class=cl><span class=s>spec:
+</span></span></span><span class=line><span class=cl><span class=s>  rules:
+</span></span></span><span class=line><span class=cl><span class=s>  - host: longhorn.k3s.cluster.local
+</span></span></span><span class=line><span class=cl><span class=s>    http:
+</span></span></span><span class=line><span class=cl><span class=s>      paths:
+</span></span></span><span class=line><span class=cl><span class=s>      - pathType: Prefix
+</span></span></span><span class=line><span class=cl><span class=s>        path: &#34;/&#34;
+</span></span></span><span class=line><span class=cl><span class=s>        backend:
+</span></span></span><span class=line><span class=cl><span class=s>          service:
+</span></span></span><span class=line><span class=cl><span class=s>            name: longhorn-frontend
+</span></span></span><span class=line><span class=cl><span class=s>            port:
+</span></span></span><span class=line><span class=cl><span class=s>              number: 80
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=on-server>On Server</h3><p>로컬에서 확인할 수 있는 reverse-proxy를 설정해주는 작업입니다.
+이 작업은 서버에서 이루어집니다.</p><ol><li>reverse-proxy 폴더 생성<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>mkdir reverse-proxy
+</span></span><span class=line><span class=cl><span class=nb>cd</span> reverse-proxy
+</span></span></code></pre></td></tr></table></div></div></li><li>reverse-proxy 폴더 아래 다음 파일들 생성 합니다.<br>생성할 파일은 총 3개 입니다.<ul><li><code>Dockerfile</code><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>FROM nginx
+</span></span><span class=line><span class=cl>COPY ./longhorn.conf /etc/nginx/conf.d/longhorn.conf
+</span></span><span class=line><span class=cl>COPY ./kubeflow.conf /etc/nginx/conf.d/kubeflow.conf
+</span></span></code></pre></td></tr></table></div></div></li><li><code>longhorn.conf</code><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>server <span class=o>{</span>
+</span></span><span class=line><span class=cl>    listen 80<span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    server_name longhorn.k3s.cluster.local<span class=p>;</span>
+</span></span><span class=line><span class=cl>    location / <span class=o>{</span>
+</span></span><span class=line><span class=cl>        proxy_redirect off<span class=p>;</span>
+</span></span><span class=line><span class=cl>        proxy_pass_header Server<span class=p>;</span>
+</span></span><span class=line><span class=cl>        proxy_set_header Host <span class=nv>$http_host</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        proxy_set_header X-Real-IP <span class=nv>$remote_addr</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        proxy_set_header X-Forwarded-For <span class=nv>$proxy_add_x_forwarded_for</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        proxy_set_header X-Forwarded-Proto <span class=nv>$scheme</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        proxy_set_header X-NginX-Proxy true<span class=p>;</span>
+</span></span><span class=line><span class=cl>        proxy_set_header X-Scheme <span class=nv>$scheme</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        proxy_pass http://localhost:32080<span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div></li><li><code>kubeflow.conf</code><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>server <span class=o>{</span>
+</span></span><span class=line><span class=cl>    listen 80<span class=p>;</span>
+</span></span><span class=line><span class=cl>    server_name kubeflow.k3s.cluster.local<span class=p>;</span>
+</span></span><span class=line><span class=cl>    location / <span class=o>{</span>
+</span></span><span class=line><span class=cl>        proxy_redirect off<span class=p>;</span>
+</span></span><span class=line><span class=cl>        proxy_pass_header Server<span class=p>;</span>
+</span></span><span class=line><span class=cl>        proxy_set_header Host <span class=nv>$http_host</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        proxy_set_header X-Real-IP <span class=nv>$remote_addr</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        proxy_set_header X-Forwarded-For <span class=nv>$proxy_add_x_forwarded_for</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        proxy_set_header X-Forwarded-Proto <span class=nv>$scheme</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        proxy_set_header X-NginX-Proxy true<span class=p>;</span>
+</span></span><span class=line><span class=cl>        proxy_set_header X-Scheme <span class=nv>$scheme</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        proxy_pass http://localhost:32455<span class=p>;</span>
+</span></span><span class=line><span class=cl>        proxy_http_version 1.1<span class=p>;</span>
+</span></span><span class=line><span class=cl>        proxy_set_header Upgrade <span class=nv>$http_upgrade</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        proxy_set_header Connection <span class=s2>&#34;upgrade&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        add_header X-Frame-Options SAMEORIGIN<span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div></li></ul></li><li>reverse proxy docker를 빌드합니다.<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>docker build -t reverse-proxy .
+</span></span></code></pre></td></tr></table></div></div></li><li>빌드한 docker image를 실행합니다.<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>docker run -d --net host reverse-proxy
+</span></span></code></pre></td></tr></table></div></div></li></ol><h3 id=on-local-1>On local</h3><p>다음 주소로 접속이 되는지 확인합니다.<br><a class=link href=http://longhorn.k3s.cluster.local/ target=_blank rel=noopener>http://longhorn.k3s.cluster.local/</a></p><p>이 때 기본 ID/PWD는 다음과 같습니다.</p><ul><li>id: admin</li><li>pw: adminadmin</li></ul><p>로그인이 되면 다음과 같은 화면이 나옵니다.
+<img src=/imgs/k3s/longhorn.png loading=lazy alt=longhorn></p></section><footer class=article-footer><section class=article-tags><a href=/tags/k8s/>k8s</a>
+<a href=/tags/k3s/>k3s</a></section></footer><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.css integrity="sha256-J+iAE0sgH8QSz9hpcDxXIftnj65JEZgNhGcgReTTK9s=" crossorigin=anonymous><script src=https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.js integrity="sha256-InsNdER1b2xUewP+pKCUJpkhiqwHgqiPXDlIk7GzBu4=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/contrib/auto-render.min.js integrity="sha256-y39Mpg7V3D4lhBX4x6O0bUqTV4pSrfgwEfGKfxkOdgI=" crossorigin=anonymous defer></script><script>window.addEventListener("DOMContentLoaded",()=>{renderMathInElement(document.querySelector(`.article-content`),{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/post/mlops/kubernetes/issue_with_auth/><div class=article-details><h2 class=article-title>kubeflow 설치 중 auth dex 이슈 해결하기</h2></div></a></article><article><a href=/post/mlops/kubernetes/install_kubeflow/><div class=article-details><h2 class=article-title>Kubeflow Installation</h2></div></a></article><article><a href=/post/mlops/kubernetes/k3s_prerequisite/><div class=article-details><h2 class=article-title>Pre-Requisites for k3s Setup</h2></div></a></article><article><a href=/post/cka/99_review/><div class=article-details><h2 class=article-title>(CKA) CKA 합격 후기</h2></div></a></article><article><a href=/post/cka/09_design_and_install_k8s/><div class=article-details><h2 class=article-title>(CKA) 09. Design and Install a k8s Cluster</h2></div></a></article></div></div></aside><script src=https://utteranc.es/client.js repo=aiden-jeon/aiden-jeon.github.io issue-term=pathname label=comment crossorigin=anonymous async></script><style>.utterances{max-width:unset}</style><script>function setUtterancesTheme(e){let t=document.querySelector(".utterances iframe");t&&t.contentWindow.postMessage({type:"set-theme",theme:`github-${e}`},"https://utteranc.es")}addEventListener("message",e=>{if(e.origin!=="https://utteranc.es")return;setUtterancesTheme(document.documentElement.dataset.scheme)}),window.addEventListener("onColorSchemeChange",e=>{setUtterancesTheme(e.detail)})</script><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2022 Aiden's Camp</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.13.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#1-nvidia-device-plugin>1. Nvidia Device Plugin</a></li><li><a href=#2-ingress>2. Ingress</a></li><li><a href=#3-longhorn>3. Longhorn</a><ol><li><a href=#on-local>On Local</a></li><li><a href=#on-server>On Server</a></li><li><a href=#on-local-1>On local</a></li></ol></li></ol></nav></div></section></aside></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script>
+<script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>
