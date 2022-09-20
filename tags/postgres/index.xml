@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>postgres on Aiden's Camp</title><link>https://aiden-jeon.github.io/tags/postgres/</link><description>Recent content in postgres on Aiden's Camp</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 19 Sep 2022 14:50:00 +0900</lastBuildDate><atom:link href="https://aiden-jeon.github.io/tags/postgres/index.xml" rel="self" type="application/rss+xml"/><item><title>DB-4) Insert Row Loop Dockerfile</title><link>https://aiden-jeon.github.io/post/mle-mlops/db/insert_row_loop_dockerfile/</link><pubDate>Mon, 19 Sep 2022 14:50:00 +0900</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/db/insert_row_loop_dockerfile/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/01_db" target="_blank" rel="noopener"
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>postgres on Aiden's Camp</title><link>https://aiden-jeon.github.io/tags/postgres/</link><description>Recent content in postgres on Aiden's Camp</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 19 Sep 2022 14:50:00 +0900</lastBuildDate><atom:link href="https://aiden-jeon.github.io/tags/postgres/index.xml" rel="self" type="application/rss+xml"/><item><title>[ Chapter 1. Database ] 4) Insert Row Loop Dockerfile</title><link>https://aiden-jeon.github.io/post/mle-mlops/db/insert_row_loop_dockerfile/</link><pubDate>Mon, 19 Sep 2022 14:50:00 +0900</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/db/insert_row_loop_dockerfile/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/01_db" target="_blank" rel="noopener"
 >Github&lt;/a> 에서 해당 내용에 대해서 확인할 수 있습니다.&lt;/p>
 &lt;h2 id="overview">Overview&lt;/h2>
 &lt;h3 id="목표">목표&lt;/h3>
@@ -599,7 +599,7 @@ script 파일에서 db 연결을 위한 host 부분을 아래와 같이 수정�
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">docker run --network &lt;span class="s2">&amp;#34;my-network&amp;#34;&lt;/span> insert_row_loop &lt;span class="s2">&amp;#34;db-db-1&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item><item><title>DB-3) Insert Row Loop</title><link>https://aiden-jeon.github.io/post/mle-mlops/db/insert_row_loop/</link><pubDate>Mon, 19 Sep 2022 14:30:00 +0900</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/db/insert_row_loop/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/01_db" target="_blank" rel="noopener"
+&lt;/div></description></item><item><title>[ Chapter 1. Database ] 3) Insert Row Loop</title><link>https://aiden-jeon.github.io/post/mle-mlops/db/insert_row_loop/</link><pubDate>Mon, 19 Sep 2022 14:30:00 +0900</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/db/insert_row_loop/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/01_db" target="_blank" rel="noopener"
 >Github&lt;/a> 에서 해당 내용에 대해서 확인할 수 있습니다.&lt;/p>
 &lt;h2 id="overview">Overview&lt;/h2>
 &lt;h3 id="목표">목표&lt;/h3>
@@ -785,7 +785,7 @@ script 파일에서 db 연결을 위한 host 부분을 아래와 같이 수정�
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">(4 rows)
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item><item><title>DB-2) Create Table and Insert Row</title><link>https://aiden-jeon.github.io/post/mle-mlops/db/create_table_insert_row/</link><pubDate>Fri, 16 Sep 2022 00:00:00 +0000</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/db/create_table_insert_row/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/01_db" target="_blank" rel="noopener"
+&lt;/div></description></item><item><title>[ Chapter 1. Database ] 2) Create Table and Insert Row</title><link>https://aiden-jeon.github.io/post/mle-mlops/db/create_table_insert_row/</link><pubDate>Fri, 16 Sep 2022 00:00:00 +0000</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/db/create_table_insert_row/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/01_db" target="_blank" rel="noopener"
 >Github&lt;/a> 에서 해당 내용에 대해서 확인할 수 있습니다.&lt;/p>
 &lt;h2 id="overview">Overview&lt;/h2>
 &lt;h3 id="목표">목표&lt;/h3>
@@ -1357,7 +1357,7 @@ script 파일에서 db 연결을 위한 host 부분을 아래와 같이 수정�
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">(1 row)
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item><item><title>DB-1) Run Postgresql Server</title><link>https://aiden-jeon.github.io/post/mle-mlops/db/run_postgresql/</link><pubDate>Thu, 15 Sep 2022 00:00:00 +0000</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/db/run_postgresql/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/01_db" target="_blank" rel="noopener"
+&lt;/div></description></item><item><title>[ Chapter 1. Database ] 1) Run Postgresql Server</title><link>https://aiden-jeon.github.io/post/mle-mlops/db/run_postgresql/</link><pubDate>Thu, 15 Sep 2022 00:00:00 +0000</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/db/run_postgresql/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/01_db" target="_blank" rel="noopener"
 >Github&lt;/a> 에서 해당 내용에 대해서 확인할 수 있습니다.&lt;/p>
 &lt;h2 id="overview">Overview&lt;/h2>
 &lt;h3 id="목표">목표&lt;/h3>

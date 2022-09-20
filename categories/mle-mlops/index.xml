@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>mle-mlops on Aiden's Camp</title><link>https://aiden-jeon.github.io/categories/mle-mlops/</link><description>Recent content in mle-mlops on Aiden's Camp</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 20 Sep 2022 13:45:00 +0900</lastBuildDate><atom:link href="https://aiden-jeon.github.io/categories/mle-mlops/index.xml" rel="self" type="application/rss+xml"/><item><title>Model Registry-4) Download Model from MLFlow</title><link>https://aiden-jeon.github.io/post/mle-mlops/model_registry/download_mdoel/</link><pubDate>Tue, 20 Sep 2022 13:45:00 +0900</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/model_registry/download_mdoel/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/02_model_registry" target="_blank" rel="noopener"
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>mle-mlops on Aiden's Camp</title><link>https://aiden-jeon.github.io/categories/mle-mlops/</link><description>Recent content in mle-mlops on Aiden's Camp</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 20 Sep 2022 13:45:00 +0900</lastBuildDate><atom:link href="https://aiden-jeon.github.io/categories/mle-mlops/index.xml" rel="self" type="application/rss+xml"/><item><title>[ Chapter 2. Model Registry ] 4) Download Model from MLFlow</title><link>https://aiden-jeon.github.io/post/mle-mlops/model_registry/download_mdoel/</link><pubDate>Tue, 20 Sep 2022 13:45:00 +0900</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/model_registry/download_mdoel/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/02_model_registry" target="_blank" rel="noopener"
 >Github&lt;/a> 에서 해당 내용에 대해서 확인할 수 있습니다.&lt;/p>
 &lt;h2 id="overview">Overview&lt;/h2>
 &lt;h3 id="목표">목표&lt;/h3>
@@ -158,9 +158,11 @@ data-flex-basis="523px"
 &lt;/span>&lt;span class="lnt"> 9
 &lt;/span>&lt;span class="lnt">10
 &lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">sklearn.datasets&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">load_iris&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">df&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">_&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">load_iris&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">return_X_y&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">True&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">as_frame&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">True&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">rename_rule&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">{&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;sepal length (cm)&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;sepal_width&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
@@ -192,7 +194,7 @@ data-flex-basis="523px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">]&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>이렇게 load된 모델이 정상적으로 predict 할 수 있음을 확인했습니다.&lt;/p></description></item><item><title>Model Registry-3) Train Model and Save to MLFlow</title><link>https://aiden-jeon.github.io/post/mle-mlops/model_registry/train_save_model/</link><pubDate>Tue, 20 Sep 2022 13:30:00 +0900</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/model_registry/train_save_model/</guid><description>&lt;img src="https://aiden-jeon.github.io/post/mle-mlops/model_registry/train_save_model/run.png" alt="Featured image of post Model Registry-3) Train Model and Save to MLFlow" />&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/02_model_registry" target="_blank" rel="noopener"
+&lt;/div>&lt;p>이렇게 load된 모델이 정상적으로 predict 할 수 있음을 확인했습니다.&lt;/p></description></item><item><title>[ Chapter 2. Model Registry ] 3) Train Model and Save to MLFlow</title><link>https://aiden-jeon.github.io/post/mle-mlops/model_registry/train_save_model/</link><pubDate>Tue, 20 Sep 2022 13:30:00 +0900</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/model_registry/train_save_model/</guid><description>&lt;img src="https://aiden-jeon.github.io/post/mle-mlops/model_registry/train_save_model/run.png" alt="Featured image of post [ Chapter 2. Model Registry ] 3) Train Model and Save to MLFlow" />&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/02_model_registry" target="_blank" rel="noopener"
 >Github&lt;/a> 에서 해당 내용에 대해서 확인할 수 있습니다.&lt;/p>
 &lt;h2 id="overview">Overview&lt;/h2>
 &lt;h3 id="목표">목표&lt;/h3>
@@ -390,7 +392,7 @@ class="gallery-image"
 data-flex-grow="112"
 data-flex-basis="270px"
 >&lt;/p>
-&lt;p>위와 같이 artifacts에 &lt;code>iris_model&lt;/code> 폴더 밑에 모델과 메타 정보들이 저장된 것을 확인할 수 있습니다.&lt;/p></description></item><item><title>Model Registry-2) Get Data from DB</title><link>https://aiden-jeon.github.io/post/mle-mlops/model_registry/get_data/</link><pubDate>Tue, 20 Sep 2022 13:10:00 +0900</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/model_registry/get_data/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/02_model_registry" target="_blank" rel="noopener"
+&lt;p>위와 같이 artifacts에 &lt;code>iris_model&lt;/code> 폴더 밑에 모델과 메타 정보들이 저장된 것을 확인할 수 있습니다.&lt;/p></description></item><item><title>[ Chapter 2. Model Registry ] 2) Get Data from DB</title><link>https://aiden-jeon.github.io/post/mle-mlops/model_registry/get_data/</link><pubDate>Tue, 20 Sep 2022 13:10:00 +0900</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/model_registry/get_data/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/02_model_registry" target="_blank" rel="noopener"
 >Github&lt;/a> 에서 해당 내용에 대해서 확인할 수 있습니다.&lt;/p>
 &lt;h2 id="overview">Overview&lt;/h2>
 &lt;h3 id="목표">목표&lt;/h3>
@@ -502,7 +504,7 @@ data-flex-basis="270px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mi">9&lt;/span> &lt;span class="mi">5815&lt;/span> &lt;span class="mf">5.4&lt;/span> &lt;span class="mf">3.0&lt;/span> &lt;span class="mf">4.5&lt;/span> &lt;span class="mf">1.5&lt;/span> &lt;span class="mi">1&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item><item><title>Model Registry-1) Run Mlflow Server</title><link>https://aiden-jeon.github.io/post/mle-mlops/model_registry/mlflow_server/</link><pubDate>Mon, 19 Sep 2022 17:50:00 +0900</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/model_registry/mlflow_server/</guid><description>&lt;img src="https://aiden-jeon.github.io/post/mle-mlops/model_registry/mlflow_server/mlflow-ui.png" alt="Featured image of post Model Registry-1) Run Mlflow Server" />&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/02_model_registry" target="_blank" rel="noopener"
+&lt;/div></description></item><item><title>[ Chapter 2. Model Registry ] 1) Run Mlflow Server</title><link>https://aiden-jeon.github.io/post/mle-mlops/model_registry/mlflow_server/</link><pubDate>Mon, 19 Sep 2022 17:50:00 +0900</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/model_registry/mlflow_server/</guid><description>&lt;img src="https://aiden-jeon.github.io/post/mle-mlops/model_registry/mlflow_server/mlflow-ui.png" alt="Featured image of post [ Chapter 2. Model Registry ] 1) Run Mlflow Server" />&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/02_model_registry" target="_blank" rel="noopener"
 >Github&lt;/a> 에서 해당 내용에 대해서 확인할 수 있습니다.&lt;/p>
 &lt;h2 id="overview">Overview&lt;/h2>
 &lt;h3 id="목표">목표&lt;/h3>
@@ -591,7 +593,7 @@ alt="mlflow ui"
 class="gallery-image"
 data-flex-grow="155"
 data-flex-basis="372px"
->&lt;/p></description></item><item><title>DB-4) Insert Row Loop Dockerfile</title><link>https://aiden-jeon.github.io/post/mle-mlops/db/insert_row_loop_dockerfile/</link><pubDate>Mon, 19 Sep 2022 14:50:00 +0900</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/db/insert_row_loop_dockerfile/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/01_db" target="_blank" rel="noopener"
+>&lt;/p></description></item><item><title>[ Chapter 1. Database ] 4) Insert Row Loop Dockerfile</title><link>https://aiden-jeon.github.io/post/mle-mlops/db/insert_row_loop_dockerfile/</link><pubDate>Mon, 19 Sep 2022 14:50:00 +0900</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/db/insert_row_loop_dockerfile/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/01_db" target="_blank" rel="noopener"
 >Github&lt;/a> 에서 해당 내용에 대해서 확인할 수 있습니다.&lt;/p>
 &lt;h2 id="overview">Overview&lt;/h2>
 &lt;h3 id="목표">목표&lt;/h3>
@@ -1192,7 +1194,7 @@ script 파일에서 db 연결을 위한 host 부분을 아래와 같이 수정�
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">docker run --network &lt;span class="s2">&amp;#34;my-network&amp;#34;&lt;/span> insert_row_loop &lt;span class="s2">&amp;#34;db-db-1&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item><item><title>DB-3) Insert Row Loop</title><link>https://aiden-jeon.github.io/post/mle-mlops/db/insert_row_loop/</link><pubDate>Mon, 19 Sep 2022 14:30:00 +0900</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/db/insert_row_loop/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/01_db" target="_blank" rel="noopener"
+&lt;/div></description></item><item><title>[ Chapter 1. Database ] 3) Insert Row Loop</title><link>https://aiden-jeon.github.io/post/mle-mlops/db/insert_row_loop/</link><pubDate>Mon, 19 Sep 2022 14:30:00 +0900</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/db/insert_row_loop/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/01_db" target="_blank" rel="noopener"
 >Github&lt;/a> 에서 해당 내용에 대해서 확인할 수 있습니다.&lt;/p>
 &lt;h2 id="overview">Overview&lt;/h2>
 &lt;h3 id="목표">목표&lt;/h3>
@@ -1378,7 +1380,7 @@ script 파일에서 db 연결을 위한 host 부분을 아래와 같이 수정�
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">(4 rows)
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item><item><title>DB-2) Create Table and Insert Row</title><link>https://aiden-jeon.github.io/post/mle-mlops/db/create_table_insert_row/</link><pubDate>Fri, 16 Sep 2022 00:00:00 +0000</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/db/create_table_insert_row/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/01_db" target="_blank" rel="noopener"
+&lt;/div></description></item><item><title>[ Chapter 1. Database ] 2) Create Table and Insert Row</title><link>https://aiden-jeon.github.io/post/mle-mlops/db/create_table_insert_row/</link><pubDate>Fri, 16 Sep 2022 00:00:00 +0000</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/db/create_table_insert_row/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/01_db" target="_blank" rel="noopener"
 >Github&lt;/a> 에서 해당 내용에 대해서 확인할 수 있습니다.&lt;/p>
 &lt;h2 id="overview">Overview&lt;/h2>
 &lt;h3 id="목표">목표&lt;/h3>
@@ -1950,7 +1952,7 @@ script 파일에서 db 연결을 위한 host 부분을 아래와 같이 수정�
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">(1 row)
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item><item><title>DB-1) Run Postgresql Server</title><link>https://aiden-jeon.github.io/post/mle-mlops/db/run_postgresql/</link><pubDate>Thu, 15 Sep 2022 00:00:00 +0000</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/db/run_postgresql/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/01_db" target="_blank" rel="noopener"
+&lt;/div></description></item><item><title>[ Chapter 1. Database ] 1) Run Postgresql Server</title><link>https://aiden-jeon.github.io/post/mle-mlops/db/run_postgresql/</link><pubDate>Thu, 15 Sep 2022 00:00:00 +0000</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/db/run_postgresql/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/01_db" target="_blank" rel="noopener"
 >Github&lt;/a> 에서 해당 내용에 대해서 확인할 수 있습니다.&lt;/p>
 &lt;h2 id="overview">Overview&lt;/h2>
 &lt;h3 id="목표">목표&lt;/h3>
