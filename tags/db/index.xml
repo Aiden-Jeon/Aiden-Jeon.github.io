@@ -1,4 +1,116 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>db on Aiden's Camp</title><link>https://aiden-jeon.github.io/tags/db/</link><description>Recent content in db on Aiden's Camp</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 19 Sep 2022 14:50:00 +0800</lastBuildDate><atom:link href="https://aiden-jeon.github.io/tags/db/index.xml" rel="self" type="application/rss+xml"/><item><title>DB-4) Insert Row Loop Dockerfile</title><link>https://aiden-jeon.github.io/post/mle-mlops/db/insert_row_loop_dockerfile/</link><pubDate>Mon, 19 Sep 2022 14:50:00 +0800</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/db/insert_row_loop_dockerfile/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/01_db" target="_blank" rel="noopener"
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>db on Aiden's Camp</title><link>https://aiden-jeon.github.io/tags/db/</link><description>Recent content in db on Aiden's Camp</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 20 Sep 2022 13:10:00 +0900</lastBuildDate><atom:link href="https://aiden-jeon.github.io/tags/db/index.xml" rel="self" type="application/rss+xml"/><item><title>Model Registry-2) Get Data from DB</title><link>https://aiden-jeon.github.io/post/mle-mlops/model_registry/get_data/</link><pubDate>Tue, 20 Sep 2022 13:10:00 +0900</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/model_registry/get_data/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/02_model_registry" target="_blank" rel="noopener"
+>Github&lt;/a> 에서 해당 내용에 대해서 확인할 수 있습니다.&lt;/p>
+&lt;h2 id="overview">Overview&lt;/h2>
+&lt;h3 id="목표">목표&lt;/h3>
+&lt;ul>
+&lt;li>앞선 챕터에서 만든 DB에서 데이터를 추출합니다.&lt;/li>
+&lt;/ul>
+&lt;h3 id="요구사항">요구사항&lt;/h3>
+&lt;ol>
+&lt;li>&lt;code>pandas.read_sql&lt;/code> 함수를 이용합니다.&lt;/li>
+&lt;li>&lt;code>id&lt;/code> column을 기준으로 최신 데이터 100개를 추출하는 쿼리문을 작성합니다.&lt;/li>
+&lt;li>데이터를 추출합니다.&lt;/li>
+&lt;/ol>
+&lt;hr>
+&lt;h2 id="1-pandasread_sql-함수를-이용합니다">1. &lt;code>pandas.read_sql&lt;/code> 함수를 이용합니다.&lt;/h2>
+&lt;p>&lt;code>pandas.read_sql&lt;/code> 는 입력 argument로 Query문과 DB Connection을 받습니다.&lt;/p>
+&lt;h2 id="2-id-column을-기준으로-최신-데이터-100개를-추출하는-쿼리문을-작성합니다">2. &lt;code>id&lt;/code> column을 기준으로 최신 데이터 100개를 추출하는 쿼리문을 작성합니다.&lt;/h2>
+&lt;p>요구사항을 Query문으로 작성하면 다음과 같습니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sql" data-lang="sql">&lt;span class="line">&lt;span class="cl">&lt;span class="k">SELECT&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">*&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">FROM&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">iris_data&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">ORDER&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">BY&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">id&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">DESC&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">LIMIT&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">10&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;code>psql&lt;/code> 에서 해당 쿼리문을 입력하면 다음과 같이 출력됩니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">postgres=# SELECT * FROM iris_data ORDER BY id DESC LIMIT 10;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> id | sepal_width | sepal_length | petal_width | petal_length | target
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">------+-------------+--------------+-------------+--------------+--------
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 5789 | 4.4 | 3 | 1.3 | 0.2 | 0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 5788 | 5.1 | 3.7 | 1.5 | 0.4 | 0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 5787 | 5 | 3.4 | 1.6 | 0.4 | 0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 5786 | 5.3 | 3.7 | 1.5 | 0.2 | 0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 5785 | 5 | 3 | 1.6 | 0.2 | 0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 5784 | 6.1 | 3 | 4.9 | 1.8 | 2
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 5783 | 6.7 | 3 | 5 | 1.7 | 1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 5782 | 6.9 | 3.1 | 5.4 | 2.1 | 2
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 5781 | 6.8 | 3.2 | 5.9 | 2.3 | 2
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 5780 | 5.9 | 3.2 | 4.8 | 1.8 | 1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">(10 rows)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="3-데이터를-추출합니다">3. 데이터를 추출합니다.&lt;/h2>
+&lt;p>postgres 에 연결할 수 있는 db connection을 생성 후 쿼리문과 db 커넥션을 이용해 데이터를 불러옵니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">pandas&lt;/span> &lt;span class="k">as&lt;/span> &lt;span class="nn">pd&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">psycopg2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">db_connect&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">psycopg2&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">connect&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">host&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;localhost&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">database&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;postgres&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">user&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;postgres&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">password&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;mypassword&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">df&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">pd&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">read_sql&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;SELECT * FROM iris_data ORDER BY id DESC LIMIT 10&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">db_connect&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>추출된 데이터를 확인하면 다음과 같습니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="o">&amp;gt;&amp;gt;&amp;gt;&lt;/span> &lt;span class="n">df&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">id&lt;/span> &lt;span class="n">sepal_width&lt;/span> &lt;span class="n">sepal_length&lt;/span> &lt;span class="n">petal_width&lt;/span> &lt;span class="n">petal_length&lt;/span> &lt;span class="n">target&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mi">0&lt;/span> &lt;span class="mi">5824&lt;/span> &lt;span class="mf">6.0&lt;/span> &lt;span class="mf">2.2&lt;/span> &lt;span class="mf">5.0&lt;/span> &lt;span class="mf">1.5&lt;/span> &lt;span class="mi">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mi">1&lt;/span> &lt;span class="mi">5823&lt;/span> &lt;span class="mf">5.7&lt;/span> &lt;span class="mf">4.4&lt;/span> &lt;span class="mf">1.5&lt;/span> &lt;span class="mf">0.4&lt;/span> &lt;span class="mi">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mi">2&lt;/span> &lt;span class="mi">5822&lt;/span> &lt;span class="mf">6.0&lt;/span> &lt;span class="mf">2.7&lt;/span> &lt;span class="mf">5.1&lt;/span> &lt;span class="mf">1.6&lt;/span> &lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mi">3&lt;/span> &lt;span class="mi">5821&lt;/span> &lt;span class="mf">6.3&lt;/span> &lt;span class="mf">2.3&lt;/span> &lt;span class="mf">4.4&lt;/span> &lt;span class="mf">1.3&lt;/span> &lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mi">4&lt;/span> &lt;span class="mi">5820&lt;/span> &lt;span class="mf">4.8&lt;/span> &lt;span class="mf">3.4&lt;/span> &lt;span class="mf">1.9&lt;/span> &lt;span class="mf">0.2&lt;/span> &lt;span class="mi">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mi">5&lt;/span> &lt;span class="mi">5819&lt;/span> &lt;span class="mf">4.5&lt;/span> &lt;span class="mf">2.3&lt;/span> &lt;span class="mf">1.3&lt;/span> &lt;span class="mf">0.3&lt;/span> &lt;span class="mi">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mi">6&lt;/span> &lt;span class="mi">5818&lt;/span> &lt;span class="mf">6.7&lt;/span> &lt;span class="mf">3.3&lt;/span> &lt;span class="mf">5.7&lt;/span> &lt;span class="mf">2.1&lt;/span> &lt;span class="mi">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mi">7&lt;/span> &lt;span class="mi">5817&lt;/span> &lt;span class="mf">5.2&lt;/span> &lt;span class="mf">4.1&lt;/span> &lt;span class="mf">1.5&lt;/span> &lt;span class="mf">0.1&lt;/span> &lt;span class="mi">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mi">8&lt;/span> &lt;span class="mi">5816&lt;/span> &lt;span class="mf">5.7&lt;/span> &lt;span class="mf">4.4&lt;/span> &lt;span class="mf">1.5&lt;/span> &lt;span class="mf">0.4&lt;/span> &lt;span class="mi">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mi">9&lt;/span> &lt;span class="mi">5815&lt;/span> &lt;span class="mf">5.4&lt;/span> &lt;span class="mf">3.0&lt;/span> &lt;span class="mf">4.5&lt;/span> &lt;span class="mf">1.5&lt;/span> &lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>DB-4) Insert Row Loop Dockerfile</title><link>https://aiden-jeon.github.io/post/mle-mlops/db/insert_row_loop_dockerfile/</link><pubDate>Mon, 19 Sep 2022 14:50:00 +0900</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/db/insert_row_loop_dockerfile/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/01_db" target="_blank" rel="noopener"
 >Github&lt;/a> 에서 해당 내용에 대해서 확인할 수 있습니다.&lt;/p>
 &lt;h2 id="overview">Overview&lt;/h2>
 &lt;h3 id="목표">목표&lt;/h3>
@@ -599,7 +711,7 @@ script 파일에서 db 연결을 위한 host 부분을 아래와 같이 수정�
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">docker run --network &lt;span class="s2">&amp;#34;my-network&amp;#34;&lt;/span> insert_row_loop &lt;span class="s2">&amp;#34;db-db-1&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item><item><title>DB-3) Insert Row Loop</title><link>https://aiden-jeon.github.io/post/mle-mlops/db/insert_row_loop/</link><pubDate>Mon, 19 Sep 2022 14:30:00 +0800</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/db/insert_row_loop/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/01_db" target="_blank" rel="noopener"
+&lt;/div></description></item><item><title>DB-3) Insert Row Loop</title><link>https://aiden-jeon.github.io/post/mle-mlops/db/insert_row_loop/</link><pubDate>Mon, 19 Sep 2022 14:30:00 +0900</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/db/insert_row_loop/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/01_db" target="_blank" rel="noopener"
 >Github&lt;/a> 에서 해당 내용에 대해서 확인할 수 있습니다.&lt;/p>
 &lt;h2 id="overview">Overview&lt;/h2>
 &lt;h3 id="목표">목표&lt;/h3>
@@ -733,7 +845,7 @@ script 파일에서 db 연결을 위한 host 부분을 아래와 같이 수정�
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="vm">__name__&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="s2">&amp;#34;__main__&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">db_connect&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">psycopg2&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">connect&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">host&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;localhost&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">database&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;postgres&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">user&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;postgres&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">password&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;mypassword&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">df&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">get_data&lt;/span>&lt;span class="p">()&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">insert_row_loop&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">db_connect&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">df&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">sample&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">insert_row_loop&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">db_connect&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">df&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;h2 id="run">Run&lt;/h2>
