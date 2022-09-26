@@ -1,4 +1,794 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>model-registry on Aiden's Camp</title><link>https://aiden-jeon.github.io/tags/model-registry/</link><description>Recent content in model-registry on Aiden's Camp</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 23 Sep 2022 20:50:00 +0900</lastBuildDate><atom:link href="https://aiden-jeon.github.io/tags/model-registry/index.xml" rel="self" type="application/rss+xml"/><item><title>[ Chapter 3. API ] 5) Build FastAPI Docker</title><link>https://aiden-jeon.github.io/post/mle-mlops/api/fastapi_docker/</link><pubDate>Fri, 23 Sep 2022 20:50:00 +0900</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/api/fastapi_docker/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/03_api" target="_blank" rel="noopener"
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>model-registry on Aiden's Camp</title><link>https://aiden-jeon.github.io/tags/model-registry/</link><description>Recent content in model-registry on Aiden's Camp</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 26 Sep 2022 19:50:00 +0900</lastBuildDate><atom:link href="https://aiden-jeon.github.io/tags/model-registry/index.xml" rel="self" type="application/rss+xml"/><item><title>[ Chapter 4. Model API ] 4) Docker without model</title><link>https://aiden-jeon.github.io/post/mle-mlops/model_api/docker_without_model/</link><pubDate>Mon, 26 Sep 2022 19:50:00 +0900</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/model_api/docker_without_model/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/04_model_api" target="_blank" rel="noopener"
+>Github&lt;/a> 에서 해당 내용에 대해서 확인할 수 있습니다.&lt;/p>
+&lt;h2 id="overview">Overview&lt;/h2>
+&lt;h3 id="목표">목표&lt;/h3>
+&lt;ul>
+&lt;li>모델 경로를 받아 API를 띄우는 Dockerfile을 작성합니다.&lt;/li>
+&lt;/ul>
+&lt;h3 id="요구사항">요구사항&lt;/h3>
+&lt;ol>
+&lt;li>작성한 API에 필요한 모델을 &lt;code>/mnt/models&lt;/code> 경로에서 가져오도록 코드를 수정합니다.&lt;/li>
+&lt;li>빌드된 이미지를 실행합니다.
+&lt;ul>
+&lt;li>모델이 있는 경로를 &lt;code>/mnt/models&lt;/code> 로 volume mapping 합니다.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>example을 통해 정상적으로 예측하는지 확인합니다.&lt;/li>
+&lt;li>DB에 데이터가 쌓이고 있는지 확인합니다.&lt;/li>
+&lt;/ol>
+&lt;hr>
+&lt;h2 id="dockerfile">Dockerfile&lt;/h2>
+&lt;p>앞서 작성한 dockerfile 에서 모델을 copy하는 부분을 삭제합니다.&lt;br>
+그리고 전역 변수로 모델의 경로를 입력합니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-Dockerfile" data-lang="Dockerfile">&lt;span class="line">&lt;span class="cl">&lt;span class="k">FROM&lt;/span>&lt;span class="s"> python:3.9-slim&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">WORKDIR&lt;/span>&lt;span class="s"> /app&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">RUN&lt;/span> apt-get update &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> apt-get install -y &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> build-essential &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> software-properties-common &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> git &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> rm -rf /var/lib/apt/lists/*&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">RUN&lt;/span> pip install -U pip &lt;span class="o">&amp;amp;&amp;amp;&lt;/span>&lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> pip install &lt;span class="s2">&amp;#34;fastapi[all]&amp;#34;&lt;/span> sqlalchemy psycopg2-binary scikit-learn mlflow&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">ENV&lt;/span> &lt;span class="nv">MODEL_PATH&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;/mnt/models&amp;#34;&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">COPY&lt;/span> app/ .&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">ENTRYPOINT&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;uvicorn&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;crud:app&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;--host&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;0.0.0.0&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;--reload&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="build">Build&lt;/h2>
+&lt;p>다음과 같이 폴더를 갖고 있는 경로에서 이미지를 빌드합니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── Dockerfile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── app
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── __init__.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── crud.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── database.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── models.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   └── schemas.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">└── model
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── MLmodel
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── conda.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── model.pkl
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── python_env.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> └── requirements.txt
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">docker build . -t docker_without_model
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="run">Run&lt;/h2>
+&lt;p>도커에 volume mapping을 한 후 실행합니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">docker run -p &lt;span class="k">$(&lt;/span>&lt;span class="nb">pwd&lt;/span>&lt;span class="k">)&lt;/span>/model:/mnt/models docker_without_model
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>실행 후 swagger 페이지를 확인합니다.&lt;/p></description></item><item><title>[ Chapter 4. Model API ] 3) Docker with model</title><link>https://aiden-jeon.github.io/post/mle-mlops/model_api/docker_with_model/</link><pubDate>Mon, 26 Sep 2022 19:30:00 +0900</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/model_api/docker_with_model/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/04_model_api" target="_blank" rel="noopener"
+>Github&lt;/a> 에서 해당 내용에 대해서 확인할 수 있습니다.&lt;/p>
+&lt;h2 id="overview">Overview&lt;/h2>
+&lt;h3 id="목표">목표&lt;/h3>
+&lt;ul>
+&lt;li>컨테이너에 모델 정보를 복사해 API를 띄우는 Dockerfile을 작성합니다.&lt;/li>
+&lt;/ul>
+&lt;h3 id="요구사항">요구사항&lt;/h3>
+&lt;ol>
+&lt;li>작성한 API에 필요한 모델을 이미지에 복사하는 Dockerfile을 작성합니다.
+&lt;ul>
+&lt;li>이 이미지를 실행하면 별도의 모델 정보를 요구하지 않습니다.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>빌드된 이미지를 실행합니다.&lt;/li>
+&lt;li>example을 통해 정상적으로 예측하는지 확인합니다.&lt;/li>
+&lt;li>DB에 데이터가 쌓이고 있는지 확인합니다.&lt;/li>
+&lt;/ol>
+&lt;hr>
+&lt;h2 id="crud">Crud&lt;/h2>
+&lt;p>앞서 작성한 crud 파일에서 모델을 불러오는 부분을 다음과 같이 수정합니다.&lt;br>
+모델의 경로가 전역 변수로 선언되어 있지 않는 경우 &lt;code>/mnt/model&lt;/code> 에 있는 모델을 load 하도록 합니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">MODEL_PATH&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">os&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">getenv&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;MODEL_PATH&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;/mnt/model&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">MODEL&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">mlflow&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">pyfunc&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">load_model&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">MODEL_PATH&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="dockerfile">Dockerfile&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-Dockerfile" data-lang="Dockerfile">&lt;span class="line">&lt;span class="cl">&lt;span class="k">FROM&lt;/span>&lt;span class="s"> python:3.9-slim&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">WORKDIR&lt;/span>&lt;span class="s"> /app&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">RUN&lt;/span> apt-get update &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> apt-get install -y &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> build-essential &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> software-properties-common &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> git &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> rm -rf /var/lib/apt/lists/*&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">RUN&lt;/span> pip install -U pip &lt;span class="o">&amp;amp;&amp;amp;&lt;/span>&lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> pip install &lt;span class="s2">&amp;#34;fastapi[all]&amp;#34;&lt;/span> sqlalchemy psycopg2-binary scikit-learn mlflow&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">COPY&lt;/span> app/ .&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">COPY&lt;/span> model /mnt/model&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">ENTRYPOINT&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;uvicorn&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;crud:app&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;--host&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;0.0.0.0&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;--reload&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>모델을 불러오는데 필요한 패키지들을 설치합니다.&lt;br>
+API를 실행하는데 필요한 코드를 복사합니다.&lt;br>
+그리고 모델 폴더를 &lt;code>/mnt/model&lt;/code>에 복사합니다.&lt;/p>
+&lt;h2 id="build">Build&lt;/h2>
+&lt;p>다음과 같이 폴더를 갖고 있는 경로에서 이미지를 빌드합니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── Dockerfile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── app
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── __init__.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── crud.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── database.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── models.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   └── schemas.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">└── model
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── MLmodel
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── conda.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── model.pkl
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── python_env.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> └── requirements.txt
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">docker build . -t docker_with_model
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="run">Run&lt;/h2>
+&lt;p>실행 후 swagger 페이지를 확인합니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">docker run docker_with_model
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>[ Chapter 4. Model API ] 2) Write Data to DB</title><link>https://aiden-jeon.github.io/post/mle-mlops/model_api/write_data_to_db/</link><pubDate>Mon, 26 Sep 2022 19:00:00 +0900</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/model_api/write_data_to_db/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/04_model_api" target="_blank" rel="noopener"
+>Github&lt;/a> 에서 해당 내용에 대해서 확인할 수 있습니다.&lt;/p>
+&lt;h2 id="overview">Overview&lt;/h2>
+&lt;h3 id="목표">목표&lt;/h3>
+&lt;ul>
+&lt;li>&lt;code>predict&lt;/code> 로 요청받은 데이터와 그 결과를 DB에 저장합니다.&lt;/li>
+&lt;/ul>
+&lt;h3 id="요구사항">요구사항&lt;/h3>
+&lt;ol>
+&lt;li>&lt;code>database.py&lt;/code> 를 작성해 db에 연결합니다.&lt;/li>
+&lt;li>&lt;code>models.py&lt;/code> 를 작성합니다.
+&lt;ul>
+&lt;li>&lt;code>raw_data&lt;/code> table columns:
+&lt;ul>
+&lt;li>입력으로 받은 column들&lt;/li>
+&lt;li>&lt;code>timestamp&lt;/code>: 요청받은 시간&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;code>prediction&lt;/code> table columns:
+&lt;ul>
+&lt;li>&lt;code>iris_class&lt;/code> 모델의 결과와&lt;/li>
+&lt;li>&lt;code>timestamp&lt;/code>: 요청받은 시간&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>작성한 내용으로 &lt;code>crud.py&lt;/code> 를 수정합니다.&lt;/li>
+&lt;li>request를 날린후 &lt;code>raw_data&lt;/code> table 과 &lt;code>prediction&lt;/code> table을 확인합니다.&lt;/li>
+&lt;li>query문을 작성해 input 과 prediction 을 같이 확인합니다.&lt;/li>
+&lt;/ol>
+&lt;h3 id="질문사항">질문사항&lt;/h3>
+&lt;ol>
+&lt;li>모델을 디버깅하기 위해서 입력값과 결과값을 머지하기 위해서는 어떻게 해야할까요?
+&lt;ul>
+&lt;li>&lt;code>timestamp&lt;/code> or &lt;code>uuid&lt;/code> ?&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>왜 input_schema 와 output_schema가 필요할까요?&lt;/li>
+&lt;/ol>
+&lt;hr>
+&lt;h2 id="database">Database&lt;/h2>
+&lt;p>앞서 작성했던 자료를 참고해 다음과 같이 &lt;code>database.py&lt;/code>를 작성합니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">os&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">sqlalchemy&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">create_engine&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">sqlalchemy.ext.declarative&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">declarative_base&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">sqlalchemy.orm&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">sessionmaker&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">SQLALCHEMY_DATABASE_URL&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">os&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">getenv&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;SQLALCHEMY_DATABASE_URL&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;postgresql://postgres:mypassword@localhost:5432/postgres&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">engine&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">create_engine&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">SQLALCHEMY_DATABASE_URL&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">SessionLocal&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">sessionmaker&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">autocommit&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">False&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">autoflush&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">False&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">bind&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">engine&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Base&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">declarative_base&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="models">Models&lt;/h2>
+&lt;p>Database에서 사용할 &lt;code>models.py&lt;/code> 를 정의합니다.&lt;/p>
+&lt;h3 id="input-model">Input Model&lt;/h3>
+&lt;p>입력으로 받은 데이터에서 필요한 추가 column인 timestamp를 추가해 작성합니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">sqlalchemy&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">Column&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Integer&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">DateTime&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Float&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">database&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">Base&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">DataIn&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Base&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">__tablename__&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;raw_data&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">id&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Column&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Integer&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">primary_key&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">True&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">index&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">True&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">timestamp&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Column&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">DateTime&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">sepal_width&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Column&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Float&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">sepal_length&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Column&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Float&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">petal_width&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Column&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Float&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">petal_length&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Column&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Float&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="output-model">Output Model&lt;/h3>
+&lt;p>모델의 예측결과를 &lt;code>iris_class&lt;/code> column에 저장합니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">DataOut&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Base&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">__tablename__&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;prediction&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">id&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Column&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Integer&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">primary_key&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">True&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">index&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">True&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">timestamp&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Column&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">DateTime&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">iris_class&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Column&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Integer&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="crud">Crud&lt;/h2>
+&lt;p>database 와 models 내용을 app 에 추가해 작성합니다.&lt;/p>
+&lt;p>필요한 패키지를 불러옵니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">os&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">datetime&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">datetime&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">mlflow&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">pandas&lt;/span> &lt;span class="k">as&lt;/span> &lt;span class="nn">pd&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">fastapi&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">Depends&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">FastAPI&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">sqlalchemy.orm&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">Session&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">database&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">SessionLocal&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">engine&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">models&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">Base&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">DataIn&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">DataOut&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">schemas&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">PredictIn&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">PredictOut&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>다음으로 db 의 table을 자동으로 생성합니ㅏㄷ.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">Base&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">metadata&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">create_all&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">bind&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">engine&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>app을 선언하고 db를 불러올 수 있는 코드를 작성합니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">app&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">FastAPI&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">get_db&lt;/span>&lt;span class="p">():&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">db&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">SessionLocal&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">try&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">yield&lt;/span> &lt;span class="n">db&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">finally&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">db&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">close&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>사용할 모델을 전역 변수로 선언합니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">MODEL&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">mlflow&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">pyfunc&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">load_model&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;../model&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>predict 함수를 작성합니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">post&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/predict&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">response_model&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">PredictOut&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">predict&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">data&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">PredictIn&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">db&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Session&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Depends&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">get_db&lt;/span>&lt;span class="p">)):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">now&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">datetime&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">utcnow&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">df&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">pd&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">DataFrame&lt;/span>&lt;span class="p">([&lt;/span>&lt;span class="n">data&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">dict&lt;/span>&lt;span class="p">()])&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">pred&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">int&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">MODEL&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">predict&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">df&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">data_in&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">DataIn&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">timestamp&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">now&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="o">**&lt;/span>&lt;span class="n">data&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">dict&lt;/span>&lt;span class="p">())&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">db&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">add&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">data_in&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">db&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">commit&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">db&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">refresh&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">data_in&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">data_out&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">DataOut&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">timestamp&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">now&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">iris_class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">pred&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">db&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">add&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">data_out&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">db&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">commit&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">db&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">refresh&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">data_out&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">PredictOut&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">iris_class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">pred&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>request 를 요청받은 시간을 &lt;code>now&lt;/code> 에 저장합니다.&lt;br>
+그 이후 모델의 예측을 수행합니다.&lt;/p>
+&lt;p>예측을 수행한 후 입력으로 들어온 데이터를 commit 합니다.&lt;br>
+다음으로 모델의 결과를 commit 합니다.&lt;/p>
+&lt;h2 id="실행">실행&lt;/h2>
+&lt;p>uvicorn 을 이용해 app을 실행합니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">uvicorn crud:app --reload
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>web에서 예제를 실행합니다.&lt;/p>
+&lt;p>&lt;code>psql&lt;/code>을 이용해 database를 확인합니다.&lt;/p>
+&lt;ul>
+&lt;li>raw_data
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">postgres=# SELECT * FROM raw_data;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">id | timestamp | sepal_width | sepal_length | petal_width | petal_length
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">----+----------------------------+-------------+--------------+-------------+--------------
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1 | 2022-09-26 05:47:41.517851 | 0 | 0 | 0 | 0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">(1 rows)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/li>
+&lt;li>prediction
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">postgres=# SELECT * FROM prediction;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">id | timestamp | iris_class
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">----+----------------------------+------------
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1 | 2022-09-26 05:47:41.517851 | 2
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">(1 rows)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/li>
+&lt;/ul></description></item><item><title>[ Chapter 4. Model API ] 1) API with Model</title><link>https://aiden-jeon.github.io/post/mle-mlops/model_api/api_with_model/</link><pubDate>Mon, 26 Sep 2022 18:00:00 +0900</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/model_api/api_with_model/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/04_model_api" target="_blank" rel="noopener"
+>Github&lt;/a> 에서 해당 내용에 대해서 확인할 수 있습니다.&lt;/p>
+&lt;h2 id="overview">Overview&lt;/h2>
+&lt;h3 id="목표">목표&lt;/h3>
+&lt;ul>
+&lt;li>iris 데이터를 입력받아 예측할 수 있는 API를 작성합니다.&lt;/li>
+&lt;/ul>
+&lt;h3 id="요구사항">요구사항&lt;/h3>
+&lt;ol>
+&lt;li>&lt;code>POST predict&lt;/code>/ &amp;amp; Request Body &lt;code>{data}&lt;/code> 를 이용할 경우 모델의 예측값을 반환하는 API를 작성합니다.
+&lt;ul>
+&lt;li>API 명세서를 작성해봅니다.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;code>schemas.py&lt;/code> 에 Pydantic을 사용해 input_schema와 output_schema를 작성합니다.
+&lt;ul>
+&lt;li>input_schema: column 명은 앞선 db 챕터에서 작성한 이름을 기준으로 합니다.&lt;/li>
+&lt;li>output_schema
+&lt;ul>
+&lt;li>모델의 결과를 &lt;code>iris_class&lt;/code> 의 key값과 같이 반환합니다.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>작성한 내용으로 &lt;code>crud.py&lt;/code>를 작성합니다.&lt;/li>
+&lt;li>예측에 사용하는 모델은 mlflow에서 다운로드 받거나 바로 학습해서 사용해도 무관합니다.
+&lt;ul>
+&lt;li>이 후 챕터에서는 mlflow에서 모델을 다운로드 받아서 사용하게 됩니다.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>작성된 &lt;code>predict&lt;/code> API에 데이터를 전달해 예측값을 받아 봅니다.&lt;/li>
+&lt;/ol>
+&lt;hr>
+&lt;h2 id="api-specification">API Specification&lt;/h2>
+&lt;p>iris 데이터를 입력으로 받는 명세서를 작성하면 다음과 같습니다.&lt;/p>
+&lt;ul>
+&lt;li>Header: &lt;code>POST /predict&lt;/code>&lt;/li>
+&lt;li>Request body:
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-json" data-lang="json">&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;sepal_width&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;sepal_length&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;petal_width&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;petal_length&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/li>
+&lt;li>Response Body:
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-json" data-lang="json">&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;iris_class&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/li>
+&lt;/ul>
+&lt;h2 id="schemas">Schemas&lt;/h2>
+&lt;p>입력으로 받을 input_schema와 예측값을 반환하는 output_schema를 작성합니다.&lt;/p>
+&lt;h3 id="input-schema">Input Schema&lt;/h3>
+&lt;p>입력으로 받는 값은 db에서 변환한 iris 의 column들 입니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">pydantic&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">BaseModel&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">PredictIn&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">BaseModel&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">sepal_width&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">float&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">sepal_length&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">float&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">petal_width&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">float&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">petal_length&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">float&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="output-schema">Output Schema&lt;/h3>
+&lt;p>반환하는 값은 모델의 예측값으로 그 key 값은 &lt;code>iris_class&lt;/code> 입니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="k">class&lt;/span> &lt;span class="nc">PredictOut&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">BaseModel&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">iris_class&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">int&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="crud">Crud&lt;/h2>
+&lt;p>위에서 작성한 schema를 사용한 app 을 작성합니다.&lt;/p>
+&lt;h3 id="app">App&lt;/h3>
+&lt;p>우선 필요한 패키지와 FastAPI를 사용하는 app을 작성합니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">os&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">mlflow&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">pandas&lt;/span> &lt;span class="k">as&lt;/span> &lt;span class="nn">pd&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">fastapi&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">FastAPI&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">schemas&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">PredictIn&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">PredictOut&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">app&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">FastAPI&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="load-model">Load Model&lt;/h3>
+&lt;p>이제 예측에 사용할 모델을 불러와야 합니다. 매번 모델을 부르는건 비효율적이니 한 번만 불리도록 전역 변수로 설정합니다.&lt;br>
+다운로드 받은 모델이 위치하는 경로에서 모델을 불러올 수 있도록 합니다.&lt;br>
+여기서는 한 디렉토리 아래에 모델이 저장되어 있어서 아래와 같이 작성했습니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">MODEL&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">mlflow&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">pyfunc&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">load_model&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;../model/&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="post">POST&lt;/h3>
+&lt;p>이제 predict 함수를 작성합니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">post&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/predict&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">response_model&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">PredictOut&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">predict&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">data&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">PredictIn&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">df&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">pd&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">DataFrame&lt;/span>&lt;span class="p">([&lt;/span>&lt;span class="n">data&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">dict&lt;/span>&lt;span class="p">()])&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">pred&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">int&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">MODEL&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">predict&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">df&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">PredictOut&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">iris_class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">pred&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>API를 통해 입력받는 값은 json 형태로 들어옵니다. 모델에서 예측을 하려면 numpy array 나 pandas dataframe 형태여야 하기 때문에 변환이 필요합니다.
+&lt;code>BaseModel.dict()&lt;/code> 를 사용하면 쉽게 python dictionary 형태로 바꿀 수 있습니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="o">&amp;gt;&amp;gt;&amp;gt;&lt;/span> &lt;span class="n">data&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">dict&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;sepal_width&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;sepal_length&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;petal_width&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;petal_length&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>이를 dataframe으로 변환합니다. 이 때 dataframe은 2차원의 형태의 데이터를 요구하기 때문에 list로 한번 감싸줍니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="o">&amp;gt;&amp;gt;&amp;gt;&lt;/span> &lt;span class="n">pd&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">DataFrame&lt;/span>&lt;span class="p">([&lt;/span>&lt;span class="n">data&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">dict&lt;/span>&lt;span class="p">()])&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">sepal_width&lt;/span> &lt;span class="n">sepal_length&lt;/span> &lt;span class="n">petal_width&lt;/span> &lt;span class="n">petal_length&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mi">0&lt;/span> &lt;span class="mi">0&lt;/span> &lt;span class="mi">0&lt;/span> &lt;span class="mi">0&lt;/span> &lt;span class="mi">0&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>이제 모델로 예측을 진행합니다. 모델로 예측을 할 경우 예측값은 numpy array로 나옵니다.
+그런데 위에서 정의한 output_schema 에서는 int 를 입력해야 하기 때문에 int 로 변환 시켜줍니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">pred&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">int&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">MODEL&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">predict&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">df&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>마지막으로 &lt;code>PredictOut&lt;/code> schema에 값을 입력후 반환합니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="k">return&lt;/span> &lt;span class="n">PredictOut&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">iris_class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">pred&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="실행">실행&lt;/h2>
+&lt;p>uvicorn 을 이용해 app을 실행합니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">uvicorn crud:app --reload
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>web에서 예제를 실행하면 다음과 같이 나옵니다.&lt;/p>
+&lt;p>&lt;img src="https://aiden-jeon.github.io/post/mle-mlops/model_api/api_with_model/result.png"
+width="3232"
+height="3020"
+srcset="https://aiden-jeon.github.io/post/mle-mlops/model_api/api_with_model/result_hu1093e10c9b46d77a66e2d6b98cb296ce_1133063_480x0_resize_box_3.png 480w, https://aiden-jeon.github.io/post/mle-mlops/model_api/api_with_model/result_hu1093e10c9b46d77a66e2d6b98cb296ce_1133063_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="fastapi"
+class="gallery-image"
+data-flex-grow="107"
+data-flex-basis="256px"
+>&lt;/p></description></item><item><title>[ Chapter 3. API ] 5) Build FastAPI Docker</title><link>https://aiden-jeon.github.io/post/mle-mlops/api/fastapi_docker/</link><pubDate>Fri, 23 Sep 2022 20:50:00 +0900</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/api/fastapi_docker/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/03_api" target="_blank" rel="noopener"
 >Github&lt;/a> 에서 해당 내용에 대해서 확인할 수 있습니다.&lt;/p>
 &lt;h2 id="overview">Overview&lt;/h2>
 &lt;h3 id="목표">목표&lt;/h3>

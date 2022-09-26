@@ -1,4 +1,254 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>docker on Aiden's Camp</title><link>https://aiden-jeon.github.io/tags/docker/</link><description>Recent content in docker on Aiden's Camp</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 19 Sep 2022 14:50:00 +0900</lastBuildDate><atom:link href="https://aiden-jeon.github.io/tags/docker/index.xml" rel="self" type="application/rss+xml"/><item><title>[ Chapter 1. Database ] 4) Insert Row Loop Dockerfile</title><link>https://aiden-jeon.github.io/post/mle-mlops/db/insert_row_loop_dockerfile/</link><pubDate>Mon, 19 Sep 2022 14:50:00 +0900</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/db/insert_row_loop_dockerfile/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/01_db" target="_blank" rel="noopener"
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>docker on Aiden's Camp</title><link>https://aiden-jeon.github.io/tags/docker/</link><description>Recent content in docker on Aiden's Camp</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 26 Sep 2022 19:50:00 +0900</lastBuildDate><atom:link href="https://aiden-jeon.github.io/tags/docker/index.xml" rel="self" type="application/rss+xml"/><item><title>[ Chapter 4. Model API ] 4) Docker without model</title><link>https://aiden-jeon.github.io/post/mle-mlops/model_api/docker_without_model/</link><pubDate>Mon, 26 Sep 2022 19:50:00 +0900</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/model_api/docker_without_model/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/04_model_api" target="_blank" rel="noopener"
+>Github&lt;/a> 에서 해당 내용에 대해서 확인할 수 있습니다.&lt;/p>
+&lt;h2 id="overview">Overview&lt;/h2>
+&lt;h3 id="목표">목표&lt;/h3>
+&lt;ul>
+&lt;li>모델 경로를 받아 API를 띄우는 Dockerfile을 작성합니다.&lt;/li>
+&lt;/ul>
+&lt;h3 id="요구사항">요구사항&lt;/h3>
+&lt;ol>
+&lt;li>작성한 API에 필요한 모델을 &lt;code>/mnt/models&lt;/code> 경로에서 가져오도록 코드를 수정합니다.&lt;/li>
+&lt;li>빌드된 이미지를 실행합니다.
+&lt;ul>
+&lt;li>모델이 있는 경로를 &lt;code>/mnt/models&lt;/code> 로 volume mapping 합니다.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>example을 통해 정상적으로 예측하는지 확인합니다.&lt;/li>
+&lt;li>DB에 데이터가 쌓이고 있는지 확인합니다.&lt;/li>
+&lt;/ol>
+&lt;hr>
+&lt;h2 id="dockerfile">Dockerfile&lt;/h2>
+&lt;p>앞서 작성한 dockerfile 에서 모델을 copy하는 부분을 삭제합니다.&lt;br>
+그리고 전역 변수로 모델의 경로를 입력합니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-Dockerfile" data-lang="Dockerfile">&lt;span class="line">&lt;span class="cl">&lt;span class="k">FROM&lt;/span>&lt;span class="s"> python:3.9-slim&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">WORKDIR&lt;/span>&lt;span class="s"> /app&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">RUN&lt;/span> apt-get update &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> apt-get install -y &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> build-essential &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> software-properties-common &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> git &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> rm -rf /var/lib/apt/lists/*&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">RUN&lt;/span> pip install -U pip &lt;span class="o">&amp;amp;&amp;amp;&lt;/span>&lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> pip install &lt;span class="s2">&amp;#34;fastapi[all]&amp;#34;&lt;/span> sqlalchemy psycopg2-binary scikit-learn mlflow&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">ENV&lt;/span> &lt;span class="nv">MODEL_PATH&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;/mnt/models&amp;#34;&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">COPY&lt;/span> app/ .&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">ENTRYPOINT&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;uvicorn&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;crud:app&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;--host&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;0.0.0.0&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;--reload&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="build">Build&lt;/h2>
+&lt;p>다음과 같이 폴더를 갖고 있는 경로에서 이미지를 빌드합니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── Dockerfile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── app
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── __init__.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── crud.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── database.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── models.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   └── schemas.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">└── model
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── MLmodel
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── conda.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── model.pkl
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── python_env.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> └── requirements.txt
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">docker build . -t docker_without_model
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="run">Run&lt;/h2>
+&lt;p>도커에 volume mapping을 한 후 실행합니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">docker run -p &lt;span class="k">$(&lt;/span>&lt;span class="nb">pwd&lt;/span>&lt;span class="k">)&lt;/span>/model:/mnt/models docker_without_model
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>실행 후 swagger 페이지를 확인합니다.&lt;/p></description></item><item><title>[ Chapter 4. Model API ] 3) Docker with model</title><link>https://aiden-jeon.github.io/post/mle-mlops/model_api/docker_with_model/</link><pubDate>Mon, 26 Sep 2022 19:30:00 +0900</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/model_api/docker_with_model/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/04_model_api" target="_blank" rel="noopener"
+>Github&lt;/a> 에서 해당 내용에 대해서 확인할 수 있습니다.&lt;/p>
+&lt;h2 id="overview">Overview&lt;/h2>
+&lt;h3 id="목표">목표&lt;/h3>
+&lt;ul>
+&lt;li>컨테이너에 모델 정보를 복사해 API를 띄우는 Dockerfile을 작성합니다.&lt;/li>
+&lt;/ul>
+&lt;h3 id="요구사항">요구사항&lt;/h3>
+&lt;ol>
+&lt;li>작성한 API에 필요한 모델을 이미지에 복사하는 Dockerfile을 작성합니다.
+&lt;ul>
+&lt;li>이 이미지를 실행하면 별도의 모델 정보를 요구하지 않습니다.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>빌드된 이미지를 실행합니다.&lt;/li>
+&lt;li>example을 통해 정상적으로 예측하는지 확인합니다.&lt;/li>
+&lt;li>DB에 데이터가 쌓이고 있는지 확인합니다.&lt;/li>
+&lt;/ol>
+&lt;hr>
+&lt;h2 id="crud">Crud&lt;/h2>
+&lt;p>앞서 작성한 crud 파일에서 모델을 불러오는 부분을 다음과 같이 수정합니다.&lt;br>
+모델의 경로가 전역 변수로 선언되어 있지 않는 경우 &lt;code>/mnt/model&lt;/code> 에 있는 모델을 load 하도록 합니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">MODEL_PATH&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">os&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">getenv&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;MODEL_PATH&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;/mnt/model&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">MODEL&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">mlflow&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">pyfunc&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">load_model&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">MODEL_PATH&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="dockerfile">Dockerfile&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-Dockerfile" data-lang="Dockerfile">&lt;span class="line">&lt;span class="cl">&lt;span class="k">FROM&lt;/span>&lt;span class="s"> python:3.9-slim&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">WORKDIR&lt;/span>&lt;span class="s"> /app&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">RUN&lt;/span> apt-get update &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> apt-get install -y &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> build-essential &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> software-properties-common &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> git &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> rm -rf /var/lib/apt/lists/*&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">RUN&lt;/span> pip install -U pip &lt;span class="o">&amp;amp;&amp;amp;&lt;/span>&lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> pip install &lt;span class="s2">&amp;#34;fastapi[all]&amp;#34;&lt;/span> sqlalchemy psycopg2-binary scikit-learn mlflow&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">COPY&lt;/span> app/ .&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">COPY&lt;/span> model /mnt/model&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">ENTRYPOINT&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;uvicorn&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;crud:app&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;--host&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;0.0.0.0&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;--reload&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>모델을 불러오는데 필요한 패키지들을 설치합니다.&lt;br>
+API를 실행하는데 필요한 코드를 복사합니다.&lt;br>
+그리고 모델 폴더를 &lt;code>/mnt/model&lt;/code>에 복사합니다.&lt;/p>
+&lt;h2 id="build">Build&lt;/h2>
+&lt;p>다음과 같이 폴더를 갖고 있는 경로에서 이미지를 빌드합니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── Dockerfile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── app
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── __init__.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── crud.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── database.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── models.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   └── schemas.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">└── model
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── MLmodel
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── conda.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── model.pkl
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── python_env.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> └── requirements.txt
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">docker build . -t docker_with_model
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="run">Run&lt;/h2>
+&lt;p>실행 후 swagger 페이지를 확인합니다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">docker run docker_with_model
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>[ Chapter 1. Database ] 4) Insert Row Loop Dockerfile</title><link>https://aiden-jeon.github.io/post/mle-mlops/db/insert_row_loop_dockerfile/</link><pubDate>Mon, 19 Sep 2022 14:50:00 +0900</pubDate><guid>https://aiden-jeon.github.io/post/mle-mlops/db/insert_row_loop_dockerfile/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/Aiden-Jeon/mle-mlops/tree/main/01_db" target="_blank" rel="noopener"
 >Github&lt;/a> 에서 해당 내용에 대해서 확인할 수 있습니다.&lt;/p>
 &lt;h2 id="overview">Overview&lt;/h2>
 &lt;h3 id="목표">목표&lt;/h3>
