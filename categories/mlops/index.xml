@@ -1,4 +1,240 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>mlops on Aiden's Camp</title><link>https://aiden-jeon.github.io/categories/mlops/</link><description>Recent content in mlops on Aiden's Camp</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 07 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://aiden-jeon.github.io/categories/mlops/index.xml" rel="self" type="application/rss+xml"/><item><title>Chapter 3. Data Engineer Fundamentals</title><link>https://aiden-jeon.github.io/post/mlops/designing-ml-system/chapter-03/intro/</link><pubDate>Mon, 07 Nov 2022 00:00:00 +0000</pubDate><guid>https://aiden-jeon.github.io/post/mlops/designing-ml-system/chapter-03/intro/</guid><description>&lt;p>Summary of &lt;a class="link" href="https://learning.oreilly.com/library/view/designing-machine-learning/9781098107956/" target="_blank" rel="noopener"
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>mlops on Aiden's Camp</title><link>https://aiden-jeon.github.io/categories/mlops/</link><description>Recent content in mlops on Aiden's Camp</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 09 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://aiden-jeon.github.io/categories/mlops/index.xml" rel="self" type="application/rss+xml"/><item><title>Chapter 7. Model Deployment and Prediction Service</title><link>https://aiden-jeon.github.io/post/mlops/designing-ml-system/chapter-07/</link><pubDate>Wed, 09 Nov 2022 00:00:00 +0000</pubDate><guid>https://aiden-jeon.github.io/post/mlops/designing-ml-system/chapter-07/</guid><description>&lt;p>Summary of &lt;a class="link" href="https://learning.oreilly.com/library/view/designing-machine-learning/9781098107956/" target="_blank" rel="noopener"
+>Designing Machine Learning Systems&lt;/a> written by Chip Huyen.&lt;/p>
+&lt;hr>
+&lt;h1 id="chapter-7-model-deployment-and-prediction-service">Chapter 7. Model Deployment and Prediction Service&lt;/h1>
+&lt;ul>
+&lt;li>ML App Logic
+&lt;ul>
+&lt;li>data engineering → feature engineering → model → metrics&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Deploy &amp;amp; Inference
+&lt;ul>
+&lt;li>Deploy: a loose term that generally means making your model running and accessible&lt;/li>
+&lt;li>Inference: the process of generating predictions&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>To be deployed:
+&lt;ul>
+&lt;li>model will have to leave the development environment&lt;/li>
+&lt;li>model can be deployed to
+&lt;ul>
+&lt;li>a staging environment for testing&lt;/li>
+&lt;li>a production environment to be used by end users&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="1-machine-learning-deployment-myths">1. Machine Learning Deployment Myths&lt;/h2>
+&lt;h3 id="1-myth1-you-only-deploy-one-or-two-ml-models-at-a-time">1. Myth1: You Only Deploy One or Two ML Models at a Time&lt;/h3>
+&lt;h3 id="2-myth2-if-we-dont-do-anything-model-performance-remains-the-same">2. Myth2: If we Don’t Do Anything, Model Performance Remains the same.&lt;/h3>
+&lt;ul>
+&lt;li>“software rot” or “bit rot”
+&lt;ul>
+&lt;li>software program degrades over time even if nothing has been changed.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>ML Systems suffer from data distribution shifts&lt;/li>
+&lt;/ul>
+&lt;h3 id="3-myth3-you-wont-need-to-update-your-model-as-much">3. Myth3: You Won’t Need to Update Your Model as Much&lt;/h3>
+&lt;ul>
+&lt;li>“How often &lt;em>SHOULD&lt;/em> I update my models?” → “How often &lt;em>CAN&lt;/em> I update my models?”&lt;/li>
+&lt;li>Model’s performance decays over time → want to update model as fast as possible&lt;/li>
+&lt;/ul>
+&lt;h3 id="4-myth4-most-ml-engineers-dont-need-to-worry-about-scale">4. Myth4: Most ML Engineers Don’t Need to Worry About Scale&lt;/h3>
+&lt;ul>
+&lt;li>scale
+&lt;ul>
+&lt;li>eg) a system that serves hundreds of queries per second of millions of users a month&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="2-batch-prediction-versus-online-prediction">2. Batch Prediction versus Online Prediction&lt;/h2>
+&lt;ul>
+&lt;li>types of predictions
+&lt;ol>
+&lt;li>Batch prediction, which use only batch features&lt;/li>
+&lt;li>Online prediction that uses only batch features (eg. precomputed embeddings)&lt;/li>
+&lt;li>Online prediction(Streaming prediction) that use both batch features and streaming features&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="1-online-prediction">1. Online Prediction&lt;/h3>
+&lt;ul>
+&lt;li>when predictions are generated and returned as soon as requests for these predictions arrive&lt;/li>
+&lt;li>on-demand prediction, synchronous prediction&lt;/li>
+&lt;/ul>
+&lt;h3 id="2-batch-prediction">2. Batch Prediction&lt;/h3>
+&lt;ul>
+&lt;li>when predictions are generated periodically or whenever triggered.&lt;/li>
+&lt;li>predictions are store somewhere like in-memory or SQL Tables → retrieved as needed&lt;/li>
+&lt;li>asynchronous prediction&lt;/li>
+&lt;/ul>
+&lt;h2 id="3-from-batch-prediction-to-online-prediction">3. From Batch Prediction to Online Prediction&lt;/h2>
+&lt;h3 id="1-online-prediction-1">1. Online Prediction&lt;/h3>
+&lt;ul>
+&lt;li>easy to start&lt;/li>
+&lt;li>problem with online prediction:
+&lt;ul>
+&lt;li>&lt;em>model might take too long to generate predictions&lt;/em>&lt;/li>
+&lt;li>to solve…
+&lt;ul>
+&lt;li>compute predictions in advance → store in database → fetch then when request arrive&lt;/li>
+&lt;li>→ called batch prediction&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="2-batch-prediction-1">2. Batch Prediction&lt;/h3>
+&lt;ul>
+&lt;li>predictions are precomputed → trick to reduce the inference latency&lt;/li>
+&lt;li>good to generate a lot of predictions and don’t need the results immediately&lt;/li>
+&lt;li>problem of batch prediction:
+&lt;ol>
+&lt;li>Less responsive to users’ change preferences&lt;/li>
+&lt;li>Need to know what requests to generate predictions in advance&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="3-online-prediction-becomes-default">3. Online prediction becomes default&lt;/h3>
+&lt;ul>
+&lt;li>As hardware becomes more powerful → Online prediction becomes default&lt;/li>
+&lt;li>To overcome the latency challenge of online prediction:
+&lt;ol>
+&lt;li>A (near) real-time pipeline that can work with incoming data:
+&lt;ul>
+&lt;li>extract streaming features → input them into a model → return prediction in a near real time&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>A model that can generate predictions at a speed acceptable to its end users&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="4-unifying-batch-pipeline-and-streaming-pipeline">4. Unifying Batch Pipeline and Streaming Pipeline&lt;/h2>
+&lt;ul>
+&lt;li>using sliding features
+&lt;ul>
+&lt;li>In training this feature is computed in batch&lt;/li>
+&lt;li>Whereas during inference this feature is computed in a streaming pipeline
+&lt;ul>
+&lt;li>Apache Flink&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="5-model-compression">5. Model Compression&lt;/h2>
+&lt;ul>
+&lt;li>Deployed model takes too long to generate predictions:
+&lt;ol>
+&lt;li>make it do inference faster
+&lt;ul>
+&lt;li>→ inference optimization&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>make the model smaller
+&lt;ul>
+&lt;li>→ model compression
+&lt;ul>
+&lt;li>originally, to make model fit on edge device&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>make the hardware it’s deployed on run faster&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>model compression
+&lt;ol>
+&lt;li>low-rank optimization&lt;/li>
+&lt;li>knowledge distillation&lt;/li>
+&lt;li>pruning&lt;/li>
+&lt;li>quantization&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="1-low-rank-factorization">1. Low-Rank Factorization&lt;/h3>
+&lt;ul>
+&lt;li>key-idea
+&lt;ul>
+&lt;li>replace high-dimensional tensors with low-dimensional tensors&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>compact convolutional filters
+&lt;ul>
+&lt;li>replace over-parameterized (having too many parameters) convolutional filters to compact convolutional filters&lt;/li>
+&lt;li>compact blocks to both reduce the number of parameters and increase speed
+&lt;ul>
+&lt;li>eg) 3x3 conv → 1x1 conv&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="2-knowledge-distillation">2. Knowledge Distillation&lt;/h3>
+&lt;ul>
+&lt;li>smaller model (student) is train to mimic a larger model or ensemble model (teacher)&lt;/li>
+&lt;li>can work regardless of the architectural differences between teacher and student&lt;/li>
+&lt;li>disadvantages
+&lt;ul>
+&lt;li>highly dependent on the availability of a teacher network&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="3-pruning">3. Pruning&lt;/h3>
+&lt;ul>
+&lt;li>in neural network, it means
+&lt;ol>
+&lt;li>remove entire nodes of a neural network
+&lt;ul>
+&lt;li>changing its architecture and reducing its number of parameters&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>find parameters least useful to predictions and set them to zero(0).
+&lt;ul>
+&lt;li>do not change architecture, only the number of nonzero parameters&lt;/li>
+&lt;li>sparse architecture
+&lt;ul>
+&lt;li>make a neural network more sparse&lt;/li>
+&lt;li>require less storage than dense structure&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="4-quantization">4. Quantization&lt;/h3>
+&lt;ul>
+&lt;li>most general and commonly used model compression method&lt;/li>
+&lt;li>reduce model size by using fewer bits to represent its parameters&lt;/li>
+&lt;li>advantage
+&lt;ul>
+&lt;li>reduce memory size&lt;/li>
+&lt;li>improves the computational speed
+&lt;ol>
+&lt;li>allows to increase batch size&lt;/li>
+&lt;li>less precision speeds up computation&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>disadvantage
+&lt;ul>
+&lt;li>rounding numbers → rounding errors&lt;/li>
+&lt;li>small rounding errors → large performance change&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>lower-precision training increasingly popular&lt;/li>
+&lt;li>Fixed-point inference for edge device&lt;/li>
+&lt;/ul>
+&lt;h2 id="ml-on-the-cloud-and-on-the-edge">ML on the Cloud and on the Edge&lt;/h2>
+&lt;ul>
+&lt;li>where your model’s computation will happen?&lt;/li>
+&lt;li>⇒ due to cost of cloud, trend are moving to edge&lt;/li>
+&lt;/ul></description></item><item><title>Chapter 3. Data Engineer Fundamentals</title><link>https://aiden-jeon.github.io/post/mlops/designing-ml-system/chapter-03/</link><pubDate>Mon, 07 Nov 2022 00:00:00 +0000</pubDate><guid>https://aiden-jeon.github.io/post/mlops/designing-ml-system/chapter-03/</guid><description>&lt;p>Summary of &lt;a class="link" href="https://learning.oreilly.com/library/view/designing-machine-learning/9781098107956/" target="_blank" rel="noopener"
 >Designing Machine Learning Systems&lt;/a> written by Chip Huyen.&lt;/p>
 &lt;hr>
 &lt;h1 id="chapter-3-data-engineer-fundamentals">Chapter 3. Data Engineer Fundamentals&lt;/h1>
