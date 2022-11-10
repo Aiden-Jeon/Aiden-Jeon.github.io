@@ -1,4 +1,334 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ml-system on Aiden's Camp</title><link>https://aiden-jeon.github.io/tags/ml-system/</link><description>Recent content in ml-system on Aiden's Camp</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 09 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://aiden-jeon.github.io/tags/ml-system/index.xml" rel="self" type="application/rss+xml"/><item><title>Chapter 7. Model Deployment and Prediction Service</title><link>https://aiden-jeon.github.io/post/mlops/designing-ml-system/chapter-07/</link><pubDate>Wed, 09 Nov 2022 00:00:00 +0000</pubDate><guid>https://aiden-jeon.github.io/post/mlops/designing-ml-system/chapter-07/</guid><description>&lt;p>Summary of &lt;a class="link" href="https://learning.oreilly.com/library/view/designing-machine-learning/9781098107956/" target="_blank" rel="noopener"
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ml-system on Aiden's Camp</title><link>https://aiden-jeon.github.io/tags/ml-system/</link><description>Recent content in ml-system on Aiden's Camp</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 10 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://aiden-jeon.github.io/tags/ml-system/index.xml" rel="self" type="application/rss+xml"/><item><title>Chapter 8. Data Distribution Shifts and Monitoring</title><link>https://aiden-jeon.github.io/post/mlops/designing-ml-system/chapter-08/</link><pubDate>Thu, 10 Nov 2022 00:00:00 +0000</pubDate><guid>https://aiden-jeon.github.io/post/mlops/designing-ml-system/chapter-08/</guid><description>&lt;p>Summary of &lt;a class="link" href="https://learning.oreilly.com/library/view/designing-machine-learning/9781098107956/" target="_blank" rel="noopener"
+>Designing Machine Learning Systems&lt;/a> written by Chip Huyen.&lt;/p>
+&lt;hr>
+&lt;h1 id="chapter-8-data-distribution-shifts-and-monitoring">Chapter 8. Data Distribution Shifts and Monitoring&lt;/h1>
+&lt;ul>
+&lt;li>Deploying a model isn’t the end of process
+&lt;ul>
+&lt;li>Model’s performance degrades over time in production&lt;/li>
+&lt;li>Once models has deployed, still have to continually monitor its performance to detect issue
+&lt;ul>
+&lt;li>→ deploy updates to fix issues&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="1-causes-of-ml-system-failures">1. Causes of ML System Failures&lt;/h2>
+&lt;ul>
+&lt;li>Failure
+&lt;ul>
+&lt;li>one or more expectations of the system is violated&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Traditional software
+&lt;ul>
+&lt;li>system’s operational expectations
+&lt;ul>
+&lt;li>system executes its logic with in expected operational metrics&lt;/li>
+&lt;li>latency, throughput&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>ML System
+&lt;ul>
+&lt;li>operational expectations and ML performance metrics
+&lt;ul>
+&lt;li>operational expectation violates → easier to detect&lt;/li>
+&lt;li>ML performance metric violates → harder to detect&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="1-software-system-failures">1. Software System Failures&lt;/h3>
+&lt;ol>
+&lt;li>Dependency failure&lt;/li>
+&lt;li>Deployment failure&lt;/li>
+&lt;li>Hardware failure&lt;/li>
+&lt;li>Downtime or Crashing&lt;/li>
+&lt;/ol>
+&lt;h3 id="2-ml-specific-failures">2. ML-Specific Failures&lt;/h3>
+&lt;h4 id="1-production-data-differing-from-training-data">1. Production data differing from training data&lt;/h4>
+&lt;ul>
+&lt;li>model generalizes to unseen data
+&lt;ul>
+&lt;li>generate accurate predictions for unseen data&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Assumption: unseen data comes from a stationary distribution that is the same as the training data distribution&lt;/li>
+&lt;li>→ incorrect in most case
+&lt;ol>
+&lt;li>underlying distribution of the real-world data is unlikely to be the same as the training data distribution&lt;/li>
+&lt;li>the real-word isn’t stationary&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ul>
+&lt;h4 id="2-edge-cases">2. Edge cases&lt;/h4>
+&lt;ul>
+&lt;li>edge cases: the data samples so extreme that cause the model to make catastrophic mistakes&lt;/li>
+&lt;li>outlier vs edge case
+&lt;ul>
+&lt;li>outlier
+&lt;ul>
+&lt;li>refers to data&lt;/li>
+&lt;li>an example that differs significantly differs from other examples&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>edge case
+&lt;ul>
+&lt;li>refers to performance&lt;/li>
+&lt;li>an example where a model performs significantly worse than other examples&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="3-degenerate-feedback-loops">3. Degenerate Feedback Loops&lt;/h3>
+&lt;ul>
+&lt;li>feedback loop
+&lt;ul>
+&lt;li>the time it takes from when a prediction is show until the time feedback on the prediction is provided.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>degenerate feedback loop
+&lt;ul>
+&lt;li>predictions themselves influence feedback → influences the next iteration of the model&lt;/li>
+&lt;li>created when systems’s outputs are used → to generate the system’s future inputs
+&lt;ul>
+&lt;li>⇒ influence the system’s output&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>eg) recommendation system&lt;/li>
+&lt;/ul>
+&lt;h3 id="4-detecting-degenerate-feedback-loop">4. Detecting Degenerate Feedback Loop&lt;/h3>
+&lt;h3 id="5-correcting-degenerate-feedback-loop">5. Correcting Degenerate Feedback Loop&lt;/h3>
+&lt;h2 id="2-data-distribution-shifts">2. Data Distribution Shifts&lt;/h2>
+&lt;ul>
+&lt;li>Data distribution shifts
+&lt;ul>
+&lt;li>phenomenon in supervised learning when the data a model works with changes over time
+&lt;ul>
+&lt;li>→ causes this model’s prediction to become less accurate as time passes&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Source distribution&lt;/li>
+&lt;li>Target distribution&lt;/li>
+&lt;/ul>
+&lt;h3 id="1-types-of-data-distribution-shifts">1. Types of Data Distribution Shifts&lt;/h3>
+&lt;ol>
+&lt;li>Covariate Shift: when $P(X)$ changes but $P(Y|X)$ remains the same&lt;/li>
+&lt;li>Label Shift: when $P(Y)$ changes but $P(X|Y)$ remains the same&lt;/li>
+&lt;li>Concept Drift: when $P(Y|X)$ changes but $P(X)$ remains the same&lt;/li>
+&lt;/ol>
+&lt;h4 id="1-covariate-shift">1. Covariate shift&lt;/h4>
+&lt;ul>
+&lt;li>one of most widely studied forms&lt;/li>
+&lt;li>model development
+&lt;ul>
+&lt;li>during data selection process
+&lt;ol>
+&lt;li>difficult to collect data&lt;/li>
+&lt;li>training data is artificially altered (under-sampling, over-sampling)&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>model’s learning process
+&lt;ul>
+&lt;li>active learning&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>In production
+&lt;ul>
+&lt;li>major change in
+&lt;ul>
+&lt;li>the environment&lt;/li>
+&lt;li>the way application is used&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h4 id="2-label-shift">2. Label shift&lt;/h4>
+&lt;ul>
+&lt;li>a.k.a prior shift, target shift&lt;/li>
+&lt;li>closely related to covariate shift, methods for detecting and adapting models are similar&lt;/li>
+&lt;/ul>
+&lt;h4 id="3-concept-drift">3. Concept Drift&lt;/h4>
+&lt;ul>
+&lt;li>a.k.a posterior shift&lt;/li>
+&lt;li>same input, different output&lt;/li>
+&lt;li>usually cyclic or seasonal&lt;/li>
+&lt;/ul>
+&lt;h3 id="2-general-data-distribution-shifts">2. General Data Distribution Shifts&lt;/h3>
+&lt;ul>
+&lt;li>feature change
+&lt;ul>
+&lt;li>new features are added&lt;/li>
+&lt;li>old features are removed&lt;/li>
+&lt;li>set of all possible values of a feature changed&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Label schema change
+&lt;ul>
+&lt;li>set of possible value for Y change&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="3-detecting-data-distribution-shifts">3. Detecting Data Distribution Shifts&lt;/h3>
+&lt;ul>
+&lt;li>monitoring model’s accuracy-related metrics&lt;/li>
+&lt;li>Input&lt;/li>
+&lt;li>Output&lt;/li>
+&lt;li>Joint dist&lt;/li>
+&lt;/ul>
+&lt;h4 id="1-statistical-method">1. Statistical method&lt;/h4>
+&lt;ol>
+&lt;li>compare statistics&lt;/li>
+&lt;li>two-sample hypothesis test (two-sample test)
+&lt;ul>
+&lt;li>Kolmogrov-Smirnov test (KS test)
+&lt;ul>
+&lt;li>non-parametric test&lt;/li>
+&lt;li>can used for one-dimensional data&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Least-Square Density Difference
+&lt;ul>
+&lt;li>Maximum Mean Discrepancy (MMD)&lt;/li>
+&lt;li>Learned Kernel MMD&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;h4 id="2-time-scale-windows-for-detecting-shifts">2. Time scale windows for detecting shifts&lt;/h4>
+&lt;ul>
+&lt;li>shifts across two dimensions:
+&lt;ul>
+&lt;li>spatial: happens across points&lt;/li>
+&lt;li>temporal: happens across time
+&lt;ul>
+&lt;li>→ to detect: treat input data as time-series data&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="4-addressing-data-distribution-shifts">4. Addressing Data Distribution Shifts&lt;/h3>
+&lt;ul>
+&lt;li>Assume data shifts are inevitable → periodically retrain their model&lt;/li>
+&lt;li>To make a model work with a new distribution in production:
+&lt;ol>
+&lt;li>Train models using massive datasets&lt;/li>
+&lt;li>Adopt a trained model to a target distribution without new labels
+&lt;ul>
+&lt;li>Domain Adoption under Target and Conditional Shift&lt;/li>
+&lt;li>On Learning Invariant Representations for Domain Adoption&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Retrain model using the labeled data from the target distribution
+&lt;ol>
+&lt;li>whether to
+&lt;ol>
+&lt;li>train model from scratch (stateless training)&lt;/li>
+&lt;li>continuing training the existing model (stateful training)&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>what data to use&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="3-monitoring-and-observability">3. Monitoring and Observability&lt;/h2>
+&lt;ul>
+&lt;li>monitoring
+&lt;ul>
+&lt;li>refers to act of tracking, measuring, and logging different metrics that can help us determine when something goes wrong&lt;/li>
+&lt;li>operational metrics: health of systems
+&lt;ol>
+&lt;li>network&lt;/li>
+&lt;li>machine&lt;/li>
+&lt;li>applications&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>observability
+&lt;ul>
+&lt;li>setting up our system (instrumentation) in a way that give us visibility into our system to help us investigate what meant wrong&lt;/li>
+&lt;li>part of monitoring&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="1-ml-specific-metrics">1. ML-Specific Metrics&lt;/h3>
+&lt;ul>
+&lt;li>Types
+&lt;ol>
+&lt;li>model accuracy-related metrics&lt;/li>
+&lt;li>predictions&lt;/li>
+&lt;li>features&lt;/li>
+&lt;li>raw inputs&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>from 1 to 4
+&lt;ul>
+&lt;li>easier to monitor ←→ harder to monitor&lt;/li>
+&lt;li>closer to business metrics ←→ less likely to be caused by human errors&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h4 id="1-monitoring-accuracy-related-metrics">1. Monitoring accuracy-related metrics&lt;/h4>
+&lt;ul>
+&lt;li>direct metrics to help decide whether a model’s performance has degraded&lt;/li>
+&lt;/ul>
+&lt;h4 id="2-monitoring-predictions">2. Monitoring predictions&lt;/h4>
+&lt;ul>
+&lt;li>most common artifact to monitor&lt;/li>
+&lt;li>easy to visualize&lt;/li>
+&lt;li>monitor predictions for distribution shifts&lt;/li>
+&lt;/ul>
+&lt;h4 id="3-monitoring-features">3. Monitoring features&lt;/h4>
+&lt;ul>
+&lt;li>feature validation
+&lt;ul>
+&lt;li>ensuring that features follow an expected schema&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h4 id="4-monitoring-raw-inputs">4. Monitoring raw inputs&lt;/h4>
+&lt;h3 id="2-monitoring-toolbox">2. Monitoring Toolbox&lt;/h3>
+&lt;ol>
+&lt;li>logs&lt;/li>
+&lt;li>dashboards&lt;/li>
+&lt;li>alerts&lt;/li>
+&lt;/ol>
+&lt;h3 id="3-observability">3. Observability&lt;/h3>
+&lt;ul>
+&lt;li>better visibility into understanding the complex behavior of software using [outputs] collected from the system at run time&lt;/li>
+&lt;li>telemetry
+&lt;ul>
+&lt;li>system’s outputs collected at runtime&lt;/li>
+&lt;li>remote measures
+&lt;ul>
+&lt;li>logs and metrics collected from remote component such as
+&lt;ul>
+&lt;li>cloud services&lt;/li>
+&lt;li>applications on customer device&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul></description></item><item><title>Chapter 7. Model Deployment and Prediction Service</title><link>https://aiden-jeon.github.io/post/mlops/designing-ml-system/chapter-07/</link><pubDate>Wed, 09 Nov 2022 00:00:00 +0000</pubDate><guid>https://aiden-jeon.github.io/post/mlops/designing-ml-system/chapter-07/</guid><description>&lt;p>Summary of &lt;a class="link" href="https://learning.oreilly.com/library/view/designing-machine-learning/9781098107956/" target="_blank" rel="noopener"
 >Designing Machine Learning Systems&lt;/a> written by Chip Huyen.&lt;/p>
 &lt;hr>
 &lt;h1 id="chapter-7-model-deployment-and-prediction-service">Chapter 7. Model Deployment and Prediction Service&lt;/h1>
