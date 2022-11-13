@@ -1,4 +1,350 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ml-system on Aiden's Camp</title><link>https://aiden-jeon.github.io/tags/ml-system/</link><description>Recent content in ml-system on Aiden's Camp</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 10 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://aiden-jeon.github.io/tags/ml-system/index.xml" rel="self" type="application/rss+xml"/><item><title>Chapter 8. Data Distribution Shifts and Monitoring</title><link>https://aiden-jeon.github.io/post/mlops/designing-ml-system/chapter-08/</link><pubDate>Thu, 10 Nov 2022 00:00:00 +0000</pubDate><guid>https://aiden-jeon.github.io/post/mlops/designing-ml-system/chapter-08/</guid><description>&lt;p>Summary of &lt;a class="link" href="https://learning.oreilly.com/library/view/designing-machine-learning/9781098107956/" target="_blank" rel="noopener"
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ml-system on Aiden's Camp</title><link>https://aiden-jeon.github.io/tags/ml-system/</link><description>Recent content in ml-system on Aiden's Camp</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 13 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://aiden-jeon.github.io/tags/ml-system/index.xml" rel="self" type="application/rss+xml"/><item><title>Chapter 9. Continual Learning and Test in Production</title><link>https://aiden-jeon.github.io/post/mlops/designing-ml-system/chapter-00/</link><pubDate>Sun, 13 Nov 2022 00:00:00 +0000</pubDate><guid>https://aiden-jeon.github.io/post/mlops/designing-ml-system/chapter-00/</guid><description>&lt;p>Summary of &lt;a class="link" href="https://learning.oreilly.com/library/view/designing-machine-learning/9781098107956/" target="_blank" rel="noopener"
+>Designing Machine Learning Systems&lt;/a> written by Chip Huyen.&lt;/p>
+&lt;hr>
+&lt;h1 id="chapter-9-continual-learning-and-test-in-production">Chapter 9. Continual Learning and Test in Production&lt;/h1>
+&lt;ul>
+&lt;li>continual learning
+&lt;ul>
+&lt;li>to adapt our models to data distribution shifts&lt;/li>
+&lt;li>infrastructural problem&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>test in production
+&lt;ul>
+&lt;li>model is retrained to adapt to the changing environment
+&lt;ul>
+&lt;li>evaluating it on a stationary set&lt;/li>
+&lt;li>also test in production&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>monitoring &amp;amp; test in production
+&lt;ul>
+&lt;li>monitoring: passively keeping track of the outputs&lt;/li>
+&lt;li>test in production: proactively choosing which model to produce outputs&lt;/li>
+&lt;li>Goal: to understand a model’s performance and figure out when to update it&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Goal of continual learning
+&lt;ul>
+&lt;li>to safely and efficiently automate the update&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="continual-learning">Continual Learning&lt;/h2>
+&lt;ul>
+&lt;li>Misunderstand in term of “Continual learning”
+&lt;ul>
+&lt;li>A models updates itself with every incoming sample in production
+&lt;ul>
+&lt;li>problems
+&lt;ol>
+&lt;li>catastrophic forgetting
+&lt;ul>
+&lt;li>tendency of a neural network to completely and abruptly forget previous learned information upon learning new information&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>make training more expensive&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Update their model in micro-batch (512, 1024)&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>updated model shouldn’t be deployed until it’s been evaluated
+&lt;ul>
+&lt;li>existing model → champion model&lt;/li>
+&lt;li>replica model → challenger model&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Don’t need to update model frequently
+&lt;ol>
+&lt;li>don’t have enough traffic&lt;/li>
+&lt;li>model don’t decay that fast&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="1-stateless-retraining-versus-stateful-training">1. Stateless Retraining Versus Stateful Training&lt;/h3>
+&lt;ul>
+&lt;li>continual learning isn’t about retraining frequency → manner in which model is retrained&lt;/li>
+&lt;/ul>
+&lt;h4 id="1-stateless-retraining">1. Stateless retraining&lt;/h4>
+&lt;ul>
+&lt;li>
+&lt;p>the model is trained from scratch&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>for example&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">&amp;lt;--&amp;gt; (model v1)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;--&amp;gt; (model v2)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;--&amp;gt; (model v3)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/li>
+&lt;li>
+&lt;p>require a lot more data&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;h4 id="2-stateful-training">2. Stateful training&lt;/h4>
+&lt;ul>
+&lt;li>
+&lt;p>the model continues training on new data&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>fine-tuning or incremental learning&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>for example&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">&amp;lt;--&amp;gt; (model v1)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;-&amp;gt; (model v1.1)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;-&amp;gt; (model v1.2)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/li>
+&lt;li>
+&lt;p>allows to update model with less data&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;h4 id="3-types-of-model-updates">3. Types of model updates&lt;/h4>
+&lt;ol>
+&lt;li>Model iteration
+&lt;ul>
+&lt;li>A new feature is added to an existing model architecture&lt;/li>
+&lt;li>model architecture is changed&lt;/li>
+&lt;li>to be stateful training
+&lt;ul>
+&lt;li>knowledge transfer&lt;/li>
+&lt;li>model surgery&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Data iteration
+&lt;ul>
+&lt;li>model architecture and features remain the same&lt;/li>
+&lt;li>but refresh this model with new data&lt;/li>
+&lt;li>means stateful training&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;h3 id="2-why-continual-learning">2. Why Continual Learning&lt;/h3>
+&lt;ul>
+&lt;li>Continual Learning
+&lt;ul>
+&lt;li>setting up infrastructure so that you can update your model and deploy these changes as fast as you want&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Use case
+&lt;ol>
+&lt;li>to combat data distribution shifts, especially when the shifts happens suddenly&lt;/li>
+&lt;li>to adapt to rare events&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>Continuous cold start problem
+&lt;ul>
+&lt;li>arises when your model has to make predictions for a new user without any historical data&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="3-continual-learning-challenges">3. Continual Learning Challenges&lt;/h3>
+&lt;h4 id="1-fresh-data-access-challenge">1. Fresh data access challenge&lt;/h4>
+&lt;h4 id="2-evaluation-challenged">2. Evaluation challenged&lt;/h4>
+&lt;ul>
+&lt;li>The biggest challenge of continual learning
+&lt;ul>
+&lt;li>making sure that this update is good enough to be deployed&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>The risk of catastrophic failures amplify with continual learning
+&lt;ol>
+&lt;li>The more frequently you update your models → the more opportunities there are for updates to fail&lt;/li>
+&lt;li>make your models more susceptible to coordinated manipulation and adversarial attack&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>evaluation pipeline
+&lt;ul>
+&lt;li>evaluation takes time → can be another bottleneck for model update frequency&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h4 id="3-algorithm-challenged">3. Algorithm challenged&lt;/h4>
+&lt;h3 id="4-four-stages-of-continual-learning">4. Four Stages of continual learning&lt;/h3>
+&lt;ol>
+&lt;li>Stage 1: Manual, stateless retraining&lt;/li>
+&lt;li>Stage 2: Automated retraining&lt;/li>
+&lt;li>Stage 3: Automated, stateful retraining&lt;/li>
+&lt;li>Stage 4: Continual learning&lt;/li>
+&lt;/ol>
+&lt;h3 id="5-how-often-to-update-your-model">5. How Often to Update Your Model&lt;/h3>
+&lt;h4 id="1-value-of-data-freshness">1. Value of data freshness&lt;/h4>
+&lt;ul>
+&lt;li>Q) How often to update a model? → How much the model performance will improve with updating?&lt;/li>
+&lt;li>To figure out the gain
+&lt;ul>
+&lt;li>
+&lt;p>training your model on the data from different time windows in the past and see how the performance changes&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>for example&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">&amp;lt;--&amp;gt; model A
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;--&amp;gt; model B
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;--&amp;gt; model C
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Test data
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h4 id="2-model-iteration-versus-data-iteration">2. Model iteration versus data iteration&lt;/h4>
+&lt;ul>
+&lt;li>model iteration
+&lt;ul>
+&lt;li>data iterating doesn’t give you much performance gain&lt;/li>
+&lt;li>→ spend resources on finding a better model&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>data iteration
+&lt;ul>
+&lt;li>finding a better model architecture requires 100X compute for training and gives 1% performance gain&lt;/li>
+&lt;li>whereas data iteration requires 1X compute and also gives 1% performance gain&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="test-in-production">Test in Production&lt;/h2>
+&lt;ul>
+&lt;li>To sufficiently evaluate models
+&lt;ul>
+&lt;li>use mixture of offline evaluation and online evaluation&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Offline evaluation
+&lt;ul>
+&lt;li>Good old test split to evaluate models&lt;/li>
+&lt;li>→ not sufficient to evaluate new model&lt;/li>
+&lt;li>→backtest&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>backtest
+&lt;ul>
+&lt;li>method of testing a predictive model on data from a specific period of time in the past
+&lt;ul>
+&lt;li>not quite sufficient&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="1-shadow-deployment">1. Shadow Deployment&lt;/h3>
+&lt;ul>
+&lt;li>the safest way to deploy model&lt;/li>
+&lt;li>steps
+&lt;ol>
+&lt;li>Deploy the candidate model in parallel with the existing model&lt;/li>
+&lt;li>For each incoming request, route it both models to make predictions, but only serve the existing model’s prediction to user&lt;/li>
+&lt;li>Log the predictions from the new model for analysis purpose&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>Replace model when new model’s predictions are satisfactory&lt;/li>
+&lt;li>But expensive: doubling cost&lt;/li>
+&lt;/ul>
+&lt;h3 id="2-ab-testing">2. A/B Testing&lt;/h3>
+&lt;ul>
+&lt;li>a way to compare two variants of an object&lt;/li>
+&lt;li>testing responses to these two variants → determining which of two variants is more effective&lt;/li>
+&lt;li>steps
+&lt;ol>
+&lt;li>Deploy the candidate model alongside the existing model&lt;/li>
+&lt;li>A percentage of traffic is routed to the new model, the rest is routed to the existing model&lt;/li>
+&lt;li>Monitor and analyze the predictions and user feedback, if any, from both models to determine whether the difference in the two models’ performance is statistically significant&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>A/B testing requires
+&lt;ol>
+&lt;li>A/B testing consists of a randomized experiment&lt;/li>
+&lt;li>A/B test should be run on a sufficient number of samples to gain enough confidence about the outcome&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="3-canary-release">3. Canary Release&lt;/h3>
+&lt;ul>
+&lt;li>technique to reduce the risk of introducing a new software version in production
+&lt;ul>
+&lt;li>by slow rolling out the change to a small subset of users&lt;/li>
+&lt;li>before rolling it out to everybody&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>steps
+&lt;ol>
+&lt;li>Deploy the candidate model alongside the existing model.
+&lt;ul>
+&lt;li>candidate model is called canary&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>A portion of the traffic is routed to the candidate model&lt;/li>
+&lt;li>If its performance is satisfactory increase the traffic to the candidate model. If not, abort the canary and route all traffic to the existing model&lt;/li>
+&lt;li>Stop when either the canary serves all the traffic or the canary is aborted&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="4-interleaving-experiments">4. Interleaving Experiments&lt;/h3>
+&lt;ul>
+&lt;li>Reliably identifies the best algorithms with considerably smaller sample size compare to traditional A/B testomg&lt;/li>
+&lt;li>A/B testing**********************************:********************************** core metrics are compared&lt;/li>
+&lt;li>Interleaving: compared by measuring user preferences&lt;/li>
+&lt;/ul>
+&lt;h3 id="5-bandits">5. Bandits&lt;/h3>
+&lt;ul>
+&lt;li>A/B testing
+&lt;ul>
+&lt;li>randomly route traffic&lt;/li>
+&lt;li>stateless&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Bandits
+&lt;ul>
+&lt;li>allow to determine how to route traffic&lt;/li>
+&lt;li>stateful&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>a lot more data-efficient that A/B testing
+&lt;ul>
+&lt;li>require less data&lt;/li>
+&lt;li>reduce opportunity cost as they route traffic to the better model more quickly&lt;/li>
+&lt;li>A/B testing 630,000 to get a 95% confidence interval&lt;/li>
+&lt;li>12,000 samples to determine&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>a lot more difficult to implement
+&lt;ul>
+&lt;li>bandits requires computing and keeping track of models’ payoffs&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul></description></item><item><title>Chapter 8. Data Distribution Shifts and Monitoring</title><link>https://aiden-jeon.github.io/post/mlops/designing-ml-system/chapter-08/</link><pubDate>Thu, 10 Nov 2022 00:00:00 +0000</pubDate><guid>https://aiden-jeon.github.io/post/mlops/designing-ml-system/chapter-08/</guid><description>&lt;p>Summary of &lt;a class="link" href="https://learning.oreilly.com/library/view/designing-machine-learning/9781098107956/" target="_blank" rel="noopener"
 >Designing Machine Learning Systems&lt;/a> written by Chip Huyen.&lt;/p>
 &lt;hr>
 &lt;h1 id="chapter-8-data-distribution-shifts-and-monitoring">Chapter 8. Data Distribution Shifts and Monitoring&lt;/h1>
