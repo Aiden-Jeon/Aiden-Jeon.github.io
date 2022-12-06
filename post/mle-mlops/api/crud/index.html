@@ -41,7 +41,7 @@ Overview 목표 FastAPI를 이용해 CRUD가 되는 api를 작성합니다. Path
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nd>@app</span><span class=o>.</span><span class=n>post</span><span class=p>(</span><span class=s2>&#34;/nickname&#34;</span><span class=p>)</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nd>@app.post</span><span class=p>(</span><span class=s2>&#34;/nickname&#34;</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>create_path</span><span class=p>(</span><span class=n>name</span><span class=p>:</span> <span class=nb>str</span><span class=p>,</span> <span class=n>nickname</span><span class=p>:</span> <span class=nb>str</span><span class=p>):</span>
 </span></span><span class=line><span class=cl>    <span class=n>KEY_VALUE_STORE</span><span class=p>[</span><span class=n>name</span><span class=p>]</span> <span class=o>=</span> <span class=n>nickname</span>
 </span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>{</span><span class=s2>&#34;status&#34;</span><span class=p>:</span> <span class=s2>&#34;success&#34;</span><span class=p>}</span>
@@ -49,7 +49,7 @@ Overview 목표 FastAPI를 이용해 CRUD가 되는 api를 작성합니다. Path
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nd>@app</span><span class=o>.</span><span class=n>post</span><span class=p>(</span><span class=s2>&#34;/nickname/name/</span><span class=si>{name}</span><span class=s2>/nickname/</span><span class=si>{nickname}</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nd>@app.post</span><span class=p>(</span><span class=s2>&#34;/nickname/name/</span><span class=si>{name}</span><span class=s2>/nickname/</span><span class=si>{nickname}</span><span class=s2>&#34;</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>create_query</span><span class=p>(</span><span class=n>name</span><span class=p>:</span> <span class=nb>str</span><span class=p>,</span> <span class=n>nickname</span><span class=p>:</span> <span class=nb>str</span><span class=p>):</span>
 </span></span><span class=line><span class=cl>    <span class=n>KEY_VALUE_STORE</span><span class=p>[</span><span class=n>name</span><span class=p>]</span> <span class=o>=</span> <span class=n>nickname</span>
 </span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>{</span><span class=s2>&#34;status&#34;</span><span class=p>:</span> <span class=s2>&#34;success&#34;</span><span class=p>}</span>
@@ -58,7 +58,7 @@ Overview 목표 FastAPI를 이용해 CRUD가 되는 api를 작성합니다. Path
 </span><span class=lnt>3
 </span><span class=lnt>4
 </span><span class=lnt>5
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nd>@app</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s2>&#34;/nickname&#34;</span><span class=p>)</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nd>@app.get</span><span class=p>(</span><span class=s2>&#34;/nickname&#34;</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>get_path</span><span class=p>(</span><span class=n>name</span><span class=p>:</span> <span class=nb>str</span><span class=p>):</span>
 </span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>name</span> <span class=ow>not</span> <span class=ow>in</span> <span class=n>KEY_VALUE_STORE</span><span class=p>:</span>
 </span></span><span class=line><span class=cl>        <span class=k>raise</span> <span class=n>NAME_NOT_FOUND</span>
@@ -68,7 +68,7 @@ Overview 목표 FastAPI를 이용해 CRUD가 되는 api를 작성합니다. Path
 </span><span class=lnt>3
 </span><span class=lnt>4
 </span><span class=lnt>5
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nd>@app</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s2>&#34;/nickname/name/</span><span class=si>{name}</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nd>@app.get</span><span class=p>(</span><span class=s2>&#34;/nickname/name/</span><span class=si>{name}</span><span class=s2>&#34;</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>get_query</span><span class=p>(</span><span class=n>name</span><span class=p>:</span> <span class=nb>str</span><span class=p>):</span>
 </span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>name</span> <span class=ow>not</span> <span class=ow>in</span> <span class=n>KEY_VALUE_STORE</span><span class=p>:</span>
 </span></span><span class=line><span class=cl>        <span class=k>raise</span> <span class=n>NAME_NOT_FOUND</span>
@@ -79,7 +79,7 @@ Overview 목표 FastAPI를 이용해 CRUD가 되는 api를 작성합니다. Path
 </span><span class=lnt>4
 </span><span class=lnt>5
 </span><span class=lnt>6
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nd>@app</span><span class=o>.</span><span class=n>put</span><span class=p>(</span><span class=s2>&#34;/nickname&#34;</span><span class=p>)</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nd>@app.put</span><span class=p>(</span><span class=s2>&#34;/nickname&#34;</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>update_path</span><span class=p>(</span><span class=n>name</span><span class=p>:</span> <span class=nb>str</span><span class=p>,</span> <span class=n>nickname</span><span class=p>:</span> <span class=nb>str</span><span class=p>):</span>
 </span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>name</span> <span class=ow>not</span> <span class=ow>in</span> <span class=n>KEY_VALUE_STORE</span><span class=p>:</span>
 </span></span><span class=line><span class=cl>        <span class=k>raise</span> <span class=n>NAME_NOT_FOUND</span>
@@ -91,7 +91,7 @@ Overview 목표 FastAPI를 이용해 CRUD가 되는 api를 작성합니다. Path
 </span><span class=lnt>4
 </span><span class=lnt>5
 </span><span class=lnt>6
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nd>@app</span><span class=o>.</span><span class=n>put</span><span class=p>(</span><span class=s2>&#34;/nickname/name/</span><span class=si>{name}</span><span class=s2>/nickname/</span><span class=si>{nickname}</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nd>@app.put</span><span class=p>(</span><span class=s2>&#34;/nickname/name/</span><span class=si>{name}</span><span class=s2>/nickname/</span><span class=si>{nickname}</span><span class=s2>&#34;</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>update_query</span><span class=p>(</span><span class=n>name</span><span class=p>:</span> <span class=nb>str</span><span class=p>,</span> <span class=n>nickname</span><span class=p>:</span> <span class=nb>str</span><span class=p>):</span>
 </span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>name</span> <span class=ow>not</span> <span class=ow>in</span> <span class=n>KEY_VALUE_STORE</span><span class=p>:</span>
 </span></span><span class=line><span class=cl>        <span class=k>raise</span> <span class=n>NAME_NOT_FOUND</span>
@@ -103,7 +103,7 @@ Overview 목표 FastAPI를 이용해 CRUD가 되는 api를 작성합니다. Path
 </span><span class=lnt>4
 </span><span class=lnt>5
 </span><span class=lnt>6
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nd>@app</span><span class=o>.</span><span class=n>delete</span><span class=p>(</span><span class=s2>&#34;/nickname&#34;</span><span class=p>)</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nd>@app.delete</span><span class=p>(</span><span class=s2>&#34;/nickname&#34;</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>delete_path</span><span class=p>(</span><span class=n>name</span><span class=p>:</span> <span class=nb>str</span><span class=p>):</span>
 </span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>name</span> <span class=ow>not</span> <span class=ow>in</span> <span class=n>KEY_VALUE_STORE</span><span class=p>:</span>
 </span></span><span class=line><span class=cl>        <span class=k>raise</span> <span class=n>NAME_NOT_FOUND</span>
@@ -115,7 +115,7 @@ Overview 목표 FastAPI를 이용해 CRUD가 되는 api를 작성합니다. Path
 </span><span class=lnt>4
 </span><span class=lnt>5
 </span><span class=lnt>6
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nd>@app</span><span class=o>.</span><span class=n>delete</span><span class=p>(</span><span class=s2>&#34;/nickname/name/</span><span class=si>{name}</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nd>@app.delete</span><span class=p>(</span><span class=s2>&#34;/nickname/name/</span><span class=si>{name}</span><span class=s2>&#34;</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>delete_query</span><span class=p>(</span><span class=n>name</span><span class=p>:</span> <span class=nb>str</span><span class=p>):</span>
 </span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>name</span> <span class=ow>not</span> <span class=ow>in</span> <span class=n>KEY_VALUE_STORE</span><span class=p>:</span>
 </span></span><span class=line><span class=cl>        <span class=k>raise</span> <span class=n>NAME_NOT_FOUND</span>
@@ -185,32 +185,32 @@ Overview 목표 FastAPI를 이용해 CRUD가 되는 api를 작성합니다. Path
 </span></span><span class=line><span class=cl><span class=n>app</span> <span class=o>=</span> <span class=n>FastAPI</span><span class=p>()</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=nd>@app</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s2>&#34;/&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nd>@app.get</span><span class=p>(</span><span class=s2>&#34;/&#34;</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=k>async</span> <span class=k>def</span> <span class=nf>root</span><span class=p>():</span>
 </span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>{</span><span class=s2>&#34;message&#34;</span><span class=p>:</span> <span class=s2>&#34;Hello World&#34;</span><span class=p>}</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=nd>@app</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s2>&#34;/items/</span><span class=si>{item_id}</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nd>@app.get</span><span class=p>(</span><span class=s2>&#34;/items/</span><span class=si>{item_id}</span><span class=s2>&#34;</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=k>async</span> <span class=k>def</span> <span class=nf>read_item</span><span class=p>(</span><span class=n>item_id</span><span class=p>:</span> <span class=nb>int</span><span class=p>):</span>
 </span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>{</span><span class=s2>&#34;item_id&#34;</span><span class=p>:</span> <span class=n>item_id</span><span class=p>}</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=nd>@app</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s2>&#34;/users/me&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nd>@app.get</span><span class=p>(</span><span class=s2>&#34;/users/me&#34;</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=k>async</span> <span class=k>def</span> <span class=nf>read_user_me</span><span class=p>():</span>
 </span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>{</span><span class=s2>&#34;user_id&#34;</span><span class=p>:</span> <span class=s2>&#34;the current user&#34;</span><span class=p>}</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=nd>@app</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s2>&#34;/users/</span><span class=si>{user_id}</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nd>@app.get</span><span class=p>(</span><span class=s2>&#34;/users/</span><span class=si>{user_id}</span><span class=s2>&#34;</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=k>async</span> <span class=k>def</span> <span class=nf>read_user</span><span class=p>(</span><span class=n>user_id</span><span class=p>:</span> <span class=nb>str</span><span class=p>):</span>
 </span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>{</span><span class=s2>&#34;user_id&#34;</span><span class=p>:</span> <span class=n>user_id</span><span class=p>}</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=nd>@app</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s2>&#34;/users&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nd>@app.get</span><span class=p>(</span><span class=s2>&#34;/users&#34;</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=k>async</span> <span class=k>def</span> <span class=nf>read_users</span><span class=p>():</span>
 </span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>[</span><span class=s2>&#34;Rick&#34;</span><span class=p>,</span> <span class=s2>&#34;Morty&#34;</span><span class=p>]</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=nd>@app</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s2>&#34;/users&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nd>@app.get</span><span class=p>(</span><span class=s2>&#34;/users&#34;</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=k>async</span> <span class=k>def</span> <span class=nf>read_users2</span><span class=p>():</span>
 </span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>[</span><span class=s2>&#34;Bean&#34;</span><span class=p>,</span> <span class=s2>&#34;Elfo&#34;</span><span class=p>]</span>
 </span></span><span class=line><span class=cl>
@@ -221,7 +221,7 @@ Overview 목표 FastAPI를 이용해 CRUD가 되는 api를 작성합니다. Path
 </span></span><span class=line><span class=cl>    <span class=n>lenet</span> <span class=o>=</span> <span class=s2>&#34;lenet&#34;</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=nd>@app</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s2>&#34;/models/</span><span class=si>{model_name}</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nd>@app.get</span><span class=p>(</span><span class=s2>&#34;/models/</span><span class=si>{model_name}</span><span class=s2>&#34;</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=k>async</span> <span class=k>def</span> <span class=nf>get_model</span><span class=p>(</span><span class=n>model_name</span><span class=p>:</span> <span class=n>ModelName</span><span class=p>):</span>
 </span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>model_name</span> <span class=ow>is</span> <span class=n>ModelName</span><span class=o>.</span><span class=n>alexnet</span><span class=p>:</span>
 </span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=p>{</span><span class=s2>&#34;model_name&#34;</span><span class=p>:</span> <span class=n>model_name</span><span class=p>,</span> <span class=s2>&#34;message&#34;</span><span class=p>:</span> <span class=s2>&#34;Deep Learning FTW!&#34;</span><span class=p>}</span>
@@ -232,7 +232,7 @@ Overview 목표 FastAPI를 이용해 CRUD가 되는 api를 작성합니다. Path
 </span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>{</span><span class=s2>&#34;model_name&#34;</span><span class=p>:</span> <span class=n>model_name</span><span class=p>,</span> <span class=s2>&#34;message&#34;</span><span class=p>:</span> <span class=s2>&#34;Have some residuals&#34;</span><span class=p>}</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=nd>@app</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s2>&#34;/files/{file_path:path}&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nd>@app.get</span><span class=p>(</span><span class=s2>&#34;/files/{file_path:path}&#34;</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=k>async</span> <span class=k>def</span> <span class=nf>read_file</span><span class=p>(</span><span class=n>file_path</span><span class=p>:</span> <span class=nb>str</span><span class=p>):</span>
 </span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>{</span><span class=s2>&#34;file_path&#34;</span><span class=p>:</span> <span class=n>file_path</span><span class=p>}</span>
 </span></span></code></pre></td></tr></table></div></div><p>그리고 <code>uvicorn</code> 명령어로 실행합니다.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1

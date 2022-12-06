@@ -1,4 +1,363 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Aiden's Camp</title><link>https://aiden-jeon.github.io/</link><description>Recent content on Aiden's Camp</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 13 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://aiden-jeon.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Chapter 9. Continual Learning and Test in Production</title><link>https://aiden-jeon.github.io/post/mlops/designing-ml-system/chapter-00/</link><pubDate>Sun, 13 Nov 2022 00:00:00 +0000</pubDate><guid>https://aiden-jeon.github.io/post/mlops/designing-ml-system/chapter-00/</guid><description>&lt;p>Summary of &lt;a class="link" href="https://learning.oreilly.com/library/view/designing-machine-learning/9781098107956/" target="_blank" rel="noopener"
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Aiden's Camp</title><link>https://aiden-jeon.github.io/</link><description>Recent content on Aiden's Camp</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 06 Dec 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://aiden-jeon.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Apache Kafka 101</title><link>https://aiden-jeon.github.io/post/mlops/kafka/kakfa-introduction/</link><pubDate>Tue, 06 Dec 2022 00:00:00 +0000</pubDate><guid>https://aiden-jeon.github.io/post/mlops/kafka/kakfa-introduction/</guid><description>&lt;h1 id="apache-kafka-101">Apache Kafka 101&lt;/h1>
+&lt;p>&lt;a class="link" href="https://developer.confluent.io/learn-kafka/apache-kafka/" target="_blank" rel="noopener"
+>Apache Kafka 101&lt;/a>&lt;/p>
+&lt;h2 id="1-events">1. Events&lt;/h2>
+&lt;h3 id="kafka">Kafka&lt;/h3>
+&lt;ul>
+&lt;li>many use cases&lt;/li>
+&lt;li>⇒ start from event streaming platform&lt;/li>
+&lt;/ul>
+&lt;h3 id="event">Event&lt;/h3>
+&lt;ul>
+&lt;li>What is Event?
+&lt;ul>
+&lt;li>things that have happened combined with the description of what happend&lt;/li>
+&lt;li>⇒ notification + state&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>eg)
+&lt;ul>
+&lt;li>IOT&lt;/li>
+&lt;li>Business Process Change&lt;/li>
+&lt;li>User Interaction&lt;/li>
+&lt;li>Microservice Output&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Notification
+&lt;ul>
+&lt;li>the element of when-ness that can be used to trigger some other activity&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>State
+&lt;ul>
+&lt;li>Usually small (less than a megabyte)&lt;/li>
+&lt;li>normally represented in some structured format (JSON, an object serialized with Apache Avro or Protocol Buffers)&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="key--value">Key / Value&lt;/h3>
+&lt;ul>
+&lt;li>kafka models events as key/value pair&lt;/li>
+&lt;li>Internally: sequence of bytes&lt;/li>
+&lt;li>externally: structured objects represented in language’s type system
+&lt;ul>
+&lt;li>(JSON, JSON Schema, Avro, or Protobuf)&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="3-topics">3. Topics&lt;/h2>
+&lt;h3 id="topic">Topic&lt;/h3>
+&lt;ul>
+&lt;li>most fundamental unit of Kafka&lt;/li>
+&lt;li>something like a table in a relational database&lt;/li>
+&lt;/ul>
+&lt;h3 id="named-container-for-similar-events">Named container for similar events&lt;/h3>
+&lt;ul>
+&lt;li>create different topics to hold
+&lt;ul>
+&lt;li>different kinds of events&lt;/li>
+&lt;li>filtered and transformed versions of the same kind of event
+&lt;ul>
+&lt;li>→ can duplicate data between topics&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="a-topic-is-a-log-of-events">A topic is a log of events&lt;/h3>
+&lt;ul>
+&lt;li>Logs
+&lt;ol>
+&lt;li>Append only: when writing a new message into a log, it always goes on the end&lt;/li>
+&lt;li>Can only seek by offset, not indexed&lt;/li>
+&lt;li>Immutable: once something has happened, it is difficult to make it un-happen&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="topics-are-durable">Topics are durable&lt;/h3>
+&lt;ul>
+&lt;li>Logs are durable&lt;/li>
+&lt;li>Retention is configurable
+&lt;ul>
+&lt;li>expire data after it has reached a certain age&lt;/li>
+&lt;li>topic overall reached a certain size&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Logs on Kafka topics are files stored on disk
+&lt;ul>
+&lt;li>write on event to a topic, it is durable as it would be of you had written it to any database you ever trusted.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="4-partitioning">4. Partitioning&lt;/h2>
+&lt;ul>
+&lt;li>Kafka: Distributed System
+&lt;ul>
+&lt;li>no one topic could ever get too big&lt;/li>
+&lt;li>aspire to accommodate too many reads and writes&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="what-is-partitioning">What is Partitioning?&lt;/h3>
+&lt;ul>
+&lt;li>takes the single topic log
+&lt;ul>
+&lt;li>→ breaks it into multiple logs&lt;/li>
+&lt;li>→ each of which can live on a separate node on cluster&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>need a way of deciding which messages to write to which partition
+&lt;ul>
+&lt;li>message with no key&lt;/li>
+&lt;li>message with a key&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="message-with-no-key">Message with no key&lt;/h3>
+&lt;ul>
+&lt;li>round-robin among all the topic’s partitions&lt;/li>
+&lt;li>pros) all partitions get an even share of the data&lt;/li>
+&lt;li>cons) don’t preserve any kind of ordering of the input message&lt;/li>
+&lt;/ul>
+&lt;h3 id="message-with-a-key">Message with a key&lt;/h3>
+&lt;ul>
+&lt;li>destination partition will be computed from a has of the key
+&lt;ul>
+&lt;li>output of hash function mode of # of partitions&lt;/li>
+&lt;li>guarantee that messages having same key always land in same partition&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>pros) always in order&lt;/li>
+&lt;li>cons) what if very active key? → a larger and more active partition
+&lt;ul>
+&lt;li>⇒ risk is small in practice and manageable&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="6-brokers">6. Brokers&lt;/h2>
+&lt;h3 id="kafka-brokers">Kafka Brokers&lt;/h3>
+&lt;ul>
+&lt;li>Actual Computers&lt;/li>
+&lt;li>Kafka is composed of a network of machines called brokers
+&lt;ul>
+&lt;li>machines can be an computer, instance, or container running the Kafka process&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Each broker hosts some set of Kafka partitions
+&lt;ul>
+&lt;li>handles incoming requests
+&lt;ul>
+&lt;li>to write new events to those partitions&lt;/li>
+&lt;li>to read events from them&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>handles replication of partitions&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="7-replication">7. Replication&lt;/h2>
+&lt;ul>
+&lt;li>Copies of data for fault tolerance
+&lt;ul>
+&lt;li>if we store each partition to one broker
+→ susceptible to failure
+→ we need copy partitions data to several brokers&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>One lead partition and N-1 followers
+&lt;ul>
+&lt;li>Leader: writes and reads happens&lt;/li>
+&lt;li>Follower: works together to replicate those new writes&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Automatic process → developer don’t need to worry about it&lt;/li>
+&lt;/ul>
+&lt;h2 id="8-producers">8. Producers&lt;/h2>
+&lt;h3 id="kafka-producer">Kafka Producer&lt;/h3>
+&lt;ul>
+&lt;li>application using Kafka : Producer and Consumer&lt;/li>
+&lt;li>Producing and Consuming: how to interface with cluster&lt;/li>
+&lt;li>API surface of the producer library is fairly lightweight&lt;/li>
+&lt;/ul>
+&lt;h2 id="9-consumers">9. Consumers&lt;/h2>
+&lt;h3 id="kafka-consumer">Kafka Consumer&lt;/h3>
+&lt;ul>
+&lt;li>many consumers read one topic
+&lt;ul>
+&lt;li>reading does not destroy message&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Rebalancing processes
+&lt;ul>
+&lt;li>using same group ID → fairly split data to consumer&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>traditional topic
+&lt;ul>
+&lt;li>keep ordering guarantee in place&lt;/li>
+&lt;li>sacrifice the ability to scale out consumers&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="11-ecosystem">11. Ecosystem&lt;/h2>
+&lt;ul>
+&lt;li>Infrastructure
+&lt;ul>
+&lt;li>doesn’t contribute value directly to customers&lt;/li>
+&lt;li>best case ← provided by community or an infrastructure vendor&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>eg)
+&lt;ul>
+&lt;li>Kafka Connect&lt;/li>
+&lt;li>Confluent Schema Registry&lt;/li>
+&lt;li>Kafka Streams&lt;/li>
+&lt;li>ksqlDB&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="12-kafka-connect">12. Kafka Connect&lt;/h2>
+&lt;ul>
+&lt;li>Job of Kafka connect
+&lt;ul>
+&lt;li>the data those other systems to get into Kafka topics&lt;/li>
+&lt;li>data in Kafka topics to get into those system&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="what-does-kafka-connect-do">What does Kafka Connect Do?&lt;/h3>
+&lt;ul>
+&lt;li>Data integration system and ecosystem&lt;/li>
+&lt;li>a client application
+&lt;ul>
+&lt;li>External client process; does not run on Brokers
+&lt;ul>
+&lt;li>&lt;em>if something is not a broker is an producer or and consumer&lt;/em>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Horizontally scalable&lt;/li>
+&lt;li>Fault-tolerant&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="how-kafka-connect-works">How Kafka Connect Works&lt;/h3>
+&lt;p>&lt;img src="https://aiden-jeon.github.io/imgs/kafka/kafka-connect-workflow.png"
+loading="lazy"
+alt="Kafka Connect Workflow"
+>&lt;/p>
+&lt;ul>
+&lt;li>Connect worker runs one or more connectors&lt;/li>
+&lt;li>Connectors
+&lt;ul>
+&lt;li>pluggable software component&lt;/li>
+&lt;li>interfacing with the external system&lt;/li>
+&lt;li>Also exist as runtime entities&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Source connector (acts as Producer)
+&lt;ul>
+&lt;li>reads data from and external system and produces it to a Kafka topi&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Sink connector (acts as Consumer)
+&lt;ul>
+&lt;li>subscribes to one or more Kafka topics and writes the messages it reads to an external system&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="benefits-of-kafka-connect">Benefits of Kafka Connect&lt;/h3>
+&lt;ul>
+&lt;li>large ecosystem of connectors&lt;/li>
+&lt;/ul>
+&lt;h2 id="14-confluent-schema-registry">14. Confluent Schema Registry&lt;/h2>
+&lt;ul>
+&lt;li>To solve two problems
+&lt;ol>
+&lt;li>New consumers of existing topics will emerge
+&lt;ul>
+&lt;li>→ need to understand the format of the message in the topic&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>The format of those message will evolve as the business evolves
+&lt;ul>
+&lt;li>→ the schemas of domain objects is a constantly moving target&lt;/li>
+&lt;li>must have a way of agreeing on the schema of messages in any given topic&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="what-is-schema-registry">What is Schema Registry&lt;/h3>
+&lt;ul>
+&lt;li>Sever Process external to Kafka brokers&lt;/li>
+&lt;li>Job: maintain a &lt;em>database&lt;/em> of &lt;em>schemas&lt;/em>
+&lt;ul>
+&lt;li>schema: that have been written into topics in the cluster for which it is responsible.&lt;/li>
+&lt;li>database: internal Kafka topic and cached in Schema Registry for lower latency access&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Consumer/Producer API Component
+&lt;ul>
+&lt;li>Process
+&lt;ol>
+&lt;li>calls on API at the Schema Registry REST endpoint&lt;/li>
+&lt;li>presents the schema of the new message&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>Response
+&lt;ul>
+&lt;li>Produce side
+&lt;ul>
+&lt;li>if same as last message → &lt;strong>produce succeed&lt;/strong>&lt;/li>
+&lt;li>if different from last message
+&lt;ul>
+&lt;li>but matches the compatibility rules defined for the topic → &lt;strong>produce succeed&lt;/strong>&lt;/li>
+&lt;li>violates compatibility rules → &lt;strong>produce fail&lt;/strong> in a way that the application code can detect&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Consume side
+&lt;ul>
+&lt;li>Consumer API prevents incompatible message from being consumed&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Support Formats
+&lt;ul>
+&lt;li>JSON Schema&lt;/li>
+&lt;li>Avro&lt;/li>
+&lt;li>Protocol Buffers&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="16-kafka-stream">16. Kafka Stream&lt;/h2>
+&lt;ul>
+&lt;li>Consumer tend to grow in complexity
+&lt;ul>
+&lt;li>started from &lt;em>stateless&lt;/em> transformation (masking, changing format)&lt;/li>
+&lt;li>→being complexity → stateful&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>state
+&lt;ul>
+&lt;li>memory allocated in program’s heap&lt;/li>
+&lt;li>→ fault-tolerant liability&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="kafka-stream">Kafka Stream&lt;/h3>
+&lt;ul>
+&lt;li>Functional Java API&lt;/li>
+&lt;li>Filtering, grouping, aggregating, joining, and more&lt;/li>
+&lt;li>Scalable, fault-tolerant state management&lt;/li>
+&lt;li>Integrates within your services as a library&lt;/li>
+&lt;li>Runs in the context of your application&lt;/li>
+&lt;li>Does not require special infrastructure&lt;/li>
+&lt;/ul></description></item><item><title>Chapter 9. Continual Learning and Test in Production</title><link>https://aiden-jeon.github.io/post/mlops/designing-ml-system/chapter-00/</link><pubDate>Sun, 13 Nov 2022 00:00:00 +0000</pubDate><guid>https://aiden-jeon.github.io/post/mlops/designing-ml-system/chapter-00/</guid><description>&lt;p>Summary of &lt;a class="link" href="https://learning.oreilly.com/library/view/designing-machine-learning/9781098107956/" target="_blank" rel="noopener"
 >Designing Machine Learning Systems&lt;/a> written by Chip Huyen.&lt;/p>
 &lt;hr>
 &lt;h1 id="chapter-9-continual-learning-and-test-in-production">Chapter 9. Continual Learning and Test in Production&lt;/h1>
@@ -1907,7 +2266,7 @@ API를 실행하는데 필요한 코드를 복사합니다.&lt;br>
 &lt;/span>&lt;span class="lnt">17
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">post&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/predict&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">response_model&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">PredictOut&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app.post&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/predict&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">response_model&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">PredictOut&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">predict&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">data&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">PredictIn&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">db&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Session&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Depends&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">get_db&lt;/span>&lt;span class="p">)):&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">now&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">datetime&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">utcnow&lt;/span>&lt;span class="p">()&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
@@ -2140,7 +2499,7 @@ API를 실행하는데 필요한 코드를 복사합니다.&lt;br>
 &lt;/span>&lt;span class="lnt">5
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">post&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/predict&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">response_model&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">PredictOut&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app.post&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/predict&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">response_model&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">PredictOut&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">predict&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">data&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">PredictIn&lt;/span>&lt;span class="p">):&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">df&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">pd&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">DataFrame&lt;/span>&lt;span class="p">([&lt;/span>&lt;span class="n">data&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">dict&lt;/span>&lt;span class="p">()])&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">pred&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">int&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">MODEL&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">predict&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">df&lt;/span>&lt;span class="p">))&lt;/span>
@@ -2643,12 +3002,12 @@ db의 주소는 service name을 통해 접근할 수 있습니다.&lt;/p></descr
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">db&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">close&lt;/span>&lt;span class="p">()&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/user&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app.get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/user&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">get_user&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">user_id&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">int&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">db&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Session&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Depends&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">get_db&lt;/span>&lt;span class="p">)):&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">db&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">query&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">User&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">filter&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">User&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">id&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="n">user_id&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">first&lt;/span>&lt;span class="p">()&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">post&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/user&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">response_model&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">UserCreateOut&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app.post&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/user&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">response_model&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">UserCreateOut&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">create_user&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">user&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">UserCreateIn&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">db&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Session&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Depends&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">get_db&lt;/span>&lt;span class="p">)):&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">db_user&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">User&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">name&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">user&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">name&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">nickname&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">user&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">nickname&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">db&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">add&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">db_user&lt;/span>&lt;span class="p">)&lt;/span>
@@ -2787,7 +3146,7 @@ db의 주소는 service name을 통해 접근할 수 있습니다.&lt;/p></descr
 &lt;/span>&lt;span class="lnt">4
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">post&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/nickname&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">response_model&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">CreateOut&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app.post&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/nickname&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">response_model&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">CreateOut&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">create_query&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">create_in&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">CreateIn&lt;/span>&lt;span class="p">):&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">KEY_VALUE_STORE&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">create_in&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">name&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">create_in&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">nickname&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">CreateOut&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">status&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;success&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nb">id&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nb">len&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">KEY_VALUE_STORE&lt;/span>&lt;span class="p">))&lt;/span>
@@ -2841,7 +3200,7 @@ db의 주소는 service name을 통해 접근할 수 있습니다.&lt;/p></descr
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">id&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">int&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">post&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/nickname&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">response_model&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">CreateOut&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app.post&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/nickname&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">response_model&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">CreateOut&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">create_query&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">create_in&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">CreateIn&lt;/span>&lt;span class="p">):&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">KEY_VALUE_STORE&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">create_in&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">name&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">create_in&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">nickname&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">CreateOut&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">status&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;success&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nb">id&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nb">len&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">KEY_VALUE_STORE&lt;/span>&lt;span class="p">))&lt;/span>
@@ -3176,7 +3535,7 @@ status code는 정의된 것처럼 400을 메세지는 Name not found. 를 입�
 &lt;/span>&lt;span class="lnt">4
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">post&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/nickname&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app.post&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/nickname&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">create_path&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">name&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">str&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">nickname&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">str&lt;/span>&lt;span class="p">):&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">KEY_VALUE_STORE&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">name&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">nickname&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="s2">&amp;#34;status&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;success&amp;#34;&lt;/span>&lt;span class="p">}&lt;/span>
@@ -3191,7 +3550,7 @@ status code는 정의된 것처럼 400을 메세지는 Name not found. 를 입�
 &lt;/span>&lt;span class="lnt">4
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">post&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/nickname/name/&lt;/span>&lt;span class="si">{name}&lt;/span>&lt;span class="s2">/nickname/&lt;/span>&lt;span class="si">{nickname}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app.post&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/nickname/name/&lt;/span>&lt;span class="si">{name}&lt;/span>&lt;span class="s2">/nickname/&lt;/span>&lt;span class="si">{nickname}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">create_query&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">name&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">str&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">nickname&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">str&lt;/span>&lt;span class="p">):&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">KEY_VALUE_STORE&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">name&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">nickname&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="s2">&amp;#34;status&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;success&amp;#34;&lt;/span>&lt;span class="p">}&lt;/span>
@@ -3209,7 +3568,7 @@ status code는 정의된 것처럼 400을 메세지는 Name not found. 를 입�
 &lt;/span>&lt;span class="lnt">5
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/nickname&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app.get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/nickname&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">get_path&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">name&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">str&lt;/span>&lt;span class="p">):&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">name&lt;/span> &lt;span class="ow">not&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">KEY_VALUE_STORE&lt;/span>&lt;span class="p">:&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">raise&lt;/span> &lt;span class="n">NAME_NOT_FOUND&lt;/span>
@@ -3226,7 +3585,7 @@ status code는 정의된 것처럼 400을 메세지는 Name not found. 를 입�
 &lt;/span>&lt;span class="lnt">5
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/nickname/name/&lt;/span>&lt;span class="si">{name}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app.get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/nickname/name/&lt;/span>&lt;span class="si">{name}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">get_query&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">name&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">str&lt;/span>&lt;span class="p">):&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">name&lt;/span> &lt;span class="ow">not&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">KEY_VALUE_STORE&lt;/span>&lt;span class="p">:&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">raise&lt;/span> &lt;span class="n">NAME_NOT_FOUND&lt;/span>
@@ -3245,7 +3604,7 @@ status code는 정의된 것처럼 400을 메세지는 Name not found. 를 입�
 &lt;/span>&lt;span class="lnt">6
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">put&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/nickname&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app.put&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/nickname&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">update_path&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">name&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">str&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">nickname&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">str&lt;/span>&lt;span class="p">):&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">name&lt;/span> &lt;span class="ow">not&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">KEY_VALUE_STORE&lt;/span>&lt;span class="p">:&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">raise&lt;/span> &lt;span class="n">NAME_NOT_FOUND&lt;/span>
@@ -3264,7 +3623,7 @@ status code는 정의된 것처럼 400을 메세지는 Name not found. 를 입�
 &lt;/span>&lt;span class="lnt">6
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">put&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/nickname/name/&lt;/span>&lt;span class="si">{name}&lt;/span>&lt;span class="s2">/nickname/&lt;/span>&lt;span class="si">{nickname}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app.put&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/nickname/name/&lt;/span>&lt;span class="si">{name}&lt;/span>&lt;span class="s2">/nickname/&lt;/span>&lt;span class="si">{nickname}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">update_query&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">name&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">str&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">nickname&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">str&lt;/span>&lt;span class="p">):&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">name&lt;/span> &lt;span class="ow">not&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">KEY_VALUE_STORE&lt;/span>&lt;span class="p">:&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">raise&lt;/span> &lt;span class="n">NAME_NOT_FOUND&lt;/span>
@@ -3284,7 +3643,7 @@ status code는 정의된 것처럼 400을 메세지는 Name not found. 를 입�
 &lt;/span>&lt;span class="lnt">6
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">delete&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/nickname&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app.delete&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/nickname&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">delete_path&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">name&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">str&lt;/span>&lt;span class="p">):&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">name&lt;/span> &lt;span class="ow">not&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">KEY_VALUE_STORE&lt;/span>&lt;span class="p">:&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">raise&lt;/span> &lt;span class="n">NAME_NOT_FOUND&lt;/span>
@@ -3303,7 +3662,7 @@ status code는 정의된 것처럼 400을 메세지는 Name not found. 를 입�
 &lt;/span>&lt;span class="lnt">6
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">delete&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/nickname/name/&lt;/span>&lt;span class="si">{name}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app.delete&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/nickname/name/&lt;/span>&lt;span class="si">{name}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">delete_query&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">name&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">str&lt;/span>&lt;span class="p">):&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">name&lt;/span> &lt;span class="ow">not&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">KEY_VALUE_STORE&lt;/span>&lt;span class="p">:&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">raise&lt;/span> &lt;span class="n">NAME_NOT_FOUND&lt;/span>
@@ -3382,32 +3741,32 @@ status code는 정의된 것처럼 400을 메세지는 Name not found. 를 입�
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">app&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">FastAPI&lt;/span>&lt;span class="p">()&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app.get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">async&lt;/span> &lt;span class="k">def&lt;/span> &lt;span class="nf">root&lt;/span>&lt;span class="p">():&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="s2">&amp;#34;message&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;Hello World&amp;#34;&lt;/span>&lt;span class="p">}&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/items/&lt;/span>&lt;span class="si">{item_id}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app.get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/items/&lt;/span>&lt;span class="si">{item_id}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">async&lt;/span> &lt;span class="k">def&lt;/span> &lt;span class="nf">read_item&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">item_id&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">int&lt;/span>&lt;span class="p">):&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="s2">&amp;#34;item_id&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">item_id&lt;/span>&lt;span class="p">}&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/users/me&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app.get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/users/me&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">async&lt;/span> &lt;span class="k">def&lt;/span> &lt;span class="nf">read_user_me&lt;/span>&lt;span class="p">():&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="s2">&amp;#34;user_id&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;the current user&amp;#34;&lt;/span>&lt;span class="p">}&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/users/&lt;/span>&lt;span class="si">{user_id}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app.get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/users/&lt;/span>&lt;span class="si">{user_id}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">async&lt;/span> &lt;span class="k">def&lt;/span> &lt;span class="nf">read_user&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">user_id&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">str&lt;/span>&lt;span class="p">):&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="s2">&amp;#34;user_id&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">user_id&lt;/span>&lt;span class="p">}&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/users&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app.get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/users&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">async&lt;/span> &lt;span class="k">def&lt;/span> &lt;span class="nf">read_users&lt;/span>&lt;span class="p">():&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;Rick&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;Morty&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/users&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app.get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/users&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">async&lt;/span> &lt;span class="k">def&lt;/span> &lt;span class="nf">read_users2&lt;/span>&lt;span class="p">():&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;Bean&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;Elfo&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
@@ -3418,7 +3777,7 @@ status code는 정의된 것처럼 400을 메세지는 Name not found. 를 입�
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">lenet&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;lenet&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/models/&lt;/span>&lt;span class="si">{model_name}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app.get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/models/&lt;/span>&lt;span class="si">{model_name}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">async&lt;/span> &lt;span class="k">def&lt;/span> &lt;span class="nf">get_model&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">model_name&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">ModelName&lt;/span>&lt;span class="p">):&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">model_name&lt;/span> &lt;span class="ow">is&lt;/span> &lt;span class="n">ModelName&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">alexnet&lt;/span>&lt;span class="p">:&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="s2">&amp;#34;model_name&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">model_name&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;message&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;Deep Learning FTW!&amp;#34;&lt;/span>&lt;span class="p">}&lt;/span>
@@ -3429,7 +3788,7 @@ status code는 정의된 것처럼 400을 메세지는 Name not found. 를 입�
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="s2">&amp;#34;model_name&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">model_name&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;message&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;Have some residuals&amp;#34;&lt;/span>&lt;span class="p">}&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/files/{file_path:path}&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@app.get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/files/{file_path:path}&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">async&lt;/span> &lt;span class="k">def&lt;/span> &lt;span class="nf">read_file&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">file_path&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">str&lt;/span>&lt;span class="p">):&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="s2">&amp;#34;file_path&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">file_path&lt;/span>&lt;span class="p">}&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
